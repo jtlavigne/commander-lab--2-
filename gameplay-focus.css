@@ -1,0 +1,53 @@
+/* In-game decisions float above a dimmed, desaturated table. Settings and
+   launch dialogs keep their own surfaces; this treatment is for play choices. */
+#mana-dialog.gameplay-dialog{width:min(940px,calc(100vw - 64px));max-height:calc(100vh - 72px);padding:28px;background:linear-gradient(145deg,#18201d3d,#10171412);border:0;border-radius:20px;box-shadow:none;color:#f3f5ef;overflow:auto}
+#mana-dialog.gameplay-dialog::backdrop{background:#0f1217bf;backdrop-filter:grayscale(.85) brightness(.65) blur(2px)}
+.gameplay-dialog .dialog-heading{border-bottom:1px solid #ffffff26;padding-bottom:16px;margin-bottom:18px}
+.gameplay-dialog h2{font-size:26px;text-shadow:0 2px 12px #000}
+.gameplay-dialog .panel-caption,.gameplay-dialog label{color:#e0e6df;text-shadow:0 1px 4px #000}
+.gameplay-dialog button,.gameplay-dialog input,.gameplay-dialog select{background-color:#1b2825e8;border-color:#7e958b80}
+.gameplay-dialog button.primary{background:var(--mint);color:#13241c;text-shadow:none}
+.gameplay-dialog .mana-options{gap:12px}
+.gameplay-dialog .mana-option{padding:16px;min-height:76px;background:#24342dd9}
+.gameplay-dialog .oracle-card-choices{display:flex;flex-wrap:wrap;align-items:stretch;gap:16px;padding:12px 4px;max-height:55vh!important}
+.gameplay-dialog .oracle-card-option{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:10px;flex:0 0 156px;padding:8px;border:1px solid #ffffff35;border-radius:12px;background:#15221c66;cursor:pointer;text-align:center}
+.gameplay-dialog .oracle-card-option:not(.has-card){flex:1 0 190px;padding:16px}
+.gameplay-dialog .oracle-card-option:has(input:checked){border-color:#e8ce8f;background:#bc97512b;box-shadow:0 0 0 2px #e8ce8f66}
+.gameplay-dialog .oracle-card-option:focus-within{outline:2px solid var(--mint);outline-offset:3px}
+.gameplay-dialog .oracle-card-option .card{position:relative;inset:auto;width:140px!important;height:196px!important;min-width:140px;--card-width:140px;--card-height:196px;transform:none!important;pointer-events:none;opacity:1;margin:0}
+.gameplay-dialog .oracle-choice-label{font-size:12px;line-height:1.5}
+.gameplay-dialog .oracle-card-option input{width:18px;height:18px;margin:0;accent-color:var(--mint)}
+.combat-focus-scrim{position:absolute;inset:0;z-index:22;background:#101419ad;backdrop-filter:grayscale(.7) brightness(.7);pointer-events:none;border-radius:inherit}
+.combat-focus-scrim[hidden]{display:none}
+.combat-panel.combat-focus{inset:66px 24px calc(var(--hand-dock-height,180px) + 20px);width:auto;max-width:1160px;margin-inline:auto;padding:20px 24px;background:transparent;border:0;box-shadow:none;display:flex;flex-direction:column;gap:12px;overflow:hidden;overscroll-behavior:contain}
+#combat-panel.combat-focus{background:transparent}
+.combat-panel.combat-focus .combat-panel-heading{padding:0 0 14px;border-bottom:1px solid #ffffff30;gap:24px;position:relative;flex-shrink:0}
+.combat-panel.combat-focus h2{font-size:24px;color:#f4e6c9;text-shadow:0 2px 12px #000}
+.combat-progress{display:flex;gap:14px;margin-left:auto;font-size:12px;color:#9ba7a1}
+.combat-progress span{padding:7px 10px;border-radius:18px}
+.combat-progress [aria-current]{background:#e4cf9630;color:#ffedc4;border:1px solid #e4cf9680}
+.combat-panel.combat-focus .combat-arena{position:static;inset:auto;max-height:none;min-height:0;flex:1 1 auto;padding:8px 4px;background:transparent;border:0;box-shadow:none;overflow:auto}
+.combat-panel.combat-focus .combat-arena h3{font-size:13px;color:#c4cec5}
+.combat-panel.combat-focus .combat-arena{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;align-content:start;align-items:start}
+.combat-panel.combat-focus .combat-arena[hidden]{display:none}
+.combat-panel.combat-focus .combat-arena>h3,.combat-panel.combat-focus .combat-arena>h4{grid-column:1/-1;margin:0}
+.combat-panel.combat-focus .combat-arena-lanes{display:contents}
+.combat-panel.combat-focus .combat-arena-pool{margin:0;padding:12px;border:1px solid #a7b9b246;border-radius:9px;min-width:0}
+.combat-panel.combat-focus .combat-arena[data-stage="5"]>.combat-arena-pool::before{content:'Available creatures';flex-basis:100%;font-size:12px;color:#c5cfc6;margin-bottom:8px}
+.combat-panel.combat-focus .combat-arena-lane{background:#141b172e;border-color:#b39b6a70;padding:16px;min-width:190px}
+.combat-panel.combat-focus .combat-arena .card{width:120px!important;height:168px!important;min-width:120px;--card-width:120px;--card-height:168px}
+.combat-panel.combat-focus .combat-arena-card{max-width:140px}
+.combat-panel.combat-focus .combat-assigned-blocker{border-top:2px solid #8bc4dc;margin-top:7px;padding-top:8px;text-align:center}
+.combat-panel.combat-focus .combat-assigned-blocker .card{width:92px!important;height:129px!important;min-width:92px;--card-width:92px;--card-height:129px}
+.combat-block-target{outline:3px solid #b0dfc4!important;outline-offset:4px;box-shadow:0 0 20px #8bdbb266!important}
+.combat-card-outcome{font-size:11px;padding:4px 6px;border-radius:5px;background:#142a23c9;color:#c6ebd9;text-align:center}
+.combat-card-outcome.lethal{color:#ffb9ae;background:#54211b99}
+.combat-panel.combat-focus .combat-panel-body{padding:0;max-height:32%;flex:0 1 auto;overflow:auto}
+.combat-focus-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px;flex-shrink:0;padding-top:12px;border-top:1px solid #ffffff30}
+.combat-focus-actions>.primary{font-size:14px;padding:11px 20px;margin-left:auto}
+.combat-panel.combat-focus .combat-hint{color:#d2ddd5;font-size:12px}
+.combat-panel.combat-focus .combat-preview{background:#101c1833;border-color:#a9bdad50}
+.combat-panel:not(.combat-focus){width:auto;background:#18241b70;border-color:#71846d70}
+body.board-picking .combat-panel.combat-focus{visibility:hidden;pointer-events:none}
+body.board-picking .combat-focus-scrim{opacity:.2}
+@media(max-height:800px){.combat-panel.combat-focus{inset:60px 16px calc(var(--hand-dock-height,111px) + 12px);padding:12px}.combat-panel.combat-focus .combat-arena .card{width:94px!important;height:132px!important;min-width:94px}.combat-panel.combat-focus h2{font-size:19px}}

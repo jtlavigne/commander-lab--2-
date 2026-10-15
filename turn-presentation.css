@@ -1,0 +1,7 @@
+.turn-announcement{position:fixed;z-index:85;left:50%;top:24%;transform:translateX(-50%);max-width:calc(100vw - 48px);padding:22px 54px;border:1px solid var(--mint);border-radius:12px;background:color-mix(in srgb,var(--mint) 9%,#111615);box-shadow:0 12px 60px #0009,0 0 32px color-mix(in srgb,var(--mint) 15%,transparent);text-align:center;pointer-events:none}
+.turn-announcement[hidden]{display:none}
+.turn-announcement strong{font:500 clamp(24px,3vw,42px)/1.25 Georgia,serif;color:var(--mint);overflow-wrap:anywhere;white-space:pre-wrap}
+#draw-animations{position:fixed;z-index:84;inset:0;pointer-events:none;overflow:hidden}
+.draw-flight{position:absolute;left:0;top:0;border:1px solid var(--mint);border-radius:6px;box-shadow:0 6px 22px #0009;will-change:transform,opacity;pointer-events:none}
+.draw-flight img{display:block;width:100%;height:100%;border-radius:5px;object-fit:cover}
+.draw-batch-count{position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);background:#111615;color:var(--mint);border:1px solid var(--mint);border-radius:4px;padding:3px 8px;font-size:11px;white-space:nowrap}

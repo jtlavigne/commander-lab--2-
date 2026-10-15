@@ -1,0 +1,3526 @@
+{
+  "goreclaw_terror_of_qal_sisma": {
+    "status": "Color-fixed revision verified: shared Vehicle/exile actions and all prior scoped scenarios",
+    "oracle_verified": true,
+    "evidence": [
+      "tests/goreclaw.test.mjs",
+      "tests/goreclaw-ui.cjs",
+      "tests/combat.test.mjs",
+      "tests/phase-flow.test.mjs",
+      "tests/vehicles.test.mjs",
+      "tests/vehicles-ui.cjs"
+    ],
+    "verified_paragraphs": {
+      "Goreclaw, Terror of Qal Sisma": [
+        0,
+        1
+      ],
+      "Llanowar Elves": [
+        0
+      ],
+      "Elvish Mystic": [
+        0
+      ],
+      "Fyndhorn Elves": [
+        0
+      ],
+      "Birds of Paradise": [
+        0,
+        1
+      ],
+      "Sakura-Tribe Elder": [
+        0
+      ],
+      "Rampant Growth": [
+        0
+      ],
+      "Cultivate": [
+        0
+      ],
+      "Kodama's Reach": [
+        0
+      ],
+      "Nature's Lore": [
+        0
+      ],
+      "Three Visits": [
+        0
+      ],
+      "Beast Whisperer": [
+        0
+      ],
+      "Guardian Project": [
+        0
+      ],
+      "Garruk's Uprising": [
+        0,
+        1,
+        2
+      ],
+      "Elemental Bond": [
+        0
+      ],
+      "Return of the Wildspeaker": [
+        0,
+        1,
+        2
+      ],
+      "Rishkar's Expertise": [
+        0,
+        1
+      ],
+      "Greater Good": [
+        0
+      ],
+      "Soul of the Harvest": [
+        0,
+        1
+      ],
+      "Primordial Sage": [
+        0
+      ],
+      "Kogla, the Titan Ape": [
+        0,
+        1,
+        2
+      ],
+      "Questing Beast": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Carnage Tyrant": [
+        0,
+        1
+      ],
+      "Ghalta, Primal Hunger": [
+        0,
+        1
+      ],
+      "Ghalta, Stampede Tyrant": [
+        0,
+        1
+      ],
+      "Apex Altisaur": [
+        0,
+        1
+      ],
+      "Terastodon": [
+        0
+      ],
+      "Woodfall Primus": [
+        0,
+        1,
+        2
+      ],
+      "Craterhoof Behemoth": [
+        0,
+        1
+      ],
+      "End-Raze Forerunners": [
+        0,
+        1
+      ],
+      "Pathbreaker Ibex": [
+        0
+      ],
+      "Thunderfoot Baloth": [
+        0,
+        1
+      ],
+      "Bane of Progress": [
+        0
+      ],
+      "Reclamation Sage": [
+        0
+      ],
+      "Acidic Slime": [
+        0,
+        1
+      ],
+      "Eternal Witness": [
+        0
+      ],
+      "Regal Force": [
+        0
+      ],
+      "Ulvenwald Hydra": [
+        0,
+        1,
+        2
+      ],
+      "Old Gnawbone": [
+        0,
+        1
+      ],
+      "Nyxbloom Ancient": [
+        0,
+        1
+      ],
+      "Vorinclex, Voice of Hunger": [
+        0,
+        1,
+        2
+      ],
+      "Defiler of Vigor": [
+        0,
+        1,
+        2
+      ],
+      "Steel Leaf Champion": [
+        0
+      ],
+      "Surrak and Goreclaw": [
+        0,
+        1,
+        2
+      ],
+      "Sol Ring": [
+        0
+      ],
+      "Arcane Signet": [
+        0
+      ],
+      "Commander's Sphere": [
+        0,
+        1
+      ],
+      "Mind Stone": [
+        0,
+        1
+      ],
+      "Thought Vessel": [
+        0,
+        1
+      ],
+      "Wayfarer's Bauble": [
+        0
+      ],
+      "Worn Powerstone": [
+        0,
+        1
+      ],
+      "Burnished Hart": [
+        0
+      ],
+      "Solemn Simulacrum": [
+        0,
+        1
+      ],
+      "Swiftfoot Boots": [
+        0,
+        1
+      ],
+      "Lightning Greaves": [
+        0,
+        1
+      ],
+      "Skullclamp": [
+        0,
+        1,
+        2
+      ],
+      "Tormod's Crypt": [
+        0
+      ],
+      "Relic of Progenitus": [
+        0,
+        1
+      ],
+      "Nihil Spellbomb": [
+        0,
+        1
+      ],
+      "Soul-Guide Lantern": [
+        0,
+        1,
+        2
+      ],
+      "Meteor Golem": [
+        0
+      ],
+      "Evolving Wilds": [
+        0
+      ],
+      "Terramorphic Expanse": [
+        0
+      ],
+      "Ash Barrens": [
+        0,
+        1
+      ],
+      "Myriad Landscape": [
+        0,
+        1,
+        2
+      ],
+      "Reliquary Tower": [
+        0,
+        1
+      ],
+      "Rogue's Passage": [
+        0,
+        1
+      ],
+      "War Room": [
+        0,
+        1
+      ],
+      "Buried Ruin": [
+        0,
+        1
+      ],
+      "Field of Ruin": [
+        0,
+        1
+      ],
+      "Ghost Quarter": [
+        0,
+        1
+      ],
+      "Scavenger Grounds": [
+        0,
+        1
+      ],
+      "Blast Zone": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Temple of the False God": [
+        0
+      ],
+      "Forest": [
+        0
+      ],
+      "Unlicensed Hearse": [
+        0,
+        1,
+        2
+      ]
+    },
+    "checks": {
+      "discounts": true,
+      "combat_preview": true,
+      "power_triggers": true,
+      "library_choices": true,
+      "equipment": true,
+      "all_card_actions": true,
+      "deck_ui": true,
+      "final_regression": true
+    },
+    "limitations": [
+      "Verification covers the listed card actions and scenarios; it does not claim every possible interaction with all Magic cards.",
+      "Unknown Oracle patterns in other cards still require explicit manual resolution.",
+      "All eight Electron suites passed. The Goreclaw renderer covers ordered searches, equipment, modes chosen before responses, optional life costs, sacrifice/discard, hand cycling, payment-time mana and persistence.",
+      "The color-fixed revision passed 495 unit tests and all 18 Electron suites. Historical Nihil Spellbomb scenarios use the archived name-corrected Oracle snapshot."
+    ],
+    "last_verified": "2026-10-14",
+    "previous_revisions": [
+      {
+        "decklist_source": "commander_test_decks_names_fixed.csv",
+        "status": "Verified for scoped card-action scenarios ? 86 deck cases; 402 total unit tests and all eleven Electron suites pass",
+        "oracle_verified": true,
+        "checks": {
+          "discounts": true,
+          "combat_preview": true,
+          "power_triggers": true,
+          "library_choices": true,
+          "equipment": true,
+          "all_card_actions": true,
+          "deck_ui": true,
+          "final_regression": true
+        }
+      }
+    ],
+    "active_decklist_source": "commander_test_decks_color_fixes.csv"
+  },
+  "aurelia_the_warleader": {
+    "status": "Color-fixed revision verified: shared Vehicle/exile actions and all prior scoped scenarios",
+    "oracle_verified": true,
+    "checks": {
+      "focus_0": true,
+      "focus_1": true,
+      "focus_2": true,
+      "all_card_actions": true,
+      "deck_ui": true,
+      "final_regression": true
+    },
+    "evidence": [
+      "tests/aurelia.test.mjs",
+      "tests/battlefield-entry.test.mjs",
+      "tests/hotseat-ui.cjs",
+      "tests/spell-resolution.test.mjs",
+      "tests/spell-resolution-ui.cjs",
+      "tests/extra-combat.test.mjs",
+      "tests/aurelia-ui.cjs",
+      "tests/aurelia-combat.test.mjs",
+      "tests/aurelia-actions-ui.cjs",
+      "tests/aurelia-utilities.test.mjs",
+      "tests/vehicles.test.mjs",
+      "tests/vehicles-ui.cjs"
+    ],
+    "verified_paragraphs": {
+      "Aurelia, the Warleader": [
+        0,
+        1
+      ],
+      "Lightning Greaves": [
+        0,
+        1
+      ],
+      "Swiftfoot Boots": [
+        0,
+        1
+      ],
+      "Sword of the Animist": [
+        0,
+        1,
+        2
+      ],
+      "Boros Charm": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Swords to Plowshares": [
+        0
+      ],
+      "Path to Exile": [
+        0
+      ],
+      "Generous Gift": [
+        0
+      ],
+      "Chaos Warp": [
+        0
+      ],
+      "Aurelia, Exemplar of Justice": [
+        0,
+        1,
+        2
+      ],
+      "Combat Celebrant": [
+        0
+      ],
+      "Moraug, Fury of Akoum": [
+        0,
+        1
+      ],
+      "Karlach, Fury of Avernus": [
+        0,
+        1
+      ],
+      "Port Razer": [
+        0,
+        1
+      ],
+      "Relentless Assault": [
+        0
+      ],
+      "Seize the Day": [
+        0,
+        1
+      ],
+      "World at War": [
+        0,
+        1
+      ],
+      "Aggravated Assault": [
+        0
+      ],
+      "Savage Beating": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "Response // Resurgence": [
+        0,
+        1
+      ],
+      "Adriana, Captain of the Guard": [
+        0,
+        1
+      ],
+      "Hero of Bladehold": [
+        0,
+        1
+      ],
+      "Adeline, Resplendent Cathar": [
+        0,
+        1,
+        2
+      ],
+      "Myrel, Shield of Argive": [
+        0,
+        1
+      ],
+      "Akroma's Will": [
+        0,
+        1,
+        2
+      ],
+      "Unbreakable Formation": [
+        0,
+        1
+      ],
+      "Reconnaissance": [
+        0
+      ],
+      "Dolmen Gate": [
+        0
+      ],
+      "Fervor": [
+        0
+      ],
+      "Rising of the Day": [
+        0,
+        1
+      ],
+      "Anger": [
+        0,
+        1
+      ],
+      "Sun Titan": [
+        0,
+        1
+      ],
+      "Esper Sentinel": [
+        0
+      ],
+      "Professional Face-Breaker": [
+        0,
+        1,
+        2
+      ],
+      "Tome of Legends": [
+        0,
+        1,
+        2
+      ],
+      "Skullclamp": [
+        0,
+        1,
+        2
+      ],
+      "Aurelia's Fury": [
+        0
+      ],
+      "Sol Ring": [
+        0
+      ],
+      "Arcane Signet": [
+        0
+      ],
+      "Commander's Sphere": [
+        0,
+        1
+      ],
+      "Mind Stone": [
+        0,
+        1
+      ],
+      "Thought Vessel": [
+        0,
+        1
+      ],
+      "Wayfarer's Bauble": [
+        0
+      ],
+      "Worn Powerstone": [
+        0,
+        1
+      ],
+      "Burnished Hart": [
+        0
+      ],
+      "Solemn Simulacrum": [
+        0,
+        1
+      ],
+      "Tormod's Crypt": [
+        0
+      ],
+      "Relic of Progenitus": [
+        0,
+        1
+      ],
+      "Nihil Spellbomb": [
+        0,
+        1
+      ],
+      "Soul-Guide Lantern": [
+        0,
+        1,
+        2
+      ],
+      "Meteor Golem": [
+        0
+      ],
+      "Duplicant": [
+        0,
+        1
+      ],
+      "Steel Hellkite": [
+        0,
+        1,
+        2
+      ],
+      "Wurmcoil Engine": [
+        0,
+        1
+      ],
+      "Trading Post": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Unwinding Clock": [
+        0
+      ],
+      "Hedron Archive": [
+        0,
+        1
+      ],
+      "Thran Dynamo": [
+        0
+      ],
+      "Everflowing Chalice": [
+        0,
+        1,
+        2
+      ],
+      "Expedition Map": [
+        0
+      ],
+      "Staff of Domination": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "Command Tower": [
+        0
+      ],
+      "Exotic Orchard": [
+        0
+      ],
+      "Path of Ancestry": [
+        0,
+        1
+      ],
+      "Evolving Wilds": [
+        0
+      ],
+      "Terramorphic Expanse": [
+        0
+      ],
+      "Ash Barrens": [
+        0,
+        1
+      ],
+      "Myriad Landscape": [
+        0,
+        1,
+        2
+      ],
+      "Reliquary Tower": [
+        0,
+        1
+      ],
+      "Rogue's Passage": [
+        0,
+        1
+      ],
+      "War Room": [
+        0,
+        1
+      ],
+      "Buried Ruin": [
+        0,
+        1
+      ],
+      "Field of Ruin": [
+        0,
+        1
+      ],
+      "Ghost Quarter": [
+        0,
+        1
+      ],
+      "Scavenger Grounds": [
+        0,
+        1
+      ],
+      "Blast Zone": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Temple of the False God": [
+        0
+      ],
+      "Boros Garrison": [
+        0,
+        1,
+        2
+      ],
+      "Wind-Scarred Crag": [
+        0,
+        1,
+        2
+      ],
+      "Boros Guildgate": [
+        0,
+        1
+      ],
+      "Mountain": [
+        0
+      ],
+      "Plains": [
+        0
+      ],
+      "Unlicensed Hearse": [
+        0,
+        1,
+        2
+      ]
+    },
+    "limitations": [
+      "Scoped verification covers all 82 cached card names and their listed paragraphs, including 100 total copies. It does not establish every possible interaction with all Magic cards.",
+      "Thirty-three additional combat/casting scenarios and 58 utility/audit scenarios exercise the signature actions and every utility action. These include Duplicant links and characteristic power, Steel Hellkite damage/usage history, Wurmcoil tokens, Trading Post costs, Unwinding Clock, multikicker and mana-spending provenance for Path of Ancestry.",
+      "The new Electron workflow verifies exert, token defender choices, battle cry, rebound/seat switching, divided X damage, split halves, entwine, simultaneous trigger ordering, multikicker and discard costs. All eleven interface suites pass; the latest complete unit run passes 402 tests.",
+      "Choose a Background is audited as deck setup: a second command slot and independent commander tax work. Deck-construction legality is not enforced by the playtester.",
+      "Full layers/replacement ordering, every commander movement choice and arbitrary Oracle patterns remain engine-wide limits. Unsupported effects still require explicit manual resolution.",
+      "The revised Oracle cache passed the full unit run plus Aurelia, Aurelia actions and Vehicle Electron workflows after the 18-suite regression pass."
+    ],
+    "last_verified": "2026-10-14",
+    "previous_revisions": [
+      {
+        "decklist_source": "commander_test_decks_names_fixed.csv",
+        "status": "Verified for scoped card-action scenarios ? 402 total unit tests and all eleven Electron suites pass",
+        "oracle_verified": true,
+        "checks": {
+          "focus_0": true,
+          "focus_1": true,
+          "focus_2": true,
+          "all_card_actions": true,
+          "deck_ui": true,
+          "final_regression": true
+        }
+      }
+    ],
+    "active_decklist_source": "commander_test_decks_color_fixes.csv"
+  },
+  "arahbo_roar_of_the_world": {
+    "status": "Scoped card-action audit complete: 553 unit tests and all 19 Electron workflows pass",
+    "oracle_verified": true,
+    "checks": {
+      "all_card_actions": true,
+      "deck_ui": true,
+      "final_regression": true,
+      "focus_0": true,
+      "focus_1": true,
+      "focus_2": true
+    },
+    "verified_paragraphs": {
+      "Arahbo, Roar of the World": [
+        0,
+        1
+      ],
+      "King of the Pride": [
+        0
+      ],
+      "Feline Sovereign": [
+        0,
+        1
+      ],
+      "Kaheera, the Orphanguard": [
+        0,
+        1,
+        2
+      ],
+      "Pride Sovereign": [
+        0,
+        1
+      ],
+      "Leonin Shikari": [
+        0
+      ],
+      "Puresteel Paladin": [
+        0,
+        1
+      ],
+      "Sram, Senior Edificer": [
+        0
+      ],
+      "Sigarda's Aid": [
+        0,
+        1
+      ],
+      "Hammer of Nazahn": [
+        0,
+        1,
+        2
+      ],
+      "Blackblade Reforged": [
+        0,
+        1,
+        2
+      ],
+      "Shadowspear": [
+        0,
+        1,
+        2
+      ],
+      "Swiftfoot Boots": [
+        0,
+        1
+      ],
+      "Lightning Greaves": [
+        0,
+        1
+      ],
+      "Rancor": [
+        0,
+        1,
+        2
+      ],
+      "Bear Umbra": [
+        0,
+        1,
+        2
+      ],
+      "Snake Umbra": [
+        0,
+        1,
+        2
+      ],
+      "Ancestral Mask": [
+        0,
+        1
+      ],
+      "All That Glitters": [
+        0,
+        1
+      ],
+      "Ethereal Armor": [
+        0,
+        1
+      ],
+      "Cultivate": [
+        0
+      ],
+      "Kodama's Reach": [
+        0
+      ],
+      "Sol Ring": [
+        0
+      ],
+      "Arcane Signet": [
+        0
+      ],
+      "Commander's Sphere": [
+        0,
+        1
+      ],
+      "Mind Stone": [
+        0,
+        1
+      ],
+      "Thought Vessel": [
+        0,
+        1
+      ],
+      "Wayfarer's Bauble": [
+        0
+      ],
+      "Worn Powerstone": [
+        0,
+        1
+      ],
+      "Burnished Hart": [
+        0
+      ],
+      "Solemn Simulacrum": [
+        0,
+        1
+      ],
+      "Skullclamp": [
+        0,
+        1,
+        2
+      ],
+      "Tormod's Crypt": [
+        0
+      ],
+      "Relic of Progenitus": [
+        0,
+        1
+      ],
+      "Unlicensed Hearse": [
+        0,
+        1,
+        2
+      ],
+      "Soul-Guide Lantern": [
+        0,
+        1,
+        2
+      ],
+      "Meteor Golem": [
+        0
+      ],
+      "Evolving Wilds": [
+        0
+      ],
+      "Terramorphic Expanse": [
+        0
+      ],
+      "Ash Barrens": [
+        0,
+        1
+      ],
+      "Myriad Landscape": [
+        0,
+        1,
+        2
+      ],
+      "Reliquary Tower": [
+        0,
+        1
+      ],
+      "Rogue's Passage": [
+        0,
+        1
+      ],
+      "War Room": [
+        0,
+        1
+      ],
+      "Buried Ruin": [
+        0,
+        1
+      ],
+      "Field of Ruin": [
+        0,
+        1
+      ],
+      "Ghost Quarter": [
+        0,
+        1
+      ],
+      "Scavenger Grounds": [
+        0,
+        1
+      ],
+      "Blast Zone": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Temple of the False God": [
+        0
+      ],
+      "Forest": [
+        0
+      ],
+      "Sword of the Animist": [
+        0,
+        1,
+        2
+      ],
+      "Swords to Plowshares": [
+        0
+      ],
+      "Path to Exile": [
+        0
+      ],
+      "Duplicant": [
+        0,
+        1
+      ],
+      "Steel Hellkite": [
+        0,
+        1,
+        2
+      ],
+      "Wurmcoil Engine": [
+        0,
+        1
+      ],
+      "Trading Post": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Unwinding Clock": [
+        0
+      ],
+      "Command Tower": [
+        0
+      ],
+      "Exotic Orchard": [
+        0
+      ],
+      "Path of Ancestry": [
+        0,
+        1
+      ],
+      "Plains": [
+        0
+      ],
+      "Regal Caracal": [
+        0,
+        1
+      ],
+      "Brimaz, King of Oreskos": [
+        0,
+        1,
+        2
+      ],
+      "Leonin Warleader": [
+        0
+      ],
+      "Mirri, Weatherlight Duelist": [
+        0,
+        1,
+        2
+      ],
+      "Qasali Pridemage": [
+        0,
+        1
+      ],
+      "Qasali Slingers": [
+        0,
+        1
+      ],
+      "Jazal Goldmane": [
+        0,
+        1
+      ],
+      "Kemba, Kha Regent": [
+        0
+      ],
+      "Kemba, Kha Enduring": [
+        0,
+        1,
+        2
+      ],
+      "Jedit Ojanen of Efrava": [
+        0,
+        1
+      ],
+      "Felidar Sovereign": [
+        0,
+        1,
+        2
+      ],
+      "Stoneforge Mystic": [
+        0,
+        1
+      ],
+      "Open the Armory": [
+        0
+      ],
+      "Steelshaper's Gift": [
+        0
+      ],
+      "Selesnya Sanctuary": [
+        0,
+        1,
+        2
+      ],
+      "Blossoming Sands": [
+        0,
+        1,
+        2
+      ],
+      "Selesnya Guildgate": [
+        0,
+        1
+      ],
+      "Heroic Intervention": [
+        0
+      ],
+      "Beast Within": [
+        0
+      ]
+    },
+    "evidence": [
+      "tests/arahbo.test.mjs",
+      "tests/arahbo-combat.test.mjs",
+      "tests/arahbo-utilities.test.mjs",
+      "tests/destruction.test.mjs",
+      "tests/vehicles.test.mjs",
+      "tests/arahbo-ui.cjs",
+      "tests/arahbo-actions-ui.cjs",
+      "tests/vehicles-ui.cjs",
+      "tests/goreclaw.test.mjs",
+      "tests/aurelia-utilities.test.mjs",
+      "tests/network.test.mjs"
+    ],
+    "limitations": [
+      "Verification is scoped to the supplied card actions and scenarios; it does not establish every interaction with all Magic cards.",
+      "Common utility paragraph checks reuse first/second-deck scenarios only when complete Oracle text matches, with additional Arahbo identity, land-entry and spending-provenance checks.",
+      "Kaheera is in this fixture main deck, not selected as a companion. Its normal casting and vigilance are verified; outside-game companion setup remains unsupported.",
+      "Umbra armor choices persist and resume compound destruction spells. Full ordering among arbitrary replacement effects and continuous-effect dependencies remains unfinished.",
+      "Temporary keyword gains after losses are ordered for explicit effects. Full continuous-layer dependency and timestamp interactions remain an engine-wide limit."
+    ],
+    "last_verified": "2026-10-14",
+    "previous_revisions": [
+      {
+        "decklist_source": "commander_test_decks_names_fixed.csv",
+        "status": "In progress: attachments, Cat static effects and commander triggers verified in 33 scenarios",
+        "oracle_verified": true,
+        "checks": {}
+      }
+    ],
+    "active_decklist_source": "commander_test_decks_color_fixes.csv"
+  },
+  "isshin_two_heavens_as_one": {
+    "status": "Scoped card-action audit complete: 617 unit tests and all 20 Electron workflows pass",
+    "oracle_verified": true,
+    "active_decklist_source": "commander_test_decks_color_fixes.csv",
+    "last_verified": "2026-10-14",
+    "checks": {
+      "focus_0": true,
+      "focus_1": true,
+      "focus_2": true,
+      "all_card_actions": true,
+      "deck_ui": true,
+      "final_regression": true
+    },
+    "verified_paragraphs": {
+      "Isshin, Two Heavens as One": [
+        0
+      ],
+      "Adeline, Resplendent Cathar": [
+        0,
+        1,
+        2
+      ],
+      "Hero of Bladehold": [
+        0,
+        1
+      ],
+      "Hanweir Garrison": [
+        0,
+        1
+      ],
+      "Hammers of Moradin": [
+        0,
+        1
+      ],
+      "Captain Lannery Storm": [
+        0,
+        1,
+        2
+      ],
+      "Professional Face-Breaker": [
+        0,
+        1,
+        2
+      ],
+      "Breena, the Demagogue": [
+        0,
+        1
+      ],
+      "Etali, Primal Storm": [
+        0
+      ],
+      "Aurelia, the Warleader": [
+        0,
+        1
+      ],
+      "Krenko, Tin Street Kingpin": [
+        0
+      ],
+      "Skyknight Vanguard": [
+        0,
+        1
+      ],
+      "Myrel, Shield of Argive": [
+        0,
+        1
+      ],
+      "Anim Pakal, Thousandth Moon": [
+        0
+      ],
+      "Caesar, Legion's Emperor": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Karazikar, the Eye Tyrant": [
+        0,
+        1
+      ],
+      "Fervent Charge": [
+        0
+      ],
+      "Brutal Hordechief": [
+        0,
+        1
+      ],
+      "Hellrider": [
+        0,
+        1
+      ],
+      "Commissar Severina Raine": [
+        0,
+        1
+      ],
+      "Reconnaissance": [
+        0
+      ],
+      "Dolmen Gate": [
+        0
+      ],
+      "Tocasia's Welcome": [
+        0
+      ],
+      "Skullclamp": [
+        0,
+        1,
+        2
+      ],
+      "Sword of the Animist": [
+        0,
+        1,
+        2
+      ],
+      "Swords to Plowshares": [
+        0
+      ],
+      "Path to Exile": [
+        0
+      ],
+      "Terminate": [
+        0
+      ],
+      "Anguished Unmaking": [
+        0
+      ],
+      "Chaos Warp": [
+        0
+      ],
+      "Generous Gift": [
+        0
+      ],
+      "Boros Charm": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Rakdos Charm": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Talisman of Conviction": [
+        0,
+        1
+      ],
+      "Talisman of Hierarchy": [
+        0,
+        1
+      ],
+      "Talisman of Indulgence": [
+        0,
+        1
+      ],
+      "Sol Ring": [
+        0
+      ],
+      "Arcane Signet": [
+        0
+      ],
+      "Commander's Sphere": [
+        0,
+        1
+      ],
+      "Mind Stone": [
+        0,
+        1
+      ],
+      "Thought Vessel": [
+        0,
+        1
+      ],
+      "Wayfarer's Bauble": [
+        0
+      ],
+      "Worn Powerstone": [
+        0,
+        1
+      ],
+      "Burnished Hart": [
+        0
+      ],
+      "Solemn Simulacrum": [
+        0,
+        1
+      ],
+      "Swiftfoot Boots": [
+        0,
+        1
+      ],
+      "Lightning Greaves": [
+        0,
+        1
+      ],
+      "Tormod's Crypt": [
+        0
+      ],
+      "Relic of Progenitus": [
+        0,
+        1
+      ],
+      "Nihil Spellbomb": [
+        0,
+        1
+      ],
+      "Soul-Guide Lantern": [
+        0,
+        1,
+        2
+      ],
+      "Meteor Golem": [
+        0
+      ],
+      "Duplicant": [
+        0,
+        1
+      ],
+      "Steel Hellkite": [
+        0,
+        1,
+        2
+      ],
+      "Wurmcoil Engine": [
+        0,
+        1
+      ],
+      "Trading Post": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Unwinding Clock": [
+        0
+      ],
+      "Hedron Archive": [
+        0,
+        1
+      ],
+      "Thran Dynamo": [
+        0
+      ],
+      "Everflowing Chalice": [
+        0,
+        1,
+        2
+      ],
+      "Expedition Map": [
+        0
+      ],
+      "Command Tower": [
+        0
+      ],
+      "Exotic Orchard": [
+        0
+      ],
+      "Path of Ancestry": [
+        0,
+        1
+      ],
+      "Evolving Wilds": [
+        0
+      ],
+      "Terramorphic Expanse": [
+        0
+      ],
+      "Ash Barrens": [
+        0,
+        1
+      ],
+      "Myriad Landscape": [
+        0,
+        1,
+        2
+      ],
+      "Reliquary Tower": [
+        0,
+        1
+      ],
+      "Rogue's Passage": [
+        0,
+        1
+      ],
+      "War Room": [
+        0,
+        1
+      ],
+      "Buried Ruin": [
+        0,
+        1
+      ],
+      "Field of Ruin": [
+        0,
+        1
+      ],
+      "Ghost Quarter": [
+        0,
+        1
+      ],
+      "Scavenger Grounds": [
+        0,
+        1
+      ],
+      "Blast Zone": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Temple of the False God": [
+        0
+      ],
+      "Rakdos Carnarium": [
+        0,
+        1,
+        2
+      ],
+      "Bloodfell Caves": [
+        0,
+        1,
+        2
+      ],
+      "Rakdos Guildgate": [
+        0,
+        1
+      ],
+      "Orzhov Basilica": [
+        0,
+        1,
+        2
+      ],
+      "Scoured Barrens": [
+        0,
+        1,
+        2
+      ],
+      "Orzhov Guildgate": [
+        0,
+        1
+      ],
+      "Boros Garrison": [
+        0,
+        1,
+        2
+      ],
+      "Mountain": [
+        0
+      ],
+      "Plains": [
+        0
+      ],
+      "Swamp": [
+        0
+      ]
+    },
+    "evidence": [
+      "tests/isshin.test.mjs",
+      "tests/isshin-utilities.test.mjs",
+      "tests/isshin-ui.cjs",
+      "tests/network.test.mjs",
+      "tests/goreclaw.test.mjs",
+      "tests/aurelia-utilities.test.mjs",
+      "tests/arahbo.test.mjs",
+      "tests/extra-combat.test.mjs"
+    ],
+    "limitations": [
+      "Verification covers the supplied deck actions and scoped scenarios, not every possible interaction with all Magic cards.",
+      "Common utility evidence is reused only for complete Oracle text matching a previously verified record, including the archived Nihil Spellbomb regression.",
+      "Hanweir Garrison has its normal attack action in this list. Hanweir Battlements is absent; the parenthetical meld reminder does not provide an action with this supplied deck. Meld execution remains unsupported.",
+      "Forced blocking covers the current flying/menace/capacity and per-player blocker-limit rules. Arbitrary attack/block taxes and future restrictions still need corresponding rule handlers.",
+      "No regeneration provider appears in this fixture. Terminate destruction is verified; the engine does not yet implement regeneration-shield mechanics.",
+      "Full continuous-effect layering, arbitrary replacement ordering, player elimination and later-deck mechanics remain open engine-wide."
+    ]
+  },
+  "fynn_the_fangbearer": {
+    "status": "Scoped card-action audit complete: 669 unit tests and all 21 Electron workflows pass",
+    "oracle_verified": true,
+    "active_decklist_source": "commander_test_decks_color_fixes.csv",
+    "last_verified": "2026-10-14",
+    "checks": {
+      "focus_0": true,
+      "focus_1": true,
+      "focus_2": true,
+      "all_card_actions": true,
+      "deck_ui": true,
+      "final_regression": true
+    },
+    "verified_paragraphs": {
+      "Fynn, the Fangbearer": [
+        0,
+        1
+      ],
+      "Sedge Scorpion": [
+        0
+      ],
+      "Tajuru Blightblade": [
+        0
+      ],
+      "Moss Viper": [
+        0
+      ],
+      "Narnam Renegade": [
+        0,
+        1
+      ],
+      "Gnarlwood Dryad": [
+        0,
+        1
+      ],
+      "Wasteland Viper": [
+        0,
+        1
+      ],
+      "Ambush Viper": [
+        0,
+        1
+      ],
+      "Deadly Recluse": [
+        0,
+        1
+      ],
+      "Thornweald Archer": [
+        0,
+        1
+      ],
+      "Oakhame Adversary": [
+        0,
+        1,
+        2
+      ],
+      "Questing Beast": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Acidic Slime": [
+        0,
+        1
+      ],
+      "Hornet Queen": [
+        0,
+        1
+      ],
+      "Hornet Nest": [
+        0,
+        1
+      ],
+      "Hornet Sting": [
+        0
+      ],
+      "Bow of Nylea": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "Ohran Frostfang": [
+        0,
+        1
+      ],
+      "Saryth, the Viper's Fang": [
+        0,
+        1,
+        2
+      ],
+      "Basilisk Collar": [
+        0,
+        1
+      ],
+      "Gorgon Flail": [
+        0,
+        1
+      ],
+      "Viridian Longbow": [
+        0,
+        1
+      ],
+      "Thornbite Staff": [
+        0,
+        1,
+        2
+      ],
+      "Infectious Bite": [
+        0
+      ],
+      "Ram Through": [
+        0
+      ],
+      "Tail Swipe": [
+        0
+      ],
+      "Tyvar's Stand": [
+        0
+      ],
+      "Tamiyo's Safekeeping": [
+        0
+      ],
+      "Heroic Intervention": [
+        0
+      ],
+      "Snakeskin Veil": [
+        0
+      ],
+      "Evolution Sage": [
+        0
+      ],
+      "Contagion Clasp": [
+        0,
+        1
+      ],
+      "Contagion Engine": [
+        0,
+        1
+      ],
+      "Karn's Bastion": [
+        0,
+        1
+      ],
+      "Cankerbloom": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Bloated Contaminator": [
+        0,
+        1,
+        2
+      ],
+      "Venerated Rotpriest": [
+        0,
+        1
+      ],
+      "Ichorspit Basilisk": [
+        0,
+        1
+      ],
+      "Triumph of the Hordes": [
+        0
+      ],
+      "Sol Ring": [
+        0
+      ],
+      "Arcane Signet": [
+        0
+      ],
+      "Commander's Sphere": [
+        0,
+        1
+      ],
+      "Mind Stone": [
+        0,
+        1
+      ],
+      "Thought Vessel": [
+        0,
+        1
+      ],
+      "Wayfarer's Bauble": [
+        0
+      ],
+      "Worn Powerstone": [
+        0,
+        1
+      ],
+      "Burnished Hart": [
+        0
+      ],
+      "Solemn Simulacrum": [
+        0,
+        1
+      ],
+      "Swiftfoot Boots": [
+        0,
+        1
+      ],
+      "Lightning Greaves": [
+        0,
+        1
+      ],
+      "Skullclamp": [
+        0,
+        1,
+        2
+      ],
+      "Tormod's Crypt": [
+        0
+      ],
+      "Relic of Progenitus": [
+        0,
+        1
+      ],
+      "Unlicensed Hearse": [
+        0,
+        1,
+        2
+      ],
+      "Soul-Guide Lantern": [
+        0,
+        1,
+        2
+      ],
+      "Meteor Golem": [
+        0
+      ],
+      "Duplicant": [
+        0,
+        1
+      ],
+      "Steel Hellkite": [
+        0,
+        1,
+        2
+      ],
+      "Wurmcoil Engine": [
+        0,
+        1
+      ],
+      "Trading Post": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Unwinding Clock": [
+        0
+      ],
+      "Evolving Wilds": [
+        0
+      ],
+      "Terramorphic Expanse": [
+        0
+      ],
+      "Ash Barrens": [
+        0,
+        1
+      ],
+      "Myriad Landscape": [
+        0,
+        1,
+        2
+      ],
+      "Reliquary Tower": [
+        0,
+        1
+      ],
+      "Rogue's Passage": [
+        0,
+        1
+      ],
+      "War Room": [
+        0,
+        1
+      ],
+      "Buried Ruin": [
+        0,
+        1
+      ],
+      "Field of Ruin": [
+        0,
+        1
+      ],
+      "Ghost Quarter": [
+        0,
+        1
+      ],
+      "Scavenger Grounds": [
+        0,
+        1
+      ],
+      "Blast Zone": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Temple of the False God": [
+        0
+      ],
+      "Forest": [
+        0
+      ]
+    },
+    "evidence": [
+      "tests/fynn.test.mjs",
+      "tests/fynn-ui.cjs",
+      "tests/network.test.mjs",
+      "tests/goreclaw.test.mjs",
+      "tests/arahbo.test.mjs",
+      "tests/isshin-utilities.test.mjs",
+      "tests/vehicles.test.mjs"
+    ],
+    "limitations": [
+      "Verification covers the supplied actions and focused scenarios, not every interaction with all Magic cards. Common utility paragraphs reuse prior tests only when full Oracle text matches.",
+      "Poison, zero life and individual commander-damage losses remove owned objects, skip departed seats and preserve private decks for reset. Losing through an empty library remains unimplemented.",
+      "Two-Headed Giant team loss/poison handling remains manual; Brawl does not use Commander damage loss.",
+      "Control-effect reversion when a player leaves still needs the later control-changing deck audit; leftover foreign-controlled permanents currently exile.",
+      "Full continuous layers, arbitrary replacement ordering and advanced future keyword/counter mechanics remain engine-wide work."
+    ]
+  },
+  "talrand_sky_summoner": {
+    "status": "Scoped card-action audit complete: 734 unit tests and all 22 Electron workflows pass",
+    "oracle_verified": true,
+    "active_decklist_source": "commander_test_decks_color_fixes.csv",
+    "last_verified": "2026-10-14",
+    "checks": {
+      "focus_0": true,
+      "focus_1": true,
+      "focus_2": true,
+      "all_card_actions": true,
+      "deck_ui": true,
+      "final_regression": true
+    },
+    "verified_paragraphs": {
+      "Talrand, Sky Summoner": [
+        0
+      ],
+      "Murmuring Mystic": [
+        0
+      ],
+      "Archmage Emeritus": [
+        0
+      ],
+      "Counterspell": [
+        0
+      ],
+      "Negate": [
+        0
+      ],
+      "Swan Song": [
+        0
+      ],
+      "Spell Pierce": [
+        0
+      ],
+      "Mana Leak": [
+        0
+      ],
+      "Unwind": [
+        0
+      ],
+      "Twincast": [
+        0
+      ],
+      "Narset's Reversal": [
+        0
+      ],
+      "Shark Typhoon": [
+        0,
+        1,
+        2
+      ],
+      "Docent of Perfection // Final Iteration": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "Baral, Chief of Compliance": [
+        0,
+        1
+      ],
+      "Metallurgic Summonings": [
+        0,
+        1
+      ],
+      "Opt": [
+        0,
+        1
+      ],
+      "Consider": [
+        0,
+        1
+      ],
+      "Brainstorm": [
+        0
+      ],
+      "Ponder": [
+        0,
+        1
+      ],
+      "Preordain": [
+        0
+      ],
+      "Serum Visions": [
+        0
+      ],
+      "Gitaxian Probe": [
+        0,
+        1,
+        2
+      ],
+      "Frantic Search": [
+        0
+      ],
+      "Fact or Fiction": [
+        0
+      ],
+      "Dig Through Time": [
+        0,
+        1
+      ],
+      "Treasure Cruise": [
+        0,
+        1
+      ],
+      "Chart a Course": [
+        0
+      ],
+      "Windfall": [
+        0
+      ],
+      "Mystic Remora": [
+        0,
+        1
+      ],
+      "Rhystic Study": [
+        0
+      ],
+      "Arcane Denial": [
+        0,
+        1
+      ],
+      "Rewind": [
+        0
+      ],
+      "Cryptic Command": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "Pongify": [
+        0
+      ],
+      "Rapid Hybridization": [
+        0
+      ],
+      "Reality Shift": [
+        0
+      ],
+      "Into the Roil": [
+        0,
+        1
+      ],
+      "Snap": [
+        0
+      ],
+      "Cyclonic Rift": [
+        0,
+        1
+      ],
+      "High Tide": [
+        0
+      ],
+      "Aetherize": [
+        0
+      ],
+      "Aetherspouts": [
+        0
+      ],
+      "Blue Sun's Zenith": [
+        0
+      ],
+      "Pull from Tomorrow": [
+        0
+      ],
+      "Sol Ring": [
+        0
+      ],
+      "Arcane Signet": [
+        0
+      ],
+      "Commander's Sphere": [
+        0,
+        1
+      ],
+      "Mind Stone": [
+        0,
+        1
+      ],
+      "Thought Vessel": [
+        0,
+        1
+      ],
+      "Wayfarer's Bauble": [
+        0
+      ],
+      "Worn Powerstone": [
+        0,
+        1
+      ],
+      "Burnished Hart": [
+        0
+      ],
+      "Solemn Simulacrum": [
+        0,
+        1
+      ],
+      "Swiftfoot Boots": [
+        0,
+        1
+      ],
+      "Lightning Greaves": [
+        0,
+        1
+      ],
+      "Skullclamp": [
+        0,
+        1,
+        2
+      ],
+      "Tormod's Crypt": [
+        0
+      ],
+      "Relic of Progenitus": [
+        0,
+        1
+      ],
+      "Unlicensed Hearse": [
+        0,
+        1,
+        2
+      ],
+      "Soul-Guide Lantern": [
+        0,
+        1,
+        2
+      ],
+      "Meteor Golem": [
+        0
+      ],
+      "Evolving Wilds": [
+        0
+      ],
+      "Terramorphic Expanse": [
+        0
+      ],
+      "Ash Barrens": [
+        0,
+        1
+      ],
+      "Myriad Landscape": [
+        0,
+        1,
+        2
+      ],
+      "Reliquary Tower": [
+        0,
+        1
+      ],
+      "Rogue's Passage": [
+        0,
+        1
+      ],
+      "War Room": [
+        0,
+        1
+      ],
+      "Buried Ruin": [
+        0,
+        1
+      ],
+      "Field of Ruin": [
+        0,
+        1
+      ],
+      "Ghost Quarter": [
+        0,
+        1
+      ],
+      "Scavenger Grounds": [
+        0,
+        1
+      ],
+      "Blast Zone": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Temple of the False God": [
+        0
+      ],
+      "Island": [
+        0
+      ]
+    },
+    "evidence": [
+      "tests/talrand.test.mjs",
+      "tests/talrand-ui.cjs",
+      "tests/network.test.mjs",
+      "tests/goreclaw.test.mjs",
+      "tests/arahbo-utilities.test.mjs",
+      "tests/isshin-utilities.test.mjs",
+      "tests/vehicles.test.mjs"
+    ],
+    "limitations": [
+      "Scoped verification covers the supplied cards and focused scenarios, not every interaction with all Magic cards. Shared utility paragraphs reuse evidence only when full Oracle text matches.",
+      "Reality Shift manifests privately as a 2/2, with a paid creature-card face-up special action. Casting morph/disguise cards and their alternate face-up costs remain for the later Kadena audit.",
+      "Empty-library losses, full layers/replacement ordering, player-targeting protections, arbitrary costs and complete control-effect reversion remain engine-wide work."
+    ]
+  },
+  "mizzix_of_the_izmagnus": {
+    "status": "Scoped card-action audit complete: 777 unit tests and all 23 Electron workflows pass",
+    "oracle_verified": true,
+    "active_decklist_source": "commander_test_decks_color_fixes.csv",
+    "last_verified": "2026-10-14",
+    "checks": {
+      "focus_0": true,
+      "focus_1": true,
+      "focus_2": true,
+      "all_card_actions": true,
+      "deck_ui": true,
+      "final_regression": true
+    },
+    "verified_paragraphs": {
+      "Mizzix of the Izmagnus": [
+        0,
+        1
+      ],
+      "Opt": [
+        0,
+        1
+      ],
+      "Consider": [
+        0,
+        1
+      ],
+      "Brainstorm": [
+        0
+      ],
+      "Ponder": [
+        0,
+        1
+      ],
+      "Preordain": [
+        0
+      ],
+      "Frantic Search": [
+        0
+      ],
+      "Faithless Looting": [
+        0,
+        1
+      ],
+      "Expressive Iteration": [
+        0
+      ],
+      "Big Score": [
+        0,
+        1
+      ],
+      "Unexpected Windfall": [
+        0,
+        1
+      ],
+      "Seething Song": [
+        0
+      ],
+      "Jeska's Will": [
+        0,
+        1,
+        2
+      ],
+      "Mana Geyser": [
+        0
+      ],
+      "Past in Flames": [
+        0,
+        1
+      ],
+      "Mizzix's Mastery": [
+        0,
+        1
+      ],
+      "Reiterate": [
+        0,
+        1
+      ],
+      "Increasing Vengeance": [
+        0,
+        1
+      ],
+      "Twincast": [
+        0
+      ],
+      "Narset's Reversal": [
+        0
+      ],
+      "Expansion // Explosion": [
+        0,
+        1
+      ],
+      "Comet Storm": [
+        0,
+        1
+      ],
+      "Crackle with Power": [
+        0
+      ],
+      "Blue Sun's Zenith": [
+        0
+      ],
+      "Stroke of Genius": [
+        0
+      ],
+      "Pull from Tomorrow": [
+        0
+      ],
+      "Electrodominance": [
+        0
+      ],
+      "Epic Experiment": [
+        0
+      ],
+      "Mind's Desire": [
+        0,
+        1
+      ],
+      "Apex of Power": [
+        0,
+        1
+      ],
+      "Thousand-Year Storm": [
+        0
+      ],
+      "Storm-Kiln Artist": [
+        0,
+        1
+      ],
+      "Archmage Emeritus": [
+        0
+      ],
+      "Guttersnipe": [
+        0
+      ],
+      "Young Pyromancer": [
+        0
+      ],
+      "Baral, Chief of Compliance": [
+        0,
+        1
+      ],
+      "Counterspell": [
+        0
+      ],
+      "Arcane Denial": [
+        0,
+        1
+      ],
+      "Chaos Warp": [
+        0
+      ],
+      "Vandalblast": [
+        0,
+        1
+      ],
+      "Cyclonic Rift": [
+        0,
+        1
+      ],
+      "Solve the Equation": [
+        0
+      ],
+      "Sol Ring": [
+        0
+      ],
+      "Arcane Signet": [
+        0
+      ],
+      "Commander's Sphere": [
+        0,
+        1
+      ],
+      "Mind Stone": [
+        0,
+        1
+      ],
+      "Thought Vessel": [
+        0,
+        1
+      ],
+      "Wayfarer's Bauble": [
+        0
+      ],
+      "Worn Powerstone": [
+        0,
+        1
+      ],
+      "Burnished Hart": [
+        0
+      ],
+      "Solemn Simulacrum": [
+        0,
+        1
+      ],
+      "Swiftfoot Boots": [
+        0,
+        1
+      ],
+      "Lightning Greaves": [
+        0,
+        1
+      ],
+      "Skullclamp": [
+        0,
+        1,
+        2
+      ],
+      "Tormod's Crypt": [
+        0
+      ],
+      "Relic of Progenitus": [
+        0,
+        1
+      ],
+      "Unlicensed Hearse": [
+        0,
+        1,
+        2
+      ],
+      "Soul-Guide Lantern": [
+        0,
+        1,
+        2
+      ],
+      "Meteor Golem": [
+        0
+      ],
+      "Duplicant": [
+        0,
+        1
+      ],
+      "Steel Hellkite": [
+        0,
+        1,
+        2
+      ],
+      "Command Tower": [
+        0
+      ],
+      "Exotic Orchard": [
+        0
+      ],
+      "Path of Ancestry": [
+        0,
+        1
+      ],
+      "Evolving Wilds": [
+        0
+      ],
+      "Terramorphic Expanse": [
+        0
+      ],
+      "Ash Barrens": [
+        0,
+        1
+      ],
+      "Myriad Landscape": [
+        0,
+        1,
+        2
+      ],
+      "Reliquary Tower": [
+        0,
+        1
+      ],
+      "Rogue's Passage": [
+        0,
+        1
+      ],
+      "War Room": [
+        0,
+        1
+      ],
+      "Buried Ruin": [
+        0,
+        1
+      ],
+      "Field of Ruin": [
+        0,
+        1
+      ],
+      "Ghost Quarter": [
+        0,
+        1
+      ],
+      "Scavenger Grounds": [
+        0,
+        1
+      ],
+      "Blast Zone": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Temple of the False God": [
+        0
+      ],
+      "Izzet Boilerworks": [
+        0,
+        1,
+        2
+      ],
+      "Swiftwater Cliffs": [
+        0,
+        1,
+        2
+      ],
+      "Izzet Guildgate": [
+        0,
+        1
+      ],
+      "Island": [
+        0
+      ],
+      "Mountain": [
+        0
+      ]
+    },
+    "evidence": [
+      "tests/mizzix.test.mjs",
+      "tests/mizzix-ui.cjs",
+      "tests/network.test.mjs",
+      "tests/talrand.test.mjs",
+      "tests/goreclaw.test.mjs",
+      "tests/arahbo-utilities.test.mjs",
+      "tests/isshin-utilities.test.mjs",
+      "tests/vehicles.test.mjs"
+    ],
+    "limitations": [
+      "Scoped verification covers the supplied card actions and 41 focused/shared scenarios, not every interaction with all Magic cards. Common utility evidence requires identical full Oracle text.",
+      "Complete continuous layers/replacement ordering, player-targeting protections, arbitrary future costs and control-effect reversion remain engine-wide work."
+    ]
+  },
+  "kalamax_the_stormsire": {
+    "status": "Scoped card-action audit complete: 816 unit tests and all 24 Electron workflows pass",
+    "oracle_verified": true,
+    "active_decklist_source": "commander_test_decks_color_fixes.csv",
+    "last_verified": "2026-10-14",
+    "checks": {
+      "focus_0": true,
+      "focus_1": true,
+      "focus_2": true,
+      "all_card_actions": true,
+      "deck_ui": true,
+      "final_regression": true
+    },
+    "verified_paragraphs": {
+      "Kalamax, the Stormsire": [
+        0,
+        1
+      ],
+      "Opt": [
+        0,
+        1
+      ],
+      "Consider": [
+        0,
+        1
+      ],
+      "Brainstorm": [
+        0
+      ],
+      "Growth Spiral": [
+        0
+      ],
+      "Explore": [
+        0,
+        1
+      ],
+      "Cultivate": [
+        0
+      ],
+      "Nature's Lore": [
+        0
+      ],
+      "Three Visits": [
+        0
+      ],
+      "Harrow": [
+        0,
+        1
+      ],
+      "Roiling Regrowth": [
+        0
+      ],
+      "Beast Within": [
+        0
+      ],
+      "Chaos Warp": [
+        0
+      ],
+      "Counterspell": [
+        0
+      ],
+      "Arcane Denial": [
+        0,
+        1
+      ],
+      "Narset's Reversal": [
+        0
+      ],
+      "Twincast": [
+        0
+      ],
+      "Reverberate": [
+        0
+      ],
+      "Reiterate": [
+        0,
+        1
+      ],
+      "Expansion // Explosion": [
+        0,
+        1
+      ],
+      "Increasing Vengeance": [
+        0,
+        1
+      ],
+      "Doublecast": [
+        0
+      ],
+      "Bonus Round": [
+        0
+      ],
+      "Fork": [
+        0
+      ],
+      "Primal Amulet // Primal Wellspring": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Thousand-Year Storm": [
+        0
+      ],
+      "Twinning Staff": [
+        0,
+        1
+      ],
+      "Veyran, Voice of Duality": [
+        0,
+        1
+      ],
+      "Storm-Kiln Artist": [
+        0,
+        1
+      ],
+      "Archmage Emeritus": [
+        0
+      ],
+      "Rashmi, Eternities Crafter": [
+        0
+      ],
+      "Wilderness Reclamation": [
+        0
+      ],
+      "Seedborn Muse": [
+        0
+      ],
+      "Frantic Search": [
+        0
+      ],
+      "Big Score": [
+        0,
+        1
+      ],
+      "Unexpected Windfall": [
+        0,
+        1
+      ],
+      "Electrodominance": [
+        0
+      ],
+      "Comet Storm": [
+        0,
+        1
+      ],
+      "Blue Sun's Zenith": [
+        0
+      ],
+      "Dig Through Time": [
+        0,
+        1
+      ],
+      "Return of the Wildspeaker": [
+        0,
+        1,
+        2
+      ],
+      "Sol Ring": [
+        0
+      ],
+      "Arcane Signet": [
+        0
+      ],
+      "Commander's Sphere": [
+        0,
+        1
+      ],
+      "Mind Stone": [
+        0,
+        1
+      ],
+      "Thought Vessel": [
+        0,
+        1
+      ],
+      "Wayfarer's Bauble": [
+        0
+      ],
+      "Worn Powerstone": [
+        0,
+        1
+      ],
+      "Burnished Hart": [
+        0
+      ],
+      "Solemn Simulacrum": [
+        0,
+        1
+      ],
+      "Swiftfoot Boots": [
+        0,
+        1
+      ],
+      "Lightning Greaves": [
+        0,
+        1
+      ],
+      "Skullclamp": [
+        0,
+        1,
+        2
+      ],
+      "Tormod's Crypt": [
+        0
+      ],
+      "Relic of Progenitus": [
+        0,
+        1
+      ],
+      "Unlicensed Hearse": [
+        0,
+        1,
+        2
+      ],
+      "Soul-Guide Lantern": [
+        0,
+        1,
+        2
+      ],
+      "Meteor Golem": [
+        0
+      ],
+      "Duplicant": [
+        0,
+        1
+      ],
+      "Steel Hellkite": [
+        0,
+        1,
+        2
+      ],
+      "Wurmcoil Engine": [
+        0,
+        1
+      ],
+      "Command Tower": [
+        0
+      ],
+      "Exotic Orchard": [
+        0
+      ],
+      "Path of Ancestry": [
+        0,
+        1
+      ],
+      "Evolving Wilds": [
+        0
+      ],
+      "Terramorphic Expanse": [
+        0
+      ],
+      "Ash Barrens": [
+        0,
+        1
+      ],
+      "Myriad Landscape": [
+        0,
+        1,
+        2
+      ],
+      "Reliquary Tower": [
+        0,
+        1
+      ],
+      "Rogue's Passage": [
+        0,
+        1
+      ],
+      "War Room": [
+        0,
+        1
+      ],
+      "Buried Ruin": [
+        0,
+        1
+      ],
+      "Field of Ruin": [
+        0,
+        1
+      ],
+      "Ghost Quarter": [
+        0,
+        1
+      ],
+      "Scavenger Grounds": [
+        0,
+        1
+      ],
+      "Blast Zone": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Temple of the False God": [
+        0
+      ],
+      "Gruul Turf": [
+        0,
+        1,
+        2
+      ],
+      "Rugged Highlands": [
+        0,
+        1,
+        2
+      ],
+      "Gruul Guildgate": [
+        0,
+        1
+      ],
+      "Izzet Boilerworks": [
+        0,
+        1,
+        2
+      ],
+      "Swiftwater Cliffs": [
+        0,
+        1,
+        2
+      ],
+      "Izzet Guildgate": [
+        0,
+        1
+      ],
+      "Simic Growth Chamber": [
+        0,
+        1,
+        2
+      ],
+      "Island": [
+        0
+      ],
+      "Mountain": [
+        0
+      ],
+      "Forest": [
+        0
+      ]
+    },
+    "evidence": [
+      "tests/kalamax.test.mjs",
+      "tests/kalamax-ui.cjs",
+      "tests/network.test.mjs",
+      "tests/mizzix.test.mjs",
+      "tests/talrand.test.mjs",
+      "tests/goreclaw.test.mjs",
+      "tests/arahbo-utilities.test.mjs",
+      "tests/isshin-utilities.test.mjs",
+      "tests/vehicles.test.mjs"
+    ],
+    "limitations": [
+      "Scoped verification covers the supplied card actions and 37 focused/shared scenarios, not every interaction with all Magic cards. Common utility evidence requires identical full Oracle text.",
+      "Complete continuous layers/replacement ordering, player-targeting protections, arbitrary future costs and control-effect reversion remain engine-wide work."
+    ]
+  },
+  "niv_mizzet_parun": {
+    "status": "Scoped card-action audit complete: 866 unit tests and all 25 Electron workflows pass",
+    "oracle_verified": true,
+    "active_decklist_source": "commander_test_decks_color_fixes.csv",
+    "last_verified": "2026-10-14",
+    "checks": {
+      "focus_0": true,
+      "focus_1": true,
+      "focus_2": true,
+      "all_card_actions": true,
+      "deck_ui": true,
+      "final_regression": true
+    },
+    "verified_paragraphs": {
+      "Niv-Mizzet, Parun": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Curiosity": [
+        0,
+        1
+      ],
+      "Ophidian Eye": [
+        0,
+        1,
+        2
+      ],
+      "Tandem Lookout": [
+        0,
+        1
+      ],
+      "Opt": [
+        0,
+        1
+      ],
+      "Consider": [
+        0,
+        1
+      ],
+      "Brainstorm": [
+        0
+      ],
+      "Ponder": [
+        0,
+        1
+      ],
+      "Preordain": [
+        0
+      ],
+      "Faithless Looting": [
+        0,
+        1
+      ],
+      "Frantic Search": [
+        0
+      ],
+      "Windfall": [
+        0
+      ],
+      "Wheel of Misfortune": [
+        0
+      ],
+      "Reforge the Soul": [
+        0,
+        1
+      ],
+      "Teferi's Ageless Insight": [
+        0
+      ],
+      "Thought Reflection": [
+        0
+      ],
+      "Alhammarret's Archive": [
+        0,
+        1
+      ],
+      "Psychosis Crawler": [
+        0,
+        1
+      ],
+      "The Locust God": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Consecrated Sphinx": [
+        0,
+        1
+      ],
+      "Archmage Emeritus": [
+        0
+      ],
+      "Guttersnipe": [
+        0
+      ],
+      "Young Pyromancer": [
+        0
+      ],
+      "Counterspell": [
+        0
+      ],
+      "Arcane Denial": [
+        0,
+        1
+      ],
+      "Negate": [
+        0
+      ],
+      "Swan Song": [
+        0
+      ],
+      "Narset's Reversal": [
+        0
+      ],
+      "Reverberate": [
+        0
+      ],
+      "Chaos Warp": [
+        0
+      ],
+      "Vandalblast": [
+        0,
+        1
+      ],
+      "Cyclonic Rift": [
+        0,
+        1
+      ],
+      "Pongify": [
+        0
+      ],
+      "Rapid Hybridization": [
+        0
+      ],
+      "Blue Sun's Zenith": [
+        0
+      ],
+      "Pull from Tomorrow": [
+        0
+      ],
+      "Izzet Charm": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Prismari Command": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "Electrolyze": [
+        0,
+        1
+      ],
+      "Fire // Ice": [
+        0,
+        1,
+        2
+      ],
+      "Mystic Remora": [
+        0,
+        1
+      ],
+      "Rhystic Study": [
+        0
+      ],
+      "Sol Ring": [
+        0
+      ],
+      "Arcane Signet": [
+        0
+      ],
+      "Commander's Sphere": [
+        0,
+        1
+      ],
+      "Mind Stone": [
+        0,
+        1
+      ],
+      "Thought Vessel": [
+        0,
+        1
+      ],
+      "Wayfarer's Bauble": [
+        0
+      ],
+      "Worn Powerstone": [
+        0,
+        1
+      ],
+      "Burnished Hart": [
+        0
+      ],
+      "Solemn Simulacrum": [
+        0,
+        1
+      ],
+      "Swiftfoot Boots": [
+        0,
+        1
+      ],
+      "Lightning Greaves": [
+        0,
+        1
+      ],
+      "Skullclamp": [
+        0,
+        1,
+        2
+      ],
+      "Tormod's Crypt": [
+        0
+      ],
+      "Relic of Progenitus": [
+        0,
+        1
+      ],
+      "Unlicensed Hearse": [
+        0,
+        1,
+        2
+      ],
+      "Soul-Guide Lantern": [
+        0,
+        1,
+        2
+      ],
+      "Meteor Golem": [
+        0
+      ],
+      "Duplicant": [
+        0,
+        1
+      ],
+      "Steel Hellkite": [
+        0,
+        1,
+        2
+      ],
+      "Command Tower": [
+        0
+      ],
+      "Exotic Orchard": [
+        0
+      ],
+      "Path of Ancestry": [
+        0,
+        1
+      ],
+      "Evolving Wilds": [
+        0
+      ],
+      "Terramorphic Expanse": [
+        0
+      ],
+      "Ash Barrens": [
+        0,
+        1
+      ],
+      "Myriad Landscape": [
+        0,
+        1,
+        2
+      ],
+      "Reliquary Tower": [
+        0,
+        1
+      ],
+      "Rogue's Passage": [
+        0,
+        1
+      ],
+      "War Room": [
+        0,
+        1
+      ],
+      "Buried Ruin": [
+        0,
+        1
+      ],
+      "Field of Ruin": [
+        0,
+        1
+      ],
+      "Ghost Quarter": [
+        0,
+        1
+      ],
+      "Scavenger Grounds": [
+        0,
+        1
+      ],
+      "Blast Zone": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Temple of the False God": [
+        0
+      ],
+      "Izzet Boilerworks": [
+        0,
+        1,
+        2
+      ],
+      "Swiftwater Cliffs": [
+        0,
+        1,
+        2
+      ],
+      "Izzet Guildgate": [
+        0,
+        1
+      ],
+      "Island": [
+        0
+      ],
+      "Mountain": [
+        0
+      ]
+    },
+    "evidence": [
+      "tests/niv-mizzet.test.mjs",
+      "tests/niv-mizzet-ui.cjs",
+      "tests/network.test.mjs",
+      "tests/kalamax.test.mjs",
+      "tests/mizzix.test.mjs",
+      "tests/talrand.test.mjs",
+      "tests/goreclaw.test.mjs",
+      "tests/arahbo-utilities.test.mjs",
+      "tests/isshin-utilities.test.mjs",
+      "tests/vehicles.test.mjs"
+    ],
+    "limitations": [
+      "Scoped verification covers the supplied card actions and 47 focused/shared scenarios, not every interaction with all Magic cards. Common utility evidence requires identical full Oracle text.",
+      "Complete continuous layers/replacement ordering, player-targeting protections, arbitrary future costs and control-effect reversion remain engine-wide work."
+    ]
+  },
+  "kess_dissident_mage": {
+    "status": "Scoped card-action audit complete: 937 unit tests and all 27 Electron workflows pass",
+    "oracle_verified": true,
+    "active_decklist_source": "commander_test_decks_color_fixes.csv",
+    "last_verified": "2026-10-14",
+    "checks": {
+      "focus_0": true,
+      "focus_1": true,
+      "focus_2": true,
+      "all_card_actions": true,
+      "deck_ui": true,
+      "final_regression": true
+    },
+    "verified_paragraphs": {
+      "Kess, Dissident Mage": [
+        0,
+        1
+      ],
+      "Faithless Looting": [
+        0,
+        1
+      ],
+      "Frantic Search": [
+        0
+      ],
+      "Consider": [
+        0,
+        1
+      ],
+      "Opt": [
+        0,
+        1
+      ],
+      "Brainstorm": [
+        0
+      ],
+      "Ponder": [
+        0,
+        1
+      ],
+      "Preordain": [
+        0
+      ],
+      "Entomb": [
+        0
+      ],
+      "Buried Alive": [
+        0
+      ],
+      "Reanimate": [
+        0
+      ],
+      "Animate Dead": [
+        0,
+        1,
+        2
+      ],
+      "Victimize": [
+        0
+      ],
+      "Demonic Tutor": [
+        0
+      ],
+      "Diabolic Intent": [
+        0,
+        1
+      ],
+      "Dark Ritual": [
+        0
+      ],
+      "Cabal Ritual": [
+        0,
+        1
+      ],
+      "Seething Song": [
+        0
+      ],
+      "Jeska's Will": [
+        0,
+        1,
+        2
+      ],
+      "Past in Flames": [
+        0,
+        1
+      ],
+      "Mizzix's Mastery": [
+        0,
+        1
+      ],
+      "Yawgmoth's Will": [
+        0,
+        1
+      ],
+      "Underworld Breach": [
+        0,
+        1
+      ],
+      "Snapcaster Mage": [
+        0,
+        1
+      ],
+      "Mission Briefing": [
+        0
+      ],
+      "Finale of Promise": [
+        0
+      ],
+      "Increasing Vengeance": [
+        0,
+        1
+      ],
+      "Expressive Iteration": [
+        0
+      ],
+      "Windfall": [
+        0
+      ],
+      "Wheel of Misfortune": [
+        0
+      ],
+      "Counterspell": [
+        0
+      ],
+      "Arcane Denial": [
+        0,
+        1
+      ],
+      "Swan Song": [
+        0
+      ],
+      "Terminate": [
+        0
+      ],
+      "Feed the Swarm": [
+        0
+      ],
+      "Chaos Warp": [
+        0
+      ],
+      "Cyclonic Rift": [
+        0,
+        1
+      ],
+      "Toxic Deluge": [
+        0,
+        1
+      ],
+      "Blasphemous Act": [
+        0,
+        1
+      ],
+      "Thousand-Year Storm": [
+        0
+      ],
+      "Storm-Kiln Artist": [
+        0,
+        1
+      ],
+      "Archmage Emeritus": [
+        0
+      ],
+      "Sol Ring": [
+        0
+      ],
+      "Arcane Signet": [
+        0
+      ],
+      "Commander's Sphere": [
+        0,
+        1
+      ],
+      "Mind Stone": [
+        0,
+        1
+      ],
+      "Thought Vessel": [
+        0,
+        1
+      ],
+      "Wayfarer's Bauble": [
+        0
+      ],
+      "Worn Powerstone": [
+        0,
+        1
+      ],
+      "Burnished Hart": [
+        0
+      ],
+      "Solemn Simulacrum": [
+        0,
+        1
+      ],
+      "Swiftfoot Boots": [
+        0,
+        1
+      ],
+      "Lightning Greaves": [
+        0,
+        1
+      ],
+      "Skullclamp": [
+        0,
+        1,
+        2
+      ],
+      "Tormod's Crypt": [
+        0
+      ],
+      "Relic of Progenitus": [
+        0,
+        1
+      ],
+      "Nihil Spellbomb": [
+        0,
+        1
+      ],
+      "Soul-Guide Lantern": [
+        0,
+        1,
+        2
+      ],
+      "Meteor Golem": [
+        0
+      ],
+      "Duplicant": [
+        0,
+        1
+      ],
+      "Steel Hellkite": [
+        0,
+        1,
+        2
+      ],
+      "Command Tower": [
+        0
+      ],
+      "Exotic Orchard": [
+        0
+      ],
+      "Path of Ancestry": [
+        0,
+        1
+      ],
+      "Evolving Wilds": [
+        0
+      ],
+      "Terramorphic Expanse": [
+        0
+      ],
+      "Ash Barrens": [
+        0,
+        1
+      ],
+      "Myriad Landscape": [
+        0,
+        1,
+        2
+      ],
+      "Reliquary Tower": [
+        0,
+        1
+      ],
+      "Rogue's Passage": [
+        0,
+        1
+      ],
+      "War Room": [
+        0,
+        1
+      ],
+      "Buried Ruin": [
+        0,
+        1
+      ],
+      "Field of Ruin": [
+        0,
+        1
+      ],
+      "Ghost Quarter": [
+        0,
+        1
+      ],
+      "Scavenger Grounds": [
+        0,
+        1
+      ],
+      "Blast Zone": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Temple of the False God": [
+        0
+      ],
+      "Dimir Aqueduct": [
+        0,
+        1,
+        2
+      ],
+      "Dismal Backwater": [
+        0,
+        1,
+        2
+      ],
+      "Dimir Guildgate": [
+        0,
+        1
+      ],
+      "Rakdos Carnarium": [
+        0,
+        1,
+        2
+      ],
+      "Bloodfell Caves": [
+        0,
+        1,
+        2
+      ],
+      "Rakdos Guildgate": [
+        0,
+        1
+      ],
+      "Izzet Boilerworks": [
+        0,
+        1,
+        2
+      ],
+      "Island": [
+        0
+      ],
+      "Swamp": [
+        0
+      ],
+      "Mountain": [
+        0
+      ]
+    },
+    "evidence": [
+      "tests/kess.test.mjs",
+      "tests/kess-ui.cjs",
+      "tests/network.test.mjs",
+      "tests/mizzix.test.mjs",
+      "tests/kalamax.test.mjs",
+      "tests/niv-mizzet.test.mjs"
+    ],
+    "limitations": [
+      "Scoped evidence: 87 cached Oracle records, 67 focused/shared scenarios and four real three-client scenarios. Identical full Oracle text reuses checked paragraphs from the nine completed earlier decks.",
+      "The focused renderer exercises independent permissions, escape payment, private surveil and saved grants, life-cost X, optional typed targets and saved partial selections, free graveyard casts, tutor-to-Aura reanimation, stack responses and persistence. All 27 Electron workflows pass; the affected Kess and board workflows were rerun after the final edge fixes.",
+      "Complete continuous layers/replacement ordering, player-targeting protections, arbitrary future costs and control-effect reversion remain engine-wide work."
+    ]
+  },
+  "atraxa_praetors_voice": {
+    "status": "In progress: shared counters, Tekuthal costs and cast-to-entry metadata verified",
+    "oracle_verified": true,
+    "active_decklist_source": "commander_test_decks_color_fixes.csv",
+    "last_verified": "2026-10-14",
+    "checks": {
+      "focus_0": false,
+      "focus_1": false,
+      "focus_2": false,
+      "all_card_actions": false,
+      "deck_ui": false,
+      "final_regression": false
+    },
+    "verified_paragraphs": {
+      "Tekuthal, Inquiry Dominus": [
+        2
+      ]
+    },
+    "evidence": [
+      "tests/counter-effects.test.mjs",
+      "tests/counter-effects-ui.cjs",
+      "tests/network.test.mjs",
+      "tests/counter-costs.test.mjs",
+      "tests/entry-casting.test.mjs"
+    ],
+    "limitations": [
+      "Oracle retrieval is complete: 100 copies across 88 records. Counter coverage includes 37 focused cases, the renderer workflow, and real three-client spell/loyalty-cost reconnect cases; the complete card-action audit is still pending.",
+      "Shared counter plans handle Oracle effects, positive loyalty activation costs, affected-player replacement order, each counter kind, player counters, repeated proliferates and Deepglow-style doubling. Negative loyalty costs preserve zero so state-based actions remove the walker while its ability remains on the stack. Distributed counter-removal activation costs now have Tekuthal unit/renderer/network evidence; entry counters, damage counters and the remaining provider paragraphs are still pending.",
+      "Cast-to-entry metadata is verified with real Tamiyo/Vraska, X and sunburst fixtures, renderer reload, and a three-client reconnect (1,045 unit tests pass). Ordinary compleated entry amounts now use actual Phyrexian life payment; unrelated life costs do not reduce loyalty. External entry-counter replacements and their ordering/trigger timing are not yet connected, so compleated/provider paragraphs remain unchecked.",
+      "Pending planeswalker families: compleated ordering with external entry-counter replacements, temporary type/ability changes, poison floors, delayed land untaps, library insertion, phasing, emblems, temporary combat-damage grants, extra turns, private library choices, draw/search restrictions and graveyard milling/exile.",
+      "Pending shared actions: Oath blink/return, Chain Veil turn-wide activation tracking, Gauntlet counter-kind choice, equipment combat-counter/proliferate sequences, optional fight roles, Staff life-cost abilities and the new Azorius lands.",
+      "Finish the card-action audit, focused Electron and multiplayer scenarios, and full regression before fetching Hapatra.",
+      "User-requested next gate: after Atraxa is fully verified, take a break from the deck queue to refactor shared paths for efficiency and readability, preserve current gameplay, and add useful section/behavior comments before continuing later decks."
+    ]
+  }
+}

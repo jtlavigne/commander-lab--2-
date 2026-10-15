@@ -1,0 +1,57 @@
+.card-overlays{position:absolute;inset:auto 6px 6px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:5px;pointer-events:none;z-index:3;text-align:left}
+.card-counter-overlays{display:flex;flex-wrap:wrap;gap:4px;width:100%}
+.card-counter-overlay,.card-entry-pending{display:inline-block;max-width:100%;padding:4px 6px;border:1px solid #b1c98b;border-radius:5px;background:#14231af2;color:#f0f5df;font:600 13px/1.2 'Segoe UI',sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;box-shadow:0 1px 5px #0009}
+.card-pt-overlay{margin-left:auto;padding:3px 9px;border:2px solid #e0d5a7;border-radius:7px;background:#15251bf5;color:#fff9df;font:bold 24px/1.15 'Segoe UI',sans-serif;box-shadow:0 2px 6px #000b;white-space:nowrap}
+.card-counter-overlay[data-counter=loyalty],.card-counter-overlay[data-counter=defense]{font-size:18px;border-color:#dfd0a2;background:#18283cf5;color:#fff5d9}
+.card-loyalty-overlay{margin-left:auto}
+/* Keyword badges share the footer with stats, never the clickable counter row. */
+.card-bottom-row{display:flex;align-items:flex-end;gap:4px;width:100%;min-width:0}
+.card-keywords{display:flex;align-items:center;gap:2px;flex:1;min-width:0;max-width:100%}
+.card-keyword{display:grid;place-items:center;flex:0 1 20px;min-width:0;aspect-ratio:1;border:1px solid #c5c9b2;border-radius:50%;background:#161d20f2;color:#f4edd5;box-shadow:0 1px 3px #000b;pointer-events:auto;cursor:inherit}
+.card-keyword svg{display:block;width:76%;height:76%;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.card-keyword-more{font:700 9px/1 'Segoe UI',sans-serif}
+.card-bottom-row>.card-pt-overlay,.card-bottom-row>.card-loyalty-overlay{flex-shrink:0}
+#card-zoom-preview .card-keyword{flex-basis:32px}
+#card-zoom-preview .card-keyword-more{font-size:13px}
+.card-loyalty-abilities{position:absolute;inset:0;pointer-events:none;z-index:4}
+.card-granted-loyalty-abilities{position:absolute;right:5%;top:17%;width:42%;display:flex;flex-direction:column;gap:5px;pointer-events:none;z-index:5}
+.card-granted-loyalty-abilities .card-loyalty-ability{position:static;transform:none;width:100%;height:auto;min-height:26px;padding:4px;font-size:10px;line-height:1.2;white-space:normal;text-align:left;border-color:#a8bbde;background:#192b43}
+#card-zoom-preview .card-granted-loyalty-abilities .card-loyalty-ability{font-size:16px;min-height:45px;padding:7px}
+.card-loyalty-ability{position:absolute;transform:translate(-50%,-50%);width:14%;height:5.5%;display:grid;place-items:center;padding:0;border:1px solid #d8d2b5;border-radius:4px;background:#14241cf5;color:#fff6d4;font:700 12px/1 'Segoe UI',sans-serif;box-shadow:0 1px 4px #000b;white-space:nowrap}
+.card-loyalty-ability:hover{background:#3b5130;border-color:#f4e5a7}
+.card-loyalty-ability[aria-disabled=true]{background:#1c211f;color:#aab2a1;border-color:#68715b}
+#card-zoom-preview .card-loyalty-ability{font-size:27px;border-width:2px;border-radius:7px}
+#loyalty-cost-dialog{width:min(460px,calc(100vw - 40px))}
+#loyalty-cost-dialog p{margin:14px 0;line-height:1.65}
+.card [data-counter-control]{pointer-events:auto;cursor:pointer;touch-action:none}
+.card button.card-counter-overlay:hover{background:#39512b;border-color:#e4eebc}
+.card .card-actions-toggle{position:absolute;left:6px;top:6px;z-index:6;width:25px;height:25px;display:grid;place-items:center;padding:0;border:1px solid #b1c98b;border-radius:5px;background:#14231af2;color:#f0f5df;font:600 20px/1 'Segoe UI',sans-serif;box-shadow:0 1px 5px #0009;opacity:0;visibility:hidden;pointer-events:none}
+.card:hover .card-actions-toggle,.card:focus-within .card-actions-toggle,.card .card-actions-toggle[aria-expanded=true]{opacity:1;visibility:visible;pointer-events:auto}
+.card .card-actions-toggle:hover{background:#39512b;border-color:#e4eebc}
+.card.dragging .card-actions-toggle{opacity:0;visibility:hidden;pointer-events:none}
+#card-zoom-preview .zoom-art{pointer-events:auto}
+#card-zoom-preview .card-actions-toggle{width:32px;height:32px;font-size:24px}
+#card-actions-menu{position:fixed;inset:auto;margin:0;padding:10px;width:205px;max-height:calc(100vh - 32px);overflow:auto;background:#172019;color:#e7eee3;border:1px solid #819467;border-radius:9px;box-shadow:0 8px 24px #000a}
+#card-actions-menu h3{font-size:10px;letter-spacing:1px;color:#afc29a;margin:2px 5px 9px}
+.card-action-item{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;padding:9px 10px;font-size:13px;text-align:left;background:#233322;border-color:#42583b}
+.card-action-chevron{font-size:20px;line-height:1;color:#c8d8b5}
+.card[role=group]:focus-visible{outline:2px solid #d4b478;outline-offset:3px}
+#counter-menu{position:fixed;inset:auto;margin:0;padding:14px;width:265px;max-height:calc(100vh - 32px);overflow:auto;background:#172019;color:#e7eee3;border:1px solid #819467;border-radius:9px;box-shadow:0 8px 24px #000a}
+#counter-menu h3{font-size:11px;letter-spacing:1px;margin-bottom:10px}
+.counter-menu-quick{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:9px}
+#counter-menu select,#counter-menu input{font-size:12px;padding:7px}
+.counter-menu-custom{display:flex;gap:6px;margin-top:9px}
+.counter-menu-custom input{min-width:0;flex:1}
+.card-entry-pending{border-color:#d4b267;color:#ffe3a7}
+#card-zoom-preview .card-pt-overlay{font-size:36px;padding:5px 14px}
+#card-zoom-preview .card-counter-overlay,#card-zoom-preview .card-entry-pending{font-size:18px;padding:6px 9px}
+.creature-controls{border-top:1px solid #41523b;padding-top:12px;margin:14px 0}
+.creature-controls h3{font-size:11px;letter-spacing:1px;margin-bottom:10px;color:#bdcea6}
+.creature-controls .control-row{display:flex;gap:8px;margin-bottom:8px}
+.creature-controls .control-row>div{flex:1;min-width:0}
+.creature-controls input{width:100%;font-size:13px}
+.creature-controls button{font-size:11px;padding:6px 9px;margin-right:5px}
+#entry-dialog{width:min(520px,calc(100vw - 40px))}
+#entry-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0}
+#entry-oracle{white-space:pre-wrap;font-size:12px;line-height:1.6;max-height:180px;overflow:auto;color:#b4c1a8}
+.card-toughness.damaged{color:#ff777d;text-shadow:0 0 8px #e7474b66}.card-pt-overlay:has(.damaged){border-color:#df8b86}

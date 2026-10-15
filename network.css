@@ -1,0 +1,8 @@
+#network-dialog { width:min(540px,calc(100vw - 40px)); max-height:85vh; overflow:auto; }
+#network-dialog label { display:grid; gap:5px; margin:12px 0; }
+#network-dialog input,#network-dialog select { width:100%; box-sizing:border-box; }
+.network-actions { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+#network-dialog p { font-size:13px; line-height:1.5; }
+#network-error { color:#e3a797; min-height:1.5em; }
+#network-presence { padding-left:20px; font-size:13px; line-height:1.8; }
+#network-status { color:#a9c48c; }

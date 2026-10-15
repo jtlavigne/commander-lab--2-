@@ -1,0 +1,53 @@
+{
+    "name": "commander-lab",
+    "version": "0.1.0",
+    "private": true,
+    "description": "Manual Commander desktop playtester",
+    "main": "main.cjs",
+    "scripts": {
+        "start": "node launch.cjs .",
+        "test": "node --test tests/*.test.mjs",
+        "test:ui": "node launch.cjs tests/ui.cjs && node launch.cjs tests/planeswalker-ui.cjs && node launch.cjs tests/mana-ui.cjs && node launch.cjs tests/combat-ui.cjs && node launch.cjs tests/goreclaw-ui.cjs && node launch.cjs tests/hotseat-ui.cjs && node launch.cjs tests/spell-resolution-ui.cjs && node launch.cjs tests/aurelia-ui.cjs && node launch.cjs tests/network-ui.cjs && node launch.cjs tests/controller-ui.cjs && node launch.cjs tests/aurelia-actions-ui.cjs && node launch.cjs tests/board-interface-ui.cjs && node tests/launch-profiles-ui.cjs && node launch.cjs tests/cast-popup-ui.cjs && node launch.cjs tests/arahbo-ui.cjs && node launch.cjs tests/lobby-ui.cjs && node launch.cjs tests/color-identity-ui.cjs && node launch.cjs tests/vehicles-ui.cjs && node launch.cjs tests/arahbo-actions-ui.cjs && node launch.cjs tests/isshin-ui.cjs && node launch.cjs tests/fynn-ui.cjs && node launch.cjs tests/talrand-ui.cjs && node launch.cjs tests/mizzix-ui.cjs && node launch.cjs tests/kalamax-ui.cjs && node launch.cjs tests/niv-mizzet-ui.cjs && node launch.cjs tests/theme-ui.cjs && node launch.cjs tests/kess-ui.cjs && node launch.cjs tests/turn-presentation-ui.cjs && node launch.cjs tests/counter-effects-ui.cjs && node launch.cjs tests/card-motion-ui.cjs && node launch.cjs tests/keyword-icons-ui.cjs",
+        "test:ui:planeswalkers": "node launch.cjs tests/planeswalker-ui.cjs",
+        "test:ui:mana": "node launch.cjs tests/mana-ui.cjs",
+        "test:ui:combat": "node launch.cjs tests/combat-ui.cjs",
+        "test:ui:goreclaw": "node launch.cjs tests/goreclaw-ui.cjs",
+        "test:ui:hotseat": "node launch.cjs tests/hotseat-ui.cjs",
+        "test:ui:spells": "node launch.cjs tests/spell-resolution-ui.cjs",
+        "test:ui:aurelia": "node launch.cjs tests/aurelia-ui.cjs",
+        "test:ui:network": "node launch.cjs tests/network-ui.cjs",
+        "test:network": "node --test tests/network.test.mjs",
+        "checklist": "node scripts/update-deck-checklist.mjs",
+        "test:ui:controller": "node launch.cjs tests/controller-ui.cjs",
+        "test:ui:aurelia-actions": "node launch.cjs tests/aurelia-actions-ui.cjs",
+        "start:player2": "node launch.cjs . --profile=player2",
+        "test:ui:board": "node launch.cjs tests/board-interface-ui.cjs",
+        "test:ui:profiles": "node tests/launch-profiles-ui.cjs",
+        "test:ui:cast-popup": "node launch.cjs tests/cast-popup-ui.cjs",
+        "test:ui:arahbo": "node launch.cjs tests/arahbo-ui.cjs",
+        "test:ui:lobby": "node launch.cjs tests/lobby-ui.cjs",
+        "test:ui:color-identity": "node launch.cjs tests/color-identity-ui.cjs",
+        "decks:update": "node scripts/update-premade-decks.mjs",
+        "decks:compare": "node scripts/compare-test-deck-names.mjs",
+        "test:ui:vehicles": "node launch.cjs tests/vehicles-ui.cjs",
+        "test:ui:arahbo-actions": "node launch.cjs tests/arahbo-actions-ui.cjs",
+        "test:ui:isshin": "node launch.cjs tests/isshin-ui.cjs",
+        "test:ui:fynn": "node launch.cjs tests/fynn-ui.cjs",
+        "test:ui:talrand": "node launch.cjs tests/talrand-ui.cjs",
+        "test:ui:mizzix": "node launch.cjs tests/mizzix-ui.cjs",
+        "test:ui:kalamax": "node launch.cjs tests/kalamax-ui.cjs",
+        "test:ui:niv-mizzet": "node launch.cjs tests/niv-mizzet-ui.cjs",
+        "test:ui:kess": "node launch.cjs tests/kess-ui.cjs",
+        "test:ui:theme": "node launch.cjs tests/theme-ui.cjs",
+        "test:ui:turn-presentation": "node launch.cjs tests/turn-presentation-ui.cjs",
+        "test:ui:counters": "node launch.cjs tests/counter-effects-ui.cjs",
+        "test:ui:card-motion": "node launch.cjs tests/card-motion-ui.cjs",
+        "test:ui:keywords": "node launch.cjs tests/keyword-icons-ui.cjs"
+    },
+    "devDependencies": {
+        "electron": "latest"
+    },
+    "dependencies": {
+        "ws": "^8.22.0"
+    }
+}

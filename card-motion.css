@@ -1,0 +1,5 @@
+/* A small card-shaped tap badge stays legible without covering stats/controls. */
+.card-tap-indicator{position:absolute;left:34%;top:46%;width:32%;aspect-ratio:4/5;display:grid;place-items:center;pointer-events:none;z-index:2;transform:rotate(-102deg);border:2px solid #201f1c;border-radius:12%;background:linear-gradient(145deg,#f0ead9ee,#bdb8a8e8);box-shadow:0 2px 8px #0009,inset 0 0 0 2px #fffc}
+.card-tap-indicator svg{width:82%;height:82%;fill:#282820;filter:drop-shadow(0 1px 0 #fff8)}
+.card-flip-face{position:absolute;inset:0;z-index:20;pointer-events:none;border-radius:inherit;overflow:hidden}
+.card-flip-face>.card{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-width:0!important;margin:0!important;transform:none!important;opacity:1!important;pointer-events:none!important}

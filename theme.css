@@ -1,0 +1,63 @@
+/* Theme surfaces are separate from game colors, card art and seat identities. */
+:root[data-theme=custom]{
+ --theme-base:hsl(var(--theme-hue) calc(var(--theme-saturation)*.28) 7%);
+ --theme-panel:hsl(var(--theme-hue) calc(var(--theme-saturation)*.3) 11%);
+ --theme-raised:hsl(var(--theme-hue) calc(var(--theme-saturation)*.3) 15%);
+ --theme-hover:hsl(var(--theme-hue) calc(var(--theme-saturation)*.32) 21%);
+ --theme-border:hsl(var(--theme-hue) calc(var(--theme-saturation)*.25) 30%);
+ --theme-text:hsl(var(--theme-hue) calc(var(--theme-saturation)*.2) 93%);
+ --muted:hsl(var(--theme-hue) calc(var(--theme-saturation)*.2) 72%);
+ --line:hsl(var(--theme-hue) calc(var(--theme-saturation)*.25) 24%);
+ --mint:hsl(var(--theme-hue) var(--theme-saturation) 78%);
+ --gold:hsl(var(--theme-hue) calc(var(--theme-saturation)*.8) 80%);
+ background:var(--theme-base);color:var(--theme-text);
+}
+:root[data-theme=custom] :is(.app-header,.control-bar,.status-bar,.sidebar,.panel-bottom,.table-minimap,.hand-dock,.mana-bar,.priority-controls,.game-result,.combat-panel,.combat-arena,.play-presentation,.board-pick-hud,dialog){background:var(--theme-panel);border-color:var(--theme-border);color:var(--theme-text)}
+:root[data-theme=custom] .tabletop-workspace .sidebar section{background:var(--theme-panel)}
+:root[data-theme=custom] :where(button,.button):where(:not(.card):not([class*=card-]):not(.map-seat):not([class*=mana-])){background-color:var(--theme-raised);border-color:var(--theme-border);color:var(--theme-text)}
+:root[data-theme=custom] :where(button,.button):where(:not(.card):not([class*=card-]):not(.map-seat):not(:disabled)):hover{background-color:var(--theme-hover);border-color:var(--mint)}
+:root[data-theme=custom] :is(button.primary,.button.primary){background:var(--mint);border-color:var(--mint);color:var(--theme-base)}
+:root[data-theme=custom] :is(button.primary,.button.primary):hover{background:var(--gold);color:var(--theme-base)}
+:root[data-theme=custom] :is(input,textarea,select){background-color:var(--theme-base);border-color:var(--theme-border);color:var(--theme-text)}
+:root[data-theme=custom] input[type=range]{accent-color:var(--mint)}
+:root[data-theme=custom] :is(.seat-selector,.player-heading,.life-control button){background:transparent;color:var(--seat-color)}
+:root[data-theme=custom] .seat-selector.selected{background:color-mix(in srgb,var(--seat-color) 15%,var(--theme-base));border-color:var(--seat-color)}
+:root[data-theme=custom] .brand-mark{background:var(--theme-raised);color:var(--mint);border-color:var(--mint);box-shadow:inset 0 0 0 3px var(--theme-panel)}
+:root[data-theme=custom] :is(.turn-number,.step.current,.panel-tabs button.selected){background:var(--theme-hover);border-color:var(--mint);color:var(--mint)}
+:root[data-theme=custom] :is(.table-state,.table-footer,.status-bar,.dock-caption,.dock-count,.dock-label,.camera-hint,.minimap-heading,.zone-heading,.seat-description,.command-tax,.command-slot-label,.empty-hand,.battlefield-empty p,.battlefield-empty small){color:var(--muted)}
+:root[data-theme=custom] :is(.panel-tabs span,.life-control,.entry,.counter-chip){background:var(--theme-raised);border-color:var(--theme-border)}
+:root[data-theme=custom] :is(.oracle-text,#inspector .type-line,.help-keys dd,#help-dialog .credit){color:var(--muted)}
+:root[data-theme=custom] dialog label{color:var(--theme-text)}
+:root[data-theme=custom] .camera-viewport{background:radial-gradient(ellipse,var(--theme-raised),var(--theme-base));border-color:var(--theme-border)}
+:root[data-theme=custom] .camera-viewport #zones{background:radial-gradient(ellipse,hsl(var(--theme-hue) calc(var(--theme-saturation)*.4) 23%),var(--theme-panel) 80%);outline-color:var(--theme-border)}
+:root[data-theme=custom] .player-mat{background:radial-gradient(ellipse at 50% 20%,color-mix(in srgb,var(--seat-color) 5%,var(--theme-panel)),var(--theme-panel) 85%)}
+:root[data-theme=custom] .camera-viewport .battlefield{background:linear-gradient(145deg,color-mix(in srgb,var(--mint) 3%,transparent),color-mix(in srgb,var(--theme-base) 25%,transparent));border-color:var(--line)}
+:root[data-theme=custom] .camera-viewport :is(.pile,.pile.library,.command-empty){background-color:var(--theme-base);border-color:var(--theme-border)}
+:root[data-theme=custom] :is(#card-actions-menu,#counter-menu){background:var(--theme-panel);border-color:var(--theme-border)}
+:root[data-theme=custom] .mana-bar button{background-color:var(--theme-raised);border-color:var(--theme-border)}
+:root[data-theme=custom] #table-map{background:var(--theme-base)}
+:root[data-theme=custom] #map-view{border-color:var(--mint)}
+:root[data-theme=custom] #card-zoom-preview #inspector{background:var(--theme-panel);border-color:var(--theme-border)}
+:root[data-theme=custom] #card-zoom-preview .counter-chip{background:var(--theme-raised);color:var(--theme-text);border-color:var(--theme-border)}
+:root[data-theme=custom] .dock-resize{background:var(--theme-raised);border-color:var(--theme-border)}
+:root[data-theme=custom] #launch-screen{background:var(--theme-base);color:var(--theme-text)}
+:root[data-theme=custom] #launch-screen .launch-shade{background:linear-gradient(90deg,color-mix(in srgb,var(--theme-base) 95%,transparent),color-mix(in srgb,var(--theme-base) 65%,transparent) 36%,transparent),linear-gradient(0deg,color-mix(in srgb,var(--theme-base) 70%,transparent),transparent 45%)}
+:root[data-theme=custom] #launch-screen .launch-panel{background:color-mix(in srgb,var(--theme-panel) 90%,transparent);border-color:var(--theme-border)}
+:root[data-theme=custom] #launch-screen :is(.launch-nav h1 span,.landscape-title){color:var(--mint)}
+:root[data-theme=custom] #launch-screen :is(.launch-panel p,.launch-nav>p,.room-row span){color:var(--muted)}
+:root[data-theme=custom] #launch-screen .lobby-player{background:var(--theme-raised);border-color:var(--theme-border)}
+.theme-settings{padding-bottom:20px;margin-bottom:20px;border-bottom:1px solid var(--line)}
+.theme-settings h3{font-size:16px;margin-bottom:8px}
+.theme-editor{display:flex;align-items:center;gap:28px;margin:18px 0}
+.theme-wheel{position:relative;width:180px;height:180px;flex:0 0 180px;border-radius:50%;background:radial-gradient(closest-side,#fff,transparent),conic-gradient(from 90deg,#f00,#ff0,#0f0,#0ff,#00f,#f0f,#f00);box-shadow:0 0 0 1px #fff4,inset 0 0 10px #0002;touch-action:none;cursor:crosshair}
+.theme-wheel:focus-visible{outline:3px solid var(--mint);outline-offset:5px}
+.theme-marker{position:absolute;width:14px;height:14px;transform:translate(-50%,-50%);border:2px solid white;border-radius:50%;box-shadow:0 0 0 2px #172019;pointer-events:none}
+.theme-controls{flex:1;min-width:0}
+.theme-preview{display:flex;align-items:center;gap:10px;font-size:12px}
+.theme-swatch{display:block;width:26px;height:26px;border-radius:50%;background:var(--theme-preview);border:1px solid #fff6}
+.theme-controls input[type=range]{padding:0;width:100%;cursor:pointer}
+.theme-presets{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
+.theme-presets button{font-size:10px;padding:6px 8px}
+.theme-presets button::before{content:'';display:inline-block;width:8px;height:8px;background:var(--swatch);border-radius:50%;margin-right:5px}
+.theme-presets button[aria-pressed=true]{outline:2px solid var(--mint);outline-offset:1px}
+#theme-status:empty{display:none}

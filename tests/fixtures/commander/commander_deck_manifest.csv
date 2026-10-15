@@ -1,0 +1,40 @@
+﻿deck_id,commander,color_identity,test_focus,total_cards,unique_cards,signature_cards,nonbasic_lands,basic_lands,validation_status
+goreclaw_terror_of_qal_sisma,"Goreclaw, Terror of Qal Sisma",G,combat_trample,100,75,43,13,26,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+aurelia_the_warleader,"Aurelia, the Warleader",RW,extra_combat,100,82,36,19,20,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+arahbo_roar_of_the_world,"Arahbo, Roar of the World",GW,auras_equipment,100,82,40,19,20,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+isshin_two_heavens_as_one,"Isshin, Two Heavens as One",RWB,attack_triggers,100,87,35,23,16,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+fynn_the_fangbearer,"Fynn, the Fangbearer",G,poison_deathtouch,100,75,38,13,26,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+talrand_sky_summoner,"Talrand, Sky Summoner",U,spellcast_trigger,100,75,43,13,26,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+mizzix_of_the_izmagnus,Mizzix of the Izmagnus,UR,cost_reduction_x_spells,100,82,41,19,20,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+kalamax_the_stormsire,"Kalamax, the Stormsire",URG,spell_copy,100,87,40,23,16,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+niv_mizzet_parun,"Niv-Mizzet, Parun",UR,draw_damage_loop,100,82,41,19,20,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+kess_dissident_mage,"Kess, Dissident Mage",UBR,cast_from_graveyard,100,87,41,23,16,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+atraxa_praetors_voice,"Atraxa, Praetors' Voice",GWUB,proliferate_planeswalker,100,88,38,23,16,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+hapatra_vizier_of_poisons,"Hapatra, Vizier of Poisons",BG,minus_counters,100,82,37,19,20,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+chatterfang_squirrel_general,"Chatterfang, Squirrel General",BG,replacement_tokens,100,82,39,19,20,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+zaxara_the_exemplary,"Zaxara, the Exemplary",UBG,x_costs_tokens,100,87,39,23,16,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+meren_of_clan_nel_toth,Meren of Clan Nel Toth,BG,death_recursion,100,82,40,19,20,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+grolnok_the_omnivore,"Grolnok, the Omnivore",UG,mill_exile_play,100,82,36,19,20,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+karador_ghost_chieftain,"Karador, Ghost Chieftain",WBG,graveyard_casting,100,87,39,23,16,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+teysa_karlov,Teysa Karlov,WB,death_trigger_doubling,100,82,39,19,20,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+breya_etherium_shaper,"Breya, Etherium Shaper",WUBR,artifact_activated,100,88,40,23,16,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+sram_senior_edificer,"Sram, Senior Edificer",W,equipment_vehicle,100,75,39,13,26,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+osgir_the_reconstructor,"Osgir, the Reconstructor",RW,artifact_copy_exile,100,82,39,19,20,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+jhoira_weatherlight_captain,"Jhoira, Weatherlight Captain",UR,historic_cast,100,82,40,19,20,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+yuriko_the_tiger_s_shadow,"Yuriko, the Tiger's Shadow",UB,ninjutsu,100,82,40,19,20,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+animar_soul_of_elements,"Animar, Soul of Elements",URG,creature_cost_reduction,100,87,39,23,16,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+zedruu_the_greathearted,Zedruu the Greathearted,URW,control_ownership,100,87,39,23,16,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+the_first_sliver,The First Sliver,WUBRG,cascade_tribal,100,89,45,23,16,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+obeka_brute_chronologist,"Obeka, Brute Chronologist",UBR,end_turn_delayed,100,87,38,23,16,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+kadena_slinking_sorcerer,"Kadena, Slinking Sorcerer",UBG,face_down_morph,100,87,35,23,16,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+roon_of_the_hidden_realm,Roon of the Hidden Realm,GWU,blink_zone_reset,100,87,39,23,16,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+oloro_ageless_ascetic,"Oloro, Ageless Ascetic",WUB,lifegain_command_zone,100,87,38,23,16,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+queen_marchesa,Queen Marchesa,RWB,monarch,100,87,37,23,16,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+the_beamtown_bullies,The Beamtown Bullies,BRG,opponent_graveyard_control,100,87,38,23,16,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+sefris_of_the_hidden_ways,Sefris of the Hidden Ways,WUB,dungeons_venture,100,87,37,23,16,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+tom_bombadil,Tom Bombadil,WUBRG,saga_lore,100,89,39,23,16,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+najeela_the_blade_blossom,"Najeela, the Blade-Blossom",WUBRG,five_color_extra_combat,100,89,39,23,16,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+tivit_seller_of_secrets,"Tivit, Seller of Secrets",WUB,voting_artifact_tokens,100,87,38,23,16,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+orvar_the_all_form,"Orvar, the All-Form",U,target_copy,100,75,39,13,26,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+zhulodok_void_gorger,"Zhulodok, Void Gorger",C,colorless_cascade,100,75,40,13,26,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
+kenrith_the_returned_king,"Kenrith, the Returned King",WUBRG,activated_multiplayer,100,89,39,23,16,UNVERIFIED: sample fixture; check legality/card identities against authoritative card data
