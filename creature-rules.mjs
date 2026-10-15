@@ -1,3 +1,4 @@
+import {ruleSources} from './rule-sources.mjs';
 import {cardFace,creatureStats} from './card-state.mjs';
 import {activeRuleParagraphs,matchesAbilityRecipient,normalizeRules,effectiveLandSubtypes,graveyardCardTypes} from './ability-effects.mjs';
 
@@ -36,7 +37,7 @@ export function keywordSet(g,owner,card,{keywords=KEYWORDS,read=words}={}){
  const result=new Set();if(card.faceDown&&!card.manifested)return result;
  for(const {text} of activeRuleParagraphs(card))for(const k of read(text))result.add(k);
  for(const k of keywords)if(card.counters?.[k]>0||card.temporaryKeywords?.includes(k))result.add(k);
- for(const {card:source,owner:controller} of fieldCards(g))if(!source.faceDown)for(const text of continuousClauses(g,source,controller)){
+ for(const {card:source,owner:controller} of ruleSources(g))if(!source.faceDown)for(const text of continuousClauses(g,source,controller)){
   const grant=text.replace(/ (?:get|gets) [+-]\d+\/[+-]\d+(?: for each [^.]+?)? and (?:have|has) /i,' have ').match(/^(.+?) (?:have|has) (.+?)(?: as long as (.+?))?\.$/i);if(!grant||!combatRecipient(g,grant[1],card,owner,source,controller))continue;
   if(grant[3]){
    const condition=grant[3].match(/^there's (?:an? |one or more )?([\w-]+) cards? in your graveyard$/i);if(!condition||!g.players[controller].zones.graveyard.some(c=>(cardFace(c).type_line||'').toLowerCase().split(/\W+/).includes(condition[1].toLowerCase())))continue;
@@ -51,7 +52,7 @@ export function keywordSet(g,owner,card,{keywords=KEYWORDS,read=words}={}){
 }
 export function summoningSick(g,owner,card){return isCreature(card)&&!!card.summoningSick&&!keywordSet(g,owner,card).has('haste');}
 export function protectedFrom(g,owner,card,source){
- const clauses=[rulesText(card),...(card.temporaryKeywords||[])];for(const {card:provider,owner:controller} of fieldCards(g))if(!provider.faceDown)for(const {text} of activeRuleParagraphs(provider)){const grant=text.replace(/ (?:get|gets) [+-]\d+\/[+-]\d+(?: for each [^.]+?)? and (?:have|has) /i,' have ').match(/^(.+?) (?:have|has) (protection from .+?)\.$/i);if(grant&&combatRecipient(g,grant[1],card,owner,provider,controller))clauses.push(grant[2]);}
+ const clauses=[rulesText(card),...(card.temporaryKeywords||[])];for(const {card:provider,owner:controller} of ruleSources(g))if(!provider.faceDown)for(const {text} of activeRuleParagraphs(provider)){const grant=text.replace(/ (?:get|gets) [+-]\d+\/[+-]\d+(?: for each [^.]+?)? and (?:have|has) /i,' have ').match(/^(.+?) (?:have|has) (protection from .+?)\.$/i);if(grant&&combatRecipient(g,grant[1],card,owner,provider,controller))clauses.push(grant[2]);}
  const colors={white:'W',blue:'U',black:'B',red:'R',green:'G'};return clauses.some(text=>{const match=text.match(/(?:^|\n|, | and )protection from (all colors|[a-z]+)/i);if(!match)return false;const scope=match[1].toLowerCase();return scope==='everything'||scope==='all colors'&&(cardFace(source).colors||[]).length>0||colors[scope]&&(cardFace(source).colors||[]).includes(colors[scope])||!colors[scope]&&new RegExp('\\b'+scope.replace(/s$/,'')+'\\b','i').test(cardFace(source).type_line||'');});
 }
 export function combatStats(g,owner,card){
@@ -61,7 +62,7 @@ export function combatStats(g,owner,card){
  if(/power is equal to the number of creatures you control\./i.test(rulesText(card))&&!card.battlefieldStats){power=g.players[owner].zones.battlefield.filter(isCreature).length;for(const [kind,n] of Object.entries(card.counters||{})){const m=kind.match(/^([+-]\d+)\/[+-]\d+$/);if(m)power+=Number(m[1])*n;}}
  if(typeof power!=='number'||typeof toughness!=='number')return {...base,damage:card.markedDamage||0,remaining:null};
  power+=card.temporaryStats?.power||0;toughness+=card.temporaryStats?.toughness||0;
- for(const {card:source,owner:controller} of fieldCards(g))if(!source.faceDown)for(const text of continuousClauses(g,source,controller)){
+ for(const {card:source,owner:controller} of ruleSources(g))if(!source.faceDown)for(const text of continuousClauses(g,source,controller)){
   const boost=text.match(/^(.+?) (?:get|gets) ([+-]\d+)\/([+-]\d+)(?: and (?:have|has) [\s\S]+)?(?:\.|["”])$/i);if(boost&&combatRecipient(g,boost[1],card,owner,source,controller)){power+=Number(boost[2]);toughness+=Number(boost[3]);}
   const counted=text.match(/^(.+?) (?:get|gets) ([+-]\d+)\/([+-]\d+) for each (other )?(land you control|enchantment you control|enchantment on the battlefield|artifact and\/or enchantment you control|artifact you control|Cat you control)(?: and (?:has|have) [^.]+)?\.$/i);
   if(counted&&combatRecipient(g,counted[1],card,owner,source,controller)){
@@ -92,7 +93,7 @@ export function attackTargetError(g,card,target){
 }
 export function attackKeywordCount(g,owner,card,keyword){
  let count=activeRuleParagraphs(card).filter(({text})=>new RegExp('^'+keyword+'(?:$|[ (])','i').test(text)).length;
- for(const {card:source,owner:controller} of fieldCards(g))if(!source.faceDown)for(const {text} of activeRuleParagraphs(source)){
+ for(const {card:source,owner:controller} of ruleSources(g))if(!source.faceDown)for(const {text} of activeRuleParagraphs(source)){
   const grant=normalizeRules(text).match(new RegExp('^(.+?) (?:have|has) '+keyword+'\\.','i'));if(grant&&combatRecipient(g,grant[1],card,owner,source,controller))count++;
  }return count;
 }

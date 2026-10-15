@@ -50,6 +50,7 @@ export function flashbackOptions(g,owner,card){
 export function castingPermission(g,owner,card,zone,options={}){
  const pending=g.pendingEffect;
  if(offeredCast(pending,card,zone)&&pending.owner===owner){const face=cardFace(card);if(pending.step.scope==='instant or sorcery'&&!/\b(?:Instant|Sorcery)\b/.test(face.type_line||'')||pending.step.manaValue!==undefined&&manaValue(card,{onStack:true})>pending.step.manaValue)return null;return {zone,cost:pending.step.cost??'{0}',free:pending.step.cost===undefined,duringResolution:true,...(pending.step.graveyardExile?{graveyardExile:true}:{})};}
+ if(zone==='hand'&&(g.players[owner].emblems||[]).some(e=>/^You may cast spells from your hand without paying their mana costs\.$/i.test(e.oracle_text)))return {zone,cost:'{0}',free:true};
  if(['hand','command'].includes(zone))return {zone};
  if(zone==='graveyard'){
   const choices=flashbackOptions(g,owner,card),selected=options.flashback===undefined?choices[0]:choices.find(c=>c.key===options.flashback);

@@ -298,7 +298,7 @@ function renderTable(){
   }
   enableDrop(command,owner,'command');
   const hand=el('div',undefined,'hand'),label=el('div',undefined,'zone-label');label.append(el('span','HAND'),el('span',player.zones.hand.length+' CARDS'));const handRow=el('div',undefined,'cards');player.zones.hand.forEach(c=>handRow.append(cardButton(c)));if(!player.zones.hand.length)handRow.append(el('p','No cards in hand. Import a deck or draw.','empty-hand'));enableDrop(handRow,owner,'hand');hand.append(label,handRow);bottom.append(command,hand);
-  mat.style.gridColumn=owner===1||owner===2?'2':'1';mat.style.gridRow=owner>=2?'2':'1';mat.append(heading,body,bottom);$('zones').append(mat);
+  mat.style.gridColumn=owner===1||owner===2?'2':'1';mat.style.gridRow=owner>=2?'2':'1';mat.append(heading,body,bottom);for(const emblem of player.emblems||[]){const badge=el('div',emblem.name+' ? '+emblem.oracle_text,'emblem-status');mat.append(badge);}for(const item of (g.phasedOut||[]).filter(item=>item.owner===owner)){const badge=el('div',(item.card.hidden?'Hidden card':item.card.name)+' ? Phased out','emblem-status');mat.append(badge);}$('zones').append(mat);
   if(owner===handSeat){mat.classList.add('pinned-player');hand.hidden=true;bottom.hidden=true;piles.prepend(command);}
   player.zones.battlefield.forEach((c,index)=>{const b=cardButton(c);cards.append(b);placeBattlefieldCard(b,c,index);});handRow.scrollLeft=scroll.get(String(owner))||0;
  }

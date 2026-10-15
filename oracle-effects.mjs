@@ -595,6 +595,8 @@ export function validateOracleChoice(pending,fail,playerCount=4){
   if(step.op==='unlessPay'){if(step.amount!=='source power'&&!/^\{\d+\}$/.test(step.cost||''))fail();program(step.then,depth+1);}
   if(step.op==='mode'){if(!Array.isArray(step.modes)||!step.modes.length||step.modes.length>10)fail();for(const mode of step.modes){if(!mode||!string(mode.label))fail();program(mode.program,depth+1);}}
   if(step.op==='createTokens'&&(!string(step.amount)||!step.definition||!string(step.definition.name)||!string(step.definition.type_line)||typeof step.definition.oracle_text!=='string'))fail();
+  if(step.op==='emblem'&&!string(step.text))fail();
+  if(step.op==='extraTurns'&&(!Number.isSafeInteger(step.amount)||step.amount<0||step.amount>100))fail();
   if(step.op==='putHandTop'&&step.placement!==undefined&&!['top','bottom'].includes(step.placement))fail();
   if(step.op==='createTokens'&&step.createdCounter&&(!string(step.createdCounter.kind)||!string(step.createdCounter.amount)))fail();
   if(step.op==='conditionalPump'&&(!Number.isSafeInteger(step.power)||!Number.isSafeInteger(step.toughness)||!Array.isArray(step.grants)||step.grants.some(grant=>!string(grant.keyword)||!['white','blue','black','red','green'].includes(grant.color))))fail();

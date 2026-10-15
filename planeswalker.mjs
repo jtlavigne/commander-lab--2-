@@ -42,7 +42,7 @@ export function availableLoyaltyAbilities(g,owner,card,visited=new Set()){
 export function getLoyaltyAbility(g,owner,card,ref){const abilities=availableLoyaltyAbilities(g,owner,card);return typeof ref==='number'||/^\d+$/.test(String(ref))?abilities[Number(ref)]:abilities.find(a=>a.key===ref);}
 export function loyaltyStatus(g,owner,card){
  const turn=loyaltyTurn(g),used=card.loyaltyActivations?.turn===turn?card.loyaltyActivations.used:0;let limit=1,instant=false;
- for(const [sourceOwner,player] of g.players.entries())for(const source of player.zones.battlefield)if(!source.faceDown)for(const raw of paragraphs(source)){
+ for(const [sourceOwner,player] of g.players.entries())for(const source of [...player.zones.battlefield,...(player.emblems||[])])if(!source.faceDown)for(const raw of paragraphs(source)){
   const line=clean(raw),permission=line.match(/^You may activate (?:the )?loyalty abilities of (.+?) (twice|three times|four times) each turn rather than only once\./i);
   if(permission&&sourceOwner===owner&&affects(permission[1],card,owner,source,sourceOwner))limit=Math.max(limit,{'twice':2,'three times':3,'four times':4}[permission[2].toLowerCase()]);
   const timing=line.match(/^You may activate (?:the )?loyalty abilities of (.+?) on any player's turn any time you could cast an instant\./i);

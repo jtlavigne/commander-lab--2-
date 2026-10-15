@@ -31,6 +31,7 @@ export function applyPatch(before,changes){
 const hidden=card=>({instance:card.instance,name:'Hidden card',type_line:'',faceDown:true,face:0,tapped:false,counters:{},hidden:true});
 export function projectGame(game,seat,{log=[],automatic=false,epoch=0}={}){
  const view=cleanData(game);delete view.inactivePlayers;delete view.departedCards;view.log=[...log];view.networkSeat=seat;view.networkOptions={automatic:automaticFor(game,seat,automatic)};view.networkEpoch=epoch;
+ if(view.phasedOut)for(const item of view.phasedOut)if(item.owner!==seat&&item.card.faceDown)item.card=hidden(item.card);
  const owned=game.players.flatMap((p,owner)=>Object.values(p.zones).flat().map(card=>({card,owner}))).concat(game.stack.filter(e=>e.card).map(e=>({card:e.card,owner:e.owner})));
  view.networkCommanderColors=game.players.map((_,owner)=>[...new Set(owned.filter(e=>e.card.commander&&(e.card.ownerSeat??e.owner)===owner).flatMap(e=>e.card.color_identity||[]))]);
  const pending=game.pendingEffect,choice=pending?.kind==='oracle-choice'&&pending.owner===seat?pending.step:null;

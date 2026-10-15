@@ -1,3 +1,4 @@
+import {emblemSources} from './rule-sources.mjs';
 import {publicManifest} from './face-down-state.mjs';
 import {gainLife} from './resource-rules.mjs';
 import {soulbondOptions} from './soulbond.mjs';
@@ -91,6 +92,7 @@ function interveningCondition(g,text,event,source,owner){
  return power||life||opponentLife||firstCombat||main||sourceZone||onBattlefield||tapped||/^it doesn't have the same name/.test(match[1])?{text:match[2],valid}:{text,valid:true};
 }
 export function queueCombatTriggers(g,events,observers=fieldCards(g).map(({card,owner})=>({card:snapshotCard(card),owner}))){
+ observers=[...observers,...emblemSources(g).map(({card,owner})=>({card:snapshotCard(card),owner}))];
  events=events.filter(e=>!g.players[e.owner]?.eliminated);
  const queued=[];
  for(const event of events)if(event.kind==='leave'&&event.card.reanimationLink)queued.push(make(event.card,event.card.reanimationLink.abilityOwner,"That creature's controller sacrifices it.",event));
