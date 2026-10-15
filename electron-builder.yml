@@ -1,0 +1,30 @@
+appId: io.github.jtlavigne.commanderlab
+productName: Commander Lab
+asar: true
+directories:
+  output: release
+# Ship runtime code and art only. Test fixtures, profiles, credentials and source
+# tooling are deliberately outside this allowlist.
+files:
+  - '*.mjs'
+  - '*.cjs'
+  - '*.css'
+  - index.html
+  - package.json
+  - multiplayer/**/*
+  - assets/**/*.png
+  - '!launch.cjs'
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+    - target: zip
+      arch: [x64]
+  artifactName: 'Commander-Lab-${version}-windows-${arch}.${ext}'
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  deleteAppDataOnUninstall: false
+  artifactName: 'Commander-Lab-${version}-windows-${arch}-setup.${ext}'
+publish: null

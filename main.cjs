@@ -4,7 +4,9 @@ const {createCardClient}=require('./card-client.cjs');
 const {createCardCache}=require('./card-cache.cjs');
 const {installMultiplayer}=require('./multiplayer/electron.cjs');
 const {launchProfile}=require('./launch-profile.cjs');
-const profile=launchProfile(process.argv.slice(2),app.getPath('userData'));
+// Keep development and installed builds on the same saved-data directory.
+if(app.isPackaged)app.setPath('userData',path.join(app.getPath('appData'),'commander-lab'));
+const profile=launchProfile(process.argv.slice(app.isPackaged?1:2),app.getPath('userData'));
 if(profile){require('node:fs').mkdirSync(profile.directory,{recursive:true});app.setPath('userData',profile.directory);}
 const client=createCardClient();
 let mainWindow=null;
@@ -29,7 +31,7 @@ app.whenReady().then(()=>{
  ipcMain.handle('card',async(_,name)=>{const result=await cache.lookupBatch([name]);return result[name.trim()];});
  const win=new BrowserWindow({width:1500,height:960,minWidth:1000,minHeight:760,show:false,backgroundColor:'#111615',autoHideMenuBar:true,webPreferences:{preload:path.join(__dirname,'preload.cjs'),contextIsolation:true,nodeIntegration:false,sandbox:true}});
  mainWindow=win;
- if(profile)win.on('page-title-updated',event=>{event.preventDefault();win.setTitle('Commander Lab - '+profile.name);});
+ win.on('page-title-updated',event=>{event.preventDefault();win.setTitle('Commander Lab v'+app.getVersion()+(profile?' - '+profile.name:''));});
  win.once('ready-to-show',revealWindow);
  win.on('closed',()=>{mainWindow=null;});
  win.webContents.on('did-fail-load',(_event,code,description)=>console.error('Commander Lab failed to load:',code,description));

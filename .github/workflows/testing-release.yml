@@ -1,0 +1,49 @@
+name: Windows testing release
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*.*.*-*']
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - name: Validate prerelease version
+        shell: pwsh
+        run: |
+          $version = node -p "require('./package.json').version"
+          if ($version -notmatch '^\d+\.\d+\.\d+-[a-zA-Z0-9.-]+$') { throw 'Testing releases must have a prerelease version.' }
+          if ($env:GITHUB_REF_TYPE -eq 'tag' -and $env:GITHUB_REF_NAME -ne "v$version") { throw 'Tag must match package.json version.' }
+      - run: npm test
+      - run: npm run test:ui:playtest-decks
+      - run: npm run test:ui:tokens
+      - run: npm run test:ui:network
+      - run: npm run dist:win
+      - run: node scripts/smoke-packaged.cjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: commander-lab-windows-testing
+          path: |
+            release/*.exe
+            release/*.zip
+            release/SHA256SUMS.txt
+          if-no-files-found: error
+      # Manual runs produce downloadable build artifacts. Only explicit version
+      # tags publish a prerelease, and never move an existing release tag.
+      - name: Publish tagged prerelease
+        if: github.ref_type == 'tag'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $assets = @(Get-ChildItem release/*.exe, release/*.zip, release/SHA256SUMS.txt | ForEach-Object FullName)
+          gh release create $env:GITHUB_REF_NAME @assets --verify-tag --prerelease --title "Commander Lab $env:GITHUB_REF_NAME" --notes-file docs/testing-release-notes.md

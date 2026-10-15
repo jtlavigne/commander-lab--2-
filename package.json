@@ -1,6 +1,6 @@
 {
     "name": "commander-lab",
-    "version": "0.1.0",
+    "version": "0.1.0-test.1",
     "private": true,
     "description": "Manual Commander desktop playtester",
     "main": "main.cjs",
@@ -45,10 +45,12 @@
         "test:ui:keywords": "node launch.cjs tests/keyword-icons-ui.cjs",
         "test:ui:tokens": "node launch.cjs tests/token-catalog-ui.cjs",
         "test:ui:playtest-decks": "node launch.cjs tests/playtest-decks-ui.cjs",
-        "audit:playtest-decks": "node scripts/audit-playtest-decks.mjs"
+        "audit:playtest-decks": "node scripts/audit-playtest-decks.mjs",
+        "dist:win": "electron-builder --win --x64 --publish never && node scripts/release-checksums.mjs"
     },
     "devDependencies": {
-        "electron": "latest"
+        "electron": "44.7.1",
+        "electron-builder": "26.15.3"
     },
     "dependencies": {
         "ws": "^8.22.0"

@@ -10,6 +10,8 @@ The two exact Atraxa/Jace lists supplied during playtesting have a separate [car
 
 For friends joining the playtest, start with the [playtester setup guide](docs/playtesting.md).
 
+Windows testing builds are distributed through [GitHub Releases](https://github.com/jtlavigne/commander-lab--2-/releases). Download the installer or portable ZIP; Node.js is not needed for these builds. See [release instructions](docs/releasing.md) to build or publish a new prerelease.
+
 With Node.js 24 installed, open this folder in a terminal and run:
 
 ```powershell
