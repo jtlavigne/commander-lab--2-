@@ -1,5 +1,6 @@
 const {contextBridge,ipcRenderer}=require('electron');
 contextBridge.exposeInMainWorld('cards',{
+ lookupTokens:names=>ipcRenderer.invoke('cards-tokens',names),lookupIds:ids=>ipcRenderer.invoke('cards-by-id',ids),
  lookup:name=>ipcRenderer.invoke('card',name),lookupBatch:names=>ipcRenderer.invoke('cards-batch',names),
  onProgress(callback){const listener=(_event,progress)=>callback(progress);ipcRenderer.on('cards-progress',listener);return ()=>ipcRenderer.removeListener('cards-progress',listener);}
 });

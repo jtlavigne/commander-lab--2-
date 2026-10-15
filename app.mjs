@@ -58,7 +58,7 @@ if(handSeat>=g.players.length)seat=handSeat=0;
 const el=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;};
 const button=(text,fn,cls)=>{const b=el('button',text,cls);b.type='button';b.onclick=fn;return b;};
 const serialize=state=>JSON.stringify(state,(key,value)=>key==='localImages'?undefined:value);
-const allCards=()=>[...g.players.flatMap(p=>ZONES.flatMap(z=>p.zones[z])),...g.stack.map(e=>e.card).filter(Boolean)];
+const allCards=()=>[...g.players.flatMap(p=>[...ZONES.flatMap(z=>p.zones[z]),...(p.tokenCatalog||[])]),...g.stack.map(e=>e.card).filter(Boolean)];
 function setStatus(text){$('status').textContent=text;}
 // Artwork is cached outside serialized game history and multiplayer commands.
 // Restoring a snapshot reconnects those local assets without downloading again.
@@ -244,7 +244,7 @@ function enableDrop(target,owner,zone){
   try{
    const id=e.dataTransfer.getData('application/x-commander-card')||JSON.parse(e.dataTransfer.getData('text/plain')).id;
    const found=findCard(g,id);if(!found)return;if(concealedHand(id)){draggedId=null;clearHandDragImage();setStatus('Control this seat before moving cards from its hand.');return;}const destination=zone==='stack'?found.owner:owner;let position;
-   if(networkSession&&found.zone==='library'){draggedId=null;clearHandDragImage();if(found.owner===seat&&zone==='hand'&&owner===seat)dispatch({type:'draw'});else setStatus('Drag the top of your library to your hand to draw.');return;}
+   if(networkSession&&found.zone==='library'&&!g.players[seat].librarySearch){draggedId=null;clearHandDragImage();if(found.owner===seat&&zone==='hand'&&owner===seat)dispatch({type:'draw'});else setStatus('Drag the top of your library to your hand to draw.');return;}
    // A normal play uses announcement/payment; Shift-drag is an explicit manual
    // zone transfer. Both routes ultimately use the same gameplay reducer.
    if(!e.shiftKey&&castingPermission(g,found.owner,found.card,found.zone)&&['stack','battlefield'].includes(zone)&&!/\bLand\b/.test(cardFace(found.card).type_line||'')){
@@ -464,8 +464,10 @@ function renderInspector(id=cardPreview?.id||selected,{readOnly=false,inspection
  if(readOnly){container.scrollTop=scroll;return;}
  const actions=el('div',undefined,'inspector-actions');if(zone==='battlefield')actions.append(button(card.tapped?'Untap [T]':'Tap [T]',()=>toggleTapped(card.instance)));if(card.manifested&&owner===seat)actions.append(button('Turn face up (pay mana cost)',()=>dispatch({type:'turnFaceUp',id:card.instance})));if(!card.manifested&&!card.commander&&zone!=='command'&&zone!=='graveyard'&&zone!=='exile'&&!hidden)actions.append(button(card.faceDown?'Face up [F]':'Face down [F]',()=>toggleFaceDown(card.instance)));
  if(!card.commander&&zone!=='command'&&!hidden&&(card.localImages?.length||card.card_faces?.length||0)>1)actions.append(button('Flip card face',()=>dispatch({type:'face',id:card.instance})));
- actions.append(button('Library top',()=>dispatch({type:'libraryTop',id:card.instance})));
- if(card.token)actions.append(button('Remove token',()=>dispatch({type:'removeToken',id:card.instance})));container.append(actions);
+ actions.append(button('Library top',()=>dispatch({type:'libraryTop',id:card.instance})),button('Library bottom',()=>dispatch({type:'move',id:card.instance,to:'library',owner,libraryPosition:'bottom'})));
+ const libraryPlacement=el('div',undefined,'control-row'),positionLabel=el('label','Position from top (1 = top)'),libraryPosition=el('input');libraryPosition.id='library-position';libraryPosition.type='number';libraryPosition.min=1;libraryPosition.max=g.players[owner].zones.library.length+(zone==='library'?0:1);libraryPosition.step=1;libraryPosition.value=1;positionLabel.htmlFor=libraryPosition.id;
+ libraryPlacement.append(positionLabel,libraryPosition,button('Put in library',()=>dispatch({type:'move',id:card.instance,to:'library',owner,libraryPosition:Number(libraryPosition.value)})));
+ if(card.token)actions.append(button('Remove token',()=>dispatch({type:'removeToken',id:card.instance})));container.append(actions,libraryPlacement);
  if(!hidden&&castingPermission(g,owner,card,zone))container.append(button('Cast → stack',()=>manaUI.openCast(id)));
  if(!hidden&&zone==='battlefield'){const manaActions=el('div',undefined,'mana-source-actions');manaActions.append(button('Mana abilities',()=>manaUI.openSource(id)),button('Mana rules',()=>manaUI.openSettings(id)));if(card.tapped)manaActions.append(button('Untap from resolved effect',()=>toggleTapped(id,{fromEffect:true})));if(availableLoyaltyAbilities(g,owner,card).length||/loyalty abilities/i.test(cardFace(card).oracle_text||'')){const status=loyaltyStatus(g,owner,card);manaActions.append(button('Loyalty activations · '+status.used+'/'+status.limit,()=>manaUI.openLoyaltySettings(id)));}container.append(manaActions);}
  const controls=el('div',undefined,'move-controls');const moveLabel=el('label','MOVE TO');moveLabel.htmlFor='move-zone';const row=el('div',undefined,'control-row'),zoneSelect=el('select');zoneSelect.id='move-zone';for(const z of [...ZONES,'stack']){const option=el('option',LABELS[z]);option.value=z;zoneSelect.append(option);}zoneSelect.value=zone==='hand'?'battlefield':zone==='stack'?'graveyard':'hand';
@@ -489,6 +491,7 @@ function renderStack(){
  });
 }
 function render(){
+ $('finish-library-search').hidden=!networkSession||!g.players[seat].librarySearch;
  $('automatic').checked=automaticFor(g,seat);$('automatic').disabled=false;
  $('automatic').setAttribute('aria-label',g.players[seat].name+' auto untap / draw');
  $('automatic').parentElement.title='Automatically untap and draw during '+g.players[seat].name+' turns only.';
@@ -509,7 +512,18 @@ function openImport(owner=seat){
  if(networkSession)owner=seat;
  $('import-seat').replaceChildren(...g.players.map((p,i)=>{const option=el('option','Seat '+(i+1)+' / '+p.name);option.value=i;return option;}));$('import-seat').value=owner;$('import-seat').disabled=!!networkSession;$('player-name').value=g.players[owner].name;$('import-dialog').showModal();
 }
-function openPile(owner,zone){if(networkSession&&zone==='library'){setStatus('Library identities are revealed only during your search or scry choice.');return;}if(!networkSession)seat=owner;pileView={owner,zone};$('pile-search').value='';render();renderPile();$('pile-dialog').showModal();if(zone==='library')$('pile-search').focus();}
+function openPile(owner,zone){
+ if(networkSession&&zone==='library'){
+  if(owner!==seat){setStatus('You can search only your own library.');return;}
+  if(g.pendingEffect?.kind==='oracle-choice'){manaUI.maybeResolveEffect();setStatus('Use the pending effect choices to search.');return;}
+  if(!g.players[owner].librarySearch){dispatch({type:'librarySearch',open:true},{after:()=>showPile(owner,zone)});return;}
+ }
+ showPile(owner,zone);
+}
+function showPile(owner,zone){if(!networkSession)seat=owner;pileView={owner,zone};$('pile-search').value='';render();renderPile();if(!$('pile-dialog').open)$('pile-dialog').showModal();if(zone==='library')$('pile-search').focus();}
+function finishLibrarySearch(shuffle=true){dispatch({type:'librarySearch',open:false,shuffle},{after:()=>{$('pile-dialog').close();pileView=null;}});}
+const finishSearch=button('Finish search & shuffle',()=>finishLibrarySearch());finishSearch.id='finish-library-search';finishSearch.hidden=true;$('automatic').closest('.turn-actions').prepend(finishSearch);
+
 function renderPile(){
  if(!pileView)return;const {owner,zone}=pileView,player=g.players[owner];$('pile-owner').textContent='SEAT 0'+(owner+1)+' / '+player.name;$('pile-title').textContent=LABELS[zone]+' · '+player.zones[zone].length+' cards';$('pile-caption').textContent=zone==='library'?'Top to bottom, left to right. Hold Left Alt over a card to inspect it, or drag it directly onto the table.':'Hold Left Alt to inspect or drag a card back onto the table.';
  const cards=player.zones[zone],query=zone==='library'?$('pile-search').value.trim().toLocaleLowerCase():'';
@@ -517,6 +531,11 @@ function renderPile(){
  $('pile-search-controls').hidden=zone!=='library';$('pile-search-clear').hidden=!$('pile-search').value;
  $('pile-search-status').textContent=query?entries.length+' of '+cards.length+' cards':cards.length+' cards';
  $('pile-cards').replaceChildren(...entries.map(({card,index})=>{const wrapper=el('div');wrapper.append(cardButton(card),el('div',zone==='library'?(index===0?'TOP / 1':String(index+1)):String(index+1),'pile-index'));return wrapper;}));
+ if(networkSession&&zone==='library'&&player.librarySearch){
+  const actions=el('div',undefined,'pile-search-row');
+  actions.append(button('Finish search & shuffle',()=>finishLibrarySearch()),button('Finish without shuffling',()=>finishLibrarySearch(false)));
+  $('pile-cards').append(actions);
+ }
  if(!entries.length)$('pile-cards').append(el('p',cards.length?'No cards match your search.':'This pile is empty.','pile-empty-message'));refreshHover();
 }
 $('pile-search').oninput=renderPile;
@@ -539,7 +558,12 @@ $('draw').onclick=()=>dispatch({type:'draw'});$('untap').onclick=()=>dispatch({t
 $('shuffle').onclick=()=>dispatch({type:'shuffle'});
 $('mulligan').onclick=()=>dispatch({type:'redraw'});
 $('undo').onclick=undo;$('openimport').onclick=()=>openImport();$('import-seat').onchange=()=>{$('player-name').value=g.players[Number($('import-seat').value)].name;};
-$('token').onclick=()=>{$('token-dialog').showModal();$('token-name').select();};
+$('token').onclick=()=>{
+ const select=$('token-template');select.replaceChildren(new Option('Custom token',''));
+ for(const [index,token] of (g.players[seat].tokenCatalog||[]).entries())select.add(new Option(token.name+(token.power!==undefined?' '+token.power+'/'+token.toughness:'')+' '+(token.colors||[]).join(''),String(index)));
+ select.value=select.options.length>1?'0':'';select.onchange();$('token-dialog').showModal();
+};
+$('token-template').onchange=()=>{const custom=$('token-template').value==='';for(const id of ['token-name','token-text','token-power'])$(id).disabled=!custom;};
 $('help').onclick=()=>$('help-dialog').showModal();
 $('quickstats').onclick=()=>openStats(seat);
 $('quickpractice').onclick=()=>$('practice').click();
@@ -560,7 +584,7 @@ $('tab-stack').ondragenter=()=>{if(draggedId)setPanel('stack');};
 for(const b of document.querySelectorAll('[data-close]'))b.onclick=()=>b.closest('dialog').close();
 $('loadlabel').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('load').click();}};
 $('stats-form').onsubmit=e=>{e.preventDefault();const life=Number($('life-total').value),poison=Number($('poison-total').value),casts=Number($('command-casts').value),extra=[...$('partner-casts').querySelectorAll('input')],damage=g.players.map((_,i)=>Number($('damage-'+i).value));if(![life,poison,...damage].every(Number.isFinite)||![casts,...extra.map(input=>Number(input.value))].every(n=>Number.isSafeInteger(n)&&n>=0))return;dispatch({type:'playerStats',owner:statsSeat,name:$('seat-name').value.trim(),life,poison,damage,totalCasts:casts,casts:Object.fromEntries([...commandersFor(g,statsSeat).map((c,i)=>[c.instance,i?Number(extra.find(input=>input.dataset.commander===c.instance)?.value??c.commandCasts??0):casts])])});$('stats-dialog').close();};
-$('token-form').onsubmit=e=>{e.preventDefault();const name=$('token-name').value.trim(),count=Number($('token-count').value);if(!name||!Number.isInteger(count)||count<1||count>50)return;const parts=($('token-power').value.trim()||name.match(/^[+-]?\d+\/[+-]?\d+/)?.[0]||'').split('/');dispatch({type:'token',name,count,text:$('token-text').value,power:parts[0]?.trim()||'0',toughness:parts[1]?.trim()||'0'});$('token-dialog').close();};
+$('token-form').onsubmit=e=>{e.preventDefault();const name=$('token-name').value.trim(),count=Number($('token-count').value);if($('token-template').value!==''){dispatch({type:'token',templateIndex:Number($('token-template').value),count});$('token-dialog').close();return;}if(!name||!Number.isInteger(count)||count<1||count>50)return;const parts=($('token-power').value.trim()||name.match(/^[+-]?\d+\/[+-]?\d+/)?.[0]||'').split('/');dispatch({type:'token',name,count,text:$('token-text').value,power:parts[0]?.trim()||'0',toughness:parts[1]?.trim()||'0'});$('token-dialog').close();};
 document.addEventListener('keydown',e=>{
  if(e.altKey||e.target.closest('input,textarea,select')||document.querySelector('dialog[open]'))return;
  refreshHover();
@@ -587,7 +611,7 @@ $('import-form').onsubmit=async e=>{
  const epoch=sessionEpoch;importing=true;$('import').disabled=true;$('refreshart').disabled=true;$('import').textContent='Loading cards…';
  try{
   const names=[...new Set([...list.map(c=>c.name),...commanders])];$('import-status').textContent='Loading '+names.length+' card names and caching artwork. First imports can take a few minutes.';
-  const records=await lookupNames(names);if(epoch!==sessionEpoch)throw Error('The table changed during import. Cached cards are ready; import again into this table.');
+  const records=await lookupNames(names);$('import-status').textContent='Finding tokens and caching their artwork...';const reserve=window.cards.lookupTokens?await window.cards.lookupTokens(names):{tokens:[],warnings:[]};if(epoch!==sessionEpoch)throw Error('The table changed during import. Cached cards are ready; import again into this table.');
   const instance=(c,isCommander=false)=>({...c,instance:crypto.randomUUID(),tapped:false,counters:{},face:0,commander:isCommander,ownerSeat:target});
   const library=[],command=commanders.map((name,commandSlot)=>{if(!records[name])throw Error('Missing card: '+name);return {...instance(records[name],true),commandSlot,commandCasts:0};});
   if(command.length===2&&command[0].id===command[1].id)throw Error('Choose two different command-zone cards.');
@@ -595,8 +619,8 @@ $('import-form').onsubmit=async e=>{
   for(const row of list){const card=records[row.name];if(!card)throw Error('Missing card: '+row.name);let count=row.count;if(remaining.delete(card.id))count--;for(let i=0;i<count;i++)library.push(instance(card));}
   const count=library.length+command.length;if(count>500)throw Error('Please keep each imported deck, including commanders, to 500 cards or fewer.');
   const missingImages=[...new Map([...library,...command].map(card=>[card.id,card])).values()].filter(card=>!hasArtwork(card)||card.artworkError);
-  const resultMessage='Imported '+count+' cards for '+(playerName||g.players[target].name)+(missingImages.length?'. Images missing for '+missingImages.length+' card names; click Images to retry.':' with card images.');
-  dispatch({type:'import',owner:target,library,command,name:playerName},{message:resultMessage});
+  const resultMessage=(reserve.warnings.length?reserve.warnings.join(' ')+' ':'')+'Loaded '+reserve.tokens.length+' token templates. Imported '+count+' cards for '+(playerName||g.players[target].name)+(missingImages.length?'. Images missing for '+missingImages.length+' card names; click Images to retry.':' with card images.');
+  dispatch({type:'import',owner:target,library,command,tokenCatalog:reserve.tokens,name:playerName},{message:resultMessage});
   $('import-dialog').close();$('import-status').textContent='Card data and artwork download from Scryfall and cache locally.';
  }catch(error){$('import-status').textContent=error.message;setStatus(error.message);}
  finally{importing=false;$('import').disabled=false;$('refreshart').disabled=artworkLoading;$('import').textContent='Import & shuffle →';}
@@ -608,10 +632,10 @@ $('load').onchange=async e=>{
  catch(error){setStatus(error.message);}finally{e.target.value='';}
 };
 async function hydrateArt({retry=false}={}){
- rememberArt();if(!window.cards||artworkLoading)return;const epoch=sessionEpoch,all=allCards(),names=[...new Set(all.filter(c=>c.id&&(!hasArtwork(c)||c.artworkVersion!==2)).map(c=>c.name))];
- if(!names.length){if(retry)setStatus(all.some(c=>c.id)?'All imported cards already have images.':'Import a deck to download its card images.');return;}
+ rememberArt();if(!window.cards||artworkLoading)return;const epoch=sessionEpoch,all=allCards(),missingCards=all.filter(c=>c.id&&(!hasArtwork(c)||c.artworkVersion!==2)),tokenIds=[...new Set(missingCards.filter(c=>c.token||c.tokenTemplate).map(c=>c.id))],names=[...new Set(missingCards.filter(c=>!c.token&&!c.tokenTemplate).map(c=>c.name))];
+ if(!names.length&&!tokenIds.length){if(retry)setStatus(all.some(c=>c.id)?'All imported cards already have images.':'Import a deck to download its card images.');return;}
  artworkLoading=true;$('refreshart').disabled=true;setStatus('Downloading missing card images…');
- try{const records=await lookupNames(names);if(epoch!==sessionEpoch)return;for(const card of all)if(records[card.name]){card.localImages=records[card.name].localImages;card.artworkVersion=records[card.name].artworkVersion;if(records[card.name].artworkError)card.artworkError=records[card.name].artworkError;else delete card.artworkError;cacheArtwork(card);}restoreArt();render();const missing=[...new Set(all.filter(c=>c.id&&(!hasArtwork(c)||c.artworkVersion!==2)).map(c=>c.name))];setStatus(missing.length?'High-resolution images unavailable for '+missing.join(', ')+'. Click Images to retry.':'High-resolution card images ready.');}
+ try{const records=await lookupNames(names),byId={};for(let i=0;i<tokenIds.length;i+=250)Object.assign(byId,await window.cards.lookupIds(tokenIds.slice(i,i+250)));if(epoch!==sessionEpoch)return;for(const card of all){const record=(card.token||card.tokenTemplate)?byId[card.id]:records[card.name];if(record){card.localImages=record.localImages;card.artworkVersion=record.artworkVersion;if(record.artworkError)card.artworkError=record.artworkError;else delete card.artworkError;cacheArtwork(card);}}restoreArt();render();const missing=[...new Set(all.filter(c=>c.id&&(!hasArtwork(c)||c.artworkVersion!==2)).map(c=>c.name))];setStatus(missing.length?'High-resolution images unavailable for '+missing.join(', ')+'. Click Images to retry.':'High-resolution card images ready.');}
  catch(error){setStatus('Card images could not download: '+error.message+'. Click Images to retry.');}
  finally{artworkLoading=false;$('refreshart').disabled=importing;}
 }
@@ -619,7 +643,7 @@ dock=createHandDock({root:$('hand-dock'),track:$('dock-scroll'),items:$('dock-it
 cardPreview=createCardPreview({roots:[document.body],getCard:inspectionCard,renderCard:cardButton,renderDetails:renderInspector});
 boardPicker=createBoardInteraction({getGame:()=>g,getSeat:()=>seat,renderCard:card=>cardButton(card,{interactive:false}),el,button,setStatus});
 manaUI=createManaUI({getGame:()=>g,getSeat:()=>seat,selectSeat,toggleTapped,findCard,dispatch,setStatus,el,button,boardPicker,useLoyaltyAbility,renderCard:(card,options)=>cardButton(card,{...options,interactive:false})});
-combatUI=createCombatUI({getGame:()=>g,getSeat:()=>seat,selectSeat,dispatch,setStatus,el,button,boardPicker,renderCard:card=>cardButton(card,{interactive:false}),showStack:()=>{showPanel();setPanel('stack');}});
+combatUI=createCombatUI({openLibrary:owner=>openPile(owner,'library'),getGame:()=>g,getSeat:()=>seat,selectSeat,dispatch,setStatus,el,button,boardPicker,renderCard:card=>cardButton(card,{interactive:false}),showStack:()=>{showPanel();setPanel('stack');}});
 turnPresentation=createTurnPresentation({getGame:()=>g,getSeat:()=>seat,getEpoch:()=>sessionEpoch});
 cardMotion=createCardMotion({getSeat:()=>seat,getEpoch:()=>sessionEpoch});
 castPresentation=createCastPresentation({getGame:()=>g,renderCard:(card,options)=>cardButton(card,{...options,interactive:false}),resolveArt:card=>({...card,localImages:findCard(g,card.instance)?.card.localImages||artCache.get(card.id||card.name)?.localImages}),priorityControls:()=>manaUI.priorityControls({id:'play-priority-controls',responses:true}),el,button});

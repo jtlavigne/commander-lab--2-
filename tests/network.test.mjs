@@ -238,3 +238,57 @@ test('Pass all declines a peer legal response across reconnect while another sea
  await third.send({type:'pass'});await sync();for(const c of clients){assert.equal(c.snapshot.game.stack.length,0);assert.equal(c.snapshot.game.players[0].life,41);}
  await peer.send({type:'responseMode',mode:'prompt'});await sync();assert.equal(host.snapshot.game.players[1].responseMode,'prompt');assert.ok(host.snapshot.game.players[1].zones.hand.every(c=>c.hidden));
 });
+
+
+test('manual library searches reveal only the searching client and move the selected card rather than draw the top',async t=>{
+ const seed=game(3);seed.pendingEffect={kind:'combat-manual',owner:1,name:'Manual tutor',text:'Search your library for a card, put it into your hand, then shuffle.'};
+ const {server,room,clients:[host,peer,third]}=await setup(t,3,{seed,checkpoint:true});
+ const sync=async()=>{const rev=server.rooms.get(room.code).revision;await eventually(()=>[host,peer,third].every(c=>c.snapshot?.revision===rev));};
+ await assert.rejects(host.send({type:'librarySearch',owner:1,open:true}),/own seat/);
+ await assert.rejects(host.send({type:'librarySearch',open:true}),/pending effect/);
+ await peer.send({type:'librarySearch',open:true});await sync();
+ assert.equal(peer.snapshot.game.players[1].zones.library[1].name,'Secret next 1');
+ for(const other of [host,third])assert.ok(!JSON.stringify(other.snapshot).includes('Secret next 1'));
+ peer.disconnectForTest();await host.send({type:'responseMode',mode:'prompt'});await sync();await eventually(()=>peer.snapshot?.game.players[1].librarySearch===true);
+ // Resume the same private search after a reconnect; the top card stays put.
+ const chosen=seed.players[1].zones.library[1].instance,top=seed.players[1].zones.library[0].instance;
+ await eventually(()=>peer.snapshot?.game.players[1].zones.library.some(c=>c.instance===chosen));
+ await assert.rejects(peer.send({type:'manualResolved'}),/Finish the library search/);
+ await peer.send({type:'move',id:chosen,to:'hand'});await sync();
+ assert.ok(peer.snapshot.game.players[1].zones.hand.some(c=>c.instance===chosen));assert.equal(peer.snapshot.game.players[1].zones.library[0].instance,top);
+ assert.equal(server.rooms.get(room.code).game.pendingEffect.kind,'combat-manual');
+ await peer.send({type:'librarySearch',open:false});await sync();
+ assert.ok(peer.snapshot.game.players[1].zones.library.every(c=>c.hidden));
+ await assert.rejects(peer.send({type:'move',id:top,to:'battlefield'}),/top of your library/);
+ await peer.send({type:'manualResolved'});await sync();assert.equal(peer.snapshot.game.pendingEffect,undefined);
+ for(const other of [host,third])assert.ok(!JSON.stringify(other.snapshot).includes('Secret next 1'));
+});
+
+
+test('manual search gates preserve automatic effect choices and concealed libraries',()=>{
+ const g=game(2);g.pendingEffect={kind:'oracle-choice',owner:0,name:'Search',context:{},step:{op:'search'}};
+ assert.throws(()=>reduceAction(g,{type:'librarySearch',open:true},0),/search choices/);
+ delete g.pendingEffect;const opened=reduceAction(g,{type:'librarySearch',open:true},0).game;
+ for(const type of ['advance','endTurn','step'])assert.throws(()=>reduceAction(opened,{type,step:4},0),/Finish the library search/);
+ assert.throws(()=>reduceAction(opened,{type:'move',id:opened.players[1].zones.library[0].instance,to:'hand'},0),/control/);
+ const ids=opened.players[0].zones.library.map(c=>c.instance),finished=reduceAction(opened,{type:'librarySearch',open:false,shuffle:false},0).game;
+ assert.deepEqual(finished.players[0].zones.library.map(c=>c.instance),ids);assert.ok(projectGame(finished,0).players[0].zones.library.every(c=>c.hidden));
+ const reset=reduceAction(opened,{type:'reset'},0,{host:true}).game;assert.equal(reset.players[0].librarySearch,undefined);
+});
+
+test('token reserves are private while created copies synchronize by exact card ID',async t=>{
+ const seed=game(),template={id:'992cb1e0-e846-4710-b49e-a748e4ebffa5',name:"Tamiyo's Notebook",type_line:'Token Legendary Artifact',oracle_text:'{T}: Draw a card.',tokenTemplate:true,localImages:['data:image/png;base64,local']};seed.players[0].tokenCatalog=[template];
+ const {clients}=await setup(t,2,{seed,checkpoint:true}),[host,peer]=clients;
+ assert.equal(host.snapshot.game.players[0].tokenCatalog.length,1);assert.equal(peer.snapshot.game.players[0].tokenCatalog,undefined);
+ await assert.rejects(peer.send({type:'token',templateIndex:0,count:1}),/reserve/);
+ await host.send({type:'token',templateIndex:0,count:1});await eventually(()=>peer.snapshot.revision===host.snapshot.revision);
+ for(const client of clients){const card=client.snapshot.game.players[0].zones.battlefield[0];assert.equal(card.id,template.id);assert.equal(card.name,template.name);assert.equal(card.localImages,undefined);assert.equal(card.token,true);}
+ peer.disconnectForTest();await host.send({type:'life',delta:1});await eventually(()=>peer.snapshot.revision===host.snapshot.revision);assert.equal(peer.snapshot.game.players[0].tokenCatalog,undefined);assert.equal(peer.snapshot.game.players[0].zones.battlefield[0].id,template.id);
+});
+
+test('token creation triggers survive shared validation, response priority and reconnect',async t=>{
+ const records=JSON.parse(await fs.readFile(new URL('./fixtures/playtest-decks/jace.json',import.meta.url))),seed=game(),staff=card('Staff of the Storyteller',{...records.cards.find(c=>c.name==='Staff of the Storyteller'),battlefieldId:'staff-field'});seed.players[0].zones.battlefield=[staff];seed.players[0].tokenCatalog=[{name:'Warrior',type_line:'Token Creature',power:'1',toughness:'1',colors:['G'],oracle_text:''}];
+ const {clients}=await setup(t,2,{seed,checkpoint:true}),[host,peer]=clients,sync=()=>eventually(()=>peer.snapshot.revision===host.snapshot.revision);
+ await host.send({type:'token',templateIndex:0,count:3});await sync();assert.equal(host.snapshot.game.stack.length,1);assert.equal(host.snapshot.game.stack[0].combatTrigger.event.kind,'create-token');assert.equal(host.snapshot.game.players[0].zones.battlefield[0].counters.story,undefined);
+ peer.disconnectForTest();await host.send({type:'pass'});await sync();assert.equal(peer.snapshot.game.stack.length,1);await peer.send({type:'pass'});await sync();assert.equal(peer.snapshot.game.stack.length,0);assert.equal(peer.snapshot.game.players[0].zones.battlefield[0].counters.story,1);
+});

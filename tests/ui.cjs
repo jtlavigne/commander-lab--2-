@@ -20,6 +20,7 @@ app.whenReady().then(async()=>{
   'Test Variable':{type_line:'Creature',power:'*',toughness:'*',oracle_text:'Its power and toughness depend on the battlefield.'},
   'Test Saga':{type_line:'Enchantment — Saga',oracle_text:'I — Draw a card.\nII — Draw a card.'}
  };
+ ipcMain.handle('cards-tokens',()=>({tokens:[],warnings:[]}));
  ipcMain.handle('cards-batch',(_,names)=>Object.fromEntries(names.map(name=>[name,{id:'fixture-'+name,name,type_line:'QA fixture',oracle_text:'Test card text.',artworkVersion:2,localImages:name==='Test Commander'?[frontArt,backArt]:[frontArt],card_faces:name==='Test Commander'?[{name:'Test Commander',oracle_text:'Front face.',image_uris:{normal:'front'}},{name:'Test Back',oracle_text:'Back face.',image_uris:{normal:'back'}}]:undefined,...permanentFixtures[name]}])));
  const win=new BrowserWindow({show:false,width:1500,height:960,webPreferences:{preload:path.join(__dirname,'..','preload.cjs'),contextIsolation:true,nodeIntegration:false,sandbox:true,backgroundThrottling:false}});
  win.setContentSize(1500,960);
@@ -46,7 +47,7 @@ app.whenReady().then(async()=>{
   const alt=(type,code='AltLeft')=>win.webContents.debugger.sendCommand('Input.dispatchKeyEvent',{type,key:'Alt',code,location:code==='AltLeft'?1:2,windowsVirtualKeyCode:18,modifiers:type==='keyDown'?1:0});
   const press=async key=>{const code='Key'+key.toUpperCase();await win.webContents.debugger.sendCommand('Input.dispatchKeyEvent',{type:'keyDown',key,code,windowsVirtualKeyCode:key.toUpperCase().charCodeAt(0)});await win.webContents.debugger.sendCommand('Input.dispatchKeyEvent',{type:'keyUp',key,code,windowsVirtualKeyCode:key.toUpperCase().charCodeAt(0)});};
   const clickUI=async selector=>{
-   const point=await run(`(()=>{const r=document.querySelector(${JSON.stringify(selector)}).getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2};})()`);
+   const point=await run(`(()=>{const node=document.querySelector(${JSON.stringify(selector)});if(node.closest('#inspector'))node.scrollIntoView({block:'nearest'});const r=node.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2};})()`);
    await mouse({type:'mouseMoved',...point});await mouse({type:'mousePressed',...point,button:'left',buttons:1,clickCount:1});await mouse({type:'mouseReleased',...point,button:'left',buttons:0,clickCount:1});
   };
   const peek=async selector=>{
@@ -231,6 +232,17 @@ app.whenReady().then(async()=>{
   await run("document.getElementById('pile-dialog').close()");
   await run("document.querySelector('.player-mat[data-seat=\"0\"] .pile.library').click()");
   assert.equal(await run("document.getElementById('pile-search').value"),'','Reopening the library must start with every card visible');
+  await run("document.getElementById('pile-dialog').close()");
+  const placementBefore=JSON.parse(await run("localStorage.getItem('commanderLab')")),placementCard=placementBefore.players[0].zones.hand[0].instance,placementOrder=placementBefore.players[0].zones.library.map(c=>c.instance);
+  await run(drag(placementCard,'.player-mat[data-seat="0"] .pile.library',.7,.5,true));await run("document.dispatchEvent(new DragEvent('dragend',{bubbles:true}))");
+  assert.deepEqual(await run("JSON.parse(localStorage.getItem('commanderLab')).players[0].zones.library.map(c=>c.instance)"),[placementCard,...placementOrder]);await run("document.getElementById('undo').click()");
+  await peek('#dock-items [data-card="'+placementCard+'"]');
+  await run("[...document.querySelectorAll('#inspector button')].find(b=>b.textContent==='Library bottom').click()");
+  assert.deepEqual(await run("JSON.parse(localStorage.getItem('commanderLab')).players[0].zones.library.map(c=>c.instance)"),[...placementOrder,placementCard]);await alt('keyUp');await run("document.getElementById('undo').click()");
+  await peek('#dock-items [data-card="'+placementCard+'"]');
+  await run("document.getElementById('library-position').value='2';[...document.querySelectorAll('#inspector button')].find(b=>b.textContent==='Put in library').click()");
+  assert.deepEqual(await run("JSON.parse(localStorage.getItem('commanderLab')).players[0].zones.library.map(c=>c.instance)"),[placementOrder[0],placementCard,...placementOrder.slice(1)]);await alt('keyUp');await run("document.getElementById('undo').click()");
+
   await run("document.getElementById('pile-dialog').close()");
   // Stats and tokens use actual HTML forms, which work in Electron without prompt().
   await run("document.querySelector('.player-mat[data-seat=\"0\"] .life-total').click();document.getElementById('life-total').value='34';document.getElementById('poison-total').value='2';document.getElementById('stats-form').requestSubmit()");

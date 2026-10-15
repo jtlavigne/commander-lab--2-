@@ -12,15 +12,32 @@ function parseLoyalty(text,paragraph){
  return {cost,label:cost.replace('-','−'),text:match[2],paragraph,variable:cost.includes('X'),delta:cost.includes('X')?null:Number(cost),sign:cost.startsWith('-')?-1:1};
 }
 const affects=matchesAbilityRecipient;
-export function availableLoyaltyAbilities(g,owner,card){
+export function availableLoyaltyAbilities(g,owner,card,visited=new Set()){
  if(card.faceDown)return [];
+ // Ability-copying effects form a graph (two walkers can copy each other).
+ // Stop revisiting an incarnation while retaining its printed/quoted abilities.
  const result=loyaltyAbilities(card).map(a=>({...a,key:'printed:'+a.paragraph,printed:true}));
  for(const grant of grantedAbilities(g,owner,card)){
    const ability=parseLoyalty(grant.text,grant.paragraph);if(!ability)continue;
    // Repeated identical granted abilities provide the same available action.
    if(result.some(a=>a.cost===ability.cost&&a.text===ability.text))continue;
    result.push({...ability,key:grant.key,printed:false,grantedBy:grant.sourceName});
- }return result;
+ }
+ if(visited.has(card.instance))return result;
+ const next=new Set(visited);next.add(card.instance);
+ const field=g.players.flatMap((p,controller)=>p.zones.battlefield.filter(c=>!c.faceDown).map(c=>({card:c,owner:controller})));
+ const isSelf=(subject,source)=>[source.name,cardFace(source).name,(cardFace(source).name||source.name).split(',')[0]].some(name=>clean(subject).toLowerCase()===clean(name).toLowerCase());
+ for(const source of field)for(const raw of paragraphs(source.card)){
+  const match=clean(raw).match(/^(.+?) has (?:all )?(?:the )?loyalty abilities of (.+?)\.$/i);if(!match)continue;
+  const applies=isSelf(match[1],source.card)?card.instance===source.card.instance:affects(match[1],card,owner,source.card,source.owner);
+  if(!applies)continue;
+  const providers=/^all other planeswalkers on the battlefield$/i.test(match[2])?field.filter(p=>p.card.instance!==card.instance&&/\bPlaneswalker\b/.test(cardFace(p.card).type_line||'')):isSelf(match[2],source.card)?[source]:[];
+  for(const provider of providers)for(const ability of availableLoyaltyAbilities(g,provider.owner,provider.card,next)){
+   if(result.some(a=>a.cost===ability.cost&&a.text===ability.text))continue;
+   result.push({...ability,key:'inherited:'+provider.card.instance+':'+ability.key,printed:false,grantedBy:provider.card.name});
+  }
+ }
+ return result;
 }
 export function getLoyaltyAbility(g,owner,card,ref){const abilities=availableLoyaltyAbilities(g,owner,card);return typeof ref==='number'||/^\d+$/.test(String(ref))?abilities[Number(ref)]:abilities.find(a=>a.key===ref);}
 export function loyaltyStatus(g,owner,card){

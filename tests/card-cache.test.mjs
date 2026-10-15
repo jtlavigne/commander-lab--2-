@@ -49,3 +49,18 @@ test('an offline quality upgrade preserves existing artwork and remains retryabl
  const cache=createCardCache({directory:dir,client:{collection:async()=>{throw Error('Use cached metadata');}},fetchImpl:async()=>{throw Error('Offline');}});
  const result=(await cache.lookupBatch(['Forest'])).Forest;assert.ok(result.localImages[0]);assert.equal(result.artworkVersion,1);assert.match(result.artworkError,/Offline/);
 });
+
+test('token imports use related IDs, Oracle fallback and disk artwork without name collisions',async t=>{
+ const fixture=JSON.parse(await fs.readFile(new URL('./fixtures/token-catalog.json',import.meta.url))),book=fixture.tokens.find(c=>c.name==="Tamiyo's Notebook"),warrior=fixture.warriors[0];
+ const maker={id:'maker',name:'Warrior maker',oracle_text:'Create a 1/1 green Elf Warrior creature token.'},cards=[fixture.cards[0],maker],tokens=[...fixture.tokens,warrior];let lookups=0,searches=0,images=0;
+ const cache=createCardCache({directory:await directory(t),client:{collection:async()=>({data:structuredClone(cards)}),byId:async id=>{lookups++;return structuredClone(tokens.find(c=>c.id===id));},searchTokens:async query=>{searches++;assert.match(query,/Elf Warrior.*pow:1 tou:1 c=G/);return [structuredClone(warrior)];}},fetchImpl:async()=>{images++;return imageResponse();}});
+ await cache.lookupBatch(cards.map(c=>c.name));const first=await cache.lookupTokens(cards.map(c=>c.name));
+ assert.deepEqual(first.warnings,[]);assert.equal(first.tokens.length,3);assert.ok(first.tokens.every(c=>c.localImages[0]));
+ const before={lookups,searches,images};await cache.lookupTokens(cards.map(c=>c.name));assert.deepEqual({lookups,searches,images},before);
+ assert.equal((await cache.lookupIds([book.id]))[book.id].name,book.name);assert.deepEqual({lookups,searches,images},before);
+});
+test('missing token art retains a text template and reports a retryable warning',async t=>{
+ const maker={name:'Maker',oracle_text:'Create a 1/1 green Warrior creature token.'};
+ const cache=createCardCache({directory:await directory(t),client:{collection:async()=>({data:[maker]}),searchTokens:async()=>[]},fetchImpl:async()=>imageResponse()});
+ await cache.lookupBatch(['Maker']);const reserve=await cache.lookupTokens(['Maker']);assert.equal(reserve.tokens[0].name,'Warrior');assert.match(reserve.warnings.join(' '),/text template/);
+});

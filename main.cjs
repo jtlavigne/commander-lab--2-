@@ -23,6 +23,8 @@ app.whenReady().then(()=>{
  ipcMain.handle('app-exit',event=>{if(event.sender===mainWindow?.webContents){app.quit();return true;}return {tableError:'Untrusted window.'};});
 
  const cache=createCardCache({directory:path.join(app.getPath('userData'),'cards'),client});
+ ipcMain.handle('cards-tokens',(_,names)=>cache.lookupTokens(names));
+ ipcMain.handle('cards-by-id',(_,ids)=>cache.lookupIds(ids));
  ipcMain.handle('cards-batch',(event,names)=>cache.lookupBatch(names,progress=>{if(!event.sender.isDestroyed())event.sender.send('cards-progress',progress);}));
  ipcMain.handle('card',async(_,name)=>{const result=await cache.lookupBatch([name]);return result[name.trim()];});
  const win=new BrowserWindow({width:1500,height:960,minWidth:1000,minHeight:760,show:false,backgroundColor:'#111615',autoHideMenuBar:true,webPreferences:{preload:path.join(__dirname,'preload.cjs'),contextIsolation:true,nodeIntegration:false,sandbox:true}});

@@ -86,3 +86,25 @@ test('manual counter edits support piles and remove zero counts without changing
  assert.deepEqual(zero.players[0].zones.exile[0].counters,{});assert.deepEqual(zero.players[0].zones.exile[0].localImages,g.players[0].zones.exile[0].localImages);
  assert.throws(()=>reduceAction(g,{type:'counterEdit',id:'Exiled',counter:'time',delta:1},0),/control/);
 });
+
+
+for(const shared of [false,true])test((shared?'shared':'local')+' manual library placement defaults to top and preserves the other cards',()=>{
+ const g=table();g.players[0].zones.library=['A','B','C'].map(id=>card(id));g.players[0].zones.hand=[card('Returned')];
+ const reduce=shared?reduceAction:reduceGameAction;
+ for(const [placement,expected] of [[undefined,['Returned','A','B','C']],['bottom',['A','B','C','Returned']],[3,['A','B','Returned','C']]]){
+  const next=reduce(g,{type:'move',id:'Returned',to:'library',...(placement===undefined?{}:{libraryPosition:placement})},0).game;
+  assert.deepEqual(next.players[0].zones.library.map(c=>c.instance),expected);assert.equal(next.players[0].zones.hand.length,0);
+ }
+ assert.deepEqual(g.players[0].zones.library.map(c=>c.instance),['A','B','C']);
+ for(const libraryPosition of [0,-1,5,1.5,'3','bad'])assert.throws(()=>reduce(g,{type:'move',id:'Returned',to:'library',libraryPosition},0),/library position/);
+});
+
+test('manual library placement reorders within a library and retains zone replacements',()=>{
+ const g=table();g.players[0].zones.library=['A','B','C'].map(id=>card(id));g.players[0].librarySearch=true;
+ let next=reduceAction(g,{type:'move',id:'A',to:'library',libraryPosition:'bottom'},0).game;
+ assert.deepEqual(next.players[0].zones.library.map(c=>c.instance),['B','C','A']);
+ next=reduceAction(next,{type:'libraryTop',id:'A'},0).game;assert.deepEqual(next.players[0].zones.library.map(c=>c.instance),['A','B','C']);
+ assert.throws(()=>reduceAction(next,{type:'move',id:'A',to:'library',libraryPosition:4},0),/library position/);
+ g.stack=[{card:card('Flashback'),owner:0,flashback:true}];next=act(g,{type:'move',id:'Flashback',to:'library'});
+ assert.equal(next.players[0].zones.exile.at(-1).instance,'Flashback');assert.deepEqual(next.players[0].zones.library.map(c=>c.instance),['A','B','C']);
+});

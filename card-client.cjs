@@ -23,6 +23,8 @@ function createCardClient({fetchImpl=fetch,now=Date.now,sleep=ms=>new Promise(r=
  }
  function enqueue(fn){const result=queue.then(fn);queue=result.catch(()=>{});return result;}
  return {
+  byId(id){if(typeof id!=='string'||!/^[a-f0-9-]{36}$/i.test(id))return Promise.reject(Error('Invalid card ID'));return enqueue(()=>request('/cards/'+id,{},id));},
+  searchTokens(query){return enqueue(async()=>{try{return (await request('/cards/search?q='+encodeURIComponent(query),{},'token search')).data||[];}catch(error){if(error.message.endsWith('(404)'))return [];throw error;}});},
   lookup(name){return enqueue(()=>request('/cards/named?exact='+encodeURIComponent(name),{},name));},
   collection(names){return enqueue(async()=>{
    const unique=[...new Map(names.map(name=>[name.toLowerCase(),name])).values()];const data=[],not_found=[];

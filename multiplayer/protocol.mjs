@@ -36,13 +36,15 @@ export function projectGame(game,seat,{log=[],automatic=false,epoch=0}={}){
  const pending=game.pendingEffect,choice=pending?.kind==='oracle-choice'&&pending.owner===seat?pending.step:null;
  if(view.pendingEffect?.kind==='oracle-choice'&&view.pendingEffect.step.op==='secretNumber'){view.pendingEffect.step.submitted=Object.keys(view.pendingEffect.step.values||{}).map(Number);delete view.pendingEffect.step.values;}
  for(const [owner,p] of view.players.entries()){
+  if(owner!==seat)delete p.tokenCatalog;
   // Legality details can name cards still concealed in this player's deck.
   if(owner!==seat&&view.lobby?.decks?.[owner])delete view.lobby.decks[owner].identityNotes;
   const handReveal=pending?.kind==='oracle-choice'&&pending.owner===seat&&pending.step.op==='viewHand'&&pending.step.target===owner;if(owner!==seat&&!handReveal)p.zones.hand=p.zones.hand.map((card,index)=>({...hidden(card),instance:'concealed-hand-'+owner+'-'+index}));
+  const manualSearch=owner===seat&&p.librarySearch;
   const revealed=owner===seat&&choice&&(choice.op==='search'||['iterationHand','iterationBottom','scry','orderTop','surveil','selectLook','orderBottomLibrary'].includes(choice.op));
   // Never send stable card IDs for concealed libraries: otherwise a client
   // could track a previously revealed card through a shuffle.
-  p.zones.library=p.zones.library.map((card,index)=>(revealed&&(choice.op==='search'||choice.ids.includes(card.instance))||pending?.revealed?.owner===owner&&pending.revealed.ids.includes(card.instance))?card:{...hidden(card),instance:'concealed-library-'+owner+'-'+index});
+  p.zones.library=p.zones.library.map((card,index)=>(manualSearch||revealed&&(choice.op==='search'||choice.ids.includes(card.instance))||pending?.revealed?.owner===owner&&pending.revealed.ids.includes(card.instance))?card:{...hidden(card),instance:'concealed-library-'+owner+'-'+index});
   p.zones.battlefield=p.zones.battlefield.map(card=>owner!==seat&&card.faceDown?{...(card.manifested?publicManifest(card):hidden(card)),tapped:card.tapped,tablePosition:card.tablePosition,ownerSeat:card.ownerSeat,battlefieldId:card.battlefieldId}:card);
  }
  if(pending&&pending.owner!==seat)view.pendingEffect={kind:'remote-choice',owner:pending.owner,name:pending.name,...(pending.revealed?{revealed:cleanData(pending.revealed)}:{})};

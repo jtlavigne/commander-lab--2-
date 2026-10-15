@@ -5,6 +5,7 @@ const records=require('./fixtures/commander/color-identity-regressions.json').ca
 app.setPath('userData',path.join(__dirname,'..','.qa','color-identity-profile'));app.disableHardwareAcceleration();
 app.whenReady().then(async()=>{
  const network=installMultiplayer({ipcMain,app}),windows=[],errors=[],art=nativeImage.createFromBitmap(Buffer.alloc(8*12*4,170),{width:8,height:12}).toDataURL();
+ ipcMain.handle('cards-tokens',()=>({tokens:[],warnings:[]}));
  ipcMain.handle('cards-batch',(_event,names)=>Object.fromEntries(names.map(name=>[name,{...records.find(c=>c.name===name),localImages:[art],artworkVersion:2}])));
  const run=(w,s)=>w.webContents.executeJavaScript(s,true),click=(w,s)=>run(w,`document.querySelector(${JSON.stringify(s)}).click()`),snapshot=w=>run(w,'window.tableNetwork.get().then(v=>v.snapshot)');
  async function wait(fn){const start=Date.now();while(!await fn()){if(Date.now()-start>8000)throw Error('Color identity UI timed out');await new Promise(r=>setTimeout(r,15));}}

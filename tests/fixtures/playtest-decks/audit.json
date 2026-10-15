@@ -1,0 +1,5403 @@
+[
+  {
+    "deck": "atraxa",
+    "total": 100,
+    "cards": [
+      {
+        "name": "Atraxa, Praetors' Voice",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/2xm/190/atraxa-praetors-voice?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Atraxa, Praetors' Voice",
+            "text": "Flying, vigilance, deathtouch, lifelink",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Atraxa, Praetors' Voice",
+            "text": "At the beginning of your end step, proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Adarkar Wastes",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/eoc/147/adarkar-wastes?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Adarkar Wastes",
+            "text": "{T}: Add {C}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Adarkar Wastes",
+            "text": "{T}: Add {W} or {U}. This land deals 1 damage to you.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "An Offer You Can't Refuse",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/fdn/160/an-offer-you-cant-refuse?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "An Offer You Can't Refuse",
+            "text": "Counter target noncreature spell. Its controller creates two Treasure tokens. (They're artifacts with \"{T}, Sacrifice this token: Add one mana of any color.\")",
+            "status": "FAIL (manual resolution)",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Counter target noncreature spell. Its controller creates two Treasure tokens. (They're artifacts with \"{T}, Sacrifice this token: Add one mana of any color.\")",
+            "recognized": false
+          }
+        ]
+      },
+      {
+        "name": "Arcane Denial",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/msc/147/arcane-denial?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Arcane Denial",
+            "text": "Counter target spell. Its controller may draw up to two cards at the beginning of the next turn's upkeep.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Arcane Denial",
+            "text": "You draw a card at the beginning of the next turn's upkeep.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Counter target spell. Its controller may draw up to two cards at the beginning of the next turn's upkeep.\nYou draw a card at the beginning of the next turn's upkeep.",
+            "recognized": true
+          }
+        ]
+      },
+      {
+        "name": "Arcane Signet",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/20/arcane-signet?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Arcane Signet",
+            "text": "{T}: Add one mana of any color in your commander's color identity.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Ashiok, Dream Render",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/war/228/ashiok-dream-render?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Ashiok, Dream Render",
+            "text": "Spells and abilities your opponents control can't cause their controller to search their library.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Ashiok, Dream Render",
+            "text": "−1: Target player mills four cards. Then exile each opponent's graveyard.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Beast Within",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/msc/169/beast-within?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Beast Within",
+            "text": "Destroy target permanent. Its controller creates a 3/3 green Beast creature token.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kalamax.test.mjs",
+              "tests/kalamax-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/talrand.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/arahbo-utilities.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/vehicles.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Destroy target permanent. Its controller creates a 3/3 green Beast creature token.",
+            "recognized": true
+          }
+        ]
+      },
+      {
+        "name": "Breeding Pool",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/trk/279/breeding-pool?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Breeding Pool",
+            "text": "({T}: Add {G} or {U}.)",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Breeding Pool",
+            "text": "As this land enters, you may pay 2 life. If you don't, it enters tapped.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Brokers Ascendancy",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/snc/170/brokers-ascendancy?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Brokers Ascendancy",
+            "text": "At the beginning of your end step, put a +1/+1 counter on each creature you control and a loyalty counter on each planeswalker you control.",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Brushland",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/bro/259/brushland?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Brushland",
+            "text": "{T}: Add {C}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Brushland",
+            "text": "{T}: Add {G} or {W}. This land deals 1 damage to you.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Burgeoning",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/c16/143/burgeoning?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Burgeoning",
+            "text": "Whenever an opponent plays a land, you may put a land card from your hand onto the battlefield.",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Canopy Vista",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/msc/227/canopy-vista?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Canopy Vista",
+            "text": "({T}: Add {G} or {W}.)",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Canopy Vista",
+            "text": "This land enters tapped unless you control two or more basic lands.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Caves of Koilos",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/66/caves-of-koilos?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Caves of Koilos",
+            "text": "{T}: Add {C}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Caves of Koilos",
+            "text": "{T}: Add {W} or {B}. This land deals 1 damage to you.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Chromatic Lantern",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/mbc/73/chromatic-lantern?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Chromatic Lantern",
+            "text": "Lands you control have \"{T}: Add one mana of any color.\"",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Chromatic Lantern",
+            "text": "{T}: Add one mana of any color.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/goreclaw.test.mjs",
+              "tests/goreclaw-ui.cjs",
+              "tests/combat.test.mjs",
+              "tests/phase-flow.test.mjs",
+              "tests/vehicles.test.mjs",
+              "tests/vehicles-ui.cjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Command Tower",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/22/command-tower?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Command Tower",
+            "text": "{T}: Add one mana of any color in your commander's color identity.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Consecrated Sphinx",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/2x2/43/consecrated-sphinx?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Consecrated Sphinx",
+            "text": "Flying",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Consecrated Sphinx",
+            "text": "Whenever an opponent draws a card, you may draw two cards.",
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/niv-mizzet.test.mjs",
+              "tests/niv-mizzet-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/talrand.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/arahbo-utilities.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/vehicles.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Contagion Engine",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/som/145/contagion-engine?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Contagion Engine",
+            "text": "When this artifact enters, put a -1/-1 counter on each creature target player controls.",
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/fynn.test.mjs",
+              "tests/fynn-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/arahbo.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/vehicles.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Contagion Engine",
+            "text": "{4}, {T}: Proliferate twice. (Choose any number of permanents and/or players, then give each another counter of each kind already there. Then do it again.)",
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/fynn.test.mjs",
+              "tests/fynn-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/arahbo.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/vehicles.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Contentious Plan",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/war/46/contentious-plan?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Contentious Plan",
+            "text": "Proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Contentious Plan",
+            "text": "Draw a card.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)\nDraw a card.",
+            "recognized": true
+          }
+        ]
+      },
+      {
+        "name": "Crop Rotation",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/dmr/154/crop-rotation?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Crop Rotation",
+            "text": "As an additional cost to cast this spell, sacrifice a land.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kalamax.test.mjs",
+              "tests/kalamax-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/talrand.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/arahbo-utilities.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/vehicles.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Crop Rotation",
+            "text": "Search your library for a land card, put that card onto the battlefield, then shuffle.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Search your library for a land card, put that card onto the battlefield, then shuffle.",
+            "recognized": true
+          }
+        ]
+      },
+      {
+        "name": "Cultivate",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/msc/172/cultivate?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Cultivate",
+            "text": "Search your library for up to two basic land cards, reveal those cards, put one onto the battlefield tapped and the other into your hand, then shuffle.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kalamax.test.mjs",
+              "tests/kalamax-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/talrand.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/arahbo-utilities.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/vehicles.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Search your library for up to two basic land cards, reveal those cards, put one onto the battlefield tapped and the other into your hand, then shuffle.",
+            "recognized": true
+          }
+        ]
+      },
+      {
+        "name": "Cyclonic Rift",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/rvr/40/cyclonic-rift?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Cyclonic Rift",
+            "text": "Return target nonland permanent you don't control to its owner's hand.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Cyclonic Rift",
+            "text": "Overload {6}{U} (You may cast this spell for its overload cost. If you do, change \"target\" in its text to \"each.\")",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Return target nonland permanent you don't control to its owner's hand.",
+            "recognized": true
+          },
+          {
+            "text": "Return each nonland permanent you don't control to its owner's hand.",
+            "recognized": true
+          }
+        ]
+      },
+      {
+        "name": "Deathcap Glade",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/sos/253/deathcap-glade?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Deathcap Glade",
+            "text": "This land enters tapped unless you control two or more other lands.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Deathcap Glade",
+            "text": "{T}: Add {B} or {G}.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Deepglow Skate",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/eoc/70/deepglow-skate?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Deepglow Skate",
+            "text": "When this creature enters, double the number of each kind of counter on any number of target permanents.",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Deserted Beach",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/fra/176/deserted-beach?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Deserted Beach",
+            "text": "This land enters tapped unless you control two or more other lands.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Deserted Beach",
+            "text": "{T}: Add {W} or {U}.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Displacer Kitten",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/clb/63/displacer-kitten?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Displacer Kitten",
+            "text": "Avoidance — Whenever you cast a noncreature spell, exile up to one target nonland permanent you control, then return that card to the battlefield under its owner's control.",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Dovin's Veto",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/war/193/dovins-veto?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Dovin's Veto",
+            "text": "This spell can't be countered.",
+            "status": "FAIL (manual resolution)",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Dovin's Veto",
+            "text": "Counter target noncreature spell.",
+            "status": "FAIL (manual resolution)",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "This spell can't be countered.\nCounter target noncreature spell.",
+            "recognized": false
+          }
+        ]
+      },
+      {
+        "name": "Dreamroot Cascade",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/sos/254/dreamroot-cascade?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Dreamroot Cascade",
+            "text": "This land enters tapped unless you control two or more other lands.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Dreamroot Cascade",
+            "text": "{T}: Add {G} or {U}.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Drowned Catacomb",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/69/drowned-catacomb?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Drowned Catacomb",
+            "text": "This land enters tapped unless you control an Island or a Swamp.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Drowned Catacomb",
+            "text": "{T}: Add {U} or {B}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Dryad of the Ilysian Grove",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/cmm/891/dryad-of-the-ilysian-grove?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Dryad of the Ilysian Grove",
+            "text": "You may play an additional land on each of your turns.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Dryad of the Ilysian Grove",
+            "text": "Lands you control are every basic land type in addition to their other types.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Elspeth, Sun's Champion",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/24/elspeth-suns-champion?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Elspeth, Sun's Champion",
+            "text": "+1: Create three 1/1 white Soldier creature tokens.",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Elspeth, Sun's Champion",
+            "text": "−3: Destroy all creatures with power 4 or greater.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Elspeth, Sun's Champion",
+            "text": "−7: You get an emblem with \"Creatures you control get +2/+2 and have flying.\"",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Everflowing Chalice",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/eoc/137/everflowing-chalice?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Everflowing Chalice",
+            "text": "Multikicker {2} (You may pay an additional {2} any number of times as you cast this spell.)",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/isshin.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/isshin-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/aurelia-utilities.test.mjs",
+              "tests/arahbo.test.mjs",
+              "tests/extra-combat.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Everflowing Chalice",
+            "text": "This artifact enters with a charge counter on it for each time it was kicked.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/isshin.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/isshin-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/aurelia-utilities.test.mjs",
+              "tests/arahbo.test.mjs",
+              "tests/extra-combat.test.mjs"
+            ]
+          },
+          {
+            "index": 2,
+            "face": "Everflowing Chalice",
+            "text": "{T}: Add {C} for each charge counter on this artifact.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/isshin.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/isshin-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/aurelia-utilities.test.mjs",
+              "tests/arahbo.test.mjs",
+              "tests/extra-combat.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Evolution Sage",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/ecc/105/evolution-sage?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Evolution Sage",
+            "text": "Landfall — Whenever a land you control enters, proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)",
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/fynn.test.mjs",
+              "tests/fynn-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/arahbo.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/vehicles.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Exotic Orchard",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/mbc/79/exotic-orchard?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Exotic Orchard",
+            "text": "{T}: Add one mana of any color that a land an opponent controls could produce.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Fabled Passage",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/71/fabled-passage?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Fabled Passage",
+            "text": "{T}, Sacrifice this land: Search your library for a basic land card, put it onto the battlefield tapped, then shuffle. Then if you control four or more lands, untap that land.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Farewell",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/mkc/64/farewell?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Farewell",
+            "text": "Choose one or more —",
+            "status": "FAIL (manual resolution)",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Farewell",
+            "text": "• Exile all artifacts.",
+            "status": "FAIL (manual resolution)",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Farewell",
+            "text": "• Exile all creatures.",
+            "status": "FAIL (manual resolution)",
+            "evidence": []
+          },
+          {
+            "index": 3,
+            "face": "Farewell",
+            "text": "• Exile all enchantments.",
+            "status": "FAIL (manual resolution)",
+            "evidence": []
+          },
+          {
+            "index": 4,
+            "face": "Farewell",
+            "text": "• Exile all graveyards.",
+            "status": "FAIL (manual resolution)",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Choose one or more —\n• Exile all artifacts.\n• Exile all creatures.\n• Exile all enchantments.\n• Exile all graveyards.",
+            "recognized": false
+          }
+        ]
+      },
+      {
+        "name": "Fellwar Stone",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/mbc/74/fellwar-stone?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Fellwar Stone",
+            "text": "{T}: Add one mana of any color that a land an opponent controls could produce.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Flux Channeler",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/cmm/847/flux-channeler?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Flux Channeler",
+            "text": "Whenever you cast a noncreature spell, proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Forest",
+        "quantity": 4,
+        "url": "https://scryfall.com/card/mdd/301/forest?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Forest",
+            "text": "({T}: Add {G}.)",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kalamax.test.mjs",
+              "tests/kalamax-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/talrand.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/arahbo-utilities.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/vehicles.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Generous Gift",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/msc/133/generous-gift?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Generous Gift",
+            "text": "Destroy target permanent. Its controller creates a 3/3 green Elephant creature token.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/isshin.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/isshin-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/aurelia-utilities.test.mjs",
+              "tests/arahbo.test.mjs",
+              "tests/extra-combat.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Destroy target permanent. Its controller creates a 3/3 green Elephant creature token.",
+            "recognized": true
+          }
+        ]
+      },
+      {
+        "name": "Godless Shrine",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/trk/285/godless-shrine?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Godless Shrine",
+            "text": "({T}: Add {W} or {B}.)",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Godless Shrine",
+            "text": "As this land enters, you may pay 2 life. If you don't, it enters tapped.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Golgari Signet",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/dsc/246/golgari-signet?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Golgari Signet",
+            "text": "{1}, {T}: Add {B}{G}.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Grateful Apparition",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/cmm/824/grateful-apparition?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Grateful Apparition",
+            "text": "Flying",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Grateful Apparition",
+            "text": "Whenever this creature deals combat damage to a player or planeswalker, proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Hallowed Fountain",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/trk/286/hallowed-fountain?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Hallowed Fountain",
+            "text": "({T}: Add {W} or {U}.)",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Hallowed Fountain",
+            "text": "As this land enters, you may pay 2 life. If you don't, it enters tapped.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Hinterland Harbor",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/msc/250/hinterland-harbor?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Hinterland Harbor",
+            "text": "This land enters tapped unless you control a Forest or an Island.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Hinterland Harbor",
+            "text": "{T}: Add {G} or {U}.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Ichor Rats",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/som/67/ichor-rats?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Ichor Rats",
+            "text": "Infect (This creature deals damage to creatures in the form of -1/-1 counters and to players in the form of poison counters.)",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Ichor Rats",
+            "text": "When this creature enters, each player gets a poison counter.",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Ichormoon Gauntlet",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/one/56/ichormoon-gauntlet?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Ichormoon Gauntlet",
+            "text": "Planeswalkers you control have \"[0]: Proliferate\" and \"[−12]: Take an extra turn after this one.\"",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Ichormoon Gauntlet",
+            "text": "Whenever you cast a noncreature spell, choose a counter on target permanent. Put an additional counter of that kind on that permanent.",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Inexorable Tide",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/mm2/49/inexorable-tide?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Inexorable Tide",
+            "text": "Whenever you cast a spell, proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Island",
+        "quantity": 2,
+        "url": "https://scryfall.com/card/mdd/294/island?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Island",
+            "text": "({T}: Add {U}.)",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Karn's Bastion",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/eoc/163/karns-bastion?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Karn's Bastion",
+            "text": "{T}: Add {C}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Karn's Bastion",
+            "text": "{4}, {T}: Proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)",
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/fynn.test.mjs",
+              "tests/fynn-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/arahbo.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/vehicles.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Kasmina, Enigma Sage",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/stx/196/kasmina-enigma-sage?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Kasmina, Enigma Sage",
+            "text": "Each other planeswalker you control has the loyalty abilities of Kasmina.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/playtest-decks.test.mjs",
+              "tests/token-catalog.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Kasmina, Enigma Sage",
+            "text": "+2: Scry 1.",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Kasmina, Enigma Sage",
+            "text": "−X: Create a 0/0 green and blue Fractal creature token. Put X +1/+1 counters on it.",
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/playtest-decks.test.mjs",
+              "tests/token-catalog.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
+          },
+          {
+            "index": 3,
+            "face": "Kasmina, Enigma Sage",
+            "text": "−8: Search your library for an instant or sorcery card that shares a color with this planeswalker, exile that card, then shuffle. You may cast that card without paying its mana cost.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Kodama's Reach",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/ecc/113/kodamas-reach?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Kodama's Reach",
+            "text": "Search your library for up to two basic land cards, reveal those cards, put one onto the battlefield tapped and the other into your hand, then shuffle.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kalamax.test.mjs",
+              "tests/kalamax-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/talrand.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/arahbo-utilities.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/vehicles.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Search your library for up to two basic land cards, reveal those cards, put one onto the battlefield tapped and the other into your hand, then shuffle.",
+            "recognized": true
+          }
+        ]
+      },
+      {
+        "name": "Krosan Grip",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/c21/198/krosan-grip?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Krosan Grip",
+            "text": "Split second (As long as this spell is on the stack, players can't cast spells or activate abilities that aren't mana abilities.)",
+            "status": "FAIL (manual resolution)",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Krosan Grip",
+            "text": "Destroy target artifact or enchantment.",
+            "status": "FAIL (manual resolution)",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Split second (As long as this spell is on the stack, players can't cast spells or activate abilities that aren't mana abilities.)\nDestroy target artifact or enchantment.",
+            "recognized": false
+          }
+        ]
+      },
+      {
+        "name": "Lae'zel, Vlaakith's Champion",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/clb/29/laezel-vlaakiths-champion?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Lae'zel, Vlaakith's Champion",
+            "text": "If you would put one or more counters on a creature or planeswalker you control or on yourself, put that many plus one of each of those kinds of counters on that permanent or player instead.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Lae'zel, Vlaakith's Champion",
+            "text": "Choose a Background (You can have a Background as a second commander.)",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/aurelia.test.mjs",
+              "tests/battlefield-entry.test.mjs",
+              "tests/hotseat-ui.cjs",
+              "tests/spell-resolution.test.mjs",
+              "tests/spell-resolution-ui.cjs",
+              "tests/extra-combat.test.mjs",
+              "tests/aurelia-ui.cjs",
+              "tests/aurelia-combat.test.mjs",
+              "tests/aurelia-actions-ui.cjs",
+              "tests/aurelia-utilities.test.mjs",
+              "tests/vehicles.test.mjs",
+              "tests/vehicles-ui.cjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Eladamri's Call",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/mh1/197/eladamris-call?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Eladamri's Call",
+            "text": "Search your library for a creature card, reveal that card, put it into your hand, then shuffle.",
+            "status": "FAIL (manual resolution)",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Search your library for a creature card, reveal that card, put it into your hand, then shuffle.",
+            "recognized": false
+          }
+        ]
+      },
+      {
+        "name": "Llanowar Wastes",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/soc/383/llanowar-wastes?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Llanowar Wastes",
+            "text": "{T}: Add {C}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Llanowar Wastes",
+            "text": "{T}: Add {B} or {G}. This land deals 1 damage to you.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Magistrate's Scepter",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/m19/238/magistrates-scepter?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Magistrate's Scepter",
+            "text": "{4}, {T}: Put a charge counter on this artifact.",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Magistrate's Scepter",
+            "text": "{T}, Remove three charge counters from this artifact: Take an extra turn after this one.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Narset, Parter of Veils",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/cmm/853/narset-parter-of-veils?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Narset, Parter of Veils",
+            "text": "Each opponent can't draw more than one card each turn.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Narset, Parter of Veils",
+            "text": "−2: Look at the top four cards of your library. You may reveal a noncreature, nonland card from among them and put it into your hand. Put the rest on the bottom of your library in a random order.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Nyxbloom Ancient",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/thb/190/nyxbloom-ancient?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Nyxbloom Ancient",
+            "text": "Trample",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/fynn.test.mjs",
+              "tests/fynn-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/arahbo.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/vehicles.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Nyxbloom Ancient",
+            "text": "If you tap a permanent for mana, it produces three times as much of that mana instead.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/goreclaw.test.mjs",
+              "tests/goreclaw-ui.cjs",
+              "tests/combat.test.mjs",
+              "tests/phase-flow.test.mjs",
+              "tests/vehicles.test.mjs",
+              "tests/vehicles-ui.cjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Oath of Kaya",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/war/209/oath-of-kaya?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Oath of Kaya",
+            "text": "When Oath of Kaya enters, it deals 3 damage to any target and you gain 3 life.",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Oath of Kaya",
+            "text": "Whenever an opponent attacks a planeswalker you control with one or more creatures, Oath of Kaya deals 2 damage to that player and you gain 2 life.",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Oath of Nissa",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/ogw/140/oath-of-nissa?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Oath of Nissa",
+            "text": "When Oath of Nissa enters, look at the top three cards of your library. You may reveal a creature, land, or planeswalker card from among them and put it into your hand. Put the rest on the bottom of your library in any order.",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Oath of Nissa",
+            "text": "You may spend mana as though it were mana of any color to cast planeswalker spells.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Oath of Teferi",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/cmm/934/oath-of-teferi?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Oath of Teferi",
+            "text": "When Oath of Teferi enters, exile another target permanent you control. Return it to the battlefield under its owner's control at the beginning of the next end step.",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Oath of Teferi",
+            "text": "You may activate the loyalty abilities of planeswalkers you control twice each turn rather than only once.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Overgrown Tomb",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/trk/289/overgrown-tomb?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Overgrown Tomb",
+            "text": "({T}: Add {B} or {G}.)",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Overgrown Tomb",
+            "text": "As this land enters, you may pay 2 life. If you don't, it enters tapped.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Path to Exile",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/30/path-to-exile?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Path to Exile",
+            "text": "Exile target creature. Its controller may search their library for a basic land card, put that card onto the battlefield tapped, then shuffle.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/isshin.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/isshin-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/aurelia-utilities.test.mjs",
+              "tests/arahbo.test.mjs",
+              "tests/extra-combat.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Exile target creature. Its controller may search their library for a basic land card, put that card onto the battlefield tapped, then shuffle.",
+            "recognized": true
+          }
+        ]
+      },
+      {
+        "name": "Plains",
+        "quantity": 2,
+        "url": "https://scryfall.com/card/mdd/292/plains?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Plains",
+            "text": "({T}: Add {W}.)",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/isshin.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/isshin-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/aurelia-utilities.test.mjs",
+              "tests/arahbo.test.mjs",
+              "tests/extra-combat.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Prairie Stream",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/79/prairie-stream?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Prairie Stream",
+            "text": "({T}: Add {W} or {U}.)",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Prairie Stream",
+            "text": "This land enters tapped unless you control two or more basic lands.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Prologue to Phyresis",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/one/65/prologue-to-phyresis?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Prologue to Phyresis",
+            "text": "Each opponent gets a poison counter.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Prologue to Phyresis",
+            "text": "Draw a card.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Each opponent gets a poison counter.\nDraw a card.",
+            "recognized": true
+          }
+        ]
+      },
+      {
+        "name": "Rampant Growth",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/tdc/265/rampant-growth?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Rampant Growth",
+            "text": "Search your library for a basic land card, put that card onto the battlefield tapped, then shuffle.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/goreclaw.test.mjs",
+              "tests/goreclaw-ui.cjs",
+              "tests/combat.test.mjs",
+              "tests/phase-flow.test.mjs",
+              "tests/vehicles.test.mjs",
+              "tests/vehicles-ui.cjs"
+            ]
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Search your library for a basic land card, put that card onto the battlefield tapped, then shuffle.",
+            "recognized": true
+          }
+        ]
+      },
+      {
+        "name": "Reflecting Pool",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/23/reflecting-pool?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Reflecting Pool",
+            "text": "{T}: Add one mana of any type that a land you control could produce.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Replicating Ring",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/moc/372/replicating-ring?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Replicating Ring",
+            "text": "{T}: Add one mana of any color.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/goreclaw.test.mjs",
+              "tests/goreclaw-ui.cjs",
+              "tests/combat.test.mjs",
+              "tests/phase-flow.test.mjs",
+              "tests/vehicles.test.mjs",
+              "tests/vehicles-ui.cjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Replicating Ring",
+            "text": "At the beginning of your upkeep, put a night counter on this artifact. Then if it has eight or more night counters on it, remove all of them and create eight colorless snow artifact tokens named Replicated Ring with \"{T}: Add one mana of any color.\"",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Shalai, Voice of Plenty",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/tdc/130/shalai-voice-of-plenty?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Shalai, Voice of Plenty",
+            "text": "Flying",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Shalai, Voice of Plenty",
+            "text": "You, planeswalkers you control, and other creatures you control have hexproof.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Shalai, Voice of Plenty",
+            "text": "{4}{G}{G}: Put a +1/+1 counter on each creature you control.",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Shattered Sanctum",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/sos/260/shattered-sanctum?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Shattered Sanctum",
+            "text": "This land enters tapped unless you control two or more other lands.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Shattered Sanctum",
+            "text": "{T}: Add {W} or {B}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/isshin.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/isshin-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/aurelia-utilities.test.mjs",
+              "tests/arahbo.test.mjs",
+              "tests/extra-combat.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Sol Ring",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/21/sol-ring?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Sol Ring",
+            "text": "{T}: Add {C}{C}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Sorin the Mirthless",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/vow/131/sorin-the-mirthless?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Sorin the Mirthless",
+            "text": "+1: Look at the top card of your library. You may reveal that card and put it into your hand. If you do, you lose life equal to its mana value.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Sorin the Mirthless",
+            "text": "−2: Create a 2/3 black Vampire creature token with flying and lifelink.",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Sorin the Mirthless",
+            "text": "−7: Sorin deals 13 damage to any target. You gain 13 life.",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Swamp",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/mdd/296/swamp?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Swamp",
+            "text": "({T}: Add {B}.)",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Swords to Plowshares",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/37/swords-to-plowshares?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Swords to Plowshares",
+            "text": "Exile target creature. Its controller gains life equal to its power.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/isshin.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/isshin-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/aurelia-utilities.test.mjs",
+              "tests/arahbo.test.mjs",
+              "tests/extra-combat.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Exile target creature. Its controller gains life equal to its power.",
+            "recognized": true
+          }
+        ]
+      },
+      {
+        "name": "Tamiyo, Compleated Sage",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/neo/238/tamiyo-compleated-sage?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Tamiyo, Compleated Sage",
+            "text": "Compleated ({G/U/P} can be paid with {G}, {U}, or 2 life. If life was paid, this planeswalker enters with two fewer loyalty counters.)",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Tamiyo, Compleated Sage",
+            "text": "+1: Tap up to one target artifact or creature. It doesn't untap during its controller's next untap step.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Tamiyo, Compleated Sage",
+            "text": "−X: Exile target nonland permanent card with mana value X from your graveyard. Create a token that's a copy of that card.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 3,
+            "face": "Tamiyo, Compleated Sage",
+            "text": "−7: Create Tamiyo's Notebook, a legendary colorless Book artifact token with \"Spells you cast cost {2} less to cast\" and \"{T}: Draw a card.\"",
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/playtest-decks.test.mjs",
+              "tests/token-catalog.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Tamiyo, Field Researcher",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/inr/249/tamiyo-field-researcher?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Tamiyo, Field Researcher",
+            "text": "+1: Choose up to two target creatures. Until your next turn, whenever either of those creatures deals combat damage, you draw a card.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Tamiyo, Field Researcher",
+            "text": "−2: Tap up to two target nonland permanents. They don't untap during their controller's next untap step.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Tamiyo, Field Researcher",
+            "text": "−7: Draw three cards. You get an emblem with \"You may cast spells from your hand without paying their mana costs.\"",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Teferi's Ageless Insight",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/mkc/119/teferis-ageless-insight?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Teferi's Ageless Insight",
+            "text": "If you would draw a card except the first one you draw in each of your draw steps, draw two cards instead.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/niv-mizzet.test.mjs",
+              "tests/niv-mizzet-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/talrand.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/arahbo-utilities.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/vehicles.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Teferi, Hero of Dominaria",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/dom/207/teferi-hero-of-dominaria?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Teferi, Hero of Dominaria",
+            "text": "+1: Draw a card. At the beginning of the next end step, untap up to two lands.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Teferi, Hero of Dominaria",
+            "text": "−3: Put target nonland permanent into its owner's library third from the top.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Teferi, Hero of Dominaria",
+            "text": "−8: You get an emblem with \"Whenever you draw a card, exile target permanent an opponent controls.\"",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Teferi, Master of Time",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/m21/75/teferi-master-of-time?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Teferi, Master of Time",
+            "text": "You may activate loyalty abilities of Teferi on any player's turn any time you could cast an instant.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Teferi, Master of Time",
+            "text": "+1: Draw a card, then discard a card.",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Teferi, Master of Time",
+            "text": "−3: Target creature you don't control phases out. (Treat it and anything attached to it as though they don't exist until its controller's next turn.)",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 3,
+            "face": "Teferi, Master of Time",
+            "text": "−10: Take two extra turns after this one.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Teferi, Temporal Archmage",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/cmm/125/teferi-temporal-archmage?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Teferi, Temporal Archmage",
+            "text": "+1: Look at the top two cards of your library. Put one of them into your hand and the other on the bottom of your library.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Teferi, Temporal Archmage",
+            "text": "−1: Untap up to four target permanents.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Teferi, Temporal Archmage",
+            "text": "−10: You get an emblem with \"You may activate loyalty abilities of planeswalkers you control on any player's turn any time you could cast an instant.\"",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 3,
+            "face": "Teferi, Temporal Archmage",
+            "text": "Teferi, Temporal Archmage can be your commander.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Tekuthal, Inquiry Dominus",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/eoc/78/tekuthal-inquiry-dominus?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Tekuthal, Inquiry Dominus",
+            "text": "Flying",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Tekuthal, Inquiry Dominus",
+            "text": "If you would proliferate, proliferate twice instead.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Tekuthal, Inquiry Dominus",
+            "text": "{1}{U/P}{U/P}, Remove three counters from among other artifacts, creatures, and planeswalkers you control: Put an indestructible counter on Tekuthal. ({U/P} can be paid with either {U} or 2 life.)",
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Temple Garden",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/trk/301/temple-garden?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Temple Garden",
+            "text": "({T}: Add {G} or {W}.)",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Temple Garden",
+            "text": "As this land enters, you may pay 2 life. If you don't, it enters tapped.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Tezzeret's Gambit",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/eoc/47/tezzerets-gambit?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Tezzeret's Gambit",
+            "text": "({U/P} can be paid with either {U} or 2 life.)",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/talrand.test.mjs",
+              "tests/talrand-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/arahbo-utilities.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/vehicles.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Tezzeret's Gambit",
+            "text": "Draw two cards, then proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/playtest-decks.test.mjs",
+              "tests/token-catalog.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "({U/P} can be paid with either {U} or 2 life.)\nDraw two cards, then proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)",
+            "recognized": true
+          }
+        ]
+      },
+      {
+        "name": "The Chain Veil",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/cmm/943/the-chain-veil?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "The Chain Veil",
+            "text": "At the beginning of your end step, if you didn't activate a loyalty ability of a planeswalker this turn, you lose 2 life.",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "The Chain Veil",
+            "text": "{4}, {T}: For each planeswalker you control, you may activate one of its loyalty abilities once this turn as though none of its loyalty abilities have been activated this turn.",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Thrummingbird",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/eoc/80/thrummingbird?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Thrummingbird",
+            "text": "Flying",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Thrummingbird",
+            "text": "Whenever this creature deals combat damage to a player, proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)",
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/fynn.test.mjs",
+              "tests/fynn-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/arahbo.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/vehicles.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Sword of Truth and Justice",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/mh1/229/sword-of-truth-and-justice?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Sword of Truth and Justice",
+            "text": "Equipped creature gets +2/+2 and has protection from white and from blue.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Sword of Truth and Justice",
+            "text": "Whenever equipped creature deals combat damage to a player, put a +1/+1 counter on a creature you control, then proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Sword of Truth and Justice",
+            "text": "Equip {2}",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/isshin.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/isshin-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/aurelia-utilities.test.mjs",
+              "tests/arahbo.test.mjs",
+              "tests/extra-combat.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Underground River",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/87/underground-river?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Underground River",
+            "text": "{T}: Add {C}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Underground River",
+            "text": "{T}: Add {U} or {B}. This land deals 1 damage to you.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Viral Drake",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/nph/49/viral-drake?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Viral Drake",
+            "text": "Flying",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Viral Drake",
+            "text": "Infect (This creature deals damage to creatures in the form of -1/-1 counters and to players in the form of poison counters.)",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Viral Drake",
+            "text": "{3}{U}: Proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Vorinclex, Monstrous Raider",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/khm/199/vorinclex-monstrous-raider?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Vorinclex, Monstrous Raider",
+            "text": "Trample, haste",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Vorinclex, Monstrous Raider",
+            "text": "If you would put one or more counters on a permanent or player, put twice that many of each of those kinds of counters on that permanent or player instead.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Vorinclex, Monstrous Raider",
+            "text": "If an opponent would put one or more counters on a permanent or player, they put half that many of each of those kinds of counters on that permanent or player instead, rounded down.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Vraska, Betrayal's Sting",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/ecc/88/vraska-betrayals-sting?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Vraska, Betrayal's Sting",
+            "text": "Compleated ({B/P} can be paid with {B} or 2 life. If life was paid, this planeswalker enters with two fewer loyalty counters.)",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Vraska, Betrayal's Sting",
+            "text": "0: You draw a card and lose 1 life. Proliferate.",
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/playtest-decks.test.mjs",
+              "tests/token-catalog.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
+          },
+          {
+            "index": 2,
+            "face": "Vraska, Betrayal's Sting",
+            "text": "−2: Target creature becomes a Treasure artifact with \"{T}, Sacrifice this artifact: Add one mana of any color\" and loses all other card types and abilities.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 3,
+            "face": "Vraska, Betrayal's Sting",
+            "text": "−9: If target player has fewer than nine poison counters, they get a number of poison counters equal to the difference.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Watery Grave",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/trk/306/watery-grave?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Watery Grave",
+            "text": "({T}: Add {U} or {B}.)",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Watery Grave",
+            "text": "As this land enters, you may pay 2 life. If you don't, it enters tapped.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Woodland Cemetery",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/soc/424/woodland-cemetery?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Woodland Cemetery",
+            "text": "This land enters tapped unless you control a Swamp or a Forest.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Woodland Cemetery",
+            "text": "{T}: Add {B} or {G}.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Yavimaya Coast",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/soc/425/yavimaya-coast?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Yavimaya Coast",
+            "text": "{T}: Add {C}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Yavimaya Coast",
+            "text": "{T}: Add {G} or {U}. This land deals 1 damage to you.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Zagoth Triome",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/iko/259/zagoth-triome?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Zagoth Triome",
+            "text": "({T}: Add {B}, {G}, or {U}.)",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Zagoth Triome",
+            "text": "This land enters tapped.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 2,
+            "face": "Zagoth Triome",
+            "text": "Cycling {3} ({3}, Discard this card: Draw a card.)",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      }
+    ],
+    "counts": {
+      "PASS (regression)": 62,
+      "FAIL (manual resolution)": 34,
+      "UNVERIFIED": 89
+    }
+  },
+  {
+    "deck": "jace",
+    "total": 100,
+    "cards": [
+      {
+        "name": "Jace, Multiverse Architect",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/1/jace-multiverse-architect?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Jace, Multiverse Architect",
+            "text": "At the beginning of combat on each opponent's turn, they may pay {2}. If they don't, creatures they control can't attack Jaces you control this turn.",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Jace, Multiverse Architect",
+            "text": "+1: Draw two cards, then put a card from your hand on the bottom of your library.",
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/playtest-decks.test.mjs",
+              "tests/token-catalog.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
+          },
+          {
+            "index": 2,
+            "face": "Jace, Multiverse Architect",
+            "text": "−3: Exile another target planeswalker or creature you control. Reveal cards from the top of your library until you reveal a creature or planeswalker card. Put that card onto the battlefield and the rest on the bottom of your library in a random order.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 3,
+            "face": "Jace, Multiverse Architect",
+            "text": "Jace, Multiverse Architect can be your commander.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Oath of Teferi",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/cmm/934/oath-of-teferi?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Oath of Teferi",
+            "text": "When Oath of Teferi enters, exile another target permanent you control. Return it to the battlefield under its owner's control at the beginning of the next end step.",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Oath of Teferi",
+            "text": "You may activate the loyalty abilities of planeswalkers you control twice each turn rather than only once.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Synthetic Destiny",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/45/synthetic-destiny?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Synthetic Destiny",
+            "text": "Exile all creatures you control. At the beginning of the next end step, reveal cards from the top of your library until you reveal that many creature cards, put all creature cards revealed this way onto the battlefield, then shuffle the rest of the revealed cards into your library.",
+            "status": "FAIL (manual resolution)",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Exile all creatures you control. At the beginning of the next end step, reveal cards from the top of your library until you reveal that many creature cards, put all creature cards revealed this way onto the battlefield, then shuffle the rest of the revealed cards into your library.",
+            "recognized": false
+          }
+        ]
+      },
+      {
+        "name": "Primevals' Glorious Rebirth",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/dmc/165/primevals-glorious-rebirth?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Primevals' Glorious Rebirth",
+            "text": "(You may cast a legendary sorcery only if you control a legendary creature or planeswalker.)",
+            "status": "FAIL (manual resolution)",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Primevals' Glorious Rebirth",
+            "text": "Return all legendary permanent cards from your graveyard to the battlefield.",
+            "status": "FAIL (manual resolution)",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "(You may cast a legendary sorcery only if you control a legendary creature or planeswalker.)\nReturn all legendary permanent cards from your graveyard to the battlefield.",
+            "recognized": false
+          }
+        ]
+      },
+      {
+        "name": "Jin-Gitaxias, Progress Tyrant",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/neo/59/jin-gitaxias-progress-tyrant?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Jin-Gitaxias, Progress Tyrant",
+            "text": "Whenever you cast an artifact, instant, or sorcery spell, copy that spell. You may choose new targets for the copy. This ability triggers only once each turn. (A copy of a permanent spell becomes a token.)",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Jin-Gitaxias, Progress Tyrant",
+            "text": "Whenever an opponent casts an artifact, instant, or sorcery spell, counter that spell. This ability triggers only once each turn.",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Quantum Misalignment",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/msc/152/quantum-misalignment?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Quantum Misalignment",
+            "text": "Create a token that's a copy of target creature you control, except it isn't legendary.",
+            "status": "FAIL (manual resolution)",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Quantum Misalignment",
+            "text": "Rebound (If you cast this spell from your hand, exile it as it resolves. At the beginning of your next upkeep, you may cast this card from exile without paying its mana cost.)",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/aurelia.test.mjs",
+              "tests/battlefield-entry.test.mjs",
+              "tests/hotseat-ui.cjs",
+              "tests/spell-resolution.test.mjs",
+              "tests/spell-resolution-ui.cjs",
+              "tests/extra-combat.test.mjs",
+              "tests/aurelia-ui.cjs",
+              "tests/aurelia-combat.test.mjs",
+              "tests/aurelia-actions-ui.cjs",
+              "tests/aurelia-utilities.test.mjs",
+              "tests/vehicles.test.mjs",
+              "tests/vehicles-ui.cjs"
+            ]
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Create a token that's a copy of target creature you control, except it isn't legendary.",
+            "recognized": false
+          }
+        ]
+      },
+      {
+        "name": "Spark Double",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/rvr/62/spark-double?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Spark Double",
+            "text": "You may have this creature enter as a copy of a creature or planeswalker you control, except it enters with an additional +1/+1 counter on it if it's a creature, it enters with an additional loyalty counter on it if it's a planeswalker, and it isn't legendary.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Windcrag Siege",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/52/windcrag-siege?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Windcrag Siege",
+            "text": "As this enchantment enters, choose Mardu or Jeskai.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Windcrag Siege",
+            "text": "• Mardu — If a creature attacking causes a triggered ability of a permanent you control to trigger, that ability triggers an additional time.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Windcrag Siege",
+            "text": "• Jeskai — At the beginning of your upkeep, create a 1/1 red Goblin creature token. It gains lifelink and haste until end of turn.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Archon of Cruelty",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/47/archon-of-cruelty?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Archon of Cruelty",
+            "text": "Flying",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Archon of Cruelty",
+            "text": "Whenever this creature enters or attacks, target opponent sacrifices a creature or planeswalker of their choice, discards a card, and loses 3 life. You draw a card and gain 3 life.",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Brainstorm",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/39/brainstorm?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Brainstorm",
+            "text": "Draw three cards, then put two cards from your hand on top of your library in any order.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Draw three cards, then put two cards from your hand on top of your library in any order.",
+            "recognized": true
+          }
+        ]
+      },
+      {
+        "name": "Brainsurge",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/40/brainsurge?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Brainsurge",
+            "text": "Draw four cards, then put two cards from your hand on top of your library in any order.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/playtest-decks.test.mjs",
+              "tests/token-catalog.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Draw four cards, then put two cards from your hand on top of your library in any order.",
+            "recognized": true
+          }
+        ]
+      },
+      {
+        "name": "Identity Echo",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/fra/87/identity-echo?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Identity Echo",
+            "text": "{3}{R}: Exile target creature or planeswalker you control. Reveal cards from the top of your library until you reveal a creature or planeswalker card. Put that card onto the battlefield and the rest on the bottom of your library in a random order. Activate only as a sorcery.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Jace, the Mind Sculptor",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/2xm/56/jace-the-mind-sculptor?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Jace, the Mind Sculptor",
+            "text": "+2: Look at the top card of target player's library. You may put that card on the bottom of that player's library.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Jace, the Mind Sculptor",
+            "text": "0: Draw three cards, then put two cards from your hand on top of your library in any order.",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Jace, the Mind Sculptor",
+            "text": "−1: Return target creature to its owner's hand.",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          },
+          {
+            "index": 3,
+            "face": "Jace, the Mind Sculptor",
+            "text": "−12: Exile all cards from target player's library, then that player shuffles their hand into their library.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Nicol Bolas, Dragon-God",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/rvr/205/nicol-bolas-dragon-god?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Nicol Bolas, Dragon-God",
+            "text": "Nicol Bolas has all loyalty abilities of all other planeswalkers on the battlefield.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/playtest-decks.test.mjs",
+              "tests/token-catalog.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Nicol Bolas, Dragon-God",
+            "text": "+1: You draw a card. Each opponent exiles a card from their hand or a permanent they control.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Nicol Bolas, Dragon-God",
+            "text": "−3: Destroy target creature or planeswalker.",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          },
+          {
+            "index": 3,
+            "face": "Nicol Bolas, Dragon-God",
+            "text": "−8: Each opponent who doesn't control a legendary creature or planeswalker loses the game.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Sun Titan",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/soc/178/sun-titan?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Sun Titan",
+            "text": "Vigilance",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/isshin.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/isshin-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/aurelia-utilities.test.mjs",
+              "tests/arahbo.test.mjs",
+              "tests/extra-combat.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Sun Titan",
+            "text": "Whenever this creature enters or attacks, you may return target permanent card with mana value 3 or less from your graveyard to the battlefield.",
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/aurelia.test.mjs",
+              "tests/battlefield-entry.test.mjs",
+              "tests/hotseat-ui.cjs",
+              "tests/spell-resolution.test.mjs",
+              "tests/spell-resolution-ui.cjs",
+              "tests/extra-combat.test.mjs",
+              "tests/aurelia-ui.cjs",
+              "tests/aurelia-combat.test.mjs",
+              "tests/aurelia-actions-ui.cjs",
+              "tests/aurelia-utilities.test.mjs",
+              "tests/vehicles.test.mjs",
+              "tests/vehicles-ui.cjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Memnarch, the Warden",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/15/memnarch-the-warden?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Memnarch, the Warden",
+            "text": "Indestructible",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Memnarch, the Warden",
+            "text": "When Memnarch enters, create two 1/1 colorless Myr artifact creature tokens.",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Memnarch, the Warden",
+            "text": "Whenever Memnarch attacks, draw a card for each artifact you control.",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Nissa, Leyline Tamer",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/2/nissa-leyline-tamer?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Nissa, Leyline Tamer",
+            "text": "Deathtouch, vigilance",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Nissa, Leyline Tamer",
+            "text": "Landfall — Whenever a land you control enters, draw a card. Then if this is the first time this ability has resolved this turn, reveal cards from the top of your library until you reveal a creature card. Put that card onto the battlefield and the rest on the bottom of your library in a random order.",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Occult Epiphany",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/43/occult-epiphany?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Occult Epiphany",
+            "text": "Draw X cards, then discard X cards. Create a 1/1 white Spirit creature token with flying for each card type among cards discarded this way.",
+            "status": "FAIL (manual resolution)",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Draw X cards, then discard X cards. Create a 1/1 white Spirit creature token with flying for each card type among cards discarded this way.",
+            "recognized": false
+          }
+        ]
+      },
+      {
+        "name": "Staff of the Storyteller",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/34/staff-of-the-storyteller?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Staff of the Storyteller",
+            "text": "When this artifact enters, create a 1/1 white Spirit creature token with flying.",
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/playtest-decks.test.mjs",
+              "tests/token-catalog.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Staff of the Storyteller",
+            "text": "Whenever you create one or more creature tokens, put a story counter on this artifact.",
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/playtest-decks.test.mjs",
+              "tests/token-catalog.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
+          },
+          {
+            "index": 2,
+            "face": "Staff of the Storyteller",
+            "text": "{W}, {T}, Remove a story counter from this artifact: Draw a card.",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Nicol Bolas, Planeswalker",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/e01/85/nicol-bolas-planeswalker?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Nicol Bolas, Planeswalker",
+            "text": "+3: Destroy target noncreature permanent.",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Nicol Bolas, Planeswalker",
+            "text": "−2: Gain control of target creature.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Nicol Bolas, Planeswalker",
+            "text": "−9: Nicol Bolas deals 7 damage to target player or planeswalker. That player or that planeswalker's controller discards seven cards, then sacrifices seven permanents of their choice.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Teferi, Master of Time",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/m21/75/teferi-master-of-time?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Teferi, Master of Time",
+            "text": "You may activate loyalty abilities of Teferi on any player's turn any time you could cast an instant.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Teferi, Master of Time",
+            "text": "+1: Draw a card, then discard a card.",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Teferi, Master of Time",
+            "text": "−3: Target creature you don't control phases out. (Treat it and anything attached to it as though they don't exist until its controller's next turn.)",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 3,
+            "face": "Teferi, Master of Time",
+            "text": "−10: Take two extra turns after this one.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Whirlwind of Thought",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/51/whirlwind-of-thought?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Whirlwind of Thought",
+            "text": "Whenever you cast a noncreature spell, draw a card.",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Deification",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/mat/2/deification?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Deification",
+            "text": "As this enchantment enters, choose a planeswalker type.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Deification",
+            "text": "Planeswalkers you control of the chosen type have hexproof.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Deification",
+            "text": "As long as you control a creature, if damage dealt to a planeswalker you control of the chosen type would result in all loyalty counters on it being removed, instead all but one of those counters are removed.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Flawless Maneuver",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/25/flawless-maneuver?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Flawless Maneuver",
+            "text": "If you control a commander, you may cast this spell without paying its mana cost.",
+            "status": "FAIL (manual resolution)",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Flawless Maneuver",
+            "text": "Creatures you control gain indestructible until end of turn.",
+            "status": "FAIL (manual resolution)",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "If you control a commander, you may cast this spell without paying its mana cost.\nCreatures you control gain indestructible until end of turn.",
+            "recognized": false
+          }
+        ]
+      },
+      {
+        "name": "Grand Crescendo",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/26/grand-crescendo?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Grand Crescendo",
+            "text": "Create X 1/1 green and white Citizen creature tokens. Creatures you control gain indestructible until end of turn.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Create X 1/1 green and white Citizen creature tokens. Creatures you control gain indestructible until end of turn.",
+            "recognized": true
+          }
+        ]
+      },
+      {
+        "name": "Serra's Emissary",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/32/serras-emissary?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Serra's Emissary",
+            "text": "Flying",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Serra's Emissary",
+            "text": "As this creature enters, choose a card type.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Serra's Emissary",
+            "text": "You and creatures you control have protection from the chosen card type.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Avacyn, Angel of Horror",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/7/avacyn-angel-of-horror?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Avacyn, Angel of Horror",
+            "text": "Flying, deathtouch",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/fynn.test.mjs",
+              "tests/fynn-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/arahbo.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/vehicles.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Avacyn, Angel of Horror",
+            "text": "Whenever Avacyn or another nontoken creature you control dies, return that card to the battlefield under your control at the beginning of the next end step.",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Despark",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/50/despark?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Despark",
+            "text": "Exile target permanent with mana value 4 or greater.",
+            "status": "FAIL (manual resolution)",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Exile target permanent with mana value 4 or greater.",
+            "recognized": false
+          }
+        ]
+      },
+      {
+        "name": "Fatehold Charm",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/fra/132/fatehold-charm?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Fatehold Charm",
+            "text": "Choose one —",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/niv-mizzet.test.mjs",
+              "tests/niv-mizzet-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/talrand.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/arahbo-utilities.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/vehicles.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Fatehold Charm",
+            "text": "• Draw a card. Empower Jace 2.",
+            "status": "FAIL (manual resolution)",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Fatehold Charm",
+            "text": "• Return target spell or creature to its owner's hand.",
+            "status": "FAIL (manual resolution)",
+            "evidence": []
+          },
+          {
+            "index": 3,
+            "face": "Fatehold Charm",
+            "text": "• Creatures you control get +1/+2 until end of turn.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Draw a card. Empower Jace 2.",
+            "recognized": false
+          },
+          {
+            "text": "Return target spell or creature to its owner's hand.",
+            "recognized": false
+          },
+          {
+            "text": "Creatures you control get +1/+2 until end of turn.",
+            "recognized": true
+          }
+        ]
+      },
+      {
+        "name": "Martial Coup",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/28/martial-coup?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Martial Coup",
+            "text": "Create X 1/1 white Soldier creature tokens. If X is 5 or more, destroy all other creatures.",
+            "status": "FAIL (manual resolution)",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Create X 1/1 white Soldier creature tokens. If X is 5 or more, destroy all other creatures.",
+            "recognized": false
+          }
+        ]
+      },
+      {
+        "name": "Ob Nixilis, the Ascended",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/5/ob-nixilis-the-ascended?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Ob Nixilis, the Ascended",
+            "text": "Flying",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Ob Nixilis, the Ascended",
+            "text": "When Ob Nixilis enters, destroy all tapped creatures your opponents control. You gain 1 life for each creature destroyed this way.",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Ob Nixilis, the Ascended",
+            "text": "At the beginning of each end step, if you gained life this turn, create a 4/4 white Angel creature token with flying.",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Path to Exile",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/30/path-to-exile?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Path to Exile",
+            "text": "Exile target creature. Its controller may search their library for a basic land card, put that card onto the battlefield tapped, then shuffle.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/isshin.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/isshin-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/aurelia-utilities.test.mjs",
+              "tests/arahbo.test.mjs",
+              "tests/extra-combat.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Exile target creature. Its controller may search their library for a basic land card, put that card onto the battlefield tapped, then shuffle.",
+            "recognized": true
+          }
+        ]
+      },
+      {
+        "name": "Proteus Staff",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/59/proteus-staff?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Proteus Staff",
+            "text": "{2}{U}, {T}: Put target creature on the bottom of its owner's library. That creature's controller reveals cards from the top of their library until they reveal a creature card. The player puts that card onto the battlefield and the rest on the bottom of their library in any order. Activate only as a sorcery.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Rings of Brighthearth",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/cmr/335/rings-of-brighthearth?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Rings of Brighthearth",
+            "text": "Whenever you activate an ability, if it isn't a mana ability, you may pay {2}. If you do, copy that ability. You may choose new targets for the copy.",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Stroke of Midnight",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/35/stroke-of-midnight?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Stroke of Midnight",
+            "text": "Destroy target nonland permanent. Its controller creates a 1/1 white Human creature token.",
+            "status": "FAIL (manual resolution)",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Destroy target nonland permanent. Its controller creates a 1/1 white Human creature token.",
+            "recognized": false
+          }
+        ]
+      },
+      {
+        "name": "Sunfall",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/36/sunfall?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Sunfall",
+            "text": "Exile all creatures. Incubate X, where X is the number of creatures exiled this way. (Create an Incubator token with X +1/+1 counters on it and \"{2}: Transform this token.\" It transforms into a 0/0 Phyrexian artifact creature.)",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Exile all creatures. Incubate X, where X is the number of creatures exiled this way. (Create an Incubator token with X +1/+1 counters on it and \"{2}: Transform this token.\" It transforms into a 0/0 Phyrexian artifact creature.)",
+            "recognized": false
+          }
+        ]
+      },
+      {
+        "name": "Swords to Plowshares",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/37/swords-to-plowshares?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Swords to Plowshares",
+            "text": "Exile target creature. Its controller gains life equal to its power.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/isshin.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/isshin-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/aurelia-utilities.test.mjs",
+              "tests/arahbo.test.mjs",
+              "tests/extra-combat.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Exile target creature. Its controller gains life equal to its power.",
+            "recognized": true
+          }
+        ]
+      },
+      {
+        "name": "White Sun's Twilight",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/38/white-suns-twilight?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "White Sun's Twilight",
+            "text": "You gain X life. Create X 1/1 colorless Phyrexian Mite artifact creature tokens with toxic 1 and \"This token can't block.\" If X is 5 or more, destroy all other creatures. (Players dealt combat damage by a creature with toxic 1 also get a poison counter.)",
+            "status": "FAIL (manual resolution)",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "You gain X life. Create X 1/1 colorless Phyrexian Mite artifact creature tokens with toxic 1 and \"This token can't block.\" If X is 5 or more, destroy all other creatures. (Players dealt combat damage by a creature with toxic 1 also get a poison counter.)",
+            "recognized": false
+          }
+        ]
+      },
+      {
+        "name": "Victimize",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/tdc/198/victimize?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Victimize",
+            "text": "Choose two target creature cards in your graveyard. Sacrifice a creature. If you do, return the chosen cards to the battlefield tapped.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Choose two target creature cards in your graveyard. Sacrifice a creature. If you do, return the chosen cards to the battlefield tapped.",
+            "recognized": true
+          }
+        ]
+      },
+      {
+        "name": "Mizzix's Mastery",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/otc/175/mizzixs-mastery?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Mizzix's Mastery",
+            "text": "Exile target card that's an instant or sorcery from your graveyard. For each card exiled this way, copy it, and you may cast the copy without paying its mana cost. Exile Mizzix's Mastery.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Mizzix's Mastery",
+            "text": "Overload {5}{R}{R}{R} (You may cast this spell for its overload cost. If you do, change \"target\" in its text to \"each.\")",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Exile target card that's an instant or sorcery from your graveyard. For each card exiled this way, copy it, and you may cast the copy without paying its mana cost. Exile Mizzix's Mastery.",
+            "recognized": true
+          },
+          {
+            "text": "Exile each card that's an instant or sorcery from your graveyard. For each card exiled this way, copy it, and you may cast the copy without paying its mana cost. Exile Mizzix's Mastery.",
+            "recognized": true
+          }
+        ]
+      },
+      {
+        "name": "Elesh Norn, Mother of Machines",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/one/10/elesh-norn-mother-of-machines?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Elesh Norn, Mother of Machines",
+            "text": "Vigilance",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/isshin.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/isshin-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/aurelia-utilities.test.mjs",
+              "tests/arahbo.test.mjs",
+              "tests/extra-combat.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Elesh Norn, Mother of Machines",
+            "text": "If a permanent entering causes a triggered ability of a permanent you control to trigger, that ability triggers an additional time.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Elesh Norn, Mother of Machines",
+            "text": "Permanents entering don't cause abilities of permanents your opponents control to trigger.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Ichormoon Gauntlet",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/one/56/ichormoon-gauntlet?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Ichormoon Gauntlet",
+            "text": "Planeswalkers you control have \"[0]: Proliferate\" and \"[−12]: Take an extra turn after this one.\"",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Ichormoon Gauntlet",
+            "text": "Whenever you cast a noncreature spell, choose a counter on target permanent. Put an additional counter of that kind on that permanent.",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Dreadhorde Invasion",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/48/dreadhorde-invasion?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Dreadhorde Invasion",
+            "text": "At the beginning of your upkeep, you lose 1 life and amass Zombies 1. (Put a +1/+1 counter on an Army you control. It's also a Zombie. If you don't control an Army, create a 0/0 black Zombie Army creature token first.)",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Dreadhorde Invasion",
+            "text": "Whenever a Zombie token you control with power 6 or greater attacks, it gains lifelink until end of turn.",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Elspeth, Sun's Champion",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/24/elspeth-suns-champion?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Elspeth, Sun's Champion",
+            "text": "+1: Create three 1/1 white Soldier creature tokens.",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Elspeth, Sun's Champion",
+            "text": "−3: Destroy all creatures with power 4 or greater.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Elspeth, Sun's Champion",
+            "text": "−7: You get an emblem with \"Creatures you control get +2/+2 and have flying.\"",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Lingering Souls",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/27/lingering-souls?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Lingering Souls",
+            "text": "Create two 1/1 white Spirit creature tokens with flying.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Lingering Souls",
+            "text": "Flashback {1}{B} (You may cast this card from your graveyard for its flashback cost. Then exile it.)",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Create two 1/1 white Spirit creature tokens with flying.",
+            "recognized": true
+          }
+        ]
+      },
+      {
+        "name": "Mass Polymorph",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/42/mass-polymorph?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Mass Polymorph",
+            "text": "Exile all creatures you control, then reveal cards from the top of your library until you reveal that many creature cards. Put all creature cards revealed this way onto the battlefield, then shuffle the rest of the revealed cards into your library.",
+            "status": "FAIL (manual resolution)",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Exile all creatures you control, then reveal cards from the top of your library until you reveal that many creature cards. Put all creature cards revealed this way onto the battlefield, then shuffle the rest of the revealed cards into your library.",
+            "recognized": false
+          }
+        ]
+      },
+      {
+        "name": "Overlord of the Mistmoors",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/29/overlord-of-the-mistmoors?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Overlord of the Mistmoors",
+            "text": "Impending 4—{2}{W}{W} (If you cast this spell for its impending cost, it enters with four time counters and isn't a creature until the last is removed. At the beginning of your end step, remove a time counter from it.)",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Overlord of the Mistmoors",
+            "text": "Whenever this permanent enters or attacks, create two 2/1 white Insect creature tokens with flying.",
+            "status": "UNVERIFIED",
+            "effectParser": "recognized",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Ovika, Enigma Goliath",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/fdn/663/ovika-enigma-goliath?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Ovika, Enigma Goliath",
+            "text": "Flying",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Ovika, Enigma Goliath",
+            "text": "Ward—{3}, Pay 3 life.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 2,
+            "face": "Ovika, Enigma Goliath",
+            "text": "Whenever you cast a noncreature spell, create X 1/1 red Phyrexian Goblin creature tokens, where X is the mana value of that spell. They gain haste until end of turn.",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Secure the Wastes",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/31/secure-the-wastes?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Secure the Wastes",
+            "text": "Create X 1/1 white Warrior creature tokens.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": [
+          {
+            "text": "Create X 1/1 white Warrior creature tokens.",
+            "recognized": true
+          }
+        ]
+      },
+      {
+        "name": "Shark Typhoon",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/44/shark-typhoon?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Shark Typhoon",
+            "text": "Whenever you cast a noncreature spell, create an X/X blue Shark creature token with flying, where X is that spell's mana value.",
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/talrand.test.mjs",
+              "tests/talrand-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/arahbo-utilities.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/vehicles.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Shark Typhoon",
+            "text": "Cycling {X}{1}{U} ({X}{1}{U}, Discard this card: Draw a card.)",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/talrand.test.mjs",
+              "tests/talrand-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/arahbo-utilities.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/vehicles.test.mjs"
+            ]
+          },
+          {
+            "index": 2,
+            "face": "Shark Typhoon",
+            "text": "When you cycle this card, create an X/X blue Shark creature token with flying.",
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/talrand.test.mjs",
+              "tests/talrand-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/arahbo-utilities.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/vehicles.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Skrelv's Hive",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/33/skrelvs-hive?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Skrelv's Hive",
+            "text": "At the beginning of your upkeep, you lose 1 life and create a 1/1 colorless Phyrexian Mite artifact creature token with toxic 1 and \"This token can't block.\"",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Skrelv's Hive",
+            "text": "Corrupted — As long as an opponent has three or more poison counters, creatures you control with toxic have lifelink.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Hoarding Broodlord",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/mom/110/hoarding-broodlord?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Hoarding Broodlord",
+            "text": "Convoke",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Hoarding Broodlord",
+            "text": "Flying",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 2,
+            "face": "Hoarding Broodlord",
+            "text": "When this creature enters, search your library for a card, exile it face down, then shuffle. For as long as that card remains exiled, you may play it.",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          },
+          {
+            "index": 3,
+            "face": "Hoarding Broodlord",
+            "text": "Spells you cast from exile have convoke.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Scholar of the Lost Trove",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/jmp/14/scholar-of-the-lost-trove?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Scholar of the Lost Trove",
+            "text": "Flying",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Scholar of the Lost Trove",
+            "text": "When this creature enters, you may cast target instant, sorcery, or artifact card from your graveyard without paying its mana cost. If an instant or sorcery spell cast this way would be put into your graveyard, exile it instead.",
+            "status": "UNVERIFIED",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Sol Ring",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/21/sol-ring?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Sol Ring",
+            "text": "{T}: Add {C}{C}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Arcane Signet",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/20/arcane-signet?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Arcane Signet",
+            "text": "{T}: Add one mana of any color in your commander's color identity.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Fellwar Stone",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/mbc/74/fellwar-stone?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Fellwar Stone",
+            "text": "{T}: Add one mana of any color that a land an opponent controls could produce.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Azorius Signet",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/53/azorius-signet?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Azorius Signet",
+            "text": "{1}, {T}: Add {W}{U}.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Dimir Signet",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/56/dimir-signet?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Dimir Signet",
+            "text": "{1}, {T}: Add {U}{B}.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Izzet Signet",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/58/izzet-signet?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Izzet Signet",
+            "text": "{1}, {T}: Add {U}{R}.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Rakdos Signet",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/60/rakdos-signet?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Rakdos Signet",
+            "text": "{1}, {T}: Add {B}{R}.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Talisman of Creativity",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/61/talisman-of-creativity?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Talisman of Creativity",
+            "text": "{T}: Add {C}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Talisman of Creativity",
+            "text": "{T}: Add {U} or {R}. This artifact deals 1 damage to you.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Talisman of Dominance",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/62/talisman-of-dominance?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Talisman of Dominance",
+            "text": "{T}: Add {C}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Talisman of Dominance",
+            "text": "{T}: Add {U} or {B}. This artifact deals 1 damage to you.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Talisman of Indulgence",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/63/talisman-of-indulgence?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Talisman of Indulgence",
+            "text": "{T}: Add {C}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Talisman of Indulgence",
+            "text": "{T}: Add {B} or {R}. This artifact deals 1 damage to you.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/isshin.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/isshin-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/aurelia-utilities.test.mjs",
+              "tests/arahbo.test.mjs",
+              "tests/extra-combat.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Talisman of Progress",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/64/talisman-of-progress?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Talisman of Progress",
+            "text": "{T}: Add {C}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Talisman of Progress",
+            "text": "{T}: Add {W} or {U}. This artifact deals 1 damage to you.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Chromatic Lantern",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/mbc/73/chromatic-lantern?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Chromatic Lantern",
+            "text": "Lands you control have \"{T}: Add one mana of any color.\"",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Chromatic Lantern",
+            "text": "{T}: Add one mana of any color.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/goreclaw.test.mjs",
+              "tests/goreclaw-ui.cjs",
+              "tests/combat.test.mjs",
+              "tests/phase-flow.test.mjs",
+              "tests/vehicles.test.mjs",
+              "tests/vehicles-ui.cjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Cursed Mirror",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/49/cursed-mirror?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Cursed Mirror",
+            "text": "{T}: Add {R}.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Cursed Mirror",
+            "text": "As this artifact enters, you may have it become a copy of any creature on the battlefield until end of turn, except it has haste.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Battlefield Forge",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/65/battlefield-forge?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Battlefield Forge",
+            "text": "{T}: Add {C}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Battlefield Forge",
+            "text": "{T}: Add {R} or {W}. This land deals 1 damage to you.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Caves of Koilos",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/66/caves-of-koilos?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Caves of Koilos",
+            "text": "{T}: Add {C}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Caves of Koilos",
+            "text": "{T}: Add {W} or {B}. This land deals 1 damage to you.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Clifftop Retreat",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/67/clifftop-retreat?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Clifftop Retreat",
+            "text": "This land enters tapped unless you control a Mountain or a Plains.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Clifftop Retreat",
+            "text": "{T}: Add {R} or {W}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/aurelia.test.mjs",
+              "tests/battlefield-entry.test.mjs",
+              "tests/hotseat-ui.cjs",
+              "tests/spell-resolution.test.mjs",
+              "tests/spell-resolution-ui.cjs",
+              "tests/extra-combat.test.mjs",
+              "tests/aurelia-ui.cjs",
+              "tests/aurelia-combat.test.mjs",
+              "tests/aurelia-actions-ui.cjs",
+              "tests/aurelia-utilities.test.mjs",
+              "tests/vehicles.test.mjs",
+              "tests/vehicles-ui.cjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Command Tower",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/22/command-tower?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Command Tower",
+            "text": "{T}: Add one mana of any color in your commander's color identity.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Drowned Catacomb",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/69/drowned-catacomb?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Drowned Catacomb",
+            "text": "This land enters tapped unless you control an Island or a Swamp.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Drowned Catacomb",
+            "text": "{T}: Add {U} or {B}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Exotic Orchard",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/mbc/79/exotic-orchard?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Exotic Orchard",
+            "text": "{T}: Add one mana of any color that a land an opponent controls could produce.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Fabled Passage",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/71/fabled-passage?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Fabled Passage",
+            "text": "{T}, Sacrifice this land: Search your library for a basic land card, put it onto the battlefield tapped, then shuffle. Then if you control four or more lands, untap that land.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Fetid Heath",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/72/fetid-heath?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Fetid Heath",
+            "text": "{T}: Add {C}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Fetid Heath",
+            "text": "{W/B}, {T}: Add {W}{W}, {W}{B}, or {B}{B}.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Glacial Fortress",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/73/glacial-fortress?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Glacial Fortress",
+            "text": "This land enters tapped unless you control a Plains or an Island.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Glacial Fortress",
+            "text": "{T}: Add {W} or {U}.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Island",
+        "quantity": 3,
+        "url": "https://scryfall.com/card/mdd/294/island?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Island",
+            "text": "({T}: Add {U}.)",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Isolated Chapel",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/74/isolated-chapel?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Isolated Chapel",
+            "text": "This land enters tapped unless you control a Plains or a Swamp.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Isolated Chapel",
+            "text": "{T}: Add {W} or {B}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/isshin.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/isshin-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/aurelia-utilities.test.mjs",
+              "tests/arahbo.test.mjs",
+              "tests/extra-combat.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Kher Keep",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/75/kher-keep?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Kher Keep",
+            "text": "{T}: Add {C}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Kher Keep",
+            "text": "{1}{R}, {T}: Create a 0/1 red Kobold creature token named Kobolds of Kher Keep.",
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/playtest-decks.test.mjs",
+              "tests/token-catalog.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Mystic Gate",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/76/mystic-gate?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Mystic Gate",
+            "text": "{T}: Add {C}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Mystic Gate",
+            "text": "{W/U}, {T}: Add {W}{W}, {W}{U}, or {U}{U}.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Path of Ancestry",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/mbc/80/path-of-ancestry?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Path of Ancestry",
+            "text": "This land enters tapped.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Path of Ancestry",
+            "text": "{T}: Add one mana of any color in your commander's color identity. When that mana is spent to cast a creature spell that shares a creature type with your commander, scry 1. (Look at the top card of your library. You may put that card on the bottom.)",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Plains",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/mdd/292/plains?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Plains",
+            "text": "({T}: Add {W}.)",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/isshin.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/isshin-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/aurelia-utilities.test.mjs",
+              "tests/arahbo.test.mjs",
+              "tests/extra-combat.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Prairie Stream",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/79/prairie-stream?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Prairie Stream",
+            "text": "({T}: Add {W} or {U}.)",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Prairie Stream",
+            "text": "This land enters tapped unless you control two or more basic lands.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Radiant Summit",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/80/radiant-summit?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Radiant Summit",
+            "text": "({T}: Add {R} or {W}.)",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Radiant Summit",
+            "text": "This land enters tapped unless you control two or more basic lands.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Reflecting Pool",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/23/reflecting-pool?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Reflecting Pool",
+            "text": "{T}: Add one mana of any type that a land you control could produce.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Shivan Reef",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/83/shivan-reef?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Shivan Reef",
+            "text": "{T}: Add {C}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Shivan Reef",
+            "text": "{T}: Add {U} or {R}. This land deals 1 damage to you.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Sokenzan, Crucible of Defiance",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/neo/276/sokenzan-crucible-of-defiance?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Sokenzan, Crucible of Defiance",
+            "text": "{T}: Add {R}.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Sokenzan, Crucible of Defiance",
+            "text": "Channel — {3}{R}, Discard this card: Create two 1/1 colorless Spirit creature tokens. They gain haste until end of turn. This ability costs {1} less to activate for each legendary creature you control.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Sulfur Falls",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/84/sulfur-falls?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Sulfur Falls",
+            "text": "This land enters tapped unless you control an Island or a Mountain.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Sulfur Falls",
+            "text": "{T}: Add {U} or {R}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/niv-mizzet.test.mjs",
+              "tests/niv-mizzet-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/talrand.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/arahbo-utilities.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/vehicles.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Sulfurous Springs",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/85/sulfurous-springs?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Sulfurous Springs",
+            "text": "{T}: Add {C}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Sulfurous Springs",
+            "text": "{T}: Add {B} or {R}. This land deals 1 damage to you.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Sunken Ruins",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/86/sunken-ruins?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Sunken Ruins",
+            "text": "{T}: Add {C}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Sunken Ruins",
+            "text": "{U/B}, {T}: Add {U}{U}, {U}{B}, or {B}{B}.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Swamp",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/mdd/296/swamp?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Swamp",
+            "text": "({T}: Add {B}.)",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Takenuma, Abandoned Mire",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/neo/278/takenuma-abandoned-mire?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Takenuma, Abandoned Mire",
+            "text": "{T}: Add {B}.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Takenuma, Abandoned Mire",
+            "text": "Channel — {3}{B}, Discard this card: Mill three cards, then return a creature or planeswalker card from your graveyard to your hand. This ability costs {1} less to activate for each legendary creature you control.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Turbulent Shore",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/17/turbulent-shore?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Turbulent Shore",
+            "text": "({T}: Add {W} or {U}.)",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Turbulent Shore",
+            "text": "This land enters tapped unless your opponents control eight or more lands.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Turbulent Wetlands",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/18/turbulent-wetlands?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Turbulent Wetlands",
+            "text": "({T}: Add {U} or {B}.)",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Turbulent Wetlands",
+            "text": "This land enters tapped unless your opponents control eight or more lands.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Underground River",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/frc/87/underground-river?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Underground River",
+            "text": "{T}: Add {C}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Underground River",
+            "text": "{T}: Add {U} or {B}. This land deals 1 damage to you.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Karn's Bastion",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/eoc/163/karns-bastion?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Karn's Bastion",
+            "text": "{T}: Add {C}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Karn's Bastion",
+            "text": "{4}, {T}: Proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)",
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/fynn.test.mjs",
+              "tests/fynn-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/goreclaw.test.mjs",
+              "tests/arahbo.test.mjs",
+              "tests/isshin-utilities.test.mjs",
+              "tests/vehicles.test.mjs"
+            ]
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Academy Ruins",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/2xm/309/academy-ruins?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Academy Ruins",
+            "text": "{T}: Add {C}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Academy Ruins",
+            "text": "{1}{U}, {T}: Put target artifact card from your graveyard on top of your library.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Hall of Heliod's Generosity",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/dsc/283/hall-of-heliods-generosity?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Hall of Heliod's Generosity",
+            "text": "{T}: Add {C}.",
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/kess.test.mjs",
+              "tests/kess-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/mizzix.test.mjs",
+              "tests/kalamax.test.mjs",
+              "tests/niv-mizzet.test.mjs"
+            ]
+          },
+          {
+            "index": 1,
+            "face": "Hall of Heliod's Generosity",
+            "text": "{1}{W}, {T}: Put target enchantment card from your graveyard on top of your library.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      },
+      {
+        "name": "Eiganjo, Seat of the Empire",
+        "quantity": 1,
+        "url": "https://scryfall.com/card/neo/268/eiganjo-seat-of-the-empire?utm_source=api",
+        "checks": [
+          {
+            "index": 0,
+            "face": "Eiganjo, Seat of the Empire",
+            "text": "{T}: Add {W}.",
+            "status": "UNVERIFIED",
+            "evidence": []
+          },
+          {
+            "index": 1,
+            "face": "Eiganjo, Seat of the Empire",
+            "text": "Channel — {2}{W}, Discard this card: It deals 4 damage to target attacking or blocking creature. This ability costs {1} less to activate for each legendary creature you control.",
+            "status": "FAIL (manual resolution)",
+            "effectParser": "missing",
+            "evidence": []
+          }
+        ],
+        "spellPrograms": []
+      }
+    ],
+    "counts": {
+      "PASS (regression)": 60,
+      "FAIL (manual resolution)": 34,
+      "UNVERIFIED": 91
+    }
+  }
+]

@@ -1,7 +1,8 @@
+import {tokenTemplate} from './token-catalog.mjs';
 import {OPENING_ACTIONS,openingPending,applyOpeningAction,beginOpeningHands,decksReadyForOpening} from './opening-hand.mjs';
 import {validResponseMode} from './response-settings.mjs';
 import {turnManifestFaceUp} from './face-down.mjs';
-import {newGame,validateSession,ZONES,findCard,commandersFor,transfer,draw,shuffle,advance,endTurn,untap,changeStep,resolve,note,resetGame} from './engine.mjs';
+import {newGame,validateSession,ZONES,findCard,commandersFor,transfer,placeInLibrary,draw,shuffle,advance,endTurn,untap,changeStep,resolve,note,resetGame} from './engine.mjs';
 import {playLand,castSpell,activateMana,activateManaLoyalty,activateLoyaltyAction,passPriority,prioritySeat,resolveProliferate,resolveTop,chooseEntryLife,chooseEntryTapped,counterTop,settlePriority} from './casting.mjs';
 import {addMana,reverseManaTap,validateManaSettings} from './mana.mjs';
 import {applyEntryChoices} from './card-state.mjs';
@@ -59,6 +60,19 @@ export function reduceGameAction(original,action,actor,{automatic=false,host=tru
  // ---- Apply one command ----
  // These commands are shared by mouse, keyboard, controller and network input.
  switch(a.type){
+  case 'librarySearch':{
+   if(owner!==actor)throw Error('Each player controls their own seat.');
+   if(typeof a.open!=='boolean'||a.shuffle!==undefined&&typeof a.shuffle!=='boolean')throw Error('Invalid library search.');
+   if(a.open){
+    if(g.pendingEffect?(g.pendingEffect.kind!=='combat-manual'||g.pendingEffect.owner!==actor):g.stack.length)throw Error('Finish the pending effect or use its search choices before manually searching.');
+    player.librarySearch=true;
+   }else{
+    if(!player.librarySearch)throw Error('No manual library search is open.');
+    delete player.librarySearch;if(a.shuffle!==false)shuffle(player.zones.library);
+   }
+   note(g,player.name+(a.open?' searches their library.':a.shuffle===false?' finishes searching.':' finishes searching and shuffles.'));
+   validateSession(g);return {game:g,description:player.name+(a.open?': searching library.':a.shuffle===false?': search finished.':': search finished; library shuffled.')};
+  }
   case 'advance':advance(g,{automatic});break;
   case 'endTurn':endTurn(g,{automatic});break;
   case 'step':changeStep(g,integer(a.step,0,11));break;
@@ -83,7 +97,7 @@ export function reduceGameAction(original,action,actor,{automatic=false,host=tru
   case 'resolveNow':resolveTop(g);break;
   case 'resolveTo':resolve(g,a.to);break;
   case 'counter':if(!g.stack.length)throw Error('The stack is empty.');counterTop(g);break;
-  case 'move':transfer(g,requireCard(a.id).instance,a.to,a.owner??actor,a.position);break;
+  case 'move':{const id=requireCard(a.id).instance;if(a.to==='library')placeInLibrary(g,id,a.owner??actor,a.libraryPosition??'top');else transfer(g,id,a.to,a.owner??actor,a.position);break;}
   case 'tap':{
    const card=requireCard(a.id,['battlefield']),controller=findCard(g,a.id).owner;
    if(card.tapped)reverseManaTap(g,card,{fromEffect:a.fromEffect===true||g.step===0&&g.active===controller});
@@ -124,6 +138,7 @@ export function reduceGameAction(original,action,actor,{automatic=false,host=tru
   case 'proliferate':resolveProliferate(g,a.ids||[],a.owners||[]);break;
   case 'triggerTarget':chooseTriggerTarget(g,a.id,a.keys);break;
   case 'manualResolved':
+   if(player.librarySearch)throw Error('Finish the library search before confirming the effect.');
    if(g.pendingEffect?.kind!=='combat-manual')throw Error('No manual effect for your seat.');
    note(g,g.pendingEffect.name+': manually resolved '+g.pendingEffect.text);delete g.pendingEffect;break;
   case 'attacker':requireCard(a.id,['battlefield']);setAttacker(g,a.id,a.target,a.selected,{exert:a.exert});break;
@@ -174,9 +189,7 @@ export function reduceGameAction(original,action,actor,{automatic=false,host=tru
    note(g,player.name+' stats updated.');break;
   }
   case 'libraryTop':{
-   requireCard(a.id);const found=findCard(g,a.id),card=transfer(g,a.id,'library',a.owner??found.owner);
-   const library=g.players[a.owner??found.owner].zones.library;
-   library.splice(library.indexOf(card),1);library.unshift(card);
+   requireCard(a.id);const found=findCard(g,a.id),card=placeInLibrary(g,a.id,a.owner??found.owner);
    note(g,card.name+' placed on top of library.');break;
   }
   case 'removeToken':{
@@ -188,11 +201,13 @@ export function reduceGameAction(original,action,actor,{automatic=false,host=tru
    note(g,'Removed token '+card.name);break;
   }
   case 'token':
+   if(a.templateIndex!==undefined){const template=player.tokenCatalog?.[integer(a.templateIndex,0,249)];if(!template)throw Error('Choose a token from your imported reserve.');createTokens(g,owner,template,integer(a.count,1,50));break;}
    createTokens(g,owner,{name:text(a.name,100),type_line:'Token Creature',oracle_text:text(a.text||''),power:text(a.power||'0',20),toughness:text(a.toughness||'0',20)},integer(a.count,1,50));break;
   case 'import':{
    if(!Array.isArray(a.library)||!Array.isArray(a.command)||a.library.length+a.command.length>500||a.command.length>2)throw Error('Invalid imported deck.');
    const staged=newGame(g.players.length);
-   staged.players[owner].zones.library=a.library;staged.players[owner].zones.command=a.command;validateSession(staged);
+   staged.players[owner].tokenCatalog=structuredClone(a.tokenCatalog||[]);staged.players[owner].zones.library=a.library;staged.players[owner].zones.command=a.command;validateSession(staged);
+   player.tokenCatalog=staged.players[owner].tokenCatalog.map(tokenTemplate);
    player.zones=Object.fromEntries(ZONES.map(z=>[z,[]]));
    player.zones.library=a.library.map(c=>({...c,ownerSeat:owner}));
    player.zones.command=a.command.map(c=>({...c,ownerSeat:owner,commander:true}));

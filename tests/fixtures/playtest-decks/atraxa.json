@@ -1,0 +1,2289 @@
+{
+  "source": "User list, 2026-10-15; https://api.scryfall.com/cards/collection",
+  "fetched_at": "2026-10-15T05:07:57.976Z",
+  "total": 100,
+  "not_found": [],
+  "cards": [
+    {
+      "quantity": 1,
+      "id": "d0d33d52-3d28-4635-b985-51e126289259",
+      "oracle_id": "7e6b9b59-cd68-4e3c-827b-38833c92d6eb",
+      "name": "Atraxa, Praetors' Voice",
+      "mana_cost": "{G}{W}{U}{B}",
+      "cmc": 4,
+      "type_line": "Legendary Creature — Phyrexian Angel Horror",
+      "oracle_text": "Flying, vigilance, deathtouch, lifelink\nAt the beginning of your end step, proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)",
+      "power": "4",
+      "toughness": "4",
+      "colors": [
+        "B",
+        "G",
+        "U",
+        "W"
+      ],
+      "color_identity": [
+        "B",
+        "G",
+        "U",
+        "W"
+      ],
+      "keywords": [
+        "Deathtouch",
+        "Flying",
+        "Lifelink",
+        "Vigilance",
+        "Proliferate"
+      ],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/2xm/190/atraxa-praetors-voice?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/d0d33d52-3d28-4635-b985-51e126289259/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "42e0aa15-639a-4e88-9bd8-ce5e7c7d7649",
+      "oracle_id": "d5ad26cc-2bdb-46b7-b8bf-dd099d5fa09b",
+      "name": "Adarkar Wastes",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land",
+      "oracle_text": "{T}: Add {C}.\n{T}: Add {W} or {U}. This land deals 1 damage to you.",
+      "colors": [],
+      "color_identity": [
+        "U",
+        "W"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/eoc/147/adarkar-wastes?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/42e0aa15-639a-4e88-9bd8-ce5e7c7d7649/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "a829747f-cf9b-4d81-ba66-9f0630ed4565",
+      "oracle_id": "234a734b-ba28-4f1b-9d01-3c3e7d516590",
+      "name": "An Offer You Can't Refuse",
+      "mana_cost": "{U}",
+      "cmc": 1,
+      "type_line": "Instant",
+      "oracle_text": "Counter target noncreature spell. Its controller creates two Treasure tokens. (They're artifacts with \"{T}, Sacrifice this token: Add one mana of any color.\")",
+      "colors": [
+        "U"
+      ],
+      "color_identity": [
+        "U"
+      ],
+      "keywords": [
+        "Treasure"
+      ],
+      "layout": "normal",
+      "all_parts": [
+        {
+          "object": "related_card",
+          "id": "6f6aaee9-8c44-4e23-8167-ead64e599711",
+          "component": "combo_piece",
+          "name": "An Offer You Can't Refuse",
+          "type_line": "Instant",
+          "uri": "https://api.scryfall.com/cards/6f6aaee9-8c44-4e23-8167-ead64e599711"
+        },
+        {
+          "object": "related_card",
+          "id": "21210145-8edd-41f5-9a64-9f0b5be79864",
+          "component": "token",
+          "name": "Treasure",
+          "type_line": "Token Artifact — Treasure",
+          "uri": "https://api.scryfall.com/cards/21210145-8edd-41f5-9a64-9f0b5be79864"
+        }
+      ],
+      "scryfall_uri": "https://scryfall.com/card/fdn/160/an-offer-you-cant-refuse?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/a829747f-cf9b-4d81-ba66-9f0630ed4565/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "5eb843ef-b223-40d0-a461-54b16d188d0e",
+      "oracle_id": "ab1cc360-b9de-48d9-9983-4dfe4a7d2a37",
+      "name": "Arcane Denial",
+      "mana_cost": "{1}{U}",
+      "cmc": 2,
+      "type_line": "Instant",
+      "oracle_text": "Counter target spell. Its controller may draw up to two cards at the beginning of the next turn's upkeep.\nYou draw a card at the beginning of the next turn's upkeep.",
+      "colors": [
+        "U"
+      ],
+      "color_identity": [
+        "U"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/msc/147/arcane-denial?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/5eb843ef-b223-40d0-a461-54b16d188d0e/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "c6b6117c-faab-4bbb-b851-07bd8061ef03",
+      "oracle_id": "0bc7f093-bef0-4f1a-852c-4b75ebf54838",
+      "name": "Arcane Signet",
+      "mana_cost": "{2}",
+      "cmc": 2,
+      "type_line": "Artifact",
+      "oracle_text": "{T}: Add one mana of any color in your commander's color identity.",
+      "colors": [],
+      "color_identity": [],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/frc/20/arcane-signet?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/c6b6117c-faab-4bbb-b851-07bd8061ef03/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "f2df3258-c053-48a8-974f-d80899b2cd93",
+      "oracle_id": "93723b12-db34-4047-885e-8606415b1553",
+      "name": "Ashiok, Dream Render",
+      "mana_cost": "{1}{U/B}{U/B}",
+      "cmc": 3,
+      "type_line": "Legendary Planeswalker — Ashiok",
+      "oracle_text": "Spells and abilities your opponents control can't cause their controller to search their library.\n−1: Target player mills four cards. Then exile each opponent's graveyard.",
+      "loyalty": "5",
+      "colors": [
+        "B",
+        "U"
+      ],
+      "color_identity": [
+        "B",
+        "U"
+      ],
+      "keywords": [
+        "Mill"
+      ],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/war/228/ashiok-dream-render?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/f2df3258-c053-48a8-974f-d80899b2cd93/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "400b43aa-c1d2-4435-b863-061f43889422",
+      "oracle_id": "7735eeba-693b-47e2-bd51-414379cf1016",
+      "name": "Beast Within",
+      "mana_cost": "{2}{G}",
+      "cmc": 3,
+      "type_line": "Instant",
+      "oracle_text": "Destroy target permanent. Its controller creates a 3/3 green Beast creature token.",
+      "colors": [
+        "G"
+      ],
+      "color_identity": [
+        "G"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "all_parts": [
+        {
+          "object": "related_card",
+          "id": "62facbb8-1a83-4731-b515-0f7759ee8c3b",
+          "component": "token",
+          "name": "Beast",
+          "type_line": "Token Creature — Beast",
+          "uri": "https://api.scryfall.com/cards/62facbb8-1a83-4731-b515-0f7759ee8c3b"
+        },
+        {
+          "object": "related_card",
+          "id": "400b43aa-c1d2-4435-b863-061f43889422",
+          "component": "combo_piece",
+          "name": "Beast Within",
+          "type_line": "Instant",
+          "uri": "https://api.scryfall.com/cards/400b43aa-c1d2-4435-b863-061f43889422"
+        }
+      ],
+      "scryfall_uri": "https://scryfall.com/card/msc/169/beast-within?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/400b43aa-c1d2-4435-b863-061f43889422/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "63e4dc07-c742-41bd-8301-861637908fd1",
+      "oracle_id": "20283c4a-f1f0-42f0-bc08-6da87474426b",
+      "name": "Breeding Pool",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land — Forest Island",
+      "oracle_text": "({T}: Add {G} or {U}.)\nAs this land enters, you may pay 2 life. If you don't, it enters tapped.",
+      "colors": [],
+      "color_identity": [
+        "G",
+        "U"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/trk/279/breeding-pool?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/63e4dc07-c742-41bd-8301-861637908fd1/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "799de0f1-6bf2-4158-8a4f-bedc3d2f6578",
+      "oracle_id": "809edfed-89a9-4327-b7db-1bcec63f3e66",
+      "name": "Brokers Ascendancy",
+      "mana_cost": "{G}{W}{U}",
+      "cmc": 3,
+      "type_line": "Enchantment",
+      "oracle_text": "At the beginning of your end step, put a +1/+1 counter on each creature you control and a loyalty counter on each planeswalker you control.",
+      "colors": [
+        "G",
+        "U",
+        "W"
+      ],
+      "color_identity": [
+        "G",
+        "U",
+        "W"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/snc/170/brokers-ascendancy?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/799de0f1-6bf2-4158-8a4f-bedc3d2f6578/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "18d236ce-3b78-403a-b5f9-4fb44123d85b",
+      "oracle_id": "5eb8b497-ec9a-4a89-ad29-1ec3ca82da7c",
+      "name": "Brushland",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land",
+      "oracle_text": "{T}: Add {C}.\n{T}: Add {G} or {W}. This land deals 1 damage to you.",
+      "colors": [],
+      "color_identity": [
+        "G",
+        "W"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/bro/259/brushland?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/18d236ce-3b78-403a-b5f9-4fb44123d85b/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "6da045f8-6278-4c84-9d39-025adf0789c1",
+      "oracle_id": "88cf4c1a-5863-45fc-b76d-7ad33b175b2b",
+      "name": "Burgeoning",
+      "mana_cost": "{G}",
+      "cmc": 1,
+      "type_line": "Enchantment",
+      "oracle_text": "Whenever an opponent plays a land, you may put a land card from your hand onto the battlefield.",
+      "colors": [
+        "G"
+      ],
+      "color_identity": [
+        "G"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/c16/143/burgeoning?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/6da045f8-6278-4c84-9d39-025adf0789c1/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "369e6485-fbc7-45f9-ac9d-2e26dd94f2d5",
+      "oracle_id": "dcb7e046-f01b-497c-88e5-57794eb30ce5",
+      "name": "Canopy Vista",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land — Forest Plains",
+      "oracle_text": "({T}: Add {G} or {W}.)\nThis land enters tapped unless you control two or more basic lands.",
+      "colors": [],
+      "color_identity": [
+        "G",
+        "W"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/msc/227/canopy-vista?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/369e6485-fbc7-45f9-ac9d-2e26dd94f2d5/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "ca814c7c-9908-4727-b556-3f85bfd653ca",
+      "oracle_id": "33de01e9-ce5a-42d4-afcb-343cd54a6d80",
+      "name": "Caves of Koilos",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land",
+      "oracle_text": "{T}: Add {C}.\n{T}: Add {W} or {B}. This land deals 1 damage to you.",
+      "colors": [],
+      "color_identity": [
+        "B",
+        "W"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/frc/66/caves-of-koilos?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/ca814c7c-9908-4727-b556-3f85bfd653ca/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "9b29492a-8bdd-4806-8d1b-3058ed277cc1",
+      "oracle_id": "539f5396-d99a-417d-a84c-dff7930b5900",
+      "name": "Chromatic Lantern",
+      "mana_cost": "{3}",
+      "cmc": 3,
+      "type_line": "Artifact",
+      "oracle_text": "Lands you control have \"{T}: Add one mana of any color.\"\n{T}: Add one mana of any color.",
+      "colors": [],
+      "color_identity": [],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/mbc/73/chromatic-lantern?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/9b29492a-8bdd-4806-8d1b-3058ed277cc1/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "1ac6cb62-45da-4e9a-84c6-09e6eacf0664",
+      "oracle_id": "0895c9b7-ae7d-4bb3-af17-3b75deb50a25",
+      "name": "Command Tower",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land",
+      "oracle_text": "{T}: Add one mana of any color in your commander's color identity.",
+      "colors": [],
+      "color_identity": [],
+      "keywords": [],
+      "layout": "normal",
+      "all_parts": [
+        {
+          "object": "related_card",
+          "id": "1ac6cb62-45da-4e9a-84c6-09e6eacf0664",
+          "component": "combo_piece",
+          "name": "Command Tower",
+          "type_line": "Land",
+          "uri": "https://api.scryfall.com/cards/1ac6cb62-45da-4e9a-84c6-09e6eacf0664"
+        },
+        {
+          "object": "related_card",
+          "id": "ad03209f-568a-40f5-8470-a083080e6831",
+          "component": "combo_piece",
+          "name": "Tower Winder",
+          "type_line": "Creature — Snake",
+          "uri": "https://api.scryfall.com/cards/ad03209f-568a-40f5-8470-a083080e6831"
+        }
+      ],
+      "scryfall_uri": "https://scryfall.com/card/frc/22/command-tower?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/1ac6cb62-45da-4e9a-84c6-09e6eacf0664/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "c9bd60fc-2777-44bc-b314-a792e8e48360",
+      "oracle_id": "311a449d-dc74-46e6-9a47-6a597931f736",
+      "name": "Consecrated Sphinx",
+      "mana_cost": "{4}{U}{U}",
+      "cmc": 6,
+      "type_line": "Creature — Sphinx",
+      "oracle_text": "Flying\nWhenever an opponent draws a card, you may draw two cards.",
+      "power": "4",
+      "toughness": "6",
+      "colors": [
+        "U"
+      ],
+      "color_identity": [
+        "U"
+      ],
+      "keywords": [
+        "Flying"
+      ],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/2x2/43/consecrated-sphinx?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/c9bd60fc-2777-44bc-b314-a792e8e48360/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "dce72636-08e4-484e-ad81-4d1597a31ffb",
+      "oracle_id": "482bd55a-ba73-4722-8643-94fa12818515",
+      "name": "Contagion Engine",
+      "mana_cost": "{6}",
+      "cmc": 6,
+      "type_line": "Artifact",
+      "oracle_text": "When this artifact enters, put a -1/-1 counter on each creature target player controls.\n{4}, {T}: Proliferate twice. (Choose any number of permanents and/or players, then give each another counter of each kind already there. Then do it again.)",
+      "colors": [],
+      "color_identity": [],
+      "keywords": [
+        "Proliferate"
+      ],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/som/145/contagion-engine?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/dce72636-08e4-484e-ad81-4d1597a31ffb/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "8e30deb6-9e1f-4545-ae30-c30ba6c7b3a0",
+      "oracle_id": "2fc6de19-9d04-422b-90bc-eee2f9f8c84c",
+      "name": "Contentious Plan",
+      "mana_cost": "{1}{U}",
+      "cmc": 2,
+      "type_line": "Sorcery",
+      "oracle_text": "Proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)\nDraw a card.",
+      "colors": [
+        "U"
+      ],
+      "color_identity": [
+        "U"
+      ],
+      "keywords": [
+        "Proliferate"
+      ],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/war/46/contentious-plan?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/8e30deb6-9e1f-4545-ae30-c30ba6c7b3a0/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "523414cb-f8db-407a-808a-01454e03d8b9",
+      "oracle_id": "28b46183-c62f-47b1-9fee-3ba148202cab",
+      "name": "Crop Rotation",
+      "mana_cost": "{G}",
+      "cmc": 1,
+      "type_line": "Instant",
+      "oracle_text": "As an additional cost to cast this spell, sacrifice a land.\nSearch your library for a land card, put that card onto the battlefield, then shuffle.",
+      "colors": [
+        "G"
+      ],
+      "color_identity": [
+        "G"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/dmr/154/crop-rotation?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/523414cb-f8db-407a-808a-01454e03d8b9/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "e60deb92-f7dd-4f4e-9036-e47dd586f985",
+      "oracle_id": "8b755881-a72d-4e21-a369-d2924eb4585a",
+      "name": "Cultivate",
+      "mana_cost": "{2}{G}",
+      "cmc": 3,
+      "type_line": "Sorcery",
+      "oracle_text": "Search your library for up to two basic land cards, reveal those cards, put one onto the battlefield tapped and the other into your hand, then shuffle.",
+      "colors": [
+        "G"
+      ],
+      "color_identity": [
+        "G"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/msc/172/cultivate?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/e60deb92-f7dd-4f4e-9036-e47dd586f985/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "dfb7c4b9-f2f4-4d4e-baf2-86551c8150fe",
+      "oracle_id": "d75b9c82-1b49-4c3e-a1b5-aeef57d6644b",
+      "name": "Cyclonic Rift",
+      "mana_cost": "{1}{U}",
+      "cmc": 2,
+      "type_line": "Instant",
+      "oracle_text": "Return target nonland permanent you don't control to its owner's hand.\nOverload {6}{U} (You may cast this spell for its overload cost. If you do, change \"target\" in its text to \"each.\")",
+      "colors": [
+        "U"
+      ],
+      "color_identity": [
+        "U"
+      ],
+      "keywords": [
+        "Overload"
+      ],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/rvr/40/cyclonic-rift?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/dfb7c4b9-f2f4-4d4e-baf2-86551c8150fe/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "78897104-80e1-4d8a-9958-145b40f679e8",
+      "oracle_id": "f6d24565-5b32-4eff-b2e0-6e2c25516ff0",
+      "name": "Deathcap Glade",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land",
+      "oracle_text": "This land enters tapped unless you control two or more other lands.\n{T}: Add {B} or {G}.",
+      "colors": [],
+      "color_identity": [
+        "B",
+        "G"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/sos/253/deathcap-glade?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/78897104-80e1-4d8a-9958-145b40f679e8/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "6fb36f7b-6d31-413d-8392-ae4f8ca3c0c4",
+      "oracle_id": "debce64a-18bd-42f5-9e85-158c2242e9e9",
+      "name": "Deepglow Skate",
+      "mana_cost": "{4}{U}",
+      "cmc": 5,
+      "type_line": "Creature — Fish",
+      "oracle_text": "When this creature enters, double the number of each kind of counter on any number of target permanents.",
+      "power": "3",
+      "toughness": "3",
+      "colors": [
+        "U"
+      ],
+      "color_identity": [
+        "U"
+      ],
+      "keywords": [
+        "Double"
+      ],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/eoc/70/deepglow-skate?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/6fb36f7b-6d31-413d-8392-ae4f8ca3c0c4/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "56dae4c4-3e71-4a32-979b-4e26d9c9e96c",
+      "oracle_id": "f0ec8681-da50-466b-8cdd-1dc710deccd9",
+      "name": "Deserted Beach",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land",
+      "oracle_text": "This land enters tapped unless you control two or more other lands.\n{T}: Add {W} or {U}.",
+      "colors": [],
+      "color_identity": [
+        "U",
+        "W"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/fra/176/deserted-beach?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/56dae4c4-3e71-4a32-979b-4e26d9c9e96c/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "c7a401b8-29fb-46ef-a663-427f66724d5c",
+      "oracle_id": "09ef446c-a13d-49d9-a94c-cd5f5a2d440b",
+      "name": "Displacer Kitten",
+      "mana_cost": "{3}{U}",
+      "cmc": 4,
+      "type_line": "Creature — Cat Beast",
+      "oracle_text": "Avoidance — Whenever you cast a noncreature spell, exile up to one target nonland permanent you control, then return that card to the battlefield under its owner's control.",
+      "power": "2",
+      "toughness": "2",
+      "colors": [
+        "U"
+      ],
+      "color_identity": [
+        "U"
+      ],
+      "keywords": [
+        "Avoidance"
+      ],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/clb/63/displacer-kitten?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/c7a401b8-29fb-46ef-a663-427f66724d5c/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "5d6b5054-2224-4f68-9d82-3ed17c5dacc4",
+      "oracle_id": "1b388371-f9ef-45b4-82a3-ca20a8cd7807",
+      "name": "Dovin's Veto",
+      "mana_cost": "{W}{U}",
+      "cmc": 2,
+      "type_line": "Instant",
+      "oracle_text": "This spell can't be countered.\nCounter target noncreature spell.",
+      "colors": [
+        "U",
+        "W"
+      ],
+      "color_identity": [
+        "U",
+        "W"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/war/193/dovins-veto?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/5d6b5054-2224-4f68-9d82-3ed17c5dacc4/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "ef662b92-5a7f-48c9-bcc1-14b55e091aef",
+      "oracle_id": "dd8538e6-cd5f-4a88-aff5-eb5e76ce8ddb",
+      "name": "Dreamroot Cascade",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land",
+      "oracle_text": "This land enters tapped unless you control two or more other lands.\n{T}: Add {G} or {U}.",
+      "colors": [],
+      "color_identity": [
+        "G",
+        "U"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/sos/254/dreamroot-cascade?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/ef662b92-5a7f-48c9-bcc1-14b55e091aef/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "4acb0f92-74be-40e8-b70e-61c4aaaeb47b",
+      "oracle_id": "819fc966-434e-470f-91e9-a38df974ad17",
+      "name": "Drowned Catacomb",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land",
+      "oracle_text": "This land enters tapped unless you control an Island or a Swamp.\n{T}: Add {U} or {B}.",
+      "colors": [],
+      "color_identity": [
+        "B",
+        "U"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/frc/69/drowned-catacomb?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/4acb0f92-74be-40e8-b70e-61c4aaaeb47b/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "43be1363-7e73-4862-b45f-07f490ab46be",
+      "oracle_id": "bdbde5d0-f5e4-44da-b27c-b4ad6f374cc9",
+      "name": "Dryad of the Ilysian Grove",
+      "mana_cost": "{2}{G}",
+      "cmc": 3,
+      "type_line": "Enchantment Creature — Nymph Dryad",
+      "oracle_text": "You may play an additional land on each of your turns.\nLands you control are every basic land type in addition to their other types.",
+      "power": "2",
+      "toughness": "4",
+      "colors": [
+        "G"
+      ],
+      "color_identity": [
+        "G"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/cmm/891/dryad-of-the-ilysian-grove?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/43be1363-7e73-4862-b45f-07f490ab46be/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "a91d9163-c1f2-4eae-acab-5dabbc71d7d4",
+      "oracle_id": "05e6b243-48a6-4a42-bc5f-413441de9c33",
+      "name": "Elspeth, Sun's Champion",
+      "mana_cost": "{4}{W}{W}",
+      "cmc": 6,
+      "type_line": "Legendary Planeswalker — Elspeth",
+      "oracle_text": "+1: Create three 1/1 white Soldier creature tokens.\n−3: Destroy all creatures with power 4 or greater.\n−7: You get an emblem with \"Creatures you control get +2/+2 and have flying.\"",
+      "loyalty": "4",
+      "colors": [
+        "W"
+      ],
+      "color_identity": [
+        "W"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "all_parts": [
+        {
+          "object": "related_card",
+          "id": "a91d9163-c1f2-4eae-acab-5dabbc71d7d4",
+          "component": "combo_piece",
+          "name": "Elspeth, Sun's Champion",
+          "type_line": "Legendary Planeswalker — Elspeth",
+          "uri": "https://api.scryfall.com/cards/a91d9163-c1f2-4eae-acab-5dabbc71d7d4"
+        },
+        {
+          "object": "related_card",
+          "id": "dffbc23b-23d3-4cc5-9ea2-fa3aab785ffe",
+          "component": "combo_piece",
+          "name": "Elspeth, Sun's Champion Emblem",
+          "type_line": "Emblem — Elspeth",
+          "uri": "https://api.scryfall.com/cards/dffbc23b-23d3-4cc5-9ea2-fa3aab785ffe"
+        },
+        {
+          "object": "related_card",
+          "id": "a58c2fc3-c07f-4f06-a9d5-1d0fe3dbde1f",
+          "component": "token",
+          "name": "Soldier",
+          "type_line": "Token Creature — Soldier",
+          "uri": "https://api.scryfall.com/cards/a58c2fc3-c07f-4f06-a9d5-1d0fe3dbde1f"
+        }
+      ],
+      "scryfall_uri": "https://scryfall.com/card/frc/24/elspeth-suns-champion?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/a91d9163-c1f2-4eae-acab-5dabbc71d7d4/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "e4ed0052-d6dd-4f69-8313-10863baefac9",
+      "oracle_id": "0a79237e-0811-4a8a-bd4d-db3ca91bff22",
+      "name": "Everflowing Chalice",
+      "mana_cost": "{0}",
+      "cmc": 0,
+      "type_line": "Artifact",
+      "oracle_text": "Multikicker {2} (You may pay an additional {2} any number of times as you cast this spell.)\nThis artifact enters with a charge counter on it for each time it was kicked.\n{T}: Add {C} for each charge counter on this artifact.",
+      "colors": [],
+      "color_identity": [],
+      "keywords": [
+        "Multikicker"
+      ],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/eoc/137/everflowing-chalice?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/e4ed0052-d6dd-4f69-8313-10863baefac9/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "1d58d08d-cd62-416d-8d8e-7d9c56d5c4da",
+      "oracle_id": "b45fdeab-00cc-4422-af9f-66f30a880a7c",
+      "name": "Evolution Sage",
+      "mana_cost": "{2}{G}",
+      "cmc": 3,
+      "type_line": "Creature — Elf Druid",
+      "oracle_text": "Landfall — Whenever a land you control enters, proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)",
+      "power": "3",
+      "toughness": "2",
+      "colors": [
+        "G"
+      ],
+      "color_identity": [
+        "G"
+      ],
+      "keywords": [
+        "Proliferate",
+        "Landfall"
+      ],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/ecc/105/evolution-sage?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/1d58d08d-cd62-416d-8d8e-7d9c56d5c4da/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "d11c5fe0-1528-4c94-a8cc-42bcab9d7487",
+      "oracle_id": "27b047e3-0d41-45e2-98e9-9391d7923a1e",
+      "name": "Exotic Orchard",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land",
+      "oracle_text": "{T}: Add one mana of any color that a land an opponent controls could produce.",
+      "colors": [],
+      "color_identity": [],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/mbc/79/exotic-orchard?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/d11c5fe0-1528-4c94-a8cc-42bcab9d7487/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "76edd22f-808e-4a7c-b941-13c0f5e30418",
+      "oracle_id": "0c85b8f7-0bd0-4680-9ec5-d4b110460a54",
+      "name": "Fabled Passage",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land",
+      "oracle_text": "{T}, Sacrifice this land: Search your library for a basic land card, put it onto the battlefield tapped, then shuffle. Then if you control four or more lands, untap that land.",
+      "colors": [],
+      "color_identity": [],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/frc/71/fabled-passage?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/76edd22f-808e-4a7c-b941-13c0f5e30418/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "114d2180-093b-4838-97ad-badbc8ee50b0",
+      "oracle_id": "4eb813fd-2d5a-4b02-8193-662681ef4e7d",
+      "name": "Farewell",
+      "mana_cost": "{4}{W}{W}",
+      "cmc": 6,
+      "type_line": "Sorcery",
+      "oracle_text": "Choose one or more —\n• Exile all artifacts.\n• Exile all creatures.\n• Exile all enchantments.\n• Exile all graveyards.",
+      "colors": [
+        "W"
+      ],
+      "color_identity": [
+        "W"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/mkc/64/farewell?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/114d2180-093b-4838-97ad-badbc8ee50b0/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "3ef87948-0ad9-4757-a692-2262c8e24367",
+      "oracle_id": "95560508-7ac9-4be9-8a3f-3c7d5b52807b",
+      "name": "Fellwar Stone",
+      "mana_cost": "{2}",
+      "cmc": 2,
+      "type_line": "Artifact",
+      "oracle_text": "{T}: Add one mana of any color that a land an opponent controls could produce.",
+      "colors": [],
+      "color_identity": [],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/mbc/74/fellwar-stone?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/3ef87948-0ad9-4757-a692-2262c8e24367/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "3c520263-6bad-4521-ba9e-192ca8223b07",
+      "oracle_id": "83874e60-291b-47a7-ba9f-69437fa7e3c7",
+      "name": "Flux Channeler",
+      "mana_cost": "{2}{U}",
+      "cmc": 3,
+      "type_line": "Creature — Human Wizard",
+      "oracle_text": "Whenever you cast a noncreature spell, proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)",
+      "power": "2",
+      "toughness": "2",
+      "colors": [
+        "U"
+      ],
+      "color_identity": [
+        "U"
+      ],
+      "keywords": [
+        "Proliferate"
+      ],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/cmm/847/flux-channeler?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/3c520263-6bad-4521-ba9e-192ca8223b07/rulings"
+    },
+    {
+      "quantity": 4,
+      "id": "2e781bfd-f8cb-4d20-b977-4359f3a21311",
+      "oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+      "name": "Forest",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Basic Land — Forest",
+      "oracle_text": "({T}: Add {G}.)",
+      "colors": [],
+      "color_identity": [
+        "G"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "all_parts": [
+        {
+          "object": "related_card",
+          "id": "2e781bfd-f8cb-4d20-b977-4359f3a21311",
+          "component": "combo_piece",
+          "name": "Forest",
+          "type_line": "Basic Land — Forest",
+          "uri": "https://api.scryfall.com/cards/2e781bfd-f8cb-4d20-b977-4359f3a21311"
+        },
+        {
+          "object": "related_card",
+          "id": "aed8ae06-ae54-4a16-8830-6547164ce6ae",
+          "component": "combo_piece",
+          "name": "Gilt-Leaf Alchemist",
+          "type_line": "Creature — Elf Druid",
+          "uri": "https://api.scryfall.com/cards/aed8ae06-ae54-4a16-8830-6547164ce6ae"
+        }
+      ],
+      "scryfall_uri": "https://scryfall.com/card/mdd/301/forest?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/2e781bfd-f8cb-4d20-b977-4359f3a21311/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "c3f9b454-97e9-4c77-b37a-e974221ae385",
+      "oracle_id": "fae37e28-e137-4177-b973-fa8b4dd8f409",
+      "name": "Generous Gift",
+      "mana_cost": "{2}{W}",
+      "cmc": 3,
+      "type_line": "Instant",
+      "oracle_text": "Destroy target permanent. Its controller creates a 3/3 green Elephant creature token.",
+      "colors": [
+        "W"
+      ],
+      "color_identity": [
+        "W"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "all_parts": [
+        {
+          "object": "related_card",
+          "id": "e96f22c0-b9c8-418a-8224-e7d0b2841bd2",
+          "component": "token",
+          "name": "Elephant",
+          "type_line": "Token Creature — Elephant",
+          "uri": "https://api.scryfall.com/cards/e96f22c0-b9c8-418a-8224-e7d0b2841bd2"
+        },
+        {
+          "object": "related_card",
+          "id": "c3f9b454-97e9-4c77-b37a-e974221ae385",
+          "component": "combo_piece",
+          "name": "Generous Gift",
+          "type_line": "Instant",
+          "uri": "https://api.scryfall.com/cards/c3f9b454-97e9-4c77-b37a-e974221ae385"
+        }
+      ],
+      "scryfall_uri": "https://scryfall.com/card/msc/133/generous-gift?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/c3f9b454-97e9-4c77-b37a-e974221ae385/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "8fbd1ae0-3d4c-492a-a1ea-85a95fa3d7b6",
+      "oracle_id": "73864fcc-1bde-4bc0-831e-2b93e546e417",
+      "name": "Godless Shrine",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land — Plains Swamp",
+      "oracle_text": "({T}: Add {W} or {B}.)\nAs this land enters, you may pay 2 life. If you don't, it enters tapped.",
+      "colors": [],
+      "color_identity": [
+        "B",
+        "W"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/trk/285/godless-shrine?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/8fbd1ae0-3d4c-492a-a1ea-85a95fa3d7b6/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "95103b4c-d0c0-40fa-9ddd-c7416455ca0c",
+      "oracle_id": "1cf51f50-24e4-48d0-95b3-1dad3ffa4bf5",
+      "name": "Golgari Signet",
+      "mana_cost": "{2}",
+      "cmc": 2,
+      "type_line": "Artifact",
+      "oracle_text": "{1}, {T}: Add {B}{G}.",
+      "colors": [],
+      "color_identity": [
+        "B",
+        "G"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/dsc/246/golgari-signet?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/95103b4c-d0c0-40fa-9ddd-c7416455ca0c/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "5e1cf888-dd41-4cc2-a16e-3414ef7a78ed",
+      "oracle_id": "f1b3e0fc-1dc3-4eba-bd54-557f036f5ea9",
+      "name": "Grateful Apparition",
+      "mana_cost": "{1}{W}",
+      "cmc": 2,
+      "type_line": "Creature — Spirit",
+      "oracle_text": "Flying\nWhenever this creature deals combat damage to a player or planeswalker, proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)",
+      "power": "1",
+      "toughness": "1",
+      "colors": [
+        "W"
+      ],
+      "color_identity": [
+        "W"
+      ],
+      "keywords": [
+        "Flying",
+        "Proliferate"
+      ],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/cmm/824/grateful-apparition?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/5e1cf888-dd41-4cc2-a16e-3414ef7a78ed/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "b7285986-7e08-4969-86ef-452dc5bfdd9f",
+      "oracle_id": "f1750962-a87c-49f6-b731-02ae971ac6ea",
+      "name": "Hallowed Fountain",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land — Plains Island",
+      "oracle_text": "({T}: Add {W} or {U}.)\nAs this land enters, you may pay 2 life. If you don't, it enters tapped.",
+      "colors": [],
+      "color_identity": [
+        "U",
+        "W"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/trk/286/hallowed-fountain?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/b7285986-7e08-4969-86ef-452dc5bfdd9f/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "892451a1-5527-4857-84f8-62028d147489",
+      "oracle_id": "fb5a3403-7f0b-406c-8c4f-d693be010ca6",
+      "name": "Hinterland Harbor",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land",
+      "oracle_text": "This land enters tapped unless you control a Forest or an Island.\n{T}: Add {G} or {U}.",
+      "colors": [],
+      "color_identity": [
+        "G",
+        "U"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/msc/250/hinterland-harbor?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/892451a1-5527-4857-84f8-62028d147489/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "2013aed6-7415-4bf0-a3bb-46d6beecbaff",
+      "oracle_id": "f8148664-49c0-421f-93a5-cd59e4e9ea36",
+      "name": "Ichor Rats",
+      "mana_cost": "{1}{B}{B}",
+      "cmc": 3,
+      "type_line": "Creature — Phyrexian Rat",
+      "oracle_text": "Infect (This creature deals damage to creatures in the form of -1/-1 counters and to players in the form of poison counters.)\nWhen this creature enters, each player gets a poison counter.",
+      "power": "2",
+      "toughness": "1",
+      "colors": [
+        "B"
+      ],
+      "color_identity": [
+        "B"
+      ],
+      "keywords": [
+        "Infect"
+      ],
+      "layout": "normal",
+      "all_parts": [
+        {
+          "object": "related_card",
+          "id": "856e308d-6268-4311-9667-c2f761db8f99",
+          "component": "combo_piece",
+          "name": "Poison Counter",
+          "type_line": "Card",
+          "uri": "https://api.scryfall.com/cards/856e308d-6268-4311-9667-c2f761db8f99"
+        },
+        {
+          "object": "related_card",
+          "id": "2013aed6-7415-4bf0-a3bb-46d6beecbaff",
+          "component": "combo_piece",
+          "name": "Ichor Rats",
+          "type_line": "Creature — Phyrexian Rat",
+          "uri": "https://api.scryfall.com/cards/2013aed6-7415-4bf0-a3bb-46d6beecbaff"
+        }
+      ],
+      "scryfall_uri": "https://scryfall.com/card/som/67/ichor-rats?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/2013aed6-7415-4bf0-a3bb-46d6beecbaff/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "2c093ce0-2561-4847-ab58-f6f1650d743e",
+      "oracle_id": "9fc7aba7-eda2-4134-9c10-31ee35201b72",
+      "name": "Ichormoon Gauntlet",
+      "mana_cost": "{2}{U}",
+      "cmc": 3,
+      "type_line": "Artifact",
+      "oracle_text": "Planeswalkers you control have \"[0]: Proliferate\" and \"[−12]: Take an extra turn after this one.\"\nWhenever you cast a noncreature spell, choose a counter on target permanent. Put an additional counter of that kind on that permanent.",
+      "colors": [
+        "U"
+      ],
+      "color_identity": [
+        "U"
+      ],
+      "keywords": [
+        "Proliferate"
+      ],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/one/56/ichormoon-gauntlet?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/2c093ce0-2561-4847-ab58-f6f1650d743e/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "40441345-23ca-47e4-b349-bd13d986e41e",
+      "oracle_id": "40ec0a47-badf-4074-b0a8-749bb7c17b95",
+      "name": "Inexorable Tide",
+      "mana_cost": "{3}{U}{U}",
+      "cmc": 5,
+      "type_line": "Enchantment",
+      "oracle_text": "Whenever you cast a spell, proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)",
+      "colors": [
+        "U"
+      ],
+      "color_identity": [
+        "U"
+      ],
+      "keywords": [
+        "Proliferate"
+      ],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/mm2/49/inexorable-tide?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/40441345-23ca-47e4-b349-bd13d986e41e/rulings"
+    },
+    {
+      "quantity": 2,
+      "id": "1335d293-3dd2-4f13-bd2c-22181f4528ee",
+      "oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+      "name": "Island",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Basic Land — Island",
+      "oracle_text": "({T}: Add {U}.)",
+      "colors": [],
+      "color_identity": [
+        "U"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/mdd/294/island?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/1335d293-3dd2-4f13-bd2c-22181f4528ee/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "22017ec2-3552-4865-af76-dba042b141f5",
+      "oracle_id": "9fb8cd81-403a-4988-8f1c-b8eccf8abd9c",
+      "name": "Karn's Bastion",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land",
+      "oracle_text": "{T}: Add {C}.\n{4}, {T}: Proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)",
+      "colors": [],
+      "color_identity": [],
+      "keywords": [
+        "Proliferate"
+      ],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/eoc/163/karns-bastion?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/22017ec2-3552-4865-af76-dba042b141f5/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "178bf300-38cf-4ab2-9e66-6fcaa112b649",
+      "oracle_id": "06425cb9-d157-4155-a727-78656df12458",
+      "name": "Kasmina, Enigma Sage",
+      "mana_cost": "{1}{G}{U}",
+      "cmc": 3,
+      "type_line": "Legendary Planeswalker — Kasmina",
+      "oracle_text": "Each other planeswalker you control has the loyalty abilities of Kasmina.\n+2: Scry 1.\n−X: Create a 0/0 green and blue Fractal creature token. Put X +1/+1 counters on it.\n−8: Search your library for an instant or sorcery card that shares a color with this planeswalker, exile that card, then shuffle. You may cast that card without paying its mana cost.",
+      "loyalty": "2",
+      "colors": [
+        "G",
+        "U"
+      ],
+      "color_identity": [
+        "G",
+        "U"
+      ],
+      "keywords": [
+        "Scry"
+      ],
+      "layout": "normal",
+      "all_parts": [
+        {
+          "object": "related_card",
+          "id": "fed5f87d-3bca-44fc-a1ea-fc01e36ba092",
+          "component": "combo_piece",
+          "name": "Kasmina, Enigma Sage",
+          "type_line": "Legendary Planeswalker — Kasmina",
+          "uri": "https://api.scryfall.com/cards/fed5f87d-3bca-44fc-a1ea-fc01e36ba092"
+        },
+        {
+          "object": "related_card",
+          "id": "910f48ab-b04e-4874-b31d-a86a7bc5af14",
+          "component": "token",
+          "name": "Fractal",
+          "type_line": "Token Creature — Fractal",
+          "uri": "https://api.scryfall.com/cards/910f48ab-b04e-4874-b31d-a86a7bc5af14"
+        }
+      ],
+      "scryfall_uri": "https://scryfall.com/card/stx/196/kasmina-enigma-sage?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/178bf300-38cf-4ab2-9e66-6fcaa112b649/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "90c423cc-1264-4067-9c50-e7c88c68ef2d",
+      "oracle_id": "1593ea18-2f2f-4ab4-83fb-6ccc0bec8a90",
+      "name": "Kodama's Reach",
+      "mana_cost": "{2}{G}",
+      "cmc": 3,
+      "type_line": "Sorcery — Arcane",
+      "oracle_text": "Search your library for up to two basic land cards, reveal those cards, put one onto the battlefield tapped and the other into your hand, then shuffle.",
+      "colors": [
+        "G"
+      ],
+      "color_identity": [
+        "G"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/ecc/113/kodamas-reach?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/90c423cc-1264-4067-9c50-e7c88c68ef2d/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "d3571dee-7b90-4c0c-abc7-59b515ffa129",
+      "oracle_id": "3e39224c-72ce-4ecc-aa17-12c071ea1f3e",
+      "name": "Krosan Grip",
+      "mana_cost": "{2}{G}",
+      "cmc": 3,
+      "type_line": "Instant",
+      "oracle_text": "Split second (As long as this spell is on the stack, players can't cast spells or activate abilities that aren't mana abilities.)\nDestroy target artifact or enchantment.",
+      "colors": [
+        "G"
+      ],
+      "color_identity": [
+        "G"
+      ],
+      "keywords": [
+        "Split second"
+      ],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/c21/198/krosan-grip?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/d3571dee-7b90-4c0c-abc7-59b515ffa129/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "1a93f587-ab72-42da-88c4-31af1c9cdf1b",
+      "oracle_id": "c066f921-e349-45d1-8ec3-0955d10bbf19",
+      "name": "Lae'zel, Vlaakith's Champion",
+      "mana_cost": "{2}{W}",
+      "cmc": 3,
+      "type_line": "Legendary Creature — Gith Warrior",
+      "oracle_text": "If you would put one or more counters on a creature or planeswalker you control or on yourself, put that many plus one of each of those kinds of counters on that permanent or player instead.\nChoose a Background (You can have a Background as a second commander.)",
+      "power": "3",
+      "toughness": "3",
+      "colors": [
+        "W"
+      ],
+      "color_identity": [
+        "W"
+      ],
+      "keywords": [
+        "Choose a background"
+      ],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/clb/29/laezel-vlaakiths-champion?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/1a93f587-ab72-42da-88c4-31af1c9cdf1b/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "ea751fe2-b64a-4265-8885-a9016b29b5b3",
+      "oracle_id": "4acb6612-54e8-428d-acb6-c7259a5ad6a8",
+      "name": "Eladamri's Call",
+      "mana_cost": "{G}{W}",
+      "cmc": 2,
+      "type_line": "Instant",
+      "oracle_text": "Search your library for a creature card, reveal that card, put it into your hand, then shuffle.",
+      "colors": [
+        "G",
+        "W"
+      ],
+      "color_identity": [
+        "G",
+        "W"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/mh1/197/eladamris-call?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/ea751fe2-b64a-4265-8885-a9016b29b5b3/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "266316d3-3bbc-4283-aab8-69629855909f",
+      "oracle_id": "32116127-cf96-4a1b-8896-a1ebc087b597",
+      "name": "Llanowar Wastes",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land",
+      "oracle_text": "{T}: Add {C}.\n{T}: Add {B} or {G}. This land deals 1 damage to you.",
+      "colors": [],
+      "color_identity": [
+        "B",
+        "G"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/soc/383/llanowar-wastes?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/266316d3-3bbc-4283-aab8-69629855909f/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "ecf1f24f-d910-4ec6-95d2-0ecaf9f051aa",
+      "oracle_id": "487485a6-cf79-48c0-bea9-0ec6b3ee253c",
+      "name": "Magistrate's Scepter",
+      "mana_cost": "{3}",
+      "cmc": 3,
+      "type_line": "Artifact",
+      "oracle_text": "{4}, {T}: Put a charge counter on this artifact.\n{T}, Remove three charge counters from this artifact: Take an extra turn after this one.",
+      "colors": [],
+      "color_identity": [],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/m19/238/magistrates-scepter?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/ecf1f24f-d910-4ec6-95d2-0ecaf9f051aa/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "4e6e5c63-b6e5-4756-bf23-6c6f8669442d",
+      "oracle_id": "ab26fbe2-e808-48b9-8d0d-3fbb6c3d554f",
+      "name": "Narset, Parter of Veils",
+      "mana_cost": "{1}{U}{U}",
+      "cmc": 3,
+      "type_line": "Legendary Planeswalker — Narset",
+      "oracle_text": "Each opponent can't draw more than one card each turn.\n−2: Look at the top four cards of your library. You may reveal a noncreature, nonland card from among them and put it into your hand. Put the rest on the bottom of your library in a random order.",
+      "loyalty": "5",
+      "colors": [
+        "U"
+      ],
+      "color_identity": [
+        "U"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/cmm/853/narset-parter-of-veils?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/4e6e5c63-b6e5-4756-bf23-6c6f8669442d/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "a391da36-0b40-46ea-b771-50d2b920207e",
+      "oracle_id": "8b610f8f-c8dd-4eeb-bc6e-3bc706d5f63e",
+      "name": "Nyxbloom Ancient",
+      "mana_cost": "{4}{G}{G}{G}",
+      "cmc": 7,
+      "type_line": "Enchantment Creature — Elemental",
+      "oracle_text": "Trample\nIf you tap a permanent for mana, it produces three times as much of that mana instead.",
+      "power": "5",
+      "toughness": "5",
+      "colors": [
+        "G"
+      ],
+      "color_identity": [
+        "G"
+      ],
+      "keywords": [
+        "Trample"
+      ],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/thb/190/nyxbloom-ancient?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/a391da36-0b40-46ea-b771-50d2b920207e/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "faba010d-5b1b-4562-91d6-ec55303c4dcd",
+      "oracle_id": "8b3febb9-0597-46af-b005-982f1a31c83e",
+      "name": "Oath of Kaya",
+      "mana_cost": "{1}{W}{B}",
+      "cmc": 3,
+      "type_line": "Legendary Enchantment",
+      "oracle_text": "When Oath of Kaya enters, it deals 3 damage to any target and you gain 3 life.\nWhenever an opponent attacks a planeswalker you control with one or more creatures, Oath of Kaya deals 2 damage to that player and you gain 2 life.",
+      "colors": [
+        "B",
+        "W"
+      ],
+      "color_identity": [
+        "B",
+        "W"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/war/209/oath-of-kaya?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/faba010d-5b1b-4562-91d6-ec55303c4dcd/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "613513ea-55dd-4ae8-93b2-247e468112a6",
+      "oracle_id": "c4efdbab-711d-4269-9b24-b05d36f7e5c7",
+      "name": "Oath of Nissa",
+      "mana_cost": "{G}",
+      "cmc": 1,
+      "type_line": "Legendary Enchantment",
+      "oracle_text": "When Oath of Nissa enters, look at the top three cards of your library. You may reveal a creature, land, or planeswalker card from among them and put it into your hand. Put the rest on the bottom of your library in any order.\nYou may spend mana as though it were mana of any color to cast planeswalker spells.",
+      "colors": [
+        "G"
+      ],
+      "color_identity": [
+        "G"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/ogw/140/oath-of-nissa?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/613513ea-55dd-4ae8-93b2-247e468112a6/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "f7474f9e-a994-4ed7-83df-22edd8219e24",
+      "oracle_id": "ee00a42d-6ee4-4e46-92d6-62e8e5910880",
+      "name": "Oath of Teferi",
+      "mana_cost": "{3}{W}{U}",
+      "cmc": 5,
+      "type_line": "Legendary Enchantment",
+      "oracle_text": "When Oath of Teferi enters, exile another target permanent you control. Return it to the battlefield under its owner's control at the beginning of the next end step.\nYou may activate the loyalty abilities of planeswalkers you control twice each turn rather than only once.",
+      "colors": [
+        "U",
+        "W"
+      ],
+      "color_identity": [
+        "U",
+        "W"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/cmm/934/oath-of-teferi?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/f7474f9e-a994-4ed7-83df-22edd8219e24/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "ad7e18e2-c033-4b6c-86e8-d0e5cc824cfd",
+      "oracle_id": "975ec9a3-6f20-4177-8211-82526e092538",
+      "name": "Overgrown Tomb",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land — Swamp Forest",
+      "oracle_text": "({T}: Add {B} or {G}.)\nAs this land enters, you may pay 2 life. If you don't, it enters tapped.",
+      "colors": [],
+      "color_identity": [
+        "B",
+        "G"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/trk/289/overgrown-tomb?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/ad7e18e2-c033-4b6c-86e8-d0e5cc824cfd/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "22e08a78-55b7-46b0-bd1a-a51548fc1861",
+      "oracle_id": "d683d985-9888-4d21-8b5f-69e69ce4a03b",
+      "name": "Path to Exile",
+      "mana_cost": "{W}",
+      "cmc": 1,
+      "type_line": "Instant",
+      "oracle_text": "Exile target creature. Its controller may search their library for a basic land card, put that card onto the battlefield tapped, then shuffle.",
+      "colors": [
+        "W"
+      ],
+      "color_identity": [
+        "W"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/frc/30/path-to-exile?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/22e08a78-55b7-46b0-bd1a-a51548fc1861/rulings"
+    },
+    {
+      "quantity": 2,
+      "id": "09ac862f-0a51-44dd-b86f-9412b8218b13",
+      "oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+      "name": "Plains",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Basic Land — Plains",
+      "oracle_text": "({T}: Add {W}.)",
+      "colors": [],
+      "color_identity": [
+        "W"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/mdd/292/plains?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/09ac862f-0a51-44dd-b86f-9412b8218b13/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "a93c2e0b-3fca-476e-ae5b-a331ccacae19",
+      "oracle_id": "5330e24a-8568-446e-840a-594cd08bd1bc",
+      "name": "Prairie Stream",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land — Plains Island",
+      "oracle_text": "({T}: Add {W} or {U}.)\nThis land enters tapped unless you control two or more basic lands.",
+      "colors": [],
+      "color_identity": [
+        "U",
+        "W"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/frc/79/prairie-stream?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/a93c2e0b-3fca-476e-ae5b-a331ccacae19/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "ac625f30-ed91-4b21-ada8-aaa5b2ad79b8",
+      "oracle_id": "3f661b58-e8ca-412c-bdac-af151162de12",
+      "name": "Prologue to Phyresis",
+      "mana_cost": "{1}{U}",
+      "cmc": 2,
+      "type_line": "Instant",
+      "oracle_text": "Each opponent gets a poison counter.\nDraw a card.",
+      "colors": [
+        "U"
+      ],
+      "color_identity": [
+        "U"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "all_parts": [
+        {
+          "object": "related_card",
+          "id": "ac625f30-ed91-4b21-ada8-aaa5b2ad79b8",
+          "component": "combo_piece",
+          "name": "Prologue to Phyresis",
+          "type_line": "Instant",
+          "uri": "https://api.scryfall.com/cards/ac625f30-ed91-4b21-ada8-aaa5b2ad79b8"
+        },
+        {
+          "object": "related_card",
+          "id": "40255bfa-0004-45f1-a31b-17d385f09a95",
+          "component": "combo_piece",
+          "name": "Poison Counter",
+          "type_line": "Card",
+          "uri": "https://api.scryfall.com/cards/40255bfa-0004-45f1-a31b-17d385f09a95"
+        }
+      ],
+      "scryfall_uri": "https://scryfall.com/card/one/65/prologue-to-phyresis?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/ac625f30-ed91-4b21-ada8-aaa5b2ad79b8/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "b7c47024-5e08-4b17-b41a-7647f8b814b9",
+      "oracle_id": "8539f295-5d58-4436-a73a-b9277c4c7795",
+      "name": "Rampant Growth",
+      "mana_cost": "{1}{G}",
+      "cmc": 2,
+      "type_line": "Sorcery",
+      "oracle_text": "Search your library for a basic land card, put that card onto the battlefield tapped, then shuffle.",
+      "colors": [
+        "G"
+      ],
+      "color_identity": [
+        "G"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/tdc/265/rampant-growth?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/b7c47024-5e08-4b17-b41a-7647f8b814b9/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "cbc4281a-b70d-4f96-b309-38e986484829",
+      "oracle_id": "67f43ac6-2a58-4b53-b5d7-0330e2a252e2",
+      "name": "Reflecting Pool",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land",
+      "oracle_text": "{T}: Add one mana of any type that a land you control could produce.",
+      "colors": [],
+      "color_identity": [],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/frc/23/reflecting-pool?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/cbc4281a-b70d-4f96-b309-38e986484829/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "f1e6e3a2-5145-4898-990e-150e090f5206",
+      "oracle_id": "1ff00f5b-4bf9-4724-8bb5-6b9a9eb0ec7f",
+      "name": "Replicating Ring",
+      "mana_cost": "{3}",
+      "cmc": 3,
+      "type_line": "Snow Artifact",
+      "oracle_text": "{T}: Add one mana of any color.\nAt the beginning of your upkeep, put a night counter on this artifact. Then if it has eight or more night counters on it, remove all of them and create eight colorless snow artifact tokens named Replicated Ring with \"{T}: Add one mana of any color.\"",
+      "colors": [],
+      "color_identity": [],
+      "keywords": [],
+      "layout": "normal",
+      "all_parts": [
+        {
+          "object": "related_card",
+          "id": "f1e6e3a2-5145-4898-990e-150e090f5206",
+          "component": "combo_piece",
+          "name": "Replicating Ring",
+          "type_line": "Snow Artifact",
+          "uri": "https://api.scryfall.com/cards/f1e6e3a2-5145-4898-990e-150e090f5206"
+        },
+        {
+          "object": "related_card",
+          "id": "092bc98e-cca1-4d8e-bcde-074621280fed",
+          "component": "token",
+          "name": "Replicated Ring",
+          "type_line": "Token Snow Artifact",
+          "uri": "https://api.scryfall.com/cards/092bc98e-cca1-4d8e-bcde-074621280fed"
+        }
+      ],
+      "scryfall_uri": "https://scryfall.com/card/moc/372/replicating-ring?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/f1e6e3a2-5145-4898-990e-150e090f5206/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "53876046-cdb8-4157-96cd-7832d3ad2549",
+      "oracle_id": "a0c47ab6-dfb4-46ee-a3f7-9e1521b4bb4b",
+      "name": "Shalai, Voice of Plenty",
+      "mana_cost": "{3}{W}",
+      "cmc": 4,
+      "type_line": "Legendary Creature — Angel",
+      "oracle_text": "Flying\nYou, planeswalkers you control, and other creatures you control have hexproof.\n{4}{G}{G}: Put a +1/+1 counter on each creature you control.",
+      "power": "3",
+      "toughness": "4",
+      "colors": [
+        "W"
+      ],
+      "color_identity": [
+        "G",
+        "W"
+      ],
+      "keywords": [
+        "Flying"
+      ],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/tdc/130/shalai-voice-of-plenty?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/53876046-cdb8-4157-96cd-7832d3ad2549/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "5aa0c810-3b7d-4661-979e-e84fb327742d",
+      "oracle_id": "c854ecb0-cc60-4c48-a9aa-7f2348a7a8c6",
+      "name": "Shattered Sanctum",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land",
+      "oracle_text": "This land enters tapped unless you control two or more other lands.\n{T}: Add {W} or {B}.",
+      "colors": [],
+      "color_identity": [
+        "B",
+        "W"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/sos/260/shattered-sanctum?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/5aa0c810-3b7d-4661-979e-e84fb327742d/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "8ee443cc-e17a-493b-9c93-1f9e141a30e4",
+      "oracle_id": "6ad8011d-3471-4369-9d68-b264cc027487",
+      "name": "Sol Ring",
+      "mana_cost": "{1}",
+      "cmc": 1,
+      "type_line": "Artifact",
+      "oracle_text": "{T}: Add {C}{C}.",
+      "colors": [],
+      "color_identity": [],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/frc/21/sol-ring?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/8ee443cc-e17a-493b-9c93-1f9e141a30e4/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "cc7ff5f4-a7cc-41a1-a22b-8cf67ad18707",
+      "oracle_id": "fbffaf9f-40e7-4113-a037-533b733cebce",
+      "name": "Sorin the Mirthless",
+      "mana_cost": "{2}{B}{B}",
+      "cmc": 4,
+      "type_line": "Legendary Planeswalker — Sorin",
+      "oracle_text": "+1: Look at the top card of your library. You may reveal that card and put it into your hand. If you do, you lose life equal to its mana value.\n−2: Create a 2/3 black Vampire creature token with flying and lifelink.\n−7: Sorin deals 13 damage to any target. You gain 13 life.",
+      "loyalty": "4",
+      "colors": [
+        "B"
+      ],
+      "color_identity": [
+        "B"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "all_parts": [
+        {
+          "object": "related_card",
+          "id": "ebd12ac1-d1b2-4e22-9a17-8f3964294e35",
+          "component": "token",
+          "name": "Vampire",
+          "type_line": "Token Creature — Vampire",
+          "uri": "https://api.scryfall.com/cards/ebd12ac1-d1b2-4e22-9a17-8f3964294e35"
+        },
+        {
+          "object": "related_card",
+          "id": "260d784d-0213-44da-8f78-58968a185012",
+          "component": "combo_piece",
+          "name": "Sorin the Mirthless",
+          "type_line": "Legendary Planeswalker — Sorin",
+          "uri": "https://api.scryfall.com/cards/260d784d-0213-44da-8f78-58968a185012"
+        }
+      ],
+      "scryfall_uri": "https://scryfall.com/card/vow/131/sorin-the-mirthless?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/cc7ff5f4-a7cc-41a1-a22b-8cf67ad18707/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "b233b117-9369-45c1-80c5-cc857386b6be",
+      "oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+      "name": "Swamp",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Basic Land — Swamp",
+      "oracle_text": "({T}: Add {B}.)",
+      "colors": [],
+      "color_identity": [
+        "B"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/mdd/296/swamp?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/b233b117-9369-45c1-80c5-cc857386b6be/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "f7e12477-d59f-442b-a678-1be746d0b7be",
+      "oracle_id": "b1544f21-7e98-461b-aed5-e748b0168c52",
+      "name": "Swords to Plowshares",
+      "mana_cost": "{W}",
+      "cmc": 1,
+      "type_line": "Instant",
+      "oracle_text": "Exile target creature. Its controller gains life equal to its power.",
+      "colors": [
+        "W"
+      ],
+      "color_identity": [
+        "W"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/frc/37/swords-to-plowshares?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/f7e12477-d59f-442b-a678-1be746d0b7be/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "222a736e-d819-452d-aeda-eb848c4b2302",
+      "oracle_id": "021b4745-4a15-462c-a6b0-2dee1dc9d196",
+      "name": "Tamiyo, Compleated Sage",
+      "mana_cost": "{2}{G}{G/U/P}{U}",
+      "cmc": 5,
+      "type_line": "Legendary Planeswalker — Tamiyo",
+      "oracle_text": "Compleated ({G/U/P} can be paid with {G}, {U}, or 2 life. If life was paid, this planeswalker enters with two fewer loyalty counters.)\n+1: Tap up to one target artifact or creature. It doesn't untap during its controller's next untap step.\n−X: Exile target nonland permanent card with mana value X from your graveyard. Create a token that's a copy of that card.\n−7: Create Tamiyo's Notebook, a legendary colorless Book artifact token with \"Spells you cast cost {2} less to cast\" and \"{T}: Draw a card.\"",
+      "loyalty": "5",
+      "colors": [
+        "G",
+        "U"
+      ],
+      "color_identity": [
+        "G",
+        "U"
+      ],
+      "keywords": [
+        "Compleated"
+      ],
+      "layout": "normal",
+      "all_parts": [
+        {
+          "object": "related_card",
+          "id": "5898a9c4-c983-4807-af06-18111702ab59",
+          "component": "combo_piece",
+          "name": "Tamiyo, Compleated Sage",
+          "type_line": "Legendary Planeswalker — Tamiyo",
+          "uri": "https://api.scryfall.com/cards/5898a9c4-c983-4807-af06-18111702ab59"
+        },
+        {
+          "object": "related_card",
+          "id": "4b976756-e988-4211-95c2-0e3587118488",
+          "component": "token",
+          "name": "Copy",
+          "type_line": "Token",
+          "uri": "https://api.scryfall.com/cards/4b976756-e988-4211-95c2-0e3587118488"
+        },
+        {
+          "object": "related_card",
+          "id": "992cb1e0-e846-4710-b49e-a748e4ebffa5",
+          "component": "token",
+          "name": "Tamiyo's Notebook",
+          "type_line": "Token Legendary Artifact",
+          "uri": "https://api.scryfall.com/cards/992cb1e0-e846-4710-b49e-a748e4ebffa5"
+        }
+      ],
+      "scryfall_uri": "https://scryfall.com/card/neo/238/tamiyo-compleated-sage?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/222a736e-d819-452d-aeda-eb848c4b2302/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "576ba8db-fad9-4c48-96be-a8a7e5f43039",
+      "oracle_id": "9cf99129-f51a-4418-a8cc-8ca2992b17fa",
+      "name": "Tamiyo, Field Researcher",
+      "mana_cost": "{1}{G}{W}{U}",
+      "cmc": 4,
+      "type_line": "Legendary Planeswalker — Tamiyo",
+      "oracle_text": "+1: Choose up to two target creatures. Until your next turn, whenever either of those creatures deals combat damage, you draw a card.\n−2: Tap up to two target nonland permanents. They don't untap during their controller's next untap step.\n−7: Draw three cards. You get an emblem with \"You may cast spells from your hand without paying their mana costs.\"",
+      "loyalty": "4",
+      "colors": [
+        "G",
+        "U",
+        "W"
+      ],
+      "color_identity": [
+        "G",
+        "U",
+        "W"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "all_parts": [
+        {
+          "object": "related_card",
+          "id": "576ba8db-fad9-4c48-96be-a8a7e5f43039",
+          "component": "combo_piece",
+          "name": "Tamiyo, Field Researcher",
+          "type_line": "Legendary Planeswalker — Tamiyo",
+          "uri": "https://api.scryfall.com/cards/576ba8db-fad9-4c48-96be-a8a7e5f43039"
+        },
+        {
+          "object": "related_card",
+          "id": "e01bb7a6-0aec-4c70-bb8c-05b3ad904944",
+          "component": "combo_piece",
+          "name": "Tamiyo, Field Researcher Emblem",
+          "type_line": "Emblem — Tamiyo",
+          "uri": "https://api.scryfall.com/cards/e01bb7a6-0aec-4c70-bb8c-05b3ad904944"
+        }
+      ],
+      "scryfall_uri": "https://scryfall.com/card/inr/249/tamiyo-field-researcher?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/576ba8db-fad9-4c48-96be-a8a7e5f43039/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "b1a32b7c-9f26-4504-9f8d-379164d69346",
+      "oracle_id": "1c9e1f75-73f0-4846-b53f-458a0984b1bb",
+      "name": "Teferi's Ageless Insight",
+      "mana_cost": "{2}{U}{U}",
+      "cmc": 4,
+      "type_line": "Legendary Enchantment",
+      "oracle_text": "If you would draw a card except the first one you draw in each of your draw steps, draw two cards instead.",
+      "colors": [
+        "U"
+      ],
+      "color_identity": [
+        "U"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/mkc/119/teferis-ageless-insight?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/b1a32b7c-9f26-4504-9f8d-379164d69346/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "5d10b752-d9cb-419d-a5c4-d4ee1acb655e",
+      "oracle_id": "f2f165b6-ef0a-42ad-9352-ba68be8248b0",
+      "name": "Teferi, Hero of Dominaria",
+      "mana_cost": "{3}{W}{U}",
+      "cmc": 5,
+      "type_line": "Legendary Planeswalker — Teferi",
+      "oracle_text": "+1: Draw a card. At the beginning of the next end step, untap up to two lands.\n−3: Put target nonland permanent into its owner's library third from the top.\n−8: You get an emblem with \"Whenever you draw a card, exile target permanent an opponent controls.\"",
+      "loyalty": "4",
+      "colors": [
+        "U",
+        "W"
+      ],
+      "color_identity": [
+        "U",
+        "W"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "all_parts": [
+        {
+          "object": "related_card",
+          "id": "b82ac152-5df1-46c9-98e9-ad5585f7e799",
+          "component": "combo_piece",
+          "name": "Teferi, Hero of Dominaria Emblem",
+          "type_line": "Emblem — Teferi",
+          "uri": "https://api.scryfall.com/cards/b82ac152-5df1-46c9-98e9-ad5585f7e799"
+        },
+        {
+          "object": "related_card",
+          "id": "5d10b752-d9cb-419d-a5c4-d4ee1acb655e",
+          "component": "combo_piece",
+          "name": "Teferi, Hero of Dominaria",
+          "type_line": "Legendary Planeswalker — Teferi",
+          "uri": "https://api.scryfall.com/cards/5d10b752-d9cb-419d-a5c4-d4ee1acb655e"
+        }
+      ],
+      "scryfall_uri": "https://scryfall.com/card/dom/207/teferi-hero-of-dominaria?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/5d10b752-d9cb-419d-a5c4-d4ee1acb655e/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "9c0c61e3-9f3d-4e7f-9046-0ea336dd8a2d",
+      "oracle_id": "e802fb53-7cf5-46bc-8a0b-f99cf5c20f74",
+      "name": "Teferi, Master of Time",
+      "mana_cost": "{2}{U}{U}",
+      "cmc": 4,
+      "type_line": "Legendary Planeswalker — Teferi",
+      "oracle_text": "You may activate loyalty abilities of Teferi on any player's turn any time you could cast an instant.\n+1: Draw a card, then discard a card.\n−3: Target creature you don't control phases out. (Treat it and anything attached to it as though they don't exist until its controller's next turn.)\n−10: Take two extra turns after this one.",
+      "loyalty": "3",
+      "colors": [
+        "U"
+      ],
+      "color_identity": [
+        "U"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/m21/75/teferi-master-of-time?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/9c0c61e3-9f3d-4e7f-9046-0ea336dd8a2d/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "368c6e60-804c-447c-bc2b-ac9dc4cab5e7",
+      "oracle_id": "07d0b06b-80cb-4518-92c9-84ea87a7e08a",
+      "name": "Teferi, Temporal Archmage",
+      "mana_cost": "{4}{U}{U}",
+      "cmc": 6,
+      "type_line": "Legendary Planeswalker — Teferi",
+      "oracle_text": "+1: Look at the top two cards of your library. Put one of them into your hand and the other on the bottom of your library.\n−1: Untap up to four target permanents.\n−10: You get an emblem with \"You may activate loyalty abilities of planeswalkers you control on any player's turn any time you could cast an instant.\"\nTeferi, Temporal Archmage can be your commander.",
+      "loyalty": "5",
+      "colors": [
+        "U"
+      ],
+      "color_identity": [
+        "U"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "all_parts": [
+        {
+          "object": "related_card",
+          "id": "ba86947e-5d7c-4cf1-9d33-98b289d56108",
+          "component": "combo_piece",
+          "name": "Teferi, Temporal Archmage",
+          "type_line": "Legendary Planeswalker — Teferi",
+          "uri": "https://api.scryfall.com/cards/ba86947e-5d7c-4cf1-9d33-98b289d56108"
+        },
+        {
+          "object": "related_card",
+          "id": "72db0562-982a-43df-b7b3-4a51c4710757",
+          "component": "combo_piece",
+          "name": "Teferi, Temporal Archmage Emblem",
+          "type_line": "Emblem — Teferi",
+          "uri": "https://api.scryfall.com/cards/72db0562-982a-43df-b7b3-4a51c4710757"
+        }
+      ],
+      "scryfall_uri": "https://scryfall.com/card/cmm/125/teferi-temporal-archmage?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/368c6e60-804c-447c-bc2b-ac9dc4cab5e7/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "2d389264-e2d2-4589-9636-faa11fe46710",
+      "oracle_id": "4716ab91-30e6-4c63-8389-a9db8f9414d8",
+      "name": "Tekuthal, Inquiry Dominus",
+      "mana_cost": "{2}{U}{U}",
+      "cmc": 4,
+      "type_line": "Legendary Creature — Phyrexian Horror",
+      "oracle_text": "Flying\nIf you would proliferate, proliferate twice instead.\n{1}{U/P}{U/P}, Remove three counters from among other artifacts, creatures, and planeswalkers you control: Put an indestructible counter on Tekuthal. ({U/P} can be paid with either {U} or 2 life.)",
+      "power": "3",
+      "toughness": "5",
+      "colors": [
+        "U"
+      ],
+      "color_identity": [
+        "U"
+      ],
+      "keywords": [
+        "Flying",
+        "Proliferate"
+      ],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/eoc/78/tekuthal-inquiry-dominus?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/2d389264-e2d2-4589-9636-faa11fe46710/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "b9b0589d-f327-46a7-8bac-06b7654c547a",
+      "oracle_id": "f413a83d-a40d-434c-b20a-4c707c0527fa",
+      "name": "Temple Garden",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land — Forest Plains",
+      "oracle_text": "({T}: Add {G} or {W}.)\nAs this land enters, you may pay 2 life. If you don't, it enters tapped.",
+      "colors": [],
+      "color_identity": [
+        "G",
+        "W"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/trk/301/temple-garden?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/b9b0589d-f327-46a7-8bac-06b7654c547a/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "29ad5bb3-927d-41d0-a000-3826ea117e52",
+      "oracle_id": "b33d2b77-f068-4fdc-a1a8-0353a35e3973",
+      "name": "Tezzeret's Gambit",
+      "mana_cost": "{3}{U/P}",
+      "cmc": 4,
+      "type_line": "Sorcery",
+      "oracle_text": "({U/P} can be paid with either {U} or 2 life.)\nDraw two cards, then proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)",
+      "colors": [
+        "U"
+      ],
+      "color_identity": [
+        "U"
+      ],
+      "keywords": [
+        "Proliferate"
+      ],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/eoc/47/tezzerets-gambit?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/29ad5bb3-927d-41d0-a000-3826ea117e52/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "1ca66955-d900-45b6-9a40-38467689a68d",
+      "oracle_id": "fb88fb3d-6a85-4bb1-b316-7f759b45a0fa",
+      "name": "The Chain Veil",
+      "mana_cost": "{4}",
+      "cmc": 4,
+      "type_line": "Legendary Artifact",
+      "oracle_text": "At the beginning of your end step, if you didn't activate a loyalty ability of a planeswalker this turn, you lose 2 life.\n{4}, {T}: For each planeswalker you control, you may activate one of its loyalty abilities once this turn as though none of its loyalty abilities have been activated this turn.",
+      "colors": [],
+      "color_identity": [],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/cmm/943/the-chain-veil?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/1ca66955-d900-45b6-9a40-38467689a68d/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "f10db847-6598-49a5-8f10-67afd5187d32",
+      "oracle_id": "eac94269-4baa-4b8e-a0fd-d6b227d1cde3",
+      "name": "Thrummingbird",
+      "mana_cost": "{1}{U}",
+      "cmc": 2,
+      "type_line": "Creature — Phyrexian Bird Horror",
+      "oracle_text": "Flying\nWhenever this creature deals combat damage to a player, proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)",
+      "power": "1",
+      "toughness": "1",
+      "colors": [
+        "U"
+      ],
+      "color_identity": [
+        "U"
+      ],
+      "keywords": [
+        "Flying",
+        "Proliferate"
+      ],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/eoc/80/thrummingbird?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/f10db847-6598-49a5-8f10-67afd5187d32/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "2be8d24e-1370-4e85-90f2-66b6d6e9c4a4",
+      "oracle_id": "7a8baaf9-e21f-41a0-9f15-80764f6e5e68",
+      "name": "Sword of Truth and Justice",
+      "mana_cost": "{3}",
+      "cmc": 3,
+      "type_line": "Artifact — Equipment",
+      "oracle_text": "Equipped creature gets +2/+2 and has protection from white and from blue.\nWhenever equipped creature deals combat damage to a player, put a +1/+1 counter on a creature you control, then proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)\nEquip {2}",
+      "colors": [],
+      "color_identity": [],
+      "keywords": [
+        "Proliferate",
+        "Equip"
+      ],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/mh1/229/sword-of-truth-and-justice?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/2be8d24e-1370-4e85-90f2-66b6d6e9c4a4/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "e8b05f37-815f-4854-bf82-ca544ca67532",
+      "oracle_id": "857febd9-cdd7-4f8e-a852-d88084b0cfbc",
+      "name": "Underground River",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land",
+      "oracle_text": "{T}: Add {C}.\n{T}: Add {U} or {B}. This land deals 1 damage to you.",
+      "colors": [],
+      "color_identity": [
+        "B",
+        "U"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/frc/87/underground-river?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/e8b05f37-815f-4854-bf82-ca544ca67532/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "d89b312b-cc90-4f08-ae2e-043a79e51156",
+      "oracle_id": "3b1647d1-9aec-454f-a215-e28633cb7a2d",
+      "name": "Viral Drake",
+      "mana_cost": "{3}{U}",
+      "cmc": 4,
+      "type_line": "Creature — Phyrexian Drake",
+      "oracle_text": "Flying\nInfect (This creature deals damage to creatures in the form of -1/-1 counters and to players in the form of poison counters.)\n{3}{U}: Proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)",
+      "power": "1",
+      "toughness": "4",
+      "colors": [
+        "U"
+      ],
+      "color_identity": [
+        "U"
+      ],
+      "keywords": [
+        "Flying",
+        "Proliferate",
+        "Infect"
+      ],
+      "layout": "normal",
+      "all_parts": [
+        {
+          "object": "related_card",
+          "id": "d89b312b-cc90-4f08-ae2e-043a79e51156",
+          "component": "combo_piece",
+          "name": "Viral Drake",
+          "type_line": "Creature — Phyrexian Drake",
+          "uri": "https://api.scryfall.com/cards/d89b312b-cc90-4f08-ae2e-043a79e51156"
+        },
+        {
+          "object": "related_card",
+          "id": "470618f6-f67f-44c6-a086-285632508915",
+          "component": "combo_piece",
+          "name": "Poison Counter",
+          "type_line": "Card",
+          "uri": "https://api.scryfall.com/cards/470618f6-f67f-44c6-a086-285632508915"
+        }
+      ],
+      "scryfall_uri": "https://scryfall.com/card/nph/49/viral-drake?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/d89b312b-cc90-4f08-ae2e-043a79e51156/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "92613468-205e-488b-930d-11908477e9f8",
+      "oracle_id": "5a3fdf5a-bff8-4896-b288-3f43f9a72d9b",
+      "name": "Vorinclex, Monstrous Raider",
+      "mana_cost": "{4}{G}{G}",
+      "cmc": 6,
+      "type_line": "Legendary Creature — Phyrexian Praetor",
+      "oracle_text": "Trample, haste\nIf you would put one or more counters on a permanent or player, put twice that many of each of those kinds of counters on that permanent or player instead.\nIf an opponent would put one or more counters on a permanent or player, they put half that many of each of those kinds of counters on that permanent or player instead, rounded down.",
+      "power": "6",
+      "toughness": "6",
+      "colors": [
+        "G"
+      ],
+      "color_identity": [
+        "G"
+      ],
+      "keywords": [
+        "Haste",
+        "Trample"
+      ],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/khm/199/vorinclex-monstrous-raider?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/92613468-205e-488b-930d-11908477e9f8/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "9f1fa1c5-ff87-4bbc-89aa-dbebc91eada0",
+      "oracle_id": "05d09c55-f551-4cb4-a8d2-4811dccc848d",
+      "name": "Vraska, Betrayal's Sting",
+      "mana_cost": "{4}{B}{B/P}",
+      "cmc": 6,
+      "type_line": "Legendary Planeswalker — Vraska",
+      "oracle_text": "Compleated ({B/P} can be paid with {B} or 2 life. If life was paid, this planeswalker enters with two fewer loyalty counters.)\n0: You draw a card and lose 1 life. Proliferate.\n−2: Target creature becomes a Treasure artifact with \"{T}, Sacrifice this artifact: Add one mana of any color\" and loses all other card types and abilities.\n−9: If target player has fewer than nine poison counters, they get a number of poison counters equal to the difference.",
+      "loyalty": "6",
+      "colors": [
+        "B"
+      ],
+      "color_identity": [
+        "B"
+      ],
+      "keywords": [
+        "Proliferate",
+        "Compleated"
+      ],
+      "layout": "normal",
+      "all_parts": [
+        {
+          "object": "related_card",
+          "id": "9f1fa1c5-ff87-4bbc-89aa-dbebc91eada0",
+          "component": "combo_piece",
+          "name": "Vraska, Betrayal's Sting",
+          "type_line": "Legendary Planeswalker — Vraska",
+          "uri": "https://api.scryfall.com/cards/9f1fa1c5-ff87-4bbc-89aa-dbebc91eada0"
+        },
+        {
+          "object": "related_card",
+          "id": "8a9cb417-8709-4336-be36-2fb0cea31fe1",
+          "component": "combo_piece",
+          "name": "Poison Counter",
+          "type_line": "Card",
+          "uri": "https://api.scryfall.com/cards/8a9cb417-8709-4336-be36-2fb0cea31fe1"
+        }
+      ],
+      "scryfall_uri": "https://scryfall.com/card/ecc/88/vraska-betrayals-sting?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/9f1fa1c5-ff87-4bbc-89aa-dbebc91eada0/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "5525d6a6-e532-4047-9da4-bfae7927fecc",
+      "oracle_id": "fc9ec820-4245-4a96-b009-5308a818ca58",
+      "name": "Watery Grave",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land — Island Swamp",
+      "oracle_text": "({T}: Add {U} or {B}.)\nAs this land enters, you may pay 2 life. If you don't, it enters tapped.",
+      "colors": [],
+      "color_identity": [
+        "B",
+        "U"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/trk/306/watery-grave?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/5525d6a6-e532-4047-9da4-bfae7927fecc/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "4d6f6c96-f813-4864-b4e1-b2a0aa8be1e8",
+      "oracle_id": "c9fe1383-1331-4a58-a45a-3320250221a9",
+      "name": "Woodland Cemetery",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land",
+      "oracle_text": "This land enters tapped unless you control a Swamp or a Forest.\n{T}: Add {B} or {G}.",
+      "colors": [],
+      "color_identity": [
+        "B",
+        "G"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/soc/424/woodland-cemetery?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/4d6f6c96-f813-4864-b4e1-b2a0aa8be1e8/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "f4c1500b-1f4c-4d33-810c-25e3bb0a4666",
+      "oracle_id": "40b36bc6-c185-4bda-99e7-0118953c2c97",
+      "name": "Yavimaya Coast",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land",
+      "oracle_text": "{T}: Add {C}.\n{T}: Add {G} or {U}. This land deals 1 damage to you.",
+      "colors": [],
+      "color_identity": [
+        "G",
+        "U"
+      ],
+      "keywords": [],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/soc/425/yavimaya-coast?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/f4c1500b-1f4c-4d33-810c-25e3bb0a4666/rulings"
+    },
+    {
+      "quantity": 1,
+      "id": "cc520518-2063-4b57-a0d4-10cf62a7175e",
+      "oracle_id": "fdd46004-eaba-4024-8687-39b23dc6a58c",
+      "name": "Zagoth Triome",
+      "mana_cost": "",
+      "cmc": 0,
+      "type_line": "Land — Swamp Forest Island",
+      "oracle_text": "({T}: Add {B}, {G}, or {U}.)\nThis land enters tapped.\nCycling {3} ({3}, Discard this card: Draw a card.)",
+      "colors": [],
+      "color_identity": [
+        "B",
+        "G",
+        "U"
+      ],
+      "keywords": [
+        "Cycling"
+      ],
+      "layout": "normal",
+      "scryfall_uri": "https://scryfall.com/card/iko/259/zagoth-triome?utm_source=api",
+      "rulings_uri": "https://api.scryfall.com/cards/cc520518-2063-4b57-a0d4-10cf62a7175e/rulings"
+    }
+  ]
+}

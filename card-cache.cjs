@@ -42,7 +42,7 @@ function createCardCache({directory,client,fetchImpl=fetch}){
   }
   if(errors.length)card.artworkError=errors.join(' · ');else delete card.artworkError;
   card.artworkVersion=errors.length?1:2;
-  await save(card);return card;
+  await save(card,card.tokenTemplate?"@id:"+card.id:card.name);return card;
  }
  function lookupBatch(names,onProgress=()=>{}){
   if(!Array.isArray(names)||names.length>250||names.some(n=>typeof n!=='string'||!n.trim()||n.length>200))return Promise.reject(Error('Invalid card names'));
@@ -69,6 +69,35 @@ function createCardCache({directory,client,fetchImpl=fetch}){
   });
   queue=task.catch(()=>{});return task;
  }
- return {lookupBatch};
+ // Exact IDs keep different printings and same-name token variants separate.
+ function enqueue(task){const result=queue.then(task);queue=result.catch(()=>{});return result;}
+ async function loadId(id){const card=await cached('@id:'+id)||await client.byId(id);card.tokenTemplate=true;await loadArtwork(card);return card;}
+ function lookupIds(ids){
+  if(!Array.isArray(ids)||ids.length>250||ids.some(id=>typeof id!=='string'||!/^[a-f0-9-]{36}$/i.test(id)))return Promise.reject(Error('Invalid token IDs'));
+  return enqueue(async()=>{await fs.mkdir(directory,{recursive:true});const records={};for(const id of new Set(ids))records[id]=await loadId(id);return records;});
+ }
+ function lookupTokens(names){
+  if(!Array.isArray(names)||names.length>500||names.some(n=>typeof n!=='string'||!n.trim()||n.length>200))return Promise.reject(Error('Invalid card names'));
+  return enqueue(async()=>{
+   const {discoverTokens,matchingToken,tokenTemplate,tokenSearch}=await import('./token-catalog.mjs');
+   await fs.mkdir(directory,{recursive:true});const cards=[];
+   for(const name of new Set(names)){const card=await cached(name);if(card)cards.push(card);else throw Error('Import card data before looking up tokens.');}
+   const {ids,definitions}=discoverTokens(cards),tokens=[],warnings=[];
+   for(const id of ids){try{tokens.push(tokenTemplate(await loadId(id)));}catch(error){warnings.push('Token '+id+': '+error.message);}}
+   for(const definition of definitions){
+    if(matchingToken(tokens,definition))continue;
+    const query=tokenSearch(definition),key='@token-search:'+query;
+    try{
+     const saved=await cached(key),results=saved?.results||await client.searchTokens(query);
+     if(!saved&&results.length)await save({results},key);
+     const match=matchingToken(results,definition);
+     if(match){match.tokenTemplate=true;tokens.push(tokenTemplate(await loadArtwork(match)));continue;}
+    }catch(error){warnings.push(definition.name+': '+error.message);}
+    tokens.push(tokenTemplate(definition));warnings.push('No exact token artwork found for '+definition.name+'. A text template is available.');
+   }
+   return {tokens:[...new Map(tokens.map(t=>[t.id||JSON.stringify(t),t])).values()],warnings};
+  });
+ }
+ return {lookupBatch,lookupIds,lookupTokens};
 }
 module.exports={createCardCache,imageSources};

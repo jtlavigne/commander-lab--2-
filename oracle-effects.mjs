@@ -1,3 +1,4 @@
+import {namedToken} from './token-catalog.mjs';
 import {finishResolutionTriggers} from './trigger-rules.mjs';
 import {createCounterPlan,advanceCounterPlan,commitCounterPlan,validateCounterPlan,permanentCounterEvent,playerCounterEvent,proliferateCount} from './counter-effects.mjs';
 import {compileReanimationEffect,runReanimationStep,reanimationChoiceOptions,resolveReanimationChoice,REANIMATION_OPERATIONS} from './reanimation.mjs';
@@ -166,6 +167,9 @@ export function compileOracleEffect(raw){
   const types=m[6].trim(),artifact=/\bartifact\b/i.test(types),subtype=types.replace(/\bartifact\b/i,'').trim();
   return [{op:'createTokens',amount:m[2],expression:m[10],perOpponent:!!m[1],attacking:/attacking/.test(m[7]||''),blocking:/blocking/.test(m[7]||''),tapped:/^tapped/.test(m[7]||''),fixedDefender:!!m[8],definition:{name:subtype,type_line:'Token '+(artifact?'Artifact ':'')+'Creature — '+subtype,power:m[3],toughness:m[4],colors:(m[5].toLowerCase().match(/white|blue|black|red|green/g)||[]).map(color=>({white:'W',blue:'U',black:'B',red:'R',green:'G'}[color])),oracle_text:m[9]||''}}];
  }
+ if((m=text.match(/^(Create [^.]+\.) Put (X|one|two|three|\d+) ([+-]\d+\/[+-]\d+|[a-z]+) counters? on it\.$/i))){const program=compileOracleEffect(m[1]);if(program?.length===1&&program[0].op==='createTokens')return [{...program[0],createdCounter:{kind:m[3],amount:m[2]}}];}
+ if((m=text.match(/^(Create .+? creature tokens?) named ([^.]+)\.$/i))){const program=compileOracleEffect(m[1]+'.');if(program?.length===1&&program[0].op==='createTokens')return [{...program[0],definition:{...program[0].definition,name:m[2]}}];}
+ const named=namedToken(text);if(named)return [{op:'createTokens',amount:'one',definition:named}];
  if((m=text.match(/^Create (a|one|two|three|\d+) Treasure tokens?\.$/i)))return [{op:'createTokens',amount:m[1],definition:{name:'Treasure',type_line:'Token Artifact — Treasure',oracle_text:'{T}, Sacrifice this artifact: Add one mana of any color.'}}];
  if(/^you may search your library[^.\n]*\.$/i.test(text)){const search=compileOracleEffect(text.replace(/^you may /i,''));if(search)return [{op:'optional',label:'Search your library',then:search}];}
  if(text.startsWith('Choose one —\n')){const modes=text.slice('Choose one —\n'.length).split('\n').map(line=>line.replace(/^•\s*/,'')),programs=modes.map(compileOracleEffect);if(programs.every(Boolean))return [{op:'mode',modes:modes.map((label,i)=>({label,program:programs[i]}))}];}
@@ -229,7 +233,7 @@ export function compileOracleEffect(raw){
  // Compose only fully recognized instructions. Never execute a known prefix
  // while dropping an unknown suffix, condition, replacement, or cost.
  const paragraphs=text.split(/\n+/);if(paragraphs.length>1){const parts=paragraphs.map(compileOracleEffect);if(parts.every(Boolean)){const spec=effectTargetSpec(text);if(spec?.repeated&&spec.groups){let group=0;return parts.flatMap((part,i)=>{const targetGroup=effectTargetSpec(paragraphs[i])?group++:null;return part.map(step=>({...step,targetGroup}));});}return parts.flat();}}
- const instructions=text.replace(/^(Draw [^.]+? cards?) and (create [^]+)$/i,'$1. $2').replace(/^(you gain \d+ life) and (draw [^.]+ cards?)\.$/i,'$1. $2.').replace(/\b(draw [^.]+? cards?) and you (lose \d+ life\.)/gi,'$1. You $2').split(/\.\s+|\n+/).map(s=>s.trim()).filter(Boolean);
+ const instructions=text.replace(/^(Draw [^.]+? cards?) and (create [^]+)$/i,'$1. $2').replace(/^(you gain \d+ life) and (draw [^.]+ cards?)\.$/i,'$1. $2.').replace(/\b(draw [^.]+? cards?) and (?:you )?(lose \d+ life\.)/gi,'$1. You $2').replace(/^(Draw [^.]+? cards?), then (proliferate\.)$/i,'$1. $2').split(/\.\s+|\n+/).map(s=>s.trim()).filter(Boolean);
  if(instructions.length>1){const parts=instructions.map(s=>compileOracleEffect(s.endsWith('.')?s:s+'.'));if(parts.every(Boolean))return parts.flat();}
  return null;
 }
@@ -353,6 +357,7 @@ function runProgram(g,context,program){
    if(!Number.isSafeInteger(count)||count<0||count*groups.length>500)throw Error('This token amount needs a supported whole-number value.');
    const definition=step.statExpression?{...step.definition,power:String(effectAmount(g,context,step.statExpression)),toughness:String(effectAmount(g,context,step.statExpression))}:step.definition;
    const created=createTokens(g,owner,definition,count*groups.length,{tapped:!!step.tapped});
+   if(step.createdCounter){const amount=effectAmount(g,context,step.createdCounter.amount),events=created.map(card=>permanentCounterEvent(g,owner,card.instance,{[step.createdCounter.kind]:amount}));runProgram(g,context,[{op:'counterBatch',events},...rest]);return;}
    for(const [index,card] of created.entries()){const defender=groups[Math.floor(index/count)];if(step.blocking)enterBlocking(g,owner,card.instance,context.event?.attacker);else if(step.attacking&&tokenDefenders(g,owner,step.fixedDefender?defender:undefined).length)tokens.push({id:card.instance,...(step.fixedDefender?{defender}:{})});}
    if(tokens.length){runProgram(g,context,[{op:'tokenDefenders',tokens,min:1,max:1},...rest]);return;}
   }
@@ -390,7 +395,7 @@ function runProgram(g,context,program){
    }
   }
   if(step.op==='gift'){
-   const target=findCard(g,context.target?.id);if(target?.zone==='battlefield'){const controller=target.owner;removePermanents(g,[target.card.instance]);const token={instance:crypto.randomUUID(),name:step.token.subtype,type_line:'Token Creature — '+step.token.subtype,power:step.token.power,toughness:step.token.toughness,colors:step.token.colors,oracle_text:'',counters:{},token:true};g.players[controller].zones.hand.push(token);transfer(g,token.instance,'battlefield',controller);}
+   const target=findCard(g,context.target?.id);if(target?.zone==='battlefield'){const controller=target.owner;removePermanents(g,[target.card.instance]);createTokens(g,controller,{name:step.token.subtype,type_line:'Token Creature \u2014 '+step.token.subtype,power:step.token.power,toughness:step.token.toughness,colors:step.token.colors,oracle_text:''});}
   }
   if(step.op==='warp'){
    const target=findCard(g,context.target?.id);if(target?.zone==='battlefield'){const controller=target.card.ownerSeat??target.owner;transfer(g,target.card.instance,'library',controller);shuffle(g.players[controller].zones.library);const revealed=g.players[controller].zones.library[0];if(revealed){note(g,context.name+' reveals '+revealed.name+'.');if(!/\b(?:Instant|Sorcery)\b/.test(cardFace(revealed).type_line||''))transfer(g,revealed.instance,'battlefield',controller);}}
@@ -413,11 +418,11 @@ function runProgram(g,context,program){
    const events=(context.targets||[]).filter(t=>t.kind==='card').flatMap(target=>{const found=findCard(g,target.id);return found?.zone==='battlefield'&&(found.card.battlefieldId||null)===target.battlefieldId?[permanentCounterEvent(g,context.owner,target.id,Object.fromEntries(Object.entries(found.card.counters||{}).filter(([,n])=>n>0)))]:[];});runProgram(g,context,[{op:'counterBatch',events},...rest]);return;
   }
   if(step.op==='treasure'){
-   const amount=context.event?.amount||0;for(let n=0;n<amount;n++){const card={instance:crypto.randomUUID(),name:'Treasure',token:true,type_line:'Token Artifact — Treasure',oracle_text:'{T}, Sacrifice this artifact: Add one mana of any color.',counters:{}};g.players[owner].zones.hand.push(card);transfer(g,card.instance,'battlefield',owner);}
+   const amount=context.event?.amount||0;createTokens(g,owner,{name:'Treasure',type_line:'Token Artifact \u2014 Treasure',oracle_text:'{T}, Sacrifice this artifact: Add one mana of any color.'},amount);
   }
   if(step.op==='destroy'){
    const removed=removePermanents(g,(context.targets||[]).filter(t=>t.kind==='card').map(t=>t.id));
-   if(step.token)for(const result of removed.filter(r=>r.zone==='graveyard')){const token={instance:crypto.randomUUID(),name:step.token.subtype,token:true,type_line:'Token Creature — '+step.token.subtype,power:step.token.power,toughness:step.token.toughness,colors:step.token.colors,oracle_text:'',counters:{}};g.players[result.owner].zones.hand.push(token);transfer(g,token.instance,'battlefield',result.owner);}
+   if(step.token)for(const result of removed.filter(r=>r.zone==='graveyard')){createTokens(g,result.owner,{name:step.token.subtype,type_line:'Token Creature \u2014 '+step.token.subtype,power:step.token.power,toughness:step.token.toughness,colors:step.token.colors,oracle_text:''});}
   }
   if(step.op==='sweep'){
    const removed=removePermanents(g,fieldCards(g).filter(({card})=>!card.faceDown&&step.types.some(type=>(cardFace(card).type_line||'').includes(type))).map(({card})=>card.instance));const source=findCard(g,context.source.instance);if(step.counterSelf&&source?.zone==='battlefield'&&(source.card.battlefieldId||null)===(context.source.battlefieldId||null)){runProgram(g,context,[{op:'counterBatch',events:[permanentCounterEvent(g,context.owner,source.card.instance,{'+1/+1':removed.length})]},...rest]);return;}
@@ -590,6 +595,8 @@ export function validateOracleChoice(pending,fail,playerCount=4){
   if(step.op==='unlessPay'){if(step.amount!=='source power'&&!/^\{\d+\}$/.test(step.cost||''))fail();program(step.then,depth+1);}
   if(step.op==='mode'){if(!Array.isArray(step.modes)||!step.modes.length||step.modes.length>10)fail();for(const mode of step.modes){if(!mode||!string(mode.label))fail();program(mode.program,depth+1);}}
   if(step.op==='createTokens'&&(!string(step.amount)||!step.definition||!string(step.definition.name)||!string(step.definition.type_line)||typeof step.definition.oracle_text!=='string'))fail();
+  if(step.op==='putHandTop'&&step.placement!==undefined&&!['top','bottom'].includes(step.placement))fail();
+  if(step.op==='createTokens'&&step.createdCounter&&(!string(step.createdCounter.kind)||!string(step.createdCounter.amount)))fail();
   if(step.op==='conditionalPump'&&(!Number.isSafeInteger(step.power)||!Number.isSafeInteger(step.toughness)||!Array.isArray(step.grants)||step.grants.some(grant=>!string(grant.keyword)||!['white','blue','black','red','green'].includes(grant.color))))fail();
   if(step.op==='tokenDefenders'&&(!Array.isArray(step.tokens)||!step.tokens.length||step.tokens.length>500||step.tokens.some(token=>!string(token.id)||token.defender!==undefined&&!seat(token.defender))))fail();
   if(step.op==='optional'||step.op==='optionalPay'){if(step.op==='optional'&&!string(step.label)||step.op==='optionalPay'&&(!string(step.cost)||! /^(?:\{(?:\d+|[WUBRGCSX])\})+$/.test(step.cost)))fail();program(step.then,depth+1);if(step.otherwise!==undefined)program(step.otherwise,depth+1);}

@@ -21,7 +21,7 @@ function finishEmptyCombat(g,{automatic}){
 // Every local player gets a precombat main-phase decision, even when the
 // availability estimate finds no playable cards. Never auto-pass a whole turn.
 export function autoPassEmptySteps(g,{automatic=false}={}){
- if(g.result||g.lobby?.status==='waiting'||g.opening?.status==='choosing')return 0;
+ if(g.players.some(p=>p.librarySearch)||g.result||g.lobby?.status==='waiting'||g.opening?.status==='choosing')return 0;
  let skipped=finishEmptyCombat(g,{automatic});
  if(!g.players.some(p=>ZONES.some(z=>p.zones[z].length)))return skipped;
  let boundaries=0;const limit=Math.min(2024,(g.turnPlan?.steps.length||12)+12);

@@ -1,0 +1,114 @@
+{
+  "source": "Scryfall API",
+  "cards": [
+    {
+      "id": "222a736e-d819-452d-aeda-eb848c4b2302",
+      "name": "Tamiyo, Compleated Sage",
+      "type_line": "Legendary Planeswalker — Tamiyo",
+      "oracle_text": "Compleated ({G/U/P} can be paid with {G}, {U}, or 2 life. If life was paid, this planeswalker enters with two fewer loyalty counters.)\n+1: Tap up to one target artifact or creature. It doesn't untap during its controller's next untap step.\n−X: Exile target nonland permanent card with mana value X from your graveyard. Create a token that's a copy of that card.\n−7: Create Tamiyo's Notebook, a legendary colorless Book artifact token with \"Spells you cast cost {2} less to cast\" and \"{T}: Draw a card.\"",
+      "colors": [
+        "G",
+        "U"
+      ],
+      "all_parts": [
+        {
+          "object": "related_card",
+          "id": "5898a9c4-c983-4807-af06-18111702ab59",
+          "component": "combo_piece",
+          "name": "Tamiyo, Compleated Sage",
+          "type_line": "Legendary Planeswalker — Tamiyo",
+          "uri": "https://api.scryfall.com/cards/5898a9c4-c983-4807-af06-18111702ab59"
+        },
+        {
+          "object": "related_card",
+          "id": "4b976756-e988-4211-95c2-0e3587118488",
+          "component": "token",
+          "name": "Copy",
+          "type_line": "Token",
+          "uri": "https://api.scryfall.com/cards/4b976756-e988-4211-95c2-0e3587118488"
+        },
+        {
+          "object": "related_card",
+          "id": "992cb1e0-e846-4710-b49e-a748e4ebffa5",
+          "component": "token",
+          "name": "Tamiyo's Notebook",
+          "type_line": "Token Legendary Artifact",
+          "uri": "https://api.scryfall.com/cards/992cb1e0-e846-4710-b49e-a748e4ebffa5"
+        }
+      ],
+      "image_uris": {
+        "png": "https://cards.scryfall.io/png/front/2/2/222a736e-d819-452d-aeda-eb848c4b2302.png?1783923828"
+      }
+    },
+    {
+      "id": "4ef863d2-1e11-41cc-90d5-008bf6234565",
+      "name": "Nacatl War-Pride",
+      "type_line": "Creature — Cat Warrior",
+      "oracle_text": "This creature must be blocked by exactly one creature if able.\nWhenever this creature attacks, create X tokens that are copies of it and that are tapped and attacking, where X is the number of creatures defending player controls. Exile the tokens at the beginning of the next end step.",
+      "colors": [
+        "G"
+      ],
+      "power": "3",
+      "toughness": "3",
+      "all_parts": [
+        {
+          "object": "related_card",
+          "id": "4ef863d2-1e11-41cc-90d5-008bf6234565",
+          "component": "combo_piece",
+          "name": "Nacatl War-Pride",
+          "type_line": "Creature — Cat Warrior",
+          "uri": "https://api.scryfall.com/cards/4ef863d2-1e11-41cc-90d5-008bf6234565"
+        },
+        {
+          "object": "related_card",
+          "id": "4b976756-e988-4211-95c2-0e3587118488",
+          "component": "token",
+          "name": "Copy",
+          "type_line": "Token",
+          "uri": "https://api.scryfall.com/cards/4b976756-e988-4211-95c2-0e3587118488"
+        }
+      ],
+      "image_uris": {
+        "png": "https://cards.scryfall.io/png/front/4/e/4ef863d2-1e11-41cc-90d5-008bf6234565.png?1783943095"
+      }
+    }
+  ],
+  "tokens": [
+    {
+      "id": "4b976756-e988-4211-95c2-0e3587118488",
+      "name": "Copy",
+      "type_line": "Token",
+      "oracle_text": "(This token can be used to represent a token that's a copy of a permanent.)",
+      "colors": [],
+      "image_uris": {
+        "png": "https://cards.scryfall.io/png/front/4/b/4b976756-e988-4211-95c2-0e3587118488.png?1791939754"
+      }
+    },
+    {
+      "id": "992cb1e0-e846-4710-b49e-a748e4ebffa5",
+      "name": "Tamiyo's Notebook",
+      "type_line": "Token Legendary Artifact",
+      "oracle_text": "Spells you cast cost {2} less to cast.\n{T}: Draw a card.",
+      "colors": [],
+      "image_uris": {
+        "png": "https://cards.scryfall.io/png/front/9/9/992cb1e0-e846-4710-b49e-a748e4ebffa5.png?1783923709"
+      }
+    }
+  ],
+  "warriors": [
+    {
+      "id": "72ac66e9-4b4b-4540-b310-e7b3dc04c305",
+      "name": "Elf Warrior",
+      "type_line": "Token Creature — Elf Warrior",
+      "oracle_text": "",
+      "colors": [
+        "G"
+      ],
+      "power": "1",
+      "toughness": "1",
+      "image_uris": {
+        "png": "https://cards.scryfall.io/png/front/7/2/72ac66e9-4b4b-4540-b310-e7b3dc04c305.png?1791637257"
+      }
+    }
+  ]
+}

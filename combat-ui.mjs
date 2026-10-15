@@ -7,7 +7,7 @@ import {triggerNeedsTarget,triggerTargetOptions} from './combat-effects.mjs';
 import {effectTargetSpec} from './effect-targets.mjs';
 import {combatGroups} from './board-interaction.mjs';
 
-export function createCombatUI({getGame,getSeat,selectSeat,dispatch,setStatus,el,button,showStack,boardPicker,renderCard}){
+export function createCombatUI({getGame,getSeat,selectSeat,dispatch,setStatus,el,button,showStack,boardPicker,renderCard,openLibrary}){
  const root=el('section',undefined,'combat-panel camera-hud');root.id='combat-panel';root.setAttribute('aria-label','Combat declarations and damage preview');document.getElementById('table-viewport').append(root);
  const css=el('link');css.rel='stylesheet';css.href=new URL('./combat.css',import.meta.url).href;document.head.append(css);
  const arena=el('section',undefined,'combat-arena');arena.id='combat-arena';arena.setAttribute('aria-label','Combat groups for your seat');
@@ -61,10 +61,10 @@ export function createCombatUI({getGame,getSeat,selectSeat,dispatch,setStatus,el
   if(boardPicker.active?.startsWith('attack:')&&(owner!==g.active||g.step!==5||c?.attackersConfirmed||g.stack.length||g.pendingEffect)){boardPicker.stop();pickedAttacker=null;}
   if(boardPicker.active?.startsWith('trigger:')&&!pending)boardPicker.stop();renderArena();
   for(const card of document.querySelectorAll('.battlefield .card[data-card]'))card.classList.toggle('combat-blocker-picked',card.dataset.card===selectedBlocker);
-  const inCombat=!!c&&g.step>=4&&g.step<=8,focused=inCombat||!!pending||!!manual;
+  const inCombat=!!c&&g.step>=4&&g.step<=8,focused=(inCombat||!!pending||!!manual)&&!g.players[owner].librarySearch;
   root.classList.toggle('combat-focus',focused);scrim.hidden=!focused;root.replaceChildren();
   const header=el('div',undefined,'combat-panel-heading');
-  if(!focused){arena.hidden=true;root.append(header,arena);if(owner===g.active&&(g.step===3||g.step===9))header.append(button('Begin combat',()=>dispatch({type:'step',step:4})));else header.append(el('span','Combat begins during the active player?s turn.','combat-hint'));return;}
+  if(!focused){arena.hidden=true;root.append(header,arena);if(g.players[owner].librarySearch){header.append(el('span','Library search in progress. Finish searching to resume the effect.'));return;}if(owner===g.active&&(g.step===3||g.step===9))header.append(button('Begin combat',()=>dispatch({type:'step',step:4})));else header.append(el('span','Combat begins during the active player?s turn.','combat-hint'));return;}
   const stageNames={4:'Beginning of combat',5:c?.attackersConfirmed?'Attackers declared':'Declare attackers',6:c?.stage==='blockers'?'Declare blockers':'Review combat damage',7:damagePhase(g)==='first'?'First-strike damage':'Combat damage',8:'End of combat'};
   header.append(el('h2',pending?'Choose targets':manual?'Resolve effect':stageNames[g.step]||'Combat'));
   if(inCombat){const progress=el('nav',undefined,'combat-progress');progress.setAttribute('aria-label','Combat progress');for(const [step,label] of [[5,'Attack'],[6,'Block'],[7,'Damage']]){const item=el('span',label);if(g.step===step)item.setAttribute('aria-current','step');progress.append(item);}header.append(progress);}
@@ -73,7 +73,7 @@ export function createCombatUI({getGame,getSeat,selectSeat,dispatch,setStatus,el
   const body=el('div',undefined,'combat-panel-body');root.append(body);
   if(pending&&Number.isInteger(g.networkSeat)&&pending.owner!==g.networkSeat){body.append(hint('Waiting for '+g.players[pending.owner].name+' to choose targets.'));return;}if(manual&&Number.isInteger(g.networkSeat)&&manual.owner!==g.networkSeat)return;if(pending){body.append(el('strong',pending.name+' · Choose targets on the table'),hint(pending.text));const spec=effectTargetSpec(pending.text);
    if(owner!==pending.owner)body.append(button('Control '+g.players[pending.owner].name,()=>selectSeat(pending.owner)));else boardPicker.start({id:'trigger:'+pending.id,owner,source:pending.source,title:pending.name+' · Choose targets',required:true,min:spec.optional?0:1,max:spec.max||1,options:()=>{const entry=getGame().stack.find(e=>e.id===pending.id);return entry?triggerTargetOptions(getGame(),entry):[];},validate:keys=>{if(!spec.perOpponent)return '';const entry=getGame().stack.find(e=>e.id===pending.id),available=entry?triggerTargetOptions(getGame(),entry):[];return new Set(keys.map(key=>available.find(t=>t.key===key)?.owner)).size===keys.length?'':'Choose at most one creature for each opponent.';},onConfirm:keys=>dispatch({type:'triggerTarget',id:pending.id,keys})});return;}
-  if(manual){body.append(el('strong',manual.name+' · Effect to resolve'),hint(manual.text),hint('Use the table controls for this effect, then acknowledge it to continue.'));body.append(button('Effect resolved',()=>dispatch({type:'manualResolved'})));return;}
+  if(manual){body.append(el('strong',manual.name+' · Effect to resolve'),hint(manual.text),hint('Use the table controls for this effect, then acknowledge it to continue.'));const search=button('Search library',()=>openLibrary(owner));search.id='manual-library-search';body.append(search,button('Effect resolved',()=>dispatch({type:'manualResolved'})));return;}
   if(!c||g.step<4||g.step>8){body.append(hint('Declare attackers, assign defenders, confirm each defending seat’s blockers, then verify damage.'));const begin=button('Begin combat',()=>dispatch({type:'step',step:4}));begin.disabled=owner!==g.active||g.stack.length>0;body.append(begin);return;}
   const blocked=g.stack.length>0||!!g.pendingEffect;body.append(hint(g.players[g.active].name+' is attacking. '+(blocked?'Resolve the stack before continuing.':'')));
   if(g.step===4){body.append(hint('Beginning-of-combat triggers use the stack.'));const next=button('Choose attackers →',()=>dispatch({type:'advance'}));next.id='combat-to-attackers';next.disabled=blocked||Number.isInteger(g.networkSeat)&&owner!==turnController(g);body.append(next);return;}

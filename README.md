@@ -4,6 +4,8 @@ An Electron desktop Commander playtester with a four-seat manual tabletop.
 
 Rules work is tracked in the [39-deck implementation checklist](docs/commander-deck-checklist.md), with per-deck acceptance criteria, card-by-card Oracle audits, checked test evidence and remaining gaps. Ten decks currently pass their scoped audits, through Kess. See [implementation notes](docs/rules-implementation.md) for sources and verification status.
 
+The two exact Atraxa/Jace lists supplied during playtesting have a separate [card-by-card audit](docs/playtest-deck-audit.md). That report distinguishes verified regression coverage, missing resolution handlers, and unverified interactions; neither list is currently certified fully working. Regenerate it with `npm.cmd run audit:playtest-decks`.
+
 ## Run
 
 For friends joining the playtest, start with the [playtester setup guide](docs/playtesting.md).
@@ -17,7 +19,13 @@ npm.cmd start
 
 `npm.cmd` works in PowerShell even when script execution is disabled. On other shells, use `npm install` and `npm start`. Electron is a development dependency; this folder is not a prebuilt Windows installer. The launcher clears an inherited `ELECTRON_RUN_AS_NODE` flag in its child process so the app also launches from Node-based development hosts.
 
+Deck imports also load a hidden, per-player **token reserve** using Oracle text and Scryfall's related-token IDs. Supported resolving effects create fresh copies with token artwork; the reserve is never consumed or shuffled into a deck. Use **Token > Imported token reserve** for manual creation, or choose **Custom token**. Templates survive saves and game resets and remain private in multiplayer until a copy enters play. Reimport existing decks to populate their reserves. Missing token artwork is reported during import, with text templates retained where the Oracle description can be parsed. Importing templates does not automatically implement unsupported card effects.
+
 Auto untap / draw is saved separately for each player. In local hotseat play the checkbox follows the controlled seat; multiplayer players can change their own setting without host permission. Turn advancement uses the incoming player's setting, and reset/reconnect preserves it.
+
+In multiplayer, click your own library to start a private manual search. Filter by name, hold Left Alt to inspect, and drag the chosen card to its destination. Use **Finish search & shuffle** (also available on the top bar after dragging), or **Finish without shuffling** when the effect requires preserving order. Opponents see that you are searching but not your library. For automated search effects, use the effect's eligible-card choices and search box, then confirm; the engine handles placement and shuffling. Finish a manual search before acknowledging its resolved effect.
+
+Manual moves into the library place the card on **top** and preserve the remaining order; they do not shuffle. Hold Left Alt over the card to use **Library bottom** or **Position from top** and **Put in library** (1 = top, 2 = second). These controls work in local and multiplayer games. A search's explicit finish-and-shuffle button and card effects that instruct shuffling still shuffle.
 
 ## The table
 

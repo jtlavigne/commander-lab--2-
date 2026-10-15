@@ -1,3 +1,4 @@
+import {matchingToken} from './token-catalog.mjs';
 import {transfer} from './engine.mjs';
 import {queueCombatTriggers,snapshotCard} from './combat-effects.mjs';
 import {attackTargets} from './combat.mjs';
@@ -6,13 +7,16 @@ import {attackTargets} from './combat.mjs';
 // Replacement providers can modify these definitions without card-name cases.
 export function createTokens(g,owner,definition,amount=1,{tapped=false,deferTriggers=false}={}){
  if(!g.players[owner]||!Number.isSafeInteger(amount)||amount<0||amount>500)throw Error('Choose a token count from 0 to 500.');
+ const template=matchingToken([...(g.players[owner].tokenCatalog||[]),...g.players.filter((_,i)=>i!==owner).flatMap(p=>p.tokenCatalog||[])],definition);
+ // Keep the effect's characteristics; the reserve supplies exact artwork and ID.
+ definition={...(template||{}),...definition};delete definition.tokenTemplate;
  const created=[];
  for(let i=0;i<amount;i++){
   const card={...structuredClone(definition),instance:crypto.randomUUID(),token:true,ownerSeat:owner,counters:{},face:0};
   g.players[owner].zones.hand.push(card);
   transfer(g,card.instance,'battlefield',owner,undefined,{deferTriggers:true,entryTapped:tapped});created.push(card);
  }
- if(!deferTriggers)queueCombatTriggers(g,created.map(card=>({kind:'enter',owner,card:snapshotCard(card)})));
+ if(!deferTriggers)queueCombatTriggers(g,created.flatMap(card=>[{kind:'enter',owner,card:snapshotCard(card)},{kind:'create-token',owner,card:snapshotCard(card)}]));
  return created;
 }
 export function tokenDefenders(g,owner,defender){

@@ -1,0 +1,11 @@
+import fs from 'node:fs/promises';
+import {createRequire} from 'node:module';
+const {createCardClient,matchCard}=createRequire(import.meta.url)('../card-client.cjs');
+const deck=process.argv[2];if(!['atraxa','jace'].includes(deck))throw Error('Choose atraxa or jace.');
+const base=new URL('../tests/fixtures/playtest-decks/',import.meta.url),text=await fs.readFile(new URL(deck+'.txt',base),'utf8');
+const rows=text.trim().split(/\r?\n/).map(line=>{const m=line.match(/^(\d+) (.+)$/);return {quantity:Number(m[1]),name:m[2].trim()};});
+const client=createCardClient(),result=await client.collection(rows.map(r=>r.name));
+const fields=['id','oracle_id','name','mana_cost','cmc','type_line','oracle_text','power','toughness','loyalty','defense','colors','color_identity','keywords','layout','card_faces','all_parts','scryfall_uri','rulings_uri'];
+const cards=rows.flatMap(row=>{const card=matchCard(result.data,row.name);return card?[{quantity:row.quantity,...Object.fromEntries(fields.filter(k=>card[k]!==undefined).map(k=>[k,card[k]]))}]:[];});
+await fs.writeFile(new URL(deck+'.json',base),JSON.stringify({source:'User list, 2026-10-15; https://api.scryfall.com/cards/collection',fetched_at:new Date().toISOString(),total:rows.reduce((s,r)=>s+r.quantity,0),not_found:result.not_found,cards},null,2)+'\n');
+console.log(JSON.stringify({deck,total:rows.reduce((s,r)=>s+r.quantity,0),records:cards.length,not_found:result.not_found}));

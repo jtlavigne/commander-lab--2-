@@ -8,7 +8,7 @@ import {cleanData} from './protocol.mjs';
 import {castingController} from '../spell-rules.mjs';
 import {LOBBY_ACTIONS} from '../lobby.mjs';
 
-const seatActions=new Set(['automatic','responseMode','draw','life','playerStats','manaAdd','manaRemove','landSettings','pass','orderTriggers']);
+const seatActions=new Set(['librarySearch','automatic','responseMode','draw','life','playerStats','manaAdd','manaRemove','landSettings','pass','orderTriggers']);
 const turnActions=new Set(['advance','endTurn','step','attacker','attackAll','confirmAttackers','damage']);
 const hostActions=new Set(['reset']);
 const cardZones={
@@ -40,7 +40,7 @@ export function authorizeAction(g,a,actor,{host=false}={}){
   case 'redraw':
    if(g.stack.length)throw Error('Resolve the stack first.');break;
   case 'move':
-   if(found.zone==='library'&&(a.to!=='hand'||g.players[actor].zones.library[0]?.instance!==a.id))throw Error('Draw from the top of your library.');
+   if(found.zone==='library'&&!g.players[actor].librarySearch&&(a.to!=='hand'||g.players[actor].zones.library[0]?.instance!==a.id))throw Error('Draw from the top of your library.');
    if(a.to==='stack'||found.zone==='hand'&&a.to==='battlefield')throw Error('Use casting or Play land to pay costs.');
    if(a.owner!==undefined&&a.owner!==actor&&found.zone!=='battlefield')throw Error('Only battlefield control can be transferred.');
    break;
@@ -69,7 +69,7 @@ export function reduceAction(original,action,actor,options={}){
  authorizeAction(original,command,actor,options);
  // A library draw also records the draw-step action stamp.
  const found=command.type==='move'&&findCard(original,command.id);
- const normalized=found?.zone==='library'?{type:'draw'}:command.type==='pass'?{...command,owner:actor}:command;
+ const normalized=found?.zone==='library'&&!original.players[actor].librarySearch?{type:'draw'}:command.type==='pass'?{...command,owner:actor}:command;
  const result=reduceGameAction(original,normalized,actor,{host:false,...options});
  // Public summaries omit private engine log text and card names.
  result.description=action.type==='reset'?'Host reset the game; decks kept.':original.players[actor].name+': '+action.type;

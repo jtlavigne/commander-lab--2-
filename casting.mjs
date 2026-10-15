@@ -243,7 +243,7 @@ export function canRespond(g,owner,{includeMain=false}={}){
  // Unknown alternative costs or casting permissions require a manual window.
  return responses.some(c=>/rather than pay|without paying|costs? .*less|convoke|delve|affinity|improvise/i.test(cardFace(c).oracle_text||''))||player.zones.battlefield.some(c=>!c.faceDown&&/may cast|spells you cast cost|have flash/i.test(cardFace(c).oracle_text||''));
 }
-export function settlePriority(g){if(g.result){delete g.priority;return;}
+export function settlePriority(g){if(g.players.some(p=>p.librarySearch))return;if(g.result){delete g.priority;return;}
  if(triggerOrderGroup(g))return;
  if(!g.stack.length||g.pendingEffect||pendingEntry(g)||triggerNeedsTarget(g))return null;
  while(g.stack.length&&!g.result){

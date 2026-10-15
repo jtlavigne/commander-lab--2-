@@ -31,6 +31,7 @@ function eventMatches(g,condition,event,source,owner){
  if(event.kind==='counter-spell')return controller===owner&&/^a spell or ability you control counters a spell$/i.test(condition);
  if(event.kind==='draw')return /^you draw a card$/i.test(condition)&&controller===owner||/^an opponent draws a card$/i.test(condition)&&controller!==owner||/^a player draws a card$/i.test(condition);
  if(event.kind==='cycle')return controller===owner&&card.instance===source.instance&&/^you cycle this card$/i.test(condition);
+ if(event.kind==='create-token')return controller===owner&&/^you create (?:one or more|a|an) (?:creature )?tokens?$/i.test(condition)&&(!/creature/i.test(condition)||isCreature(card));
  if(event.kind==='cast'||event.kind==='copy'){
   if(event.kind==='cast'&&/^you copy /i.test(condition))return false;
   if(event.kind==='copy'&&!/^you (?:cast or )?copy /i.test(condition))return false;
@@ -241,5 +242,5 @@ export function moveDeadPermanent(g,owner,card,option){
 }
 export function validateCombatTrigger(entry,fail){
  if(entry.orderBatch!==undefined&&typeof entry.orderBatch!=='string'||entry.orderOpen!==undefined&&typeof entry.orderOpen!=='boolean')fail();
- if(!entry.combatTrigger)return;const t=entry.combatTrigger;if(!t.event||!['leave','miracle','draw','counter-spell','copy','cycle','targeted-spell','reflexive','end-combat','sacrifice','spent-mana','rebound','begin-combat','attack','exert','block','damage','die','enter','cast','activate','upkeep','end-step','receive-damage','tap-mana','graveyard'].includes(t.event.kind)||t.target&&(!['player','card'].includes(t.target.kind)||!Number.isInteger(t.target.owner)||t.target.owner<0||t.target.owner>3)||t.returnCounter!==undefined&&!['+1/+1','-1/-1'].includes(t.returnCounter)||t.keyword!==undefined&&!['mentor','melee','battle cry'].includes(t.keyword))fail();
+ if(!entry.combatTrigger)return;const t=entry.combatTrigger;if(!t.event||!['create-token','leave','miracle','draw','counter-spell','copy','cycle','targeted-spell','reflexive','end-combat','sacrifice','spent-mana','rebound','begin-combat','attack','exert','block','damage','die','enter','cast','activate','upkeep','end-step','receive-damage','tap-mana','graveyard'].includes(t.event.kind)||t.target&&(!['player','card'].includes(t.target.kind)||!Number.isInteger(t.target.owner)||t.target.owner<0||t.target.owner>3)||t.returnCounter!==undefined&&!['+1/+1','-1/-1'].includes(t.returnCounter)||t.keyword!==undefined&&!['mentor','melee','battle cry'].includes(t.keyword))fail();
 }
