@@ -4,6 +4,7 @@ import {fieldCards,isCreature,keywordSet,protectedFrom,combatStats} from './crea
 
 export function effectTargetSpec(text,choices={}){
  let m;
+ if(/another target (?:planeswalker or creature|creature or planeswalker) you control/i.test(text))return {kind:'card',zone:'battlefield',types:['creature','planeswalker'],own:true,other:true,max:1};
  if(/any number of target permanents/i.test(text))return {kind:'card',zone:'battlefield',types:['permanent'],optional:true,max:100};
  if(/up to one target instant card and\/or up to one target sorcery card from your graveyard each with mana value X or less/i.test(text))return {kind:'card',groups:[{text:'target instant card from your graveyard with mana value X or less.',label:'Instant'},{text:'target sorcery card from your graveyard with mana value X or less.',label:'Sorcery'}],optional:true,optionalGroups:true,repeated:true,min:0,max:2};
  if(/Choose two target creature cards in your graveyard\./i.test(text))return {kind:'card',zone:'graveyard',types:['creature'],own:true,min:2,max:2};

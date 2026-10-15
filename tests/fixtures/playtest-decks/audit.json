@@ -64,14 +64,16 @@
             "index": 0,
             "face": "An Offer You Can't Refuse",
             "text": "Counter target noncreature spell. Its controller creates two Treasure tokens. (They're artifacts with \"{T}, Sacrifice this token: Add one mana of any color.\")",
-            "status": "FAIL (manual resolution)",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/playtest-spells.test.mjs"
+            ]
           }
         ],
         "spellPrograms": [
           {
             "text": "Counter target noncreature spell. Its controller creates two Treasure tokens. (They're artifacts with \"{T}, Sacrifice this token: Add one mana of any color.\")",
-            "recognized": false
+            "recognized": true
           }
         ]
       },
@@ -688,21 +690,25 @@
             "index": 0,
             "face": "Dovin's Veto",
             "text": "This spell can't be countered.",
-            "status": "FAIL (manual resolution)",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/playtest-spells.test.mjs"
+            ]
           },
           {
             "index": 1,
             "face": "Dovin's Veto",
             "text": "Counter target noncreature spell.",
-            "status": "FAIL (manual resolution)",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/playtest-spells.test.mjs"
+            ]
           }
         ],
         "spellPrograms": [
           {
-            "text": "This spell can't be countered.\nCounter target noncreature spell.",
-            "recognized": false
+            "text": "Counter target noncreature spell.",
+            "recognized": true
           }
         ]
       },
@@ -796,17 +802,22 @@
             "index": 1,
             "face": "Elspeth, Sun's Champion",
             "text": "−3: Destroy all creatures with power 4 or greater.",
-            "status": "FAIL (manual resolution)",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/playtest-spells.test.mjs"
+            ]
           },
           {
             "index": 2,
             "face": "Elspeth, Sun's Champion",
             "text": "−7: You get an emblem with \"Creatures you control get +2/+2 and have flying.\"",
-            "status": "FAIL (manual resolution)",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/turn-effects.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
           }
         ],
         "spellPrograms": []
@@ -1388,21 +1399,25 @@
             "index": 0,
             "face": "Krosan Grip",
             "text": "Split second (As long as this spell is on the stack, players can't cast spells or activate abilities that aren't mana abilities.)",
-            "status": "FAIL (manual resolution)",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/playtest-spells.test.mjs"
+            ]
           },
           {
             "index": 1,
             "face": "Krosan Grip",
             "text": "Destroy target artifact or enchantment.",
-            "status": "FAIL (manual resolution)",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/playtest-spells.test.mjs"
+            ]
           }
         ],
         "spellPrograms": [
           {
-            "text": "Split second (As long as this spell is on the stack, players can't cast spells or activate abilities that aren't mana abilities.)\nDestroy target artifact or enchantment.",
-            "recognized": false
+            "text": "Destroy target artifact or enchantment.",
+            "recognized": true
           }
         ]
       },
@@ -1507,9 +1522,12 @@
             "index": 1,
             "face": "Magistrate's Scepter",
             "text": "{T}, Remove three charge counters from this artifact: Take an extra turn after this one.",
-            "status": "FAIL (manual resolution)",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/turn-effects.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
           }
         ],
         "spellPrograms": []
@@ -2088,9 +2106,12 @@
             "index": 2,
             "face": "Tamiyo, Field Researcher",
             "text": "−7: Draw three cards. You get an emblem with \"You may cast spells from your hand without paying their mana costs.\"",
-            "status": "FAIL (manual resolution)",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/turn-effects.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
           }
         ],
         "spellPrograms": []
@@ -2146,9 +2167,12 @@
             "index": 2,
             "face": "Teferi, Hero of Dominaria",
             "text": "−8: You get an emblem with \"Whenever you draw a card, exile target permanent an opponent controls.\"",
-            "status": "FAIL (manual resolution)",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/turn-effects.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
           }
         ],
         "spellPrograms": []
@@ -2177,17 +2201,23 @@
             "index": 2,
             "face": "Teferi, Master of Time",
             "text": "−3: Target creature you don't control phases out. (Treat it and anything attached to it as though they don't exist until its controller's next turn.)",
-            "status": "FAIL (manual resolution)",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/turn-effects.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
           },
           {
             "index": 3,
             "face": "Teferi, Master of Time",
             "text": "−10: Take two extra turns after this one.",
-            "status": "FAIL (manual resolution)",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/turn-effects.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
           }
         ],
         "spellPrograms": []
@@ -2217,9 +2247,12 @@
             "index": 2,
             "face": "Teferi, Temporal Archmage",
             "text": "−10: You get an emblem with \"You may activate loyalty abilities of planeswalkers you control on any player's turn any time you could cast an instant.\"",
-            "status": "FAIL (manual resolution)",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/turn-effects.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
           },
           {
             "index": 3,
@@ -2685,8 +2718,8 @@
       }
     ],
     "counts": {
-      "PASS (regression)": 62,
-      "FAIL (manual resolution)": 34,
+      "PASS (regression)": 75,
+      "FAIL (manual resolution)": 21,
       "UNVERIFIED": 89
     }
   },
@@ -2723,9 +2756,12 @@
             "index": 2,
             "face": "Jace, Multiverse Architect",
             "text": "−3: Exile another target planeswalker or creature you control. Reveal cards from the top of your library until you reveal a creature or planeswalker card. Put that card onto the battlefield and the rest on the bottom of your library in a random order.",
-            "status": "FAIL (manual resolution)",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/polymorph.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
           },
           {
             "index": 3,
@@ -2769,14 +2805,17 @@
             "index": 0,
             "face": "Synthetic Destiny",
             "text": "Exile all creatures you control. At the beginning of the next end step, reveal cards from the top of your library until you reveal that many creature cards, put all creature cards revealed this way onto the battlefield, then shuffle the rest of the revealed cards into your library.",
-            "status": "FAIL (manual resolution)",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/polymorph.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
           }
         ],
         "spellPrograms": [
           {
             "text": "Exile all creatures you control. At the beginning of the next end step, reveal cards from the top of your library until you reveal that many creature cards, put all creature cards revealed this way onto the battlefield, then shuffle the rest of the revealed cards into your library.",
-            "recognized": false
+            "recognized": true
           }
         ]
       },
@@ -2789,21 +2828,27 @@
             "index": 0,
             "face": "Primevals' Glorious Rebirth",
             "text": "(You may cast a legendary sorcery only if you control a legendary creature or planeswalker.)",
-            "status": "FAIL (manual resolution)",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/polymorph.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
           },
           {
             "index": 1,
             "face": "Primevals' Glorious Rebirth",
             "text": "Return all legendary permanent cards from your graveyard to the battlefield.",
-            "status": "FAIL (manual resolution)",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/polymorph.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
           }
         ],
         "spellPrograms": [
           {
             "text": "(You may cast a legendary sorcery only if you control a legendary creature or planeswalker.)\nReturn all legendary permanent cards from your graveyard to the battlefield.",
-            "recognized": false
+            "recognized": true
           }
         ]
       },
@@ -3005,9 +3050,12 @@
             "index": 0,
             "face": "Identity Echo",
             "text": "{3}{R}: Exile target creature or planeswalker you control. Reveal cards from the top of your library until you reveal a creature or planeswalker card. Put that card onto the battlefield and the rest on the bottom of your library in a random order. Activate only as a sorcery.",
-            "status": "FAIL (manual resolution)",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/polymorph.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
           }
         ],
         "spellPrograms": []
@@ -3310,17 +3358,23 @@
             "index": 2,
             "face": "Teferi, Master of Time",
             "text": "−3: Target creature you don't control phases out. (Treat it and anything attached to it as though they don't exist until its controller's next turn.)",
-            "status": "FAIL (manual resolution)",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/turn-effects.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
           },
           {
             "index": 3,
             "face": "Teferi, Master of Time",
             "text": "−10: Take two extra turns after this one.",
-            "status": "FAIL (manual resolution)",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/turn-effects.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
           }
         ],
         "spellPrograms": []
@@ -3660,9 +3714,12 @@
             "index": 0,
             "face": "Proteus Staff",
             "text": "{2}{U}, {T}: Put target creature on the bottom of its owner's library. That creature's controller reveals cards from the top of their library until they reveal a creature card. The player puts that card onto the battlefield and the rest on the bottom of their library in any order. Activate only as a sorcery.",
-            "status": "FAIL (manual resolution)",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/polymorph.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
           }
         ],
         "spellPrograms": []
@@ -3947,17 +4004,22 @@
             "index": 1,
             "face": "Elspeth, Sun's Champion",
             "text": "−3: Destroy all creatures with power 4 or greater.",
-            "status": "FAIL (manual resolution)",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/playtest-spells.test.mjs"
+            ]
           },
           {
             "index": 2,
             "face": "Elspeth, Sun's Champion",
             "text": "−7: You get an emblem with \"Creatures you control get +2/+2 and have flying.\"",
-            "status": "FAIL (manual resolution)",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/turn-effects.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
           }
         ],
         "spellPrograms": []
@@ -3998,14 +4060,17 @@
             "index": 0,
             "face": "Mass Polymorph",
             "text": "Exile all creatures you control, then reveal cards from the top of your library until you reveal that many creature cards. Put all creature cards revealed this way onto the battlefield, then shuffle the rest of the revealed cards into your library.",
-            "status": "FAIL (manual resolution)",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/polymorph.test.mjs",
+              "tests/playtest-decks-ui.cjs"
+            ]
           }
         ],
         "spellPrograms": [
           {
             "text": "Exile all creatures you control, then reveal cards from the top of your library until you reveal that many creature cards. Put all creature cards revealed this way onto the battlefield, then shuffle the rest of the revealed cards into your library.",
-            "recognized": false
+            "recognized": true
           }
         ]
       },
@@ -5395,8 +5460,8 @@
       }
     ],
     "counts": {
-      "PASS (regression)": 60,
-      "FAIL (manual resolution)": 34,
+      "PASS (regression)": 71,
+      "FAIL (manual resolution)": 23,
       "UNVERIFIED": 91
     }
   }

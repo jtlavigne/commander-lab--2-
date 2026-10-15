@@ -46,12 +46,12 @@ export function castSpell(g,id,options={}){
  const owner=castingController(g,found),{zone}=found,card=options.face===undefined?found.card:{...found.card,face:options.face};
  if(options.face!==undefined&&(!['split','modal_dfc'].includes(card.layout)||!Number.isInteger(options.face)||!card.card_faces?.[options.face]))throw Error('Choose a castable card face.');
  const permission=castingPermission(g,owner,card,zone,options);if(!permission)throw Error('No permission to cast this card from its current zone.');
+ if(permission.free&&options.x)throw Error('X must be zero when casting without paying the mana cost.');
  const timing=castingTiming(g,owner,card);if(timing)throw Error(timing);
  const announcement=spellAnnouncement(g,owner,card,options);
  const payment=spellPayment(g,owner,card,zone,options);if(!payment)throw Error('You cannot pay this spell’s mana cost.');
  const spentColors=[...new Set((g.players[owner].mana||[]).filter((lot,i)=>payment.spent[i]>0&&lot.type!=='C').map(lot=>lot.type))];
  const spentScry=(g.players[owner].mana||[]).flatMap((lot,i)=>lot.spendScry&&payment.spent[i]?[{kind:'spent-mana',owner,card:snapshotCard(card),source:lot.spendScry.source,amount:payment.spent[i]}]:[]);
- if(permission.free&&options.x)throw Error('X must be zero when casting without paying the mana cost.');
  const castChoice=permission.duringResolution?g.pendingEffect:null;if(castChoice)delete g.pendingEffect;
  consumeGravePermission(g,owner,permission);
  const resolving=g.resolutionInProgress;g.resolutionInProgress=true;

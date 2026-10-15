@@ -2,13 +2,13 @@
 
 Lists supplied on 2026-10-15. This report covers every non-empty Oracle paragraph in both exact lists, separately from the older 39-deck fixture. Current Oracle data came from Scryfall.
 
-**Current verification:** 1,083 unit tests pass. Exact-deck, token-import, planeswalker, and multiplayer Electron checks accompany the fixes. These totals include the wider engine suite; they are not a count of fully implemented cards. Remaining gaps include polymorph effects, emblems, phasing, extra turns, several token/conditional sequences, trigger restrictions and continuous effects.
+**Current verification:** 1,113 unit tests pass. Exact-deck, mana, planeswalker, and multiplayer Electron checks accompany this batch. These totals include the wider engine suite; they are not a count of fully implemented cards. Shared handlers now cover the tested extra turns, phasing, emblems, counterspell token payments, split second and reveal-and-replace effects. Remaining gaps include several token/copy/conditional sequences, trigger restrictions, continuous effects and other unchecked paragraphs below.
 
 **PASS (regression)** means identical Oracle text has checked behavioral evidence in the maintained deck audit and the full unit suite passed. **FAIL (manual resolution)** means the current resolution compiler has no complete handler. **UNVERIFIED** means more behavioral evidence is needed; a recognized handler alone is not a pass. Static effects, trigger conditions, target rules and interactions can still be missing even when an effect compiles. No deck is certified fully working by this report.
 
 ## Atraxa, Praetors' Voice
 
-100 cards; 95 distinct names. Paragraphs: 62 regression passes, 34 manual-resolution failures, 89 unverified.
+100 cards; 95 distinct names. Paragraphs: 75 regression passes, 21 manual-resolution failures, 89 unverified.
 
 ### 1 × Atraxa, Praetors' Voice
 
@@ -28,8 +28,8 @@ Lists supplied on 2026-10-15. This report covers every non-empty Oracle paragrap
 
 [Current Oracle text](https://scryfall.com/card/fdn/160/an-offer-you-cant-refuse?utm_source=api)
 
-- [ ] **FAIL (manual resolution)** Counter target noncreature spell. Its controller creates two Treasure tokens. (They're artifacts with "{T}, Sacrifice this token: Add one mana of any color.")
-- Resolution diagnostic: **manual fallback** — Counter target noncreature spell. Its controller creates two Treasure tokens. (They're artifacts with "{T}, Sacrifice this token: Add one mana of any color.")
+- [x] **PASS (regression)** Counter target noncreature spell. Its controller creates two Treasure tokens. (They're artifacts with "{T}, Sacrifice this token: Add one mana of any color.") Evidence: [tests/playtest-spells.test.mjs](../tests/playtest-spells.test.mjs).
+- Resolution diagnostic: recognized; still requires behavior/target tests — Counter target noncreature spell. Its controller creates two Treasure tokens. (They're artifacts with "{T}, Sacrifice this token: Add one mana of any color.")
 
 ### 1 × Arcane Denial
 
@@ -188,9 +188,9 @@ Lists supplied on 2026-10-15. This report covers every non-empty Oracle paragrap
 
 [Current Oracle text](https://scryfall.com/card/war/193/dovins-veto?utm_source=api)
 
-- [ ] **FAIL (manual resolution)** This spell can't be countered.
-- [ ] **FAIL (manual resolution)** Counter target noncreature spell.
-- Resolution diagnostic: **manual fallback** — This spell can't be countered. / Counter target noncreature spell.
+- [x] **PASS (regression)** This spell can't be countered. Evidence: [tests/playtest-spells.test.mjs](../tests/playtest-spells.test.mjs).
+- [x] **PASS (regression)** Counter target noncreature spell. Evidence: [tests/playtest-spells.test.mjs](../tests/playtest-spells.test.mjs).
+- Resolution diagnostic: recognized; still requires behavior/target tests — Counter target noncreature spell.
 
 ### 1 × Dreamroot Cascade
 
@@ -218,8 +218,8 @@ Lists supplied on 2026-10-15. This report covers every non-empty Oracle paragrap
 [Current Oracle text](https://scryfall.com/card/frc/24/elspeth-suns-champion?utm_source=api)
 
 - [ ] **UNVERIFIED** +1: Create three 1/1 white Soldier creature tokens. — Effect handler: recognized.
-- [ ] **FAIL (manual resolution)** −3: Destroy all creatures with power 4 or greater. — Effect handler: missing.
-- [ ] **FAIL (manual resolution)** −7: You get an emblem with "Creatures you control get +2/+2 and have flying." — Effect handler: missing.
+- [x] **PASS (regression)** −3: Destroy all creatures with power 4 or greater. — Effect handler: recognized. Evidence: [tests/playtest-spells.test.mjs](../tests/playtest-spells.test.mjs).
+- [x] **PASS (regression)** −7: You get an emblem with "Creatures you control get +2/+2 and have flying." — Effect handler: recognized. Evidence: [tests/turn-effects.test.mjs](../tests/turn-effects.test.mjs), [tests/playtest-decks-ui.cjs](../tests/playtest-decks-ui.cjs).
 
 ### 1 × Everflowing Chalice
 
@@ -370,9 +370,9 @@ Lists supplied on 2026-10-15. This report covers every non-empty Oracle paragrap
 
 [Current Oracle text](https://scryfall.com/card/c21/198/krosan-grip?utm_source=api)
 
-- [ ] **FAIL (manual resolution)** Split second (As long as this spell is on the stack, players can't cast spells or activate abilities that aren't mana abilities.)
-- [ ] **FAIL (manual resolution)** Destroy target artifact or enchantment.
-- Resolution diagnostic: **manual fallback** — Split second (As long as this spell is on the stack, players can't cast spells or activate abilities that aren't mana abilities.) / Destroy target artifact or enchantment.
+- [x] **PASS (regression)** Split second (As long as this spell is on the stack, players can't cast spells or activate abilities that aren't mana abilities.) Evidence: [tests/playtest-spells.test.mjs](../tests/playtest-spells.test.mjs).
+- [x] **PASS (regression)** Destroy target artifact or enchantment. Evidence: [tests/playtest-spells.test.mjs](../tests/playtest-spells.test.mjs).
+- Resolution diagnostic: recognized; still requires behavior/target tests — Destroy target artifact or enchantment.
 
 ### 1 × Lae'zel, Vlaakith's Champion
 
@@ -400,7 +400,7 @@ Lists supplied on 2026-10-15. This report covers every non-empty Oracle paragrap
 [Current Oracle text](https://scryfall.com/card/m19/238/magistrates-scepter?utm_source=api)
 
 - [ ] **UNVERIFIED** {4}, {T}: Put a charge counter on this artifact. — Effect handler: recognized.
-- [ ] **FAIL (manual resolution)** {T}, Remove three charge counters from this artifact: Take an extra turn after this one. — Effect handler: missing.
+- [x] **PASS (regression)** {T}, Remove three charge counters from this artifact: Take an extra turn after this one. — Effect handler: recognized. Evidence: [tests/turn-effects.test.mjs](../tests/turn-effects.test.mjs), [tests/playtest-decks-ui.cjs](../tests/playtest-decks-ui.cjs).
 
 ### 1 × Narset, Parter of Veils
 
@@ -549,7 +549,7 @@ Lists supplied on 2026-10-15. This report covers every non-empty Oracle paragrap
 
 - [ ] **FAIL (manual resolution)** +1: Choose up to two target creatures. Until your next turn, whenever either of those creatures deals combat damage, you draw a card. — Effect handler: missing.
 - [ ] **FAIL (manual resolution)** −2: Tap up to two target nonland permanents. They don't untap during their controller's next untap step. — Effect handler: missing.
-- [ ] **FAIL (manual resolution)** −7: Draw three cards. You get an emblem with "You may cast spells from your hand without paying their mana costs." — Effect handler: missing.
+- [x] **PASS (regression)** −7: Draw three cards. You get an emblem with "You may cast spells from your hand without paying their mana costs." — Effect handler: recognized. Evidence: [tests/turn-effects.test.mjs](../tests/turn-effects.test.mjs), [tests/playtest-decks-ui.cjs](../tests/playtest-decks-ui.cjs).
 
 ### 1 × Teferi's Ageless Insight
 
@@ -563,7 +563,7 @@ Lists supplied on 2026-10-15. This report covers every non-empty Oracle paragrap
 
 - [ ] **FAIL (manual resolution)** +1: Draw a card. At the beginning of the next end step, untap up to two lands. — Effect handler: missing.
 - [ ] **FAIL (manual resolution)** −3: Put target nonland permanent into its owner's library third from the top. — Effect handler: missing.
-- [ ] **FAIL (manual resolution)** −8: You get an emblem with "Whenever you draw a card, exile target permanent an opponent controls." — Effect handler: missing.
+- [x] **PASS (regression)** −8: You get an emblem with "Whenever you draw a card, exile target permanent an opponent controls." — Effect handler: recognized. Evidence: [tests/turn-effects.test.mjs](../tests/turn-effects.test.mjs), [tests/playtest-decks-ui.cjs](../tests/playtest-decks-ui.cjs).
 
 ### 1 × Teferi, Master of Time
 
@@ -571,8 +571,8 @@ Lists supplied on 2026-10-15. This report covers every non-empty Oracle paragrap
 
 - [ ] **UNVERIFIED** You may activate loyalty abilities of Teferi on any player's turn any time you could cast an instant.
 - [ ] **UNVERIFIED** +1: Draw a card, then discard a card. — Effect handler: recognized.
-- [ ] **FAIL (manual resolution)** −3: Target creature you don't control phases out. (Treat it and anything attached to it as though they don't exist until its controller's next turn.) — Effect handler: missing.
-- [ ] **FAIL (manual resolution)** −10: Take two extra turns after this one. — Effect handler: missing.
+- [x] **PASS (regression)** −3: Target creature you don't control phases out. (Treat it and anything attached to it as though they don't exist until its controller's next turn.) — Effect handler: recognized. Evidence: [tests/turn-effects.test.mjs](../tests/turn-effects.test.mjs), [tests/playtest-decks-ui.cjs](../tests/playtest-decks-ui.cjs).
+- [x] **PASS (regression)** −10: Take two extra turns after this one. — Effect handler: recognized. Evidence: [tests/turn-effects.test.mjs](../tests/turn-effects.test.mjs), [tests/playtest-decks-ui.cjs](../tests/playtest-decks-ui.cjs).
 
 ### 1 × Teferi, Temporal Archmage
 
@@ -580,7 +580,7 @@ Lists supplied on 2026-10-15. This report covers every non-empty Oracle paragrap
 
 - [ ] **FAIL (manual resolution)** +1: Look at the top two cards of your library. Put one of them into your hand and the other on the bottom of your library. — Effect handler: missing.
 - [ ] **FAIL (manual resolution)** −1: Untap up to four target permanents. — Effect handler: missing.
-- [ ] **FAIL (manual resolution)** −10: You get an emblem with "You may activate loyalty abilities of planeswalkers you control on any player's turn any time you could cast an instant." — Effect handler: missing.
+- [x] **PASS (regression)** −10: You get an emblem with "You may activate loyalty abilities of planeswalkers you control on any player's turn any time you could cast an instant." — Effect handler: recognized. Evidence: [tests/turn-effects.test.mjs](../tests/turn-effects.test.mjs), [tests/playtest-decks-ui.cjs](../tests/playtest-decks-ui.cjs).
 - [ ] **UNVERIFIED** Teferi, Temporal Archmage can be your commander.
 
 ### 1 × Tekuthal, Inquiry Dominus
@@ -691,7 +691,7 @@ Lists supplied on 2026-10-15. This report covers every non-empty Oracle paragrap
 
 ## Jace, Multiverse Architect
 
-100 cards; 98 distinct names. Paragraphs: 60 regression passes, 34 manual-resolution failures, 91 unverified.
+100 cards; 98 distinct names. Paragraphs: 71 regression passes, 23 manual-resolution failures, 91 unverified.
 
 ### 1 × Jace, Multiverse Architect
 
@@ -699,7 +699,7 @@ Lists supplied on 2026-10-15. This report covers every non-empty Oracle paragrap
 
 - [ ] **UNVERIFIED** At the beginning of combat on each opponent's turn, they may pay {2}. If they don't, creatures they control can't attack Jaces you control this turn. — Effect handler: missing.
 - [x] **PASS (regression)** +1: Draw two cards, then put a card from your hand on the bottom of your library. — Effect handler: recognized. Evidence: [tests/playtest-decks.test.mjs](../tests/playtest-decks.test.mjs), [tests/token-catalog.test.mjs](../tests/token-catalog.test.mjs), [tests/playtest-decks-ui.cjs](../tests/playtest-decks-ui.cjs).
-- [ ] **FAIL (manual resolution)** −3: Exile another target planeswalker or creature you control. Reveal cards from the top of your library until you reveal a creature or planeswalker card. Put that card onto the battlefield and the rest on the bottom of your library in a random order. — Effect handler: missing.
+- [x] **PASS (regression)** −3: Exile another target planeswalker or creature you control. Reveal cards from the top of your library until you reveal a creature or planeswalker card. Put that card onto the battlefield and the rest on the bottom of your library in a random order. — Effect handler: recognized. Evidence: [tests/polymorph.test.mjs](../tests/polymorph.test.mjs), [tests/playtest-decks-ui.cjs](../tests/playtest-decks-ui.cjs).
 - [ ] **UNVERIFIED** Jace, Multiverse Architect can be your commander.
 
 ### 1 × Oath of Teferi
@@ -713,16 +713,16 @@ Lists supplied on 2026-10-15. This report covers every non-empty Oracle paragrap
 
 [Current Oracle text](https://scryfall.com/card/frc/45/synthetic-destiny?utm_source=api)
 
-- [ ] **FAIL (manual resolution)** Exile all creatures you control. At the beginning of the next end step, reveal cards from the top of your library until you reveal that many creature cards, put all creature cards revealed this way onto the battlefield, then shuffle the rest of the revealed cards into your library.
-- Resolution diagnostic: **manual fallback** — Exile all creatures you control. At the beginning of the next end step, reveal cards from the top of your library until you reveal that many creature cards, put all creature cards revealed this way onto the battlefield, then shuffle the rest of the revealed cards into your library.
+- [x] **PASS (regression)** Exile all creatures you control. At the beginning of the next end step, reveal cards from the top of your library until you reveal that many creature cards, put all creature cards revealed this way onto the battlefield, then shuffle the rest of the revealed cards into your library. Evidence: [tests/polymorph.test.mjs](../tests/polymorph.test.mjs), [tests/playtest-decks-ui.cjs](../tests/playtest-decks-ui.cjs).
+- Resolution diagnostic: recognized; still requires behavior/target tests — Exile all creatures you control. At the beginning of the next end step, reveal cards from the top of your library until you reveal that many creature cards, put all creature cards revealed this way onto the battlefield, then shuffle the rest of the revealed cards into your library.
 
 ### 1 × Primevals' Glorious Rebirth
 
 [Current Oracle text](https://scryfall.com/card/dmc/165/primevals-glorious-rebirth?utm_source=api)
 
-- [ ] **FAIL (manual resolution)** (You may cast a legendary sorcery only if you control a legendary creature or planeswalker.)
-- [ ] **FAIL (manual resolution)** Return all legendary permanent cards from your graveyard to the battlefield.
-- Resolution diagnostic: **manual fallback** — (You may cast a legendary sorcery only if you control a legendary creature or planeswalker.) / Return all legendary permanent cards from your graveyard to the battlefield.
+- [x] **PASS (regression)** (You may cast a legendary sorcery only if you control a legendary creature or planeswalker.) Evidence: [tests/polymorph.test.mjs](../tests/polymorph.test.mjs), [tests/playtest-decks-ui.cjs](../tests/playtest-decks-ui.cjs).
+- [x] **PASS (regression)** Return all legendary permanent cards from your graveyard to the battlefield. Evidence: [tests/polymorph.test.mjs](../tests/polymorph.test.mjs), [tests/playtest-decks-ui.cjs](../tests/playtest-decks-ui.cjs).
+- Resolution diagnostic: recognized; still requires behavior/target tests — (You may cast a legendary sorcery only if you control a legendary creature or planeswalker.) / Return all legendary permanent cards from your graveyard to the battlefield.
 
 ### 1 × Jin-Gitaxias, Progress Tyrant
 
@@ -778,7 +778,7 @@ Lists supplied on 2026-10-15. This report covers every non-empty Oracle paragrap
 
 [Current Oracle text](https://scryfall.com/card/fra/87/identity-echo?utm_source=api)
 
-- [ ] **FAIL (manual resolution)** {3}{R}: Exile target creature or planeswalker you control. Reveal cards from the top of your library until you reveal a creature or planeswalker card. Put that card onto the battlefield and the rest on the bottom of your library in a random order. Activate only as a sorcery. — Effect handler: missing.
+- [x] **PASS (regression)** {3}{R}: Exile target creature or planeswalker you control. Reveal cards from the top of your library until you reveal a creature or planeswalker card. Put that card onto the battlefield and the rest on the bottom of your library in a random order. Activate only as a sorcery. — Effect handler: recognized. Evidence: [tests/polymorph.test.mjs](../tests/polymorph.test.mjs), [tests/playtest-decks-ui.cjs](../tests/playtest-decks-ui.cjs).
 
 ### 1 × Jace, the Mind Sculptor
 
@@ -849,8 +849,8 @@ Lists supplied on 2026-10-15. This report covers every non-empty Oracle paragrap
 
 - [ ] **UNVERIFIED** You may activate loyalty abilities of Teferi on any player's turn any time you could cast an instant.
 - [ ] **UNVERIFIED** +1: Draw a card, then discard a card. — Effect handler: recognized.
-- [ ] **FAIL (manual resolution)** −3: Target creature you don't control phases out. (Treat it and anything attached to it as though they don't exist until its controller's next turn.) — Effect handler: missing.
-- [ ] **FAIL (manual resolution)** −10: Take two extra turns after this one. — Effect handler: missing.
+- [x] **PASS (regression)** −3: Target creature you don't control phases out. (Treat it and anything attached to it as though they don't exist until its controller's next turn.) — Effect handler: recognized. Evidence: [tests/turn-effects.test.mjs](../tests/turn-effects.test.mjs), [tests/playtest-decks-ui.cjs](../tests/playtest-decks-ui.cjs).
+- [x] **PASS (regression)** −10: Take two extra turns after this one. — Effect handler: recognized. Evidence: [tests/turn-effects.test.mjs](../tests/turn-effects.test.mjs), [tests/playtest-decks-ui.cjs](../tests/playtest-decks-ui.cjs).
 
 ### 1 × Whirlwind of Thought
 
@@ -941,7 +941,7 @@ Lists supplied on 2026-10-15. This report covers every non-empty Oracle paragrap
 
 [Current Oracle text](https://scryfall.com/card/frc/59/proteus-staff?utm_source=api)
 
-- [ ] **FAIL (manual resolution)** {2}{U}, {T}: Put target creature on the bottom of its owner's library. That creature's controller reveals cards from the top of their library until they reveal a creature card. The player puts that card onto the battlefield and the rest on the bottom of their library in any order. Activate only as a sorcery. — Effect handler: missing.
+- [x] **PASS (regression)** {2}{U}, {T}: Put target creature on the bottom of its owner's library. That creature's controller reveals cards from the top of their library until they reveal a creature card. The player puts that card onto the battlefield and the rest on the bottom of their library in any order. Activate only as a sorcery. — Effect handler: recognized. Evidence: [tests/polymorph.test.mjs](../tests/polymorph.test.mjs), [tests/playtest-decks-ui.cjs](../tests/playtest-decks-ui.cjs).
 
 ### 1 × Rings of Brighthearth
 
@@ -1020,8 +1020,8 @@ Lists supplied on 2026-10-15. This report covers every non-empty Oracle paragrap
 [Current Oracle text](https://scryfall.com/card/frc/24/elspeth-suns-champion?utm_source=api)
 
 - [ ] **UNVERIFIED** +1: Create three 1/1 white Soldier creature tokens. — Effect handler: recognized.
-- [ ] **FAIL (manual resolution)** −3: Destroy all creatures with power 4 or greater. — Effect handler: missing.
-- [ ] **FAIL (manual resolution)** −7: You get an emblem with "Creatures you control get +2/+2 and have flying." — Effect handler: missing.
+- [x] **PASS (regression)** −3: Destroy all creatures with power 4 or greater. — Effect handler: recognized. Evidence: [tests/playtest-spells.test.mjs](../tests/playtest-spells.test.mjs).
+- [x] **PASS (regression)** −7: You get an emblem with "Creatures you control get +2/+2 and have flying." — Effect handler: recognized. Evidence: [tests/turn-effects.test.mjs](../tests/turn-effects.test.mjs), [tests/playtest-decks-ui.cjs](../tests/playtest-decks-ui.cjs).
 
 ### 1 × Lingering Souls
 
@@ -1035,8 +1035,8 @@ Lists supplied on 2026-10-15. This report covers every non-empty Oracle paragrap
 
 [Current Oracle text](https://scryfall.com/card/frc/42/mass-polymorph?utm_source=api)
 
-- [ ] **FAIL (manual resolution)** Exile all creatures you control, then reveal cards from the top of your library until you reveal that many creature cards. Put all creature cards revealed this way onto the battlefield, then shuffle the rest of the revealed cards into your library.
-- Resolution diagnostic: **manual fallback** — Exile all creatures you control, then reveal cards from the top of your library until you reveal that many creature cards. Put all creature cards revealed this way onto the battlefield, then shuffle the rest of the revealed cards into your library.
+- [x] **PASS (regression)** Exile all creatures you control, then reveal cards from the top of your library until you reveal that many creature cards. Put all creature cards revealed this way onto the battlefield, then shuffle the rest of the revealed cards into your library. Evidence: [tests/polymorph.test.mjs](../tests/polymorph.test.mjs), [tests/playtest-decks-ui.cjs](../tests/playtest-decks-ui.cjs).
+- Resolution diagnostic: recognized; still requires behavior/target tests — Exile all creatures you control, then reveal cards from the top of your library until you reveal that many creature cards. Put all creature cards revealed this way onto the battlefield, then shuffle the rest of the revealed cards into your library.
 
 ### 1 × Overlord of the Mistmoors
 

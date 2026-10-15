@@ -29,10 +29,11 @@ export function castingSacrificeType(card){return normalizeRules(cardFace(card).
 export function castingLifeCost(card,x=0){const match=normalizeRules(cardFace(card).oracle_text).match(/(?:^|\n)As an additional cost to cast this spell, pay (X|\d+) life\./i);const value=match?(match[1].toUpperCase()==='X'?x:Number(match[1])):0;return Number.isSafeInteger(value)&&value>=0&&value<=999999?value:null;}
 export function castingSacrificeOptions(g,owner,card){const type=castingSacrificeType(card);return type?g.players[owner].zones.battlefield.filter(c=>new RegExp('\\b'+type+'\\b','i').test(cardFace(c).type_line||'')):[];}
 export function resolutionText(card){
- return normalizeRules(cardFace(card).oracle_text).split('\n').filter(line=>!/^Cast this spell only |^As an additional cost to cast this spell, (?:discard |sacrifice a |pay (?:X|\d+) life\.)|^This spell costs \{\d+\} less to cast for each creature on the battlefield\.$|^(?:Entwine|Flashback|Rebound|Delve|Kicker|Multikicker|Overload|Buyback|Storm|Miracle)\b/i.test(line)).join('\n');
+ return normalizeRules(cardFace(card).oracle_text).split('\n').filter(line=>!/^This spell can't be countered\.$|^Split second(?: \([^]*\))?$|^Cast this spell only |^As an additional cost to cast this spell, (?:discard |sacrifice a |pay (?:X|\d+) life\.)|^This spell costs \{\d+\} less to cast for each creature on the battlefield\.$|^(?:Entwine|Flashback|Rebound|Delve|Kicker|Multikicker|Overload|Buyback|Storm|Miracle)\b/i.test(line)).join('\n');
 }
 export function spellRestriction(g,owner,card){
  const text=normalizeRules(cardFace(card).oracle_text);
+ if(/\bLegendary\b/.test(cardFace(card).type_line||'')&&/\bSorcery\b/.test(cardFace(card).type_line||'')&&!g.players[owner].zones.battlefield.some(c=>!c.faceDown&&/\bLegendary\b/.test(cardFace(c).type_line||'')&&/\b(?:Creature|Planeswalker)\b/.test(cardFace(c).type_line||'')))return 'A legendary sorcery requires a legendary creature or planeswalker you control.';
  if(/(?:^|\n)Cast this spell only during combat on your turn\./i.test(text)&&(g.active!==owner||g.step<4||g.step>8))return 'Cast this spell only during combat on your turn.';
  return '';
 }
@@ -50,7 +51,7 @@ export function flashbackOptions(g,owner,card){
 export function castingPermission(g,owner,card,zone,options={}){
  const pending=g.pendingEffect;
  if(offeredCast(pending,card,zone)&&pending.owner===owner){const face=cardFace(card);if(pending.step.scope==='instant or sorcery'&&!/\b(?:Instant|Sorcery)\b/.test(face.type_line||'')||pending.step.manaValue!==undefined&&manaValue(card,{onStack:true})>pending.step.manaValue)return null;return {zone,cost:pending.step.cost??'{0}',free:pending.step.cost===undefined,duringResolution:true,...(pending.step.graveyardExile?{graveyardExile:true}:{})};}
- if(zone==='hand'&&(g.players[owner].emblems||[]).some(e=>/^You may cast spells from your hand without paying their mana costs\.$/i.test(e.oracle_text)))return {zone,cost:'{0}',free:true};
+ if(zone==='hand'&&options.payPrintedCost!==true&&(g.players[owner].emblems||[]).some(e=>/^You may cast spells from your hand without paying their mana costs\.$/i.test(e.oracle_text)))return {zone,cost:'{0}',free:true,optionalFree:true};
  if(['hand','command'].includes(zone))return {zone};
  if(zone==='graveyard'){
   const choices=flashbackOptions(g,owner,card),selected=options.flashback===undefined?choices[0]:choices.find(c=>c.key===options.flashback);

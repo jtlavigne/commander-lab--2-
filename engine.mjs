@@ -248,6 +248,6 @@ export function resetGame(g){
 }
 export function changePlayerCount(g,count){
  if(![2,3,4].includes(count))throw Error('Choose 2, 3, or 4 players.');if(count===g.players.length)return g;
- const all=newGame(4);g.players.forEach((p,i)=>all.players[i]=p);for(const reserve of g.inactivePlayers||[])all.players[reserve.seat]=reserve.player;all.stack=g.stack;if(g.departedCards)all.departedCards=g.departedCards;all.responseMode=g.responseMode;
+ const all=newGame(4);g.players.forEach((p,i)=>all.players[i]=p);for(const reserve of g.inactivePlayers||[])all.players[reserve.seat]=reserve.player;all.stack=g.stack;if(g.phasedOut)all.phasedOut=g.phasedOut;if(g.departedCards)all.departedCards=g.departedCards;all.responseMode=g.responseMode;
  const fresh=resetGame(all),players=fresh.players;fresh.players=players.slice(0,count);for(const p of fresh.players)p.damage=p.damage.slice(0,count);fresh.inactivePlayers=players.slice(count).map((player,i)=>({seat:count+i,player}));note(fresh,count+'-player game. Unused seats’ decks are saved.');return fresh;
 }

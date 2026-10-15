@@ -21,3 +21,4 @@
  .command-zone{gap:3px}
  .hand .cards{padding-block:3px;gap:4px}
 }
+.emblem-status{padding:8px 12px;margin-top:6px;max-width:100%;font-size:18px;line-height:1.4;border:1px solid var(--line);border-radius:6px;background:var(--panel);overflow-wrap:anywhere}

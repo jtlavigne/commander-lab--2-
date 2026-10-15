@@ -2,7 +2,9 @@ Windows x64 playtesting build. Download the **setup.exe** installer, or extract 
 
 Everyone in a multiplayer room should use the same version (shown in the window title). Internet access is needed to import Scryfall card data and artwork. Hosting still uses the host's computer; this release does not provide a matchmaking server.
 
-Includes the exact Atraxa and Jace deck fixtures, token reserve import/creation fixes, inherited planeswalker abilities, and ongoing rules work. **Neither deck is fully verified yet.** Unsupported effects may need manual handling. See `docs/playtest-deck-audit.md` for the current evidence and remaining gaps.
+This update adds shared handling for extra turns, phasing, planeswalker emblems, An Offer You Can't Refuse, Dovin's Veto, split second, Elspeth's power-based board wipe, and the Jace/Identity Echo/Proteus Staff/Mass Polymorph/Synthetic Destiny reveal effects. Primevals' Glorious Rebirth now checks its casting restriction and returns legendary permanents. Public reveals have a confirmation screen and preserve library privacy across multiplayer and reloads.
+
+**Neither deck is fully verified yet.** Unsupported effects may need manual handling. See `docs/playtest-deck-audit.md` for the card-by-card evidence and remaining gaps. This build includes 1,113 passing unit tests, plus focused deck, mana, planeswalker and multiplayer UI checks; that total is not a count of fully implemented card interactions.
 
 This build is not code-signed. Windows may display an unknown-publisher warning. Download only from this repository's Releases page; SHA256SUMS.txt accompanies the downloads.
 

@@ -1,3 +1,4 @@
+import {compilePolymorphEffect,runPolymorphStep,resolvePolymorphChoice,POLYMORPH_OPERATIONS} from './polymorph.mjs';
 import {namedToken} from './token-catalog.mjs';
 import {finishResolutionTriggers} from './trigger-rules.mjs';
 import {createCounterPlan,advanceCounterPlan,commitCounterPlan,validateCounterPlan,permanentCounterEvent,playerCounterEvent,proliferateCount} from './counter-effects.mjs';
@@ -63,6 +64,7 @@ export function effectAmount(g,context,expression){
 // Unknown suffixes keep the effect manual instead of silently disappearing.
 export function compileOracleEffect(raw){
  const text=normalizeRules(raw).replace(/[ \t]*\([^()]*\)[ \t]*/g,' ').trim().replace(/^Until end of turn, (.+?)\.(?: \([^]*\))?$/i,'$1 until end of turn.').replace(/\s+\([^()]*\)\s*$/,'').replace(/(creature tokens?) with (lifelink|vigilance|forestwalk|haste|flying|deathtouch) (that are|that's|that is) (tapped and attacking|attacking|blocking that creature)/i,'$1 $3 $4 with $2');let m;
+ const polymorph=compilePolymorphEffect(text);if(polymorph)return polymorph;
  const library=compileLibraryEffect(text);if(library)return library;
  const temporal=compileTemporalEffect(text);if(temporal)return temporal;
  const permission=compilePermissionEffect(text);if(permission)return permission;
@@ -115,7 +117,9 @@ export function compileOracleEffect(raw){
  if(/^target instant or sorcery card in your graveyard gains flashback until end of turn\. The flashback cost is equal to its mana cost\.$/i.test(text))return [{op:'grantFlashback',target:true}];
  if(/^Shuffle [^.]+ into its owner's library\.$/i.test(text))return [{op:'shuffleSelf'}];
  if((m=text.match(/^Counter target (?:noncreature )?spell unless its controller pays (\{\d+\})\.$/i)))return [{op:'counterUnless',cost:m[1]}];
- if(/^Counter target enchantment, instant, or sorcery spell\. Its controller creates a 2\/2 blue Bird creature token with flying\.$/i.test(text))return [{op:'counterSpell'},{op:'counterControllerToken'}];
+ // The token recipient is the targeted spell's controller, even if that spell
+ // cannot be countered. An illegal target prevents the whole spell resolving.
+ if((m=text.match(/^Counter target (?:noncreature |enchantment, instant, or sorcery )?spell\. Its controller creates (.+)\.$/i))){const token=compileOracleEffect('Create '+m[1]+'.');if(token?.length===1&&token[0].op==='createTokens')return [{op:'counterSpell'},{...token[0],recipient:'countered'}];}
  if((m=text.match(/^Untap up to (two|three|four|\d+) lands\.$/i)))return [{op:'chooseUntapLands',max:number(m[1]),min:0}];
  if(/^you may draw a card\. If you do, discard a card\.$/i.test(text))return [{op:'optional',label:'Draw and discard a card',then:[{op:'draw',amount:'a'},{op:'discard',max:1}]}];
  if(/^Untap another target creature or land you control\.$/i.test(text))return [{op:'untapTargets'}];
@@ -212,6 +216,7 @@ export function compileOracleEffect(raw){
  if((m=text.match(/^create that many Treasure tokens\.$/i)))return [{op:'treasure',amount:'damage'}];
  if((m=text.match(/^(?:you may )?destroy (?:up to (?:one|two|three|\d+) )?target [^.]+\.$/i)))return [{op:'destroy',target:true,optional:/^you may/i.test(text)}];
  if((m=text.match(/^destroy all artifacts and enchantments\. Put a \+1\/\+1 counter on (.+?) for each permanent destroyed this way\.$/i)))return [{op:'sweep',types:['Artifact','Enchantment'],counterSelf:true}];
+ if((m=text.match(/^Destroy all creatures(?: with power (\d+) or (greater|less))?\.$/i)))return [{op:'sweep',types:['Creature'],...(m[1]?{power:Number(m[1]),comparison:m[2].toLowerCase()}:{})}];
  if(/^it fights up to one target creature you don't control\.$/i.test(text))return [{op:'fight'}];
  if((m=text.match(/^(?:you may )?return target (?:artifact )?card from your graveyard to your hand\.$/i)))return [{op:'return',zone:'hand',optional:/^you may/i.test(text)}];
  if(/^exile (?:target player's|each opponent's|all) graveyards?\.(?: Draw a card\.)?$/i.test(text))return [{op:'exileGraves',scope:/target player's/i.test(text)?'target':/each opponent's/i.test(text)?'opponents':'all'},...(/Draw a card/.test(text)?[{op:'draw',amount:'a'}]:[])];
@@ -253,7 +258,7 @@ function runProgram(g,context,program){
  const playerRecipients=(scope,recipient=context.owner)=>scope==='that player'?[context.event?.target?.owner].filter(owner=>g.players[owner]):scope==='you'?[recipient]:scope.startsWith('target')?(context.targets||[]).filter(t=>t.kind==='player').map(t=>t.owner):g.players.flatMap((player,owner)=>player.eliminated||scope==='each opponent'&&owner===context.owner?[]:[owner]);
  for(let i=0;i<program.length;i++){
   if(g.result){delete g.resolutionInProgress;delete g.deferredTriggers;return;}
-  const step=program[i],rest=program.slice(i+1),owner=step.owner??context.owner;if(g.players[owner]?.eliminated)continue;
+  const step=program[i],rest=program.slice(i+1),owner=step.recipient==='countered'?context.counteredController:step.owner??context.owner;if(!g.players[owner]||g.players[owner].eliminated)continue;
   if(Object.hasOwn(step,'targetGroup')){context.announcedTargets??=context.targets;context.activeTargetGroup=step.targetGroup;}
   if(context.activeTargetGroup!==undefined){context.targets=context.activeTargetGroup===null?context.announcedTargets:context.announcedTargets.filter(t=>t.group===context.activeTargetGroup);context.target=context.targets[0];}
   try{
@@ -291,6 +296,7 @@ function runProgram(g,context,program){
    if(n>1){runProgram(g,context,next);return;}
   }
   if(step.op==='returnStackTarget'){const target=g.stack.find(e=>e.card?.instance===context.target?.id&&e.card.zoneChangeId===context.target.zoneChangeId);if(target)transfer(g,target.card.instance,'hand',target.card.ownerSeat??target.owner);}
+  const polymorphResult=runPolymorphStep(g,context,step,rest,runProgram);if(polymorphResult===2)return;if(polymorphResult===1)continue;
   const libraryResult=runLibraryStep(g,context,step,rest,runProgram);if(libraryResult===2)return;if(libraryResult===1)continue;
   const reanimationResult=runReanimationStep(g,context,step,rest);if(reanimationResult===2)return;if(reanimationResult===1)continue;
   const secretResult=runSecretStep(g,context,step,rest,runProgram);if(secretResult===2)return;if(secretResult===1)continue;
@@ -425,7 +431,7 @@ function runProgram(g,context,program){
    if(step.token)for(const result of removed.filter(r=>r.zone==='graveyard')){createTokens(g,result.owner,{name:step.token.subtype,type_line:'Token Creature \u2014 '+step.token.subtype,power:step.token.power,toughness:step.token.toughness,colors:step.token.colors,oracle_text:''});}
   }
   if(step.op==='sweep'){
-   const removed=removePermanents(g,fieldCards(g).filter(({card})=>!card.faceDown&&step.types.some(type=>(cardFace(card).type_line||'').includes(type))).map(({card})=>card.instance));const source=findCard(g,context.source.instance);if(step.counterSelf&&source?.zone==='battlefield'&&(source.card.battlefieldId||null)===(context.source.battlefieldId||null)){runProgram(g,context,[{op:'counterBatch',events:[permanentCounterEvent(g,context.owner,source.card.instance,{'+1/+1':removed.length})]},...rest]);return;}
+   const removed=removePermanents(g,fieldCards(g).filter(({card,owner})=>step.types.some(type=>type==='Creature'?isCreature(card):!card.faceDown&&(cardFace(card).type_line||'').includes(type))&&(step.power===undefined||(step.comparison==='greater'?combatStats(g,owner,card)?.power>=step.power:combatStats(g,owner,card)?.power<=step.power))).map(({card})=>card.instance));const source=findCard(g,context.source.instance);if(step.counterSelf&&source?.zone==='battlefield'&&(source.card.battlefieldId||null)===(context.source.battlefieldId||null)){runProgram(g,context,[{op:'counterBatch',events:[permanentCounterEvent(g,context.owner,source.card.instance,{'+1/+1':removed.length})]},...rest]);return;}
   }
   if(step.op==='fight'){
    const source=findCard(g,context.source.instance),target=findCard(g,context.target?.id);if(source?.zone==='battlefield'&&target?.zone==='battlefield'&&(source.card.battlefieldId||null)===(context.source.battlefieldId||null)&&isCreature(source.card)&&isCreature(target.card)){
@@ -459,6 +465,7 @@ export function oracleChoiceOptions(g){
  if(step.op==='miracleReveal')return [{key:'yes',label:'Reveal for miracle'},{key:'no',label:'Keep it private'}];
  if(step.op==='soulbond')return soulbondOptions(g,owner,pending.context.source,pending.context.event).map(card=>({key:card.instance,label:'Pair with '+card.name,zone:'battlefield'}));
  if(step.op==='drawCount')return Array.from({length:step.amount+1},(_,n)=>({key:String(n),label:'Draw '+n+' card(s)'}));
+ if(pending.step.op==='polymorphReveal')return [];
  const libraryOptions=libraryChoiceOptions(g,pending);if(libraryOptions!==null)return libraryOptions;
  if(step.op==='castExiled'||step.op==='castOffered')return [];
  if(step.op==='chooseManaColor')return ['W','U','B','R','G'].map(key=>({key,label:'Add '+step.amount+' '+key+' mana'}));
@@ -499,6 +506,7 @@ export function resolveOracleChoice(g,keys=[]){
  if(step.op==='chooseManaColor'){addMana(g.players[owner],{[unique[0]]:step.amount},{source:context.name});runProgram(g,context,remaining);return;}
  if(step.op==='drawCount'){runProgram(g,context,[{op:'draw',owner,amount:unique[0]},...remaining]);return;}
  if(step.op==='sacrificeChoice'){removePermanents(g,unique,{sacrifice:true});runProgram(g,context,remaining);return;}
+ if(resolvePolymorphChoice(g,pending,runProgram))return;
  if(resolveLibraryChoice(g,pending,unique,runProgram))return;
  if(step.op==='chooseUntapLands'){for(const id of unique){const found=findCard(g,id);found.card.tapped=false;delete found.card.manaActivation;delete found.card.tapAbility;}runProgram(g,context,remaining);return;}
  if(step.op==='orderGraveBottom'){for(const id of unique)transfer(g,id,'library',findCard(g,id).card.ownerSeat??owner);runProgram(g,context,remaining);return;}
@@ -540,13 +548,13 @@ export function validateOracleChoice(pending,fail,playerCount=4){
  }
  if(pending?.kind!=='oracle-choice')return;
  const seat=n=>Number.isInteger(n)&&n>=0&&n<playerCount,integer=n=>Number.isSafeInteger(n)&&n>=0&&n<=999999,string=s=>typeof s==='string'&&s.length<=3000;
- const context=pending.context;if(!context||!seat(context.owner)||!context.source||!string(context.source.instance)||!string(context.source.name)||context.spellId!==undefined&&!string(context.spellId)||context.x!==undefined&&!integer(context.x)||!pending.step||![...LIBRARY_CHOICES,'orderCopies','chooseGraveCast','victimize','miracleReveal','secretNumber','castOffered','chooseManaColor','drawCount','castExiled','search','deploy','optional','optionalPay','mode','freeCast','discard','selectMove','sacrificeChoice','soulbond','scry','orderTop','tokenDefenders','myriad','chooseCounters','chooseExiled','sacrificeReflexive','announceModes','orderGraveBottom','chooseUntapLands','retargetCopy'].includes(pending.step.op))fail();
+ const context=pending.context;if(!context||!seat(context.owner)||!context.source||!string(context.source.instance)||!string(context.source.name)||context.spellId!==undefined&&!string(context.spellId)||context.x!==undefined&&!integer(context.x)||!pending.step||!['polymorphReveal',...LIBRARY_CHOICES,'orderCopies','chooseGraveCast','victimize','miracleReveal','secretNumber','castOffered','chooseManaColor','drawCount','castExiled','search','deploy','optional','optionalPay','mode','freeCast','discard','selectMove','sacrificeChoice','soulbond','scry','orderTop','tokenDefenders','myriad','chooseCounters','chooseExiled','sacrificeReflexive','announceModes','orderGraveBottom','chooseUntapLands','retargetCopy'].includes(pending.step.op))fail();
  const target=t=>{if(!t||!['card','player'].includes(t.kind)||!seat(t.owner)||t.kind==='card'&&!string(t.id))fail();};if(context.target)target(context.target);if(context.targets){if(!Array.isArray(context.targets)||context.targets.length>100)fail();context.targets.forEach(target);}
  if(context.announcedTargets){if(!Array.isArray(context.announcedTargets)||context.announcedTargets.length>100)fail();context.announcedTargets.forEach(target);}if(context.activeTargetGroup!==undefined&&context.activeTargetGroup!==null&&!integer(context.activeTargetGroup))fail();
  let nodes=0;
  for(const refs of [context.copyOrder])if(refs!==undefined&&(!Array.isArray(refs)||refs.length>500||refs.some(ref=>!string(ref.id)||!string(ref.zoneChangeId))))fail();
  if(context.offeredSpells!==undefined&&(!Array.isArray(context.offeredSpells)||context.offeredSpells.length>500||context.offeredSpells.some(ref=>!string(ref.id)||!string(ref.zoneChangeId))))fail();
- const operations=[...REANIMATION_OPERATIONS,'doubleCounters','counterBatch','graveCount','destroyAndLoseLife','resumeDraw','miracleReveal',...SECRET_OPERATIONS,'targetLoot','targetTreasure',...LIBRARY_OPERATIONS,...TEMPORAL_OPERATIONS,'destroyOpposing','copyEventSpells',...PERMISSION_OPERATIONS,'castOffered','chooseManaColor','scaledMana','grantFlashback','playerCounter','manifestTarget','returnSpells','temporaryMana','bounce','bounceAttackers','tapOpponents','kickedDraw','targetDraw','shuffleSelf','copySpell','returnStackTarget','retargetCopy','transformSelf','counterSpell','counterUnless','counterControllerToken','chooseUntapLands','untapTargets','bottomTargets','attachSelfToEvent','orderGraveBottom','creatureDamage','proliferate','controlBlocks','sacrificeReflexive','announceModes','exileToCast','chooseExiled','attackingDraw','chooseCounters','goadTarget','creatureControllerDamage','myriad','exileTrackedTokens','win','loseKeywords','blockLimit','animateVehicle','exileLinked','removeCombat','conditionalPump','createTokens','tokenDefenders','scry','orderTop','extraCombat','untapCreatures','lastKeywords','poison','life','landPlays','mana','damage','exileTarget','gift','warp','draw','pump','counter','treasure','destroy','sweep','fight','return','exileGraves','unblockable','attach','pumpSelf','skipUntap','repeatDamage','chargeX','destroyManaValue','destroyAndSearch','exileOne','search','deploy','optional','optionalPay','mode','freeCast','discard','selectMove','sacrificeChoice','soulbond'];
+ const operations=[...POLYMORPH_OPERATIONS,...REANIMATION_OPERATIONS,'doubleCounters','counterBatch','graveCount','destroyAndLoseLife','resumeDraw','miracleReveal',...SECRET_OPERATIONS,'targetLoot','targetTreasure',...LIBRARY_OPERATIONS,...TEMPORAL_OPERATIONS,'destroyOpposing','copyEventSpells',...PERMISSION_OPERATIONS,'castOffered','chooseManaColor','scaledMana','grantFlashback','playerCounter','manifestTarget','returnSpells','temporaryMana','bounce','bounceAttackers','tapOpponents','kickedDraw','targetDraw','shuffleSelf','copySpell','returnStackTarget','retargetCopy','transformSelf','counterSpell','counterUnless','counterControllerToken','chooseUntapLands','untapTargets','bottomTargets','attachSelfToEvent','orderGraveBottom','creatureDamage','proliferate','controlBlocks','sacrificeReflexive','announceModes','exileToCast','chooseExiled','attackingDraw','chooseCounters','goadTarget','creatureControllerDamage','myriad','exileTrackedTokens','win','loseKeywords','blockLimit','animateVehicle','exileLinked','removeCombat','conditionalPump','createTokens','tokenDefenders','scry','orderTop','extraCombat','untapCreatures','lastKeywords','poison','life','landPlays','mana','damage','exileTarget','gift','warp','draw','pump','counter','treasure','destroy','sweep','fight','return','exileGraves','unblockable','attach','pumpSelf','skipUntap','repeatDamage','chargeX','destroyManaValue','destroyAndSearch','exileOne','search','deploy','optional','optionalPay','mode','freeCast','discard','selectMove','sacrificeChoice','soulbond'];
  const program=(steps,depth)=>{if(!Array.isArray(steps)||steps.length>100||depth>6)fail();steps.forEach(step=>check(step,depth));};
  const check=(step,depth)=>{
   if(++nodes>500||!step||!operations.includes(step.op)&&!['attachEventEquipment','attachToEventCreature','returnEventFromGraveyard','untapLands','unlessPay','addendum','exileToPlay','reboundCast','castExiled','dividedDamage','untapSelf','tapTarget','destroyDamagedManaValue','attackDamage'].includes(step.op)||step.owner!==undefined&&!seat(step.owner)||['max','min','manaValue'].some(key=>step[key]!==undefined&&!integer(step[key])))fail();
@@ -621,6 +629,9 @@ export function validateOracleChoice(pending,fail,playerCount=4){
   if(step.op==='counter'&&(!string(step.counter)||!string(step.amount)||!string(step.scope)))fail();
   if(step.op==='pumpSelf'&&(!Array.isArray(step.keywords)||step.keywords.some(s=>!string(s))))fail();
   if(step.op==='return'&&!['hand','exile','battlefield'].includes(step.zone))fail();
+  if(step.recipient!==undefined&&!(step.op==='createTokens'&&step.recipient==='countered'||step.op==='polymorph'&&step.recipient==='controller'||step.op==='delayDraw'&&['countered','you'].includes(step.recipient)))fail();
+  if(POLYMORPH_OPERATIONS.includes(step.op)){if(!['random-bottom','ordered-bottom','shuffle'].includes(step.remainder))fail();if(step.op==='polymorph'&&(!['target','all'].includes(step.scope)||!['exile','library'].includes(step.destination)))fail();if(step.op==='revealPermanents'&&(!integer(step.count)||step.count>10000))fail();if(step.op!=='polymorphReveal'&&(!Array.isArray(step.types)||!step.types.length||step.types.some(t=>!['Creature','Planeswalker'].includes(t))))fail();if(step.op==='polymorphReveal'&&(!Array.isArray(step.ids)||!Array.isArray(step.hits)||step.ids.some(id=>!string(id))||step.hits.some(id=>!step.ids.includes(id))))fail();}
+  if(step.op==='sweep'&&step.power!==undefined&&(!Number.isSafeInteger(step.power)||step.power<0||!['greater','less'].includes(step.comparison)))fail();
   if(step.op==='sweep'&&(!Array.isArray(step.types)||step.types.some(s=>!string(s))))fail();
  };
  check(pending.step,0);program(pending.remaining,0);

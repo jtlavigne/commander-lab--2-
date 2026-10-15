@@ -15,8 +15,17 @@ export function checkPlayerLosses(g){
  });
  if(!lost.length)return false;
  const seats=new Set(lost.map(p=>p.seat)),removed=new Set();
- for(const {seat,reason} of lost){g.players[seat].eliminated={reason};g.players[seat].mana=[];}
+ for(const {seat,reason} of lost){g.players[seat].eliminated={reason};g.players[seat].mana=[];delete g.players[seat].emblems;}
  g.departedCards??=[];
+ // Phasing hides permanents from ordinary effects, not from leaving the game.
+ if(g.phasedOut)g.phasedOut=g.phasedOut.filter(item=>{
+  const owner=item.card.ownerSeat??item.owner;
+  if(seats.has(owner)){if(!item.card.token)g.departedCards.push({card:item.card,seat:owner});removed.add(item.card.instance);return false;}
+  // Let the ordinary departing-controller path below perform exile cleanup.
+  if(seats.has(item.owner)){g.players[item.owner].zones.battlefield.push(item.card);removed.add(item.card.instance);return false;}
+  if(seats.has(item.phaseInSeat))item.phaseInSeat=nextLivingSeat(g,item.phaseInSeat);
+  return true;
+ });
  for(const [seat,player] of g.players.entries())for(const zone of ZONES)player.zones[zone]=player.zones[zone].filter(card=>{
   if(!seats.has(card.ownerSeat??seat))return true;
   if(!card.token)g.departedCards.push({card,seat:card.ownerSeat??seat});removed.add(card.instance);return false;

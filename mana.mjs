@@ -140,7 +140,7 @@ export function activatedAbilities(g,owner,card){
 }
 export function activationError(g,owner,card,ability,{allowLife=true,x=0,spend}={}){
  if(g.result)return 'This game has ended.';
- const restriction=actionRestriction(g,owner,'activate',card);if(restriction)return restriction;
+ const restriction=actionRestriction(g,owner,ability.output&&!ability.usesStack?'mana':'activate',card);if(restriction)return restriction;
  if(g.pendingEffect&&!(g.pendingEffect.kind==='oracle-choice'&&['optionalPay','castOffered','castExiled'].includes(g.pendingEffect.step.op)&&g.pendingEffect.owner===owner&&ability.output&&!ability.usesStack))return 'Finish the pending effect first.';
  if(pendingEntry(g))return 'Finish the entering land’s life payment choice first.';
  if(g.step===0)return 'Advance to upkeep before activating abilities.';
@@ -291,6 +291,7 @@ export function payMana(player,card,cost,options={}){
 export function spellPayment(g,owner,card,zone,options={}){
  const face=cardFace(card);if(card.faceDown||/\bLand\b/.test(face.type_line||'')||face.mana_cost===undefined||face.mana_cost==='')return null;
  const permission=castingPermission(g,owner,card,zone,options);if(!permission)return null;
+ if(permission.free&&options.x)return null;
  const escaped=options.escapeIds||[];if(!Array.isArray(escaped)||escaped.length!==(permission.escapeCount||0)||new Set(escaped).size!==escaped.length||escaped.some(id=>id===card.instance||!g.players[owner].zones.graveyard.some(c=>c.instance===id))||escaped.some(id=>(options.delveIds||[]).includes(id)))return null;
  if(overloadCost(card,options.mode)&&permission.cost!==undefined)return null;
  const tax=card.commander&&zone==='command'?2*(card.commandCasts??g.players[owner].casts):0;
