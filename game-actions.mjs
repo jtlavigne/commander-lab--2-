@@ -1,4 +1,4 @@
-import {tokenTemplate} from './token-catalog.mjs';
+import {tokenTemplate,isCopyPlaceholder} from './token-catalog.mjs';
 import {OPENING_ACTIONS,openingPending,applyOpeningAction,beginOpeningHands,decksReadyForOpening} from './opening-hand.mjs';
 import {validResponseMode} from './response-settings.mjs';
 import {turnManifestFaceUp} from './face-down.mjs';
@@ -6,11 +6,11 @@ import {newGame,validateSession,ZONES,findCard,commandersFor,transfer,placeInLib
 import {playLand,castSpell,activateMana,activateManaLoyalty,activateLoyaltyAction,passPriority,prioritySeat,resolveProliferate,resolveTop,chooseEntryLife,chooseEntryTapped,counterTop,settlePriority} from './casting.mjs';
 import {addMana,reverseManaTap,validateManaSettings} from './mana.mjs';
 import {applyEntryChoices} from './card-state.mjs';
-import {createTokens} from './tokens.mjs';
+import {prepareTokenEntries,createTokenCopies} from './tokens.mjs';
 import {setAttacker,confirmAttackers,setBlocker,confirmBlockers,setDamageAssignment,applyCombatDamage,attackTargets,stateBasedActions,blockController,controlledBlockerSeat} from './combat.mjs';
 import {attackError,attackTargetError} from './creature-rules.mjs';
 import {chooseTriggerTarget,deathDestinations,orderTriggers} from './combat-effects.mjs';
-import {resolveOracleChoice,resolveDestructionChoice,resolveCounterChoice} from './oracle-effects.mjs';
+import {enterPermanents,resolveOracleChoice,resolveDestructionChoice,resolveCounterChoice} from './oracle-effects.mjs';
 import {autoPassEmptySteps} from './phase-flow.mjs';
 import {turnController} from './game-outcome.mjs';
 import {LOBBY_ACTIONS,applyLobbyAction,refreshLobbyDeck} from './lobby.mjs';
@@ -200,9 +200,18 @@ export function reduceGameAction(original,action,actor,{automatic=false,host=tru
    else g.players[f.owner].zones[f.zone]=g.players[f.owner].zones[f.zone].filter(c=>c.instance!==a.id);
    note(g,'Removed token '+card.name);break;
   }
+  case 'copyToken':{
+   // Manual setup may copy either player's public permanent, but creates the
+   // new pieces only for the actor. Never trust client-supplied card metadata.
+   if(owner!==actor)throw Error('Create copies for your own seat.');
+   const source=requireCard(a.id,['battlefield']);
+   if(a.battlefieldId!==undefined&&a.battlefieldId!==(source.battlefieldId||null))throw Error('The copy source changed zones. Choose it again.');
+   if(a.nonlegendary!==undefined&&typeof a.nonlegendary!=='boolean')throw Error('Invalid copy exception.');
+   createTokenCopies(g,owner,source,integer(a.count,1,50),{nonlegendary:a.nonlegendary===true});break;
+  }
   case 'token':
-   if(a.templateIndex!==undefined){const template=player.tokenCatalog?.[integer(a.templateIndex,0,249)];if(!template)throw Error('Choose a token from your imported reserve.');createTokens(g,owner,template,integer(a.count,1,50));break;}
-   createTokens(g,owner,{name:text(a.name,100),type_line:'Token Creature',oracle_text:text(a.text||''),power:text(a.power||'0',20),toughness:text(a.toughness||'0',20)},integer(a.count,1,50));break;
+   if(a.templateIndex!==undefined){const template=player.tokenCatalog?.[integer(a.templateIndex,0,249)];if(!template)throw Error('Choose a token from your imported reserve.');if(isCopyPlaceholder(template))throw Error('Choose a battlefield permanent to copy instead of the blank Copy marker.');enterPermanents(g,{owner,name:'Create token',source:{instance:'token-creation',name:'Create token'}},prepareTokenEntries(g,owner,template,integer(a.count,1,50)).requests);break;}
+   enterPermanents(g,{owner,name:'Create token',source:{instance:'token-creation',name:'Create token'}},prepareTokenEntries(g,owner,{name:text(a.name,100),type_line:'Token Creature',oracle_text:text(a.text||''),power:text(a.power||'0',20),toughness:text(a.toughness||'0',20)},integer(a.count,1,50)).requests);break;
   case 'import':{
    if(!Array.isArray(a.library)||!Array.isArray(a.command)||a.library.length+a.command.length>500||a.command.length>2)throw Error('Invalid imported deck.');
    const staged=newGame(g.players.length);

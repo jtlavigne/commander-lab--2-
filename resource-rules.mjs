@@ -1,5 +1,18 @@
 import {normalizeRules,activeRuleParagraphs} from './ability-effects.mjs';
 
+// Search restrictions depend on who controls the resolving spell/ability.
+// Merely browsing one's library in manual tabletop mode is not an effect.
+export function canSearchLibrary(g,searcher,effectController){
+ if(searcher!==effectController)return true;
+ return !g.players.some((player,controller)=>controller!==searcher&&!player.eliminated&&player.zones.battlefield.some(card=>!card.faceDown&&activeRuleParagraphs(card).some(({text})=>/^Spells and abilities your opponents control can't cause their controller to search their library\.$/i.test(normalizeRules(text)))));
+}
+
+export function drawAllowance(g,owner){
+ const restricted=g.players.some((player,controller)=>controller!==owner&&player.zones.battlefield.some(card=>!card.faceDown&&activeRuleParagraphs(card).some(({text})=>/^Each opponent can't draw more than one card each turn\.$/i.test(normalizeRules(text)))));
+ const drawn=g.drawHistory?.turn===g.turn+':'+g.active?g.drawHistory.counts[owner]:0;
+ return restricted?Math.max(0,1-drawn):Infinity;
+}
+
 // Each replacement is applied once to a draw event and its descendants. Each
 // resulting card is drawn separately, so a draw-step exception can change
 // between the first and second card produced by another replacement.
@@ -16,6 +29,9 @@ export function drawWithReplacements(g,owner,count,take,work){
  let drawn=0;const queue=work?structuredClone(work):[{count,applied:[]}];
  while(queue.length){
   const task=queue[0];if(task.count<=0){queue.shift();continue;}task.count--;
+  // Drawing prohibitions apply to each individual draw, including draws
+  // produced by replacement effects. Putting a card in hand bypasses this.
+  if(drawAllowance(g,owner)===0)continue;
   if(!g.players[owner].zones.library.length){take();break;}
   const replacement=effects.find(e=>!task.applied.includes(e.id)&&(!e.exceptFirst||g.step!==2||g.active!==owner||history.stepCounts[owner]>0));
   if(replacement){queue.unshift({count:2,applied:[...task.applied,replacement.id]});continue;}

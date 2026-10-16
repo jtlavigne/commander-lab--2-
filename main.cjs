@@ -1,9 +1,10 @@
-const {app,BrowserWindow,ipcMain}=require('electron');
+const {app,BrowserWindow,ipcMain,dialog}=require('electron');
 const path=require('node:path');
 const {createCardClient}=require('./card-client.cjs');
 const {createCardCache}=require('./card-cache.cjs');
 const {installMultiplayer}=require('./multiplayer/electron.cjs');
 const {launchProfile}=require('./launch-profile.cjs');
+const {installAppUpdates}=require('./app-updates.cjs');
 // Keep development and installed builds on the same saved-data directory.
 if(app.isPackaged)app.setPath('userData',path.join(app.getPath('appData'),'commander-lab'));
 const profile=launchProfile(process.argv.slice(app.isPackaged?1:2),app.getPath('userData'));
@@ -31,6 +32,7 @@ app.whenReady().then(()=>{
  ipcMain.handle('card',async(_,name)=>{const result=await cache.lookupBatch([name]);return result[name.trim()];});
  const win=new BrowserWindow({width:1500,height:960,minWidth:1000,minHeight:760,show:false,backgroundColor:'#111615',autoHideMenuBar:true,webPreferences:{preload:path.join(__dirname,'preload.cjs'),contextIsolation:true,nodeIntegration:false,sandbox:true}});
  mainWindow=win;
+ installAppUpdates({app,ipcMain,dialog,getWindow:()=>mainWindow});
  win.on('page-title-updated',event=>{event.preventDefault();win.setTitle('Commander Lab v'+app.getVersion()+(profile?' - '+profile.name:''));});
  win.once('ready-to-show',revealWindow);
  win.on('closed',()=>{mainWindow=null;});

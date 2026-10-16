@@ -25,7 +25,7 @@ export function creatureStats(card){
  }
  return {power:power===null?(face.power??'?'):power+p,toughness:toughness===null?(face.toughness??'?'):toughness+t,basePower:power,baseToughness:toughness};
 }
-export function entryPlan(card,g,owner,{cast}={}){
+export function entryPlan(card,g,owner,{cast,deferCompleated=false}={}){
  const face=cardFace(card),type=face.type_line||'',text=(face.oracle_text||'').replace(/^[A-Za-z ]+ \u2014 /gm,''),counters={},choices=[];
  if(card.faceDown)return {counters,choices};
  const ask=(key,label,suggested=0,min=0)=>{if(!choices.some(choice=>choice.key===key))choices.push({key,label,suggested,min});};
@@ -35,7 +35,7 @@ export function entryPlan(card,g,owner,{cast}={}){
  };
  if(/\bCreature\b/.test(type))for(const stat of ['power','toughness'])if(integer(face[stat])===null&&!(stat==='power'&&/power is equal to the number of creatures you control\./i.test(text))&&!/power and toughness are each equal to the number of (?:lands you control|cards in your hand)/i.test(text))ask(stat,'Base '+stat+' (printed '+(face[stat]??'?')+')',0,-999999);
  if(/\bPlaneswalker\b/.test(type)){
-  const loyalty=integer(face.loyalty),reduction=/(?:^|\n)Compleated\b/i.test(text)?cast?.phyrexianLife||0:0;
+  const loyalty=integer(face.loyalty),reduction=!deferCompleated&&/(?:^|\n)Compleated\b/i.test(text)?cast?.phyrexianLife||0:0;
   add('loyalty',loyalty===null?null:Math.max(0,loyalty-reduction));
  }
  if(/\bBattle\b/.test(type))add('defense',integer(face.defense));

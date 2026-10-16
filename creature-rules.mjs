@@ -1,6 +1,6 @@
 import {ruleSources} from './rule-sources.mjs';
 import {cardFace,creatureStats} from './card-state.mjs';
-import {activeRuleParagraphs,matchesAbilityRecipient,normalizeRules,effectiveLandSubtypes,graveyardCardTypes} from './ability-effects.mjs';
+import {activeRuleParagraphs,matchesAbilityRecipient,normalizeRules,effectiveLandSubtypes,graveyardCardTypes,keywordDeclarationText} from './ability-effects.mjs';
 
 export const fieldCards=g=>g.players.flatMap((p,owner)=>p.zones.battlefield.map(card=>({card,owner})));
 export const rulesText=c=>normalizeRules(cardFace(c).oracle_text);
@@ -21,10 +21,12 @@ export function combatRecipient(g,subject,card,owner,source,controller){
  return matchesAbilityRecipient(subject,card,owner,source,controller);
 }
 const KEYWORDS=['first strike','double strike','flying','reach','haste','vigilance','trample','deathtouch','lifelink','menace','defender','indestructible','infect','wither','shadow','horsemanship','fear','intimidate','hexproof','shroud'];
-const words=text=>KEYWORDS.filter(k=>new RegExp('(?:^|, | and )'+k+'(?:$|,| and | [(])','i').test(text.trim().replace(/\.$/,'')));
+const words=text=>{const declaration=keywordDeclarationText(text,KEYWORDS);return declaration===null?[]:KEYWORDS.filter(k=>new RegExp('(?:^|, | and )'+k+'(?:$|,| and | [(])','i').test(declaration));};
 function continuousClauses(g,source,owner){
  return activeRuleParagraphs(source).flatMap(({text})=>{
   text=normalizeRules(text).replace(/^[A-Za-z ]+ \u2014 /,'').replace(/\s*\([^]*\)\s*$/,'');
+  const monstrous=text.match(/^As long as (.+?) is monstrous, it (has|gets) (.+)$/i);
+  if(monstrous&&selfSubject(monstrous[1],source))return source.monstrous?[monstrous[1]+' '+monstrous[2]+' '+monstrous[3]]:[];
   const graveCondition=text.match(/^(.+?) as long as there are (\d+|one|two|three|four|five) or more card types among cards in your graveyard\.$/i);if(graveCondition)return graveyardCardTypes(g.players[owner]).size>=({one:1,two:2,three:3,four:4,five:5}[graveCondition[2]]??Number(graveCondition[2]))?[graveCondition[1]+'.']:[];
   const conditional=text.match(/^(?:\w+ — )?As long as you control your commander, (.+)$/i);
   if(conditional){if(!g.players[owner].zones.battlefield.some(c=>c.commander&&c.ownerSeat===undefined||c.commander&&c.ownerSeat===owner))return [];return conditional[1].replace(/\.$/,'').split(/ and (?=other creatures you control)/).map(t=>t+'.');}

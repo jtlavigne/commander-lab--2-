@@ -20,7 +20,7 @@ Active deck source: `commander_test_decks_color_fixes.csv`. Earlier CSVs and cac
 8. [Kalamax, the Stormsire](#kalamax-the-stormsire) — Scoped card-action audit complete: 816 unit tests and all 24 Electron workflows pass
 9. [Niv-Mizzet, Parun](#niv-mizzet-parun) — Scoped card-action audit complete: 866 unit tests and all 25 Electron workflows pass
 10. [Kess, Dissident Mage](#kess-dissident-mage) — Scoped card-action audit complete: 937 unit tests and all 27 Electron workflows pass
-11. [Atraxa, Praetors' Voice](#atraxa-praetors-voice) — In progress: shared counters, Tekuthal costs and cast-to-entry metadata verified
+11. [Atraxa, Praetors' Voice](#atraxa-praetors-voice) — In progress: shared search, deployment, polymorph and delayed-return entry replacements verified
 12. [Hapatra, Vizier of Poisons](#hapatra-vizier-of-poisons) — Queued; Oracle not fetched
 13. [Chatterfang, Squirrel General](#chatterfang-squirrel-general) — Queued; Oracle not fetched
 14. [Zaxara, the Exemplary](#zaxara-the-exemplary) — Queued; Oracle not fetched
@@ -5920,7 +5920,7 @@ Oracle: [Scryfall](https://scryfall.com/card/mdd/298/mountain?utm_source=api); B
 - Deck ID: atraxa_praetors_voice; colors: GWUB; 100 cards, 88 distinct names.
 - Focus: proliferate_planeswalker; priority: high.
 - Supplied test goal: Validate proliferate planeswalker under four-player Commander turn structure.
-- Status: In progress: shared counters, Tekuthal costs and cast-to-entry metadata verified.
+- Status: In progress: shared search, deployment, polymorph and delayed-return entry replacements verified.
 
 - [x] Fetch this deck’s Oracle records; verify names, quantities and active-face metadata.
 - [ ] Starting loyalty, loyalty costs, activation limits and timing.
@@ -5930,18 +5930,18 @@ Oracle: [Scryfall](https://scryfall.com/card/mdd/298/mountain?utm_source=api); B
 - [ ] Verify this deck in Electron: playable actions, choices, artwork/overlays, stack, privacy and persistence.
 - [ ] Run the full regression suites and close unresolved interactions before advancing to the next deck.
 
-Evidence: [tests/counter-effects.test.mjs](../tests/counter-effects.test.mjs), [tests/counter-effects-ui.cjs](../tests/counter-effects-ui.cjs), [tests/network.test.mjs](../tests/network.test.mjs), [tests/counter-costs.test.mjs](../tests/counter-costs.test.mjs), [tests/entry-casting.test.mjs](../tests/entry-casting.test.mjs).
+Evidence: [tests/counter-effects.test.mjs](../tests/counter-effects.test.mjs), [tests/counter-effects-ui.cjs](../tests/counter-effects-ui.cjs), [tests/network.test.mjs](../tests/network.test.mjs), [tests/counter-costs.test.mjs](../tests/counter-costs.test.mjs), [tests/entry-casting.test.mjs](../tests/entry-casting.test.mjs), [tests/atraxa-library.test.mjs](../tests/atraxa-library.test.mjs), [tests/atraxa-library-ui.cjs](../tests/atraxa-library-ui.cjs), [tests/atraxa-delayed.test.mjs](../tests/atraxa-delayed.test.mjs), [tests/atraxa-control.test.mjs](../tests/atraxa-control.test.mjs), [tests/atraxa-duration.test.mjs](../tests/atraxa-duration.test.mjs), [tests/atraxa-duration-ui.cjs](../tests/atraxa-duration-ui.cjs), [tests/commander-evidence.test.mjs](../tests/commander-evidence.test.mjs), [tests/atraxa-activations.test.mjs](../tests/atraxa-activations.test.mjs), [tests/atraxa-activations-ui.cjs](../tests/atraxa-activations-ui.cjs), [tests/entry-replacements.test.mjs](../tests/entry-replacements.test.mjs), [tests/entry-replacements-ui.cjs](../tests/entry-replacements-ui.cjs), [tests/entry-batches.test.mjs](../tests/entry-batches.test.mjs), [tests/permanent-copy.test.mjs](../tests/permanent-copy.test.mjs), [tests/entry-routes.test.mjs](../tests/entry-routes.test.mjs), [tests/entry-routes-ui.cjs](../tests/entry-routes-ui.cjs).
 
 Fixture legality audit: no color-identity mismatch found in the cached active cards; this alone does not establish full deck legality.
 
 Remaining notes:
-- Oracle retrieval is complete: 100 copies across 88 records. Counter coverage includes 37 focused cases, the renderer workflow, and real three-client spell/loyalty-cost reconnect cases; the complete card-action audit is still pending.
-- Shared counter plans handle Oracle effects, positive loyalty activation costs, affected-player replacement order, each counter kind, player counters, repeated proliferates and Deepglow-style doubling. Negative loyalty costs preserve zero so state-based actions remove the walker while its ability remains on the stack. Distributed counter-removal activation costs now have Tekuthal unit/renderer/network evidence; entry counters, damage counters and the remaining provider paragraphs are still pending.
-- Cast-to-entry metadata is verified with real Tamiyo/Vraska, X and sunburst fixtures, renderer reload, and a three-client reconnect (1,045 unit tests pass). Ordinary compleated entry amounts now use actual Phyrexian life payment; unrelated life costs do not reduce loyalty. External entry-counter replacements and their ordering/trigger timing are not yet connected, so compleated/provider paragraphs remain unchecked.
-- Pending planeswalker families: compleated ordering with external entry-counter replacements, temporary type/ability changes, poison floors, delayed land untaps, library insertion, phasing, emblems, temporary combat-damage grants, extra turns, private library choices, draw/search restrictions and graveyard milling/exile.
-- Pending shared actions: Oath blink/return, Chain Veil turn-wide activation tracking, Gauntlet counter-kind choice, equipment combat-counter/proliferate sequences, optional fight roles, Staff life-cost abilities and the new Azorius lands.
-- Finish the card-action audit, focused Electron and multiplayer scenarios, and full regression before fetching Hapatra.
-- User-requested next gate: after Atraxa is fully verified, take a break from the deck queue to refactor shared paths for efficiency and readability, preserve current gameplay, and add useful section/behavior comments before continuing later decks.
+- Oracle retrieval is complete: 100 copies across 88 records. The paragraph boxes below define the verified scope; Atraxa all-card actions, complete-deck Electron and final regression gates remain open. Overall completion is 10/39 decks; do not fetch Hapatra yet.
+- Current checkpoint: 1,259 unit/network tests pass. Eleven new entry-route cases, two real two-client reconnect/choice-ownership cases, the entry-routes Electron workflow and existing entry-replacement, playtest-deck and Atraxa-library Electron regressions pass. Historical checkpoint details are preserved in docs/rules-implementation.md.
+- Shared staged entries now cover permanent spells, manual and resolved token copies, ordinary token instructions, Populate, the implemented reanimation families, searches, hand deployment, polymorph reveals, shuffle/reveal entry, Sun Titan-style returns and tracked end-step returns. Counter replacements precede entry; later instructions wait. Incoming batch companions cannot change counter or tapped-entry replacements. Library privacy and revealed-card scope survive saved choices.
+- Remaining entry work: legacy direct/tabletop moves and Myriad entry counters; complete pre-entry handling of variable values, shock-life choices, manual conditions, as-enters cloning and temporary copy effects. The current shared operation does not certify every replacement effect or entry permission.
+- Damage counter replacements, remaining provider interactions, temporary type/ability changes, remaining planeswalker/emblem/phasing/extra-turn paragraph audits, combat equipment and the new Azorius lands remain open until supported by their own scenario evidence. Existing related tests do not automatically certify these unchecked paragraphs.
+- 53 shared cards reuse earlier completed-deck evidence only when full rules characteristics and Oracle text match. Each reuse links its original source deck and tests. This is separate from Atraxa-specific interactions and final complete-deck gates.
+- After Atraxa is fully verified, follow the user-requested efficiency/readability refactor with useful section and behavior comments, preserving current gameplay, before continuing later decks.
 
 ### Card-by-card action audit
 
@@ -5956,7 +5956,9 @@ Oracle: [Scryfall](https://scryfall.com/card/2xm/190/atraxa-praetors-voice?utm_s
 
 Oracle: [Scryfall](https://scryfall.com/card/ecc/105/evolution-sage?utm_source=api); Creature — Elf Druid; cost {2}{G}; `3/2`.
 
-- [ ] Landfall — Whenever a land you control enters, proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)
+Shared-card evidence: unchanged rules characteristics and Oracle text match [fynn_the_fangbearer](#fynn-the-fangbearer), paragraphs 0. Evidence: [tests/fynn.test.mjs](../tests/fynn.test.mjs), [tests/fynn-ui.cjs](../tests/fynn-ui.cjs), [tests/network.test.mjs](../tests/network.test.mjs), [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/arahbo.test.mjs](../tests/arahbo.test.mjs), [tests/isshin-utilities.test.mjs](../tests/isshin-utilities.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs).
+
+- [x] Landfall — Whenever a land you control enters, proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)
 
 #### 1 × Flux Channeler (signature)
 
@@ -5997,24 +5999,24 @@ Oracle: [Scryfall](https://scryfall.com/card/khm/199/vorinclex-monstrous-raider?
 
 Oracle: [Scryfall](https://scryfall.com/card/ecc/88/vraska-betrayals-sting?utm_source=api); Legendary Planeswalker — Vraska; cost {4}{B}{B/P}.
 
-- [ ] Compleated ({B/P} can be paid with {B} or 2 life. If life was paid, this planeswalker enters with two fewer loyalty counters.)
+- [x] Compleated ({B/P} can be paid with {B} or 2 life. If life was paid, this planeswalker enters with two fewer loyalty counters.)
 - [ ] 0: You draw a card and lose 1 life. Proliferate.
 - [ ] −2: Target creature becomes a Treasure artifact with "{T}, Sacrifice this artifact: Add one mana of any color" and loses all other card types and abilities.
-- [ ] −9: If target player has fewer than nine poison counters, they get a number of poison counters equal to the difference.
+- [x] −9: If target player has fewer than nine poison counters, they get a number of poison counters equal to the difference.
 
 #### 1 × Teferi, Hero of Dominaria (signature)
 
 Oracle: [Scryfall](https://scryfall.com/card/dom/207/teferi-hero-of-dominaria?utm_source=api); Legendary Planeswalker — Teferi; cost {3}{W}{U}.
 
-- [ ] +1: Draw a card. At the beginning of the next end step, untap up to two lands.
-- [ ] −3: Put target nonland permanent into its owner's library third from the top.
+- [x] +1: Draw a card. At the beginning of the next end step, untap up to two lands.
+- [x] −3: Put target nonland permanent into its owner's library third from the top.
 - [ ] −8: You get an emblem with "Whenever you draw a card, exile target permanent an opponent controls."
 
 #### 1 × Teferi, Master of Time (signature)
 
 Oracle: [Scryfall](https://scryfall.com/card/m21/75/teferi-master-of-time?utm_source=api); Legendary Planeswalker — Teferi; cost {2}{U}{U}.
 
-- [ ] You may activate loyalty abilities of Teferi on any player's turn any time you could cast an instant.
+- [x] You may activate loyalty abilities of Teferi on any player's turn any time you could cast an instant.
 - [ ] +1: Draw a card, then discard a card.
 - [ ] −3: Target creature you don't control phases out. (Treat it and anything attached to it as though they don't exist until its controller's next turn.)
 - [ ] −10: Take two extra turns after this one.
@@ -6023,24 +6025,24 @@ Oracle: [Scryfall](https://scryfall.com/card/m21/75/teferi-master-of-time?utm_so
 
 Oracle: [Scryfall](https://scryfall.com/card/inr/249/tamiyo-field-researcher?utm_source=api); Legendary Planeswalker — Tamiyo; cost {1}{G}{W}{U}.
 
-- [ ] +1: Choose up to two target creatures. Until your next turn, whenever either of those creatures deals combat damage, you draw a card.
-- [ ] −2: Tap up to two target nonland permanents. They don't untap during their controller's next untap step.
+- [x] +1: Choose up to two target creatures. Until your next turn, whenever either of those creatures deals combat damage, you draw a card.
+- [x] −2: Tap up to two target nonland permanents. They don't untap during their controller's next untap step.
 - [ ] −7: Draw three cards. You get an emblem with "You may cast spells from your hand without paying their mana costs."
 
 #### 1 × Tamiyo, Compleated Sage (signature)
 
 Oracle: [Scryfall](https://scryfall.com/card/neo/238/tamiyo-compleated-sage?utm_source=api); Legendary Planeswalker — Tamiyo; cost {2}{G}{G/U/P}{U}.
 
-- [ ] Compleated ({G/U/P} can be paid with {G}, {U}, or 2 life. If life was paid, this planeswalker enters with two fewer loyalty counters.)
+- [x] Compleated ({G/U/P} can be paid with {G}, {U}, or 2 life. If life was paid, this planeswalker enters with two fewer loyalty counters.)
 - [ ] +1: Tap up to one target artifact or creature. It doesn't untap during its controller's next untap step.
-- [ ] −X: Exile target nonland permanent card with mana value X from your graveyard. Create a token that's a copy of that card.
+- [x] −X: Exile target nonland permanent card with mana value X from your graveyard. Create a token that's a copy of that card.
 - [ ] −7: Create Tamiyo's Notebook, a legendary colorless Book artifact token with "Spells you cast cost {2} less to cast" and "{T}: Draw a card."
 
 #### 1 × Elspeth, Sun's Champion (signature)
 
 Oracle: [Scryfall](https://scryfall.com/card/frc/24/elspeth-suns-champion?utm_source=api); Legendary Planeswalker — Elspeth; cost {4}{W}{W}.
 
-- [ ] +1: Create three 1/1 white Soldier creature tokens.
+- [x] +1: Create three 1/1 white Soldier creature tokens.
 - [ ] −3: Destroy all creatures with power 4 or greater.
 - [ ] −7: You get an emblem with "Creatures you control get +2/+2 and have flying."
 
@@ -6048,21 +6050,21 @@ Oracle: [Scryfall](https://scryfall.com/card/frc/24/elspeth-suns-champion?utm_so
 
 Oracle: [Scryfall](https://scryfall.com/card/cmm/853/narset-parter-of-veils?utm_source=api); Legendary Planeswalker — Narset; cost {1}{U}{U}.
 
-- [ ] Each opponent can't draw more than one card each turn.
-- [ ] −2: Look at the top four cards of your library. You may reveal a noncreature, nonland card from among them and put it into your hand. Put the rest on the bottom of your library in a random order.
+- [x] Each opponent can't draw more than one card each turn.
+- [x] −2: Look at the top four cards of your library. You may reveal a noncreature, nonland card from among them and put it into your hand. Put the rest on the bottom of your library in a random order.
 
 #### 1 × Ashiok, Dream Render (signature)
 
 Oracle: [Scryfall](https://scryfall.com/card/war/228/ashiok-dream-render?utm_source=api); Legendary Planeswalker — Ashiok; cost {1}{U/B}{U/B}.
 
-- [ ] Spells and abilities your opponents control can't cause their controller to search their library.
-- [ ] −1: Target player mills four cards. Then exile each opponent's graveyard.
+- [x] Spells and abilities your opponents control can't cause their controller to search their library.
+- [x] −1: Target player mills four cards. Then exile each opponent's graveyard.
 
 #### 1 × Sorin the Mirthless (signature)
 
 Oracle: [Scryfall](https://scryfall.com/card/vow/131/sorin-the-mirthless?utm_source=api); Legendary Planeswalker — Sorin; cost {2}{B}{B}.
 
-- [ ] +1: Look at the top card of your library. You may reveal that card and put it into your hand. If you do, you lose life equal to its mana value.
+- [x] +1: Look at the top card of your library. You may reveal that card and put it into your hand. If you do, you lose life equal to its mana value.
 - [ ] −2: Create a 2/3 black Vampire creature token with flying and lifelink.
 - [ ] −7: Sorin deals 13 damage to any target. You gain 13 life.
 
@@ -6070,36 +6072,40 @@ Oracle: [Scryfall](https://scryfall.com/card/vow/131/sorin-the-mirthless?utm_sou
 
 Oracle: [Scryfall](https://scryfall.com/card/cmm/934/oath-of-teferi?utm_source=api); Legendary Enchantment; cost {3}{W}{U}.
 
-- [ ] When Oath of Teferi enters, exile another target permanent you control. Return it to the battlefield under its owner's control at the beginning of the next end step.
+- [x] When Oath of Teferi enters, exile another target permanent you control. Return it to the battlefield under its owner's control at the beginning of the next end step.
 - [ ] You may activate the loyalty abilities of planeswalkers you control twice each turn rather than only once.
 
 #### 1 × The Chain Veil (signature)
 
 Oracle: [Scryfall](https://scryfall.com/card/cmm/943/the-chain-veil?utm_source=api); Legendary Artifact; cost {4}.
 
-- [ ] At the beginning of your end step, if you didn't activate a loyalty ability of a planeswalker this turn, you lose 2 life.
-- [ ] {4}, {T}: For each planeswalker you control, you may activate one of its loyalty abilities once this turn as though none of its loyalty abilities have been activated this turn.
+- [x] At the beginning of your end step, if you didn't activate a loyalty ability of a planeswalker this turn, you lose 2 life.
+- [x] {4}, {T}: For each planeswalker you control, you may activate one of its loyalty abilities once this turn as though none of its loyalty abilities have been activated this turn.
 
 #### 1 × Ichormoon Gauntlet (signature)
 
 Oracle: [Scryfall](https://scryfall.com/card/one/56/ichormoon-gauntlet?utm_source=api); Artifact; cost {2}{U}.
 
 - [ ] Planeswalkers you control have "[0]: Proliferate" and "[−12]: Take an extra turn after this one."
-- [ ] Whenever you cast a noncreature spell, choose a counter on target permanent. Put an additional counter of that kind on that permanent.
+- [x] Whenever you cast a noncreature spell, choose a counter on target permanent. Put an additional counter of that kind on that permanent.
 
 #### 1 × Contagion Clasp (signature)
 
 Oracle: [Scryfall](https://scryfall.com/card/ecc/140/contagion-clasp?utm_source=api); Artifact; cost {2}.
 
-- [ ] When this artifact enters, put a -1/-1 counter on target creature.
-- [ ] {4}, {T}: Proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)
+Shared-card evidence: unchanged rules characteristics and Oracle text match [fynn_the_fangbearer](#fynn-the-fangbearer), paragraphs 0, 1. Evidence: [tests/fynn.test.mjs](../tests/fynn.test.mjs), [tests/fynn-ui.cjs](../tests/fynn-ui.cjs), [tests/network.test.mjs](../tests/network.test.mjs), [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/arahbo.test.mjs](../tests/arahbo.test.mjs), [tests/isshin-utilities.test.mjs](../tests/isshin-utilities.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs).
+
+- [x] When this artifact enters, put a -1/-1 counter on target creature.
+- [x] {4}, {T}: Proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)
 
 #### 1 × Contagion Engine (signature)
 
 Oracle: [Scryfall](https://scryfall.com/card/som/145/contagion-engine?utm_source=api); Artifact; cost {6}.
 
-- [ ] When this artifact enters, put a -1/-1 counter on each creature target player controls.
-- [ ] {4}, {T}: Proliferate twice. (Choose any number of permanents and/or players, then give each another counter of each kind already there. Then do it again.)
+Shared-card evidence: unchanged rules characteristics and Oracle text match [fynn_the_fangbearer](#fynn-the-fangbearer), paragraphs 0, 1. Evidence: [tests/fynn.test.mjs](../tests/fynn.test.mjs), [tests/fynn-ui.cjs](../tests/fynn-ui.cjs), [tests/network.test.mjs](../tests/network.test.mjs), [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/arahbo.test.mjs](../tests/arahbo.test.mjs), [tests/isshin-utilities.test.mjs](../tests/isshin-utilities.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs).
+
+- [x] When this artifact enters, put a -1/-1 counter on each creature target player controls.
+- [x] {4}, {T}: Proliferate twice. (Choose any number of permanents and/or players, then give each another counter of each kind already there. Then do it again.)
 
 #### 1 × Inexorable Tide (signature)
 
@@ -6118,7 +6124,7 @@ Oracle: [Scryfall](https://scryfall.com/card/war/46/contentious-plan?utm_source=
 
 Oracle: [Scryfall](https://scryfall.com/card/eoc/73/experimental-augury?utm_source=api); Instant; cost {1}{U}.
 
-- [ ] Look at the top three cards of your library. Put one of them into your hand and the rest on the bottom of your library in any order. Proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)
+- [x] Look at the top three cards of your library. Put one of them into your hand and the rest on the bottom of your library in any order. Proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)
 
 #### 1 × Tezzeret's Gambit (signature)
 
@@ -6137,22 +6143,24 @@ Oracle: [Scryfall](https://scryfall.com/card/one/91/drown-in-ichor?utm_source=ap
 
 Oracle: [Scryfall](https://scryfall.com/card/eoc/163/karns-bastion?utm_source=api); Land; cost —.
 
-- [ ] {T}: Add {C}.
-- [ ] {4}, {T}: Proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)
+Shared-card evidence: unchanged rules characteristics and Oracle text match [fynn_the_fangbearer](#fynn-the-fangbearer), paragraphs 0, 1. Evidence: [tests/fynn.test.mjs](../tests/fynn.test.mjs), [tests/fynn-ui.cjs](../tests/fynn-ui.cjs), [tests/network.test.mjs](../tests/network.test.mjs), [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/arahbo.test.mjs](../tests/arahbo.test.mjs), [tests/isshin-utilities.test.mjs](../tests/isshin-utilities.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs).
+
+- [x] {T}: Add {C}.
+- [x] {4}, {T}: Proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)
 
 #### 1 × Sword of Truth and Justice (signature)
 
 Oracle: [Scryfall](https://scryfall.com/card/mh1/229/sword-of-truth-and-justice?utm_source=api); Artifact — Equipment; cost {3}.
 
 - [ ] Equipped creature gets +2/+2 and has protection from white and from blue.
-- [ ] Whenever equipped creature deals combat damage to a player, put a +1/+1 counter on a creature you control, then proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)
+- [x] Whenever equipped creature deals combat damage to a player, put a +1/+1 counter on a creature you control, then proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)
 - [ ] Equip {2}
 
 #### 1 × Doubling Season (signature)
 
 Oracle: [Scryfall](https://scryfall.com/card/fdn/216/doubling-season?utm_source=api); Enchantment; cost {4}{G}.
 
-- [ ] If an effect would create one or more tokens under your control, it creates twice that many of those tokens instead.
+- [x] If an effect would create one or more tokens under your control, it creates twice that many of those tokens instead.
 - [ ] If an effect would put one or more counters on a permanent you control, it puts twice that many of those counters on that permanent instead.
 
 #### 1 × Branching Evolution (signature)
@@ -6186,25 +6194,29 @@ Oracle: [Scryfall](https://scryfall.com/card/cmm/824/grateful-apparition?utm_sou
 
 Oracle: [Scryfall](https://scryfall.com/card/one/159/bloated-contaminator?utm_source=api); Creature — Phyrexian Beast; cost {2}{G}; `4/4`.
 
-- [ ] Trample
-- [ ] Toxic 1 (Players dealt combat damage by this creature also get a poison counter.)
-- [ ] Whenever this creature deals combat damage to a player, proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)
+Shared-card evidence: unchanged rules characteristics and Oracle text match [fynn_the_fangbearer](#fynn-the-fangbearer), paragraphs 0, 1, 2. Evidence: [tests/fynn.test.mjs](../tests/fynn.test.mjs), [tests/fynn-ui.cjs](../tests/fynn-ui.cjs), [tests/network.test.mjs](../tests/network.test.mjs), [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/arahbo.test.mjs](../tests/arahbo.test.mjs), [tests/isshin-utilities.test.mjs](../tests/isshin-utilities.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs).
+
+- [x] Trample
+- [x] Toxic 1 (Players dealt combat damage by this creature also get a poison counter.)
+- [x] Whenever this creature deals combat damage to a player, proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)
 
 #### 1 × Cankerbloom (signature)
 
 Oracle: [Scryfall](https://scryfall.com/card/one/161/cankerbloom?utm_source=api); Creature — Phyrexian Fungus; cost {1}{G}; `3/2`.
 
-- [ ] {1}, Sacrifice this creature: Choose one —
-- [ ] • Destroy target artifact.
-- [ ] • Destroy target enchantment.
-- [ ] • Proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)
+Shared-card evidence: unchanged rules characteristics and Oracle text match [fynn_the_fangbearer](#fynn-the-fangbearer), paragraphs 0, 1, 2, 3. Evidence: [tests/fynn.test.mjs](../tests/fynn.test.mjs), [tests/fynn-ui.cjs](../tests/fynn-ui.cjs), [tests/network.test.mjs](../tests/network.test.mjs), [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/arahbo.test.mjs](../tests/arahbo.test.mjs), [tests/isshin-utilities.test.mjs](../tests/isshin-utilities.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs).
+
+- [x] {1}, Sacrifice this creature: Choose one —
+- [x] • Destroy target artifact.
+- [x] • Destroy target enchantment.
+- [x] • Proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)
 
 #### 1 × Smell Fear (signature)
 
 Oracle: [Scryfall](https://scryfall.com/card/mh2/173/smell-fear?utm_source=api); Sorcery; cost {1}{G}.
 
-- [ ] Proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)
-- [ ] Target creature you control fights up to one target creature you don't control.
+- [x] Proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)
+- [x] Target creature you control fights up to one target creature you don't control.
 
 #### 1 × Viral Drake (signature)
 
@@ -6218,279 +6230,357 @@ Oracle: [Scryfall](https://scryfall.com/card/nph/49/viral-drake?utm_source=api);
 
 Oracle: [Scryfall](https://scryfall.com/card/tdc/326/staff-of-compleation?utm_source=api); Artifact; cost {3}.
 
-- [ ] {T}, Pay 1 life: Destroy target permanent you own.
-- [ ] {T}, Pay 2 life: Add one mana of any color.
-- [ ] {T}, Pay 3 life: Proliferate.
-- [ ] {T}, Pay 4 life: Draw a card.
-- [ ] {5}: Untap this artifact.
+- [x] {T}, Pay 1 life: Destroy target permanent you own.
+- [x] {T}, Pay 2 life: Add one mana of any color.
+- [x] {T}, Pay 3 life: Proliferate.
+- [x] {T}, Pay 4 life: Draw a card.
+- [x] {5}: Untap this artifact.
 
 #### 1 × Heroic Intervention (signature)
 
 Oracle: [Scryfall](https://scryfall.com/card/cmm/295/heroic-intervention?utm_source=api); Instant; cost {1}{G}.
 
-- [ ] Permanents you control gain hexproof and indestructible until end of turn.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [arahbo_roar_of_the_world](#arahbo-roar-of-the-world), paragraphs 0. Evidence: [tests/arahbo.test.mjs](../tests/arahbo.test.mjs), [tests/arahbo-combat.test.mjs](../tests/arahbo-combat.test.mjs), [tests/arahbo-utilities.test.mjs](../tests/arahbo-utilities.test.mjs), [tests/destruction.test.mjs](../tests/destruction.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/arahbo-ui.cjs](../tests/arahbo-ui.cjs), [tests/arahbo-actions-ui.cjs](../tests/arahbo-actions-ui.cjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs), [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/aurelia-utilities.test.mjs](../tests/aurelia-utilities.test.mjs), [tests/network.test.mjs](../tests/network.test.mjs).
+
+- [x] Permanents you control gain hexproof and indestructible until end of turn.
 
 #### 1 × Sol Ring (support)
 
 Oracle: [Scryfall](https://scryfall.com/card/frc/21/sol-ring?utm_source=api); Artifact; cost {1}.
 
-- [ ] {T}: Add {C}{C}.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] {T}: Add {C}{C}.
 
 #### 1 × Arcane Signet (support)
 
 Oracle: [Scryfall](https://scryfall.com/card/frc/20/arcane-signet?utm_source=api); Artifact; cost {2}.
 
-- [ ] {T}: Add one mana of any color in your commander's color identity.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] {T}: Add one mana of any color in your commander's color identity.
 
 #### 1 × Commander's Sphere (support)
 
 Oracle: [Scryfall](https://scryfall.com/card/ecc/139/commanders-sphere?utm_source=api); Artifact; cost {3}.
 
-- [ ] {T}: Add one mana of any color in your commander's color identity.
-- [ ] Sacrifice this artifact: Draw a card.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0, 1. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] {T}: Add one mana of any color in your commander's color identity.
+- [x] Sacrifice this artifact: Draw a card.
 
 #### 1 × Mind Stone (support)
 
 Oracle: [Scryfall](https://scryfall.com/card/mbc/76/mind-stone?utm_source=api); Artifact; cost {2}.
 
-- [ ] {T}: Add {C}.
-- [ ] {1}, {T}, Sacrifice this artifact: Draw a card.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0, 1. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] {T}: Add {C}.
+- [x] {1}, {T}, Sacrifice this artifact: Draw a card.
 
 #### 1 × Thought Vessel (support)
 
 Oracle: [Scryfall](https://scryfall.com/card/mbc/78/thought-vessel?utm_source=api); Artifact; cost {2}.
 
-- [ ] You have no maximum hand size.
-- [ ] {T}: Add {C}.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0, 1. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] You have no maximum hand size.
+- [x] {T}: Add {C}.
 
 #### 1 × Wayfarer's Bauble (support)
 
 Oracle: [Scryfall](https://scryfall.com/card/plst/M3C-315/wayfarers-bauble?utm_source=api); Artifact; cost {1}.
 
-- [ ] {2}, {T}, Sacrifice this artifact: Search your library for a basic land card, put that card onto the battlefield tapped, then shuffle.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] {2}, {T}, Sacrifice this artifact: Search your library for a basic land card, put that card onto the battlefield tapped, then shuffle.
 
 #### 1 × Worn Powerstone (support)
 
 Oracle: [Scryfall](https://scryfall.com/card/mh3/298/worn-powerstone?utm_source=api); Artifact; cost {3}.
 
-- [ ] This artifact enters tapped.
-- [ ] {T}: Add {C}{C}.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0, 1. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] This artifact enters tapped.
+- [x] {T}: Add {C}{C}.
 
 #### 1 × Burnished Hart (support)
 
 Oracle: [Scryfall](https://scryfall.com/card/fdn/250/burnished-hart?utm_source=api); Artifact Creature — Elk; cost {3}; `2/2`.
 
-- [ ] {3}, Sacrifice this creature: Search your library for up to two basic land cards, put them onto the battlefield tapped, then shuffle.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] {3}, Sacrifice this creature: Search your library for up to two basic land cards, put them onto the battlefield tapped, then shuffle.
 
 #### 1 × Solemn Simulacrum (support)
 
 Oracle: [Scryfall](https://scryfall.com/card/msc/215/solemn-simulacrum?utm_source=api); Artifact Creature — Golem; cost {4}; `2/2`.
 
-- [ ] When this creature enters, you may search your library for a basic land card, put that card onto the battlefield tapped, then shuffle.
-- [ ] When this creature dies, you may draw a card.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0, 1. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] When this creature enters, you may search your library for a basic land card, put that card onto the battlefield tapped, then shuffle.
+- [x] When this creature dies, you may draw a card.
 
 #### 1 × Swiftfoot Boots (support)
 
 Oracle: [Scryfall](https://scryfall.com/card/mbc/77/swiftfoot-boots?utm_source=api); Artifact — Equipment; cost {2}.
 
-- [ ] Equipped creature has hexproof and haste. (It can't be the target of spells or abilities your opponents control. It can attack and {T} no matter when it came under your control.)
-- [ ] Equip {1} ({1}: Attach to target creature you control. Equip only as a sorcery.)
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0, 1. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] Equipped creature has hexproof and haste. (It can't be the target of spells or abilities your opponents control. It can attack and {T} no matter when it came under your control.)
+- [x] Equip {1} ({1}: Attach to target creature you control. Equip only as a sorcery.)
 
 #### 1 × Lightning Greaves (support)
 
 Oracle: [Scryfall](https://scryfall.com/card/msc/202/lightning-greaves?utm_source=api); Artifact — Equipment; cost {2}.
 
-- [ ] Equipped creature has haste and shroud. (It can't be the target of spells or abilities.)
-- [ ] Equip {0}
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0, 1. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] Equipped creature has haste and shroud. (It can't be the target of spells or abilities.)
+- [x] Equip {0}
 
 #### 1 × Skullclamp (support)
 
 Oracle: [Scryfall](https://scryfall.com/card/msc/210/skullclamp?utm_source=api); Artifact — Equipment; cost {1}.
 
-- [ ] Equipped creature gets +1/-1.
-- [ ] Whenever equipped creature dies, draw two cards.
-- [ ] Equip {1}
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0, 1, 2. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] Equipped creature gets +1/-1.
+- [x] Whenever equipped creature dies, draw two cards.
+- [x] Equip {1}
 
 #### 1 × Tormod's Crypt (support)
 
 Oracle: [Scryfall](https://scryfall.com/card/dmr/235/tormods-crypt?utm_source=api); Artifact; cost {0}.
 
-- [ ] {T}, Sacrifice this artifact: Exile target player's graveyard.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] {T}, Sacrifice this artifact: Exile target player's graveyard.
 
 #### 1 × Relic of Progenitus (support)
 
 Oracle: [Scryfall](https://scryfall.com/card/ema/231/relic-of-progenitus?utm_source=api); Artifact; cost {1}.
 
-- [ ] {T}: Target player exiles a card from their graveyard.
-- [ ] {1}, Exile this artifact: Exile all graveyards. Draw a card.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0, 1. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] {T}: Target player exiles a card from their graveyard.
+- [x] {1}, Exile this artifact: Exile all graveyards. Draw a card.
 
 #### 1 × Nihil Spellbomb (support)
 
 Oracle: [Scryfall](https://scryfall.com/card/a25/226/nihil-spellbomb?utm_source=api); Artifact; cost {1}.
 
-- [ ] {T}, Sacrifice this artifact: Exile target player's graveyard.
-- [ ] When this artifact is put into a graveyard from the battlefield, you may pay {B}. If you do, draw a card.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [isshin_two_heavens_as_one](#isshin-two-heavens-as-one), paragraphs 0, 1. Evidence: [tests/isshin.test.mjs](../tests/isshin.test.mjs), [tests/isshin-utilities.test.mjs](../tests/isshin-utilities.test.mjs), [tests/isshin-ui.cjs](../tests/isshin-ui.cjs), [tests/network.test.mjs](../tests/network.test.mjs), [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/aurelia-utilities.test.mjs](../tests/aurelia-utilities.test.mjs), [tests/arahbo.test.mjs](../tests/arahbo.test.mjs), [tests/extra-combat.test.mjs](../tests/extra-combat.test.mjs).
+
+- [x] {T}, Sacrifice this artifact: Exile target player's graveyard.
+- [x] When this artifact is put into a graveyard from the battlefield, you may pay {B}. If you do, draw a card.
 
 #### 1 × Soul-Guide Lantern (support)
 
 Oracle: [Scryfall](https://scryfall.com/card/eoc/143/soul-guide-lantern?utm_source=api); Artifact; cost {1}.
 
-- [ ] When this artifact enters, exile target card from a graveyard.
-- [ ] {T}, Sacrifice this artifact: Exile each opponent's graveyard.
-- [ ] {1}, {T}, Sacrifice this artifact: Draw a card.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0, 1, 2. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] When this artifact enters, exile target card from a graveyard.
+- [x] {T}, Sacrifice this artifact: Exile each opponent's graveyard.
+- [x] {1}, {T}, Sacrifice this artifact: Draw a card.
 
 #### 1 × Meteor Golem (support)
 
 Oracle: [Scryfall](https://scryfall.com/card/msc/205/meteor-golem?utm_source=api); Artifact Creature — Golem; cost {7}; `3/3`.
 
-- [ ] When this creature enters, destroy target nonland permanent an opponent controls.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] When this creature enters, destroy target nonland permanent an opponent controls.
 
 #### 1 × Duplicant (support)
 
 Oracle: [Scryfall](https://scryfall.com/card/cmm/946/duplicant?utm_source=api); Artifact Creature — Shapeshifter; cost {6}; `2/4`.
 
-- [ ] Imprint — When this creature enters, you may exile target nontoken creature.
-- [ ] As long as a card exiled with this creature is a creature card, this creature has the power, toughness, and creature types of the last creature card exiled with it. It's still a Shapeshifter.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [aurelia_the_warleader](#aurelia-the-warleader), paragraphs 0, 1. Evidence: [tests/aurelia.test.mjs](../tests/aurelia.test.mjs), [tests/battlefield-entry.test.mjs](../tests/battlefield-entry.test.mjs), [tests/hotseat-ui.cjs](../tests/hotseat-ui.cjs), [tests/spell-resolution.test.mjs](../tests/spell-resolution.test.mjs), [tests/spell-resolution-ui.cjs](../tests/spell-resolution-ui.cjs), [tests/extra-combat.test.mjs](../tests/extra-combat.test.mjs), [tests/aurelia-ui.cjs](../tests/aurelia-ui.cjs), [tests/aurelia-combat.test.mjs](../tests/aurelia-combat.test.mjs), [tests/aurelia-actions-ui.cjs](../tests/aurelia-actions-ui.cjs), [tests/aurelia-utilities.test.mjs](../tests/aurelia-utilities.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] Imprint — When this creature enters, you may exile target nontoken creature.
+- [x] As long as a card exiled with this creature is a creature card, this creature has the power, toughness, and creature types of the last creature card exiled with it. It's still a Shapeshifter.
 
 #### 1 × Steel Hellkite (support)
 
 Oracle: [Scryfall](https://scryfall.com/card/tdc/327/steel-hellkite?utm_source=api); Artifact Creature — Dragon; cost {6}; `5/5`.
 
-- [ ] Flying
-- [ ] {2}: This creature gets +1/+0 until end of turn.
-- [ ] {X}: Destroy each nonland permanent with mana value X whose controller was dealt combat damage by this creature this turn. Activate only once each turn.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [aurelia_the_warleader](#aurelia-the-warleader), paragraphs 0, 1, 2. Evidence: [tests/aurelia.test.mjs](../tests/aurelia.test.mjs), [tests/battlefield-entry.test.mjs](../tests/battlefield-entry.test.mjs), [tests/hotseat-ui.cjs](../tests/hotseat-ui.cjs), [tests/spell-resolution.test.mjs](../tests/spell-resolution.test.mjs), [tests/spell-resolution-ui.cjs](../tests/spell-resolution-ui.cjs), [tests/extra-combat.test.mjs](../tests/extra-combat.test.mjs), [tests/aurelia-ui.cjs](../tests/aurelia-ui.cjs), [tests/aurelia-combat.test.mjs](../tests/aurelia-combat.test.mjs), [tests/aurelia-actions-ui.cjs](../tests/aurelia-actions-ui.cjs), [tests/aurelia-utilities.test.mjs](../tests/aurelia-utilities.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] Flying
+- [x] {2}: This creature gets +1/+0 until end of turn.
+- [x] {X}: Destroy each nonland permanent with mana value X whose controller was dealt combat damage by this creature this turn. Activate only once each turn.
 
 #### 1 × Wurmcoil Engine (support)
 
 Oracle: [Scryfall](https://scryfall.com/card/2xm/308/wurmcoil-engine?utm_source=api); Artifact Creature — Phyrexian Wurm; cost {6}; `6/6`.
 
-- [ ] Deathtouch, lifelink
-- [ ] When this creature dies, create a 3/3 colorless Phyrexian Wurm artifact creature token with deathtouch and a 3/3 colorless Phyrexian Wurm artifact creature token with lifelink.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [aurelia_the_warleader](#aurelia-the-warleader), paragraphs 0, 1. Evidence: [tests/aurelia.test.mjs](../tests/aurelia.test.mjs), [tests/battlefield-entry.test.mjs](../tests/battlefield-entry.test.mjs), [tests/hotseat-ui.cjs](../tests/hotseat-ui.cjs), [tests/spell-resolution.test.mjs](../tests/spell-resolution.test.mjs), [tests/spell-resolution-ui.cjs](../tests/spell-resolution-ui.cjs), [tests/extra-combat.test.mjs](../tests/extra-combat.test.mjs), [tests/aurelia-ui.cjs](../tests/aurelia-ui.cjs), [tests/aurelia-combat.test.mjs](../tests/aurelia-combat.test.mjs), [tests/aurelia-actions-ui.cjs](../tests/aurelia-actions-ui.cjs), [tests/aurelia-utilities.test.mjs](../tests/aurelia-utilities.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] Deathtouch, lifelink
+- [x] When this creature dies, create a 3/3 colorless Phyrexian Wurm artifact creature token with deathtouch and a 3/3 colorless Phyrexian Wurm artifact creature token with lifelink.
 
 #### 1 × Trading Post (support)
 
 Oracle: [Scryfall](https://scryfall.com/card/msc/224/trading-post?utm_source=api); Artifact; cost {4}.
 
-- [ ] {1}, {T}, Discard a card: You gain 4 life.
-- [ ] {1}, {T}, Pay 1 life: Create a 0/1 white Goat creature token.
-- [ ] {1}, {T}, Sacrifice a creature: Return target artifact card from your graveyard to your hand.
-- [ ] {1}, {T}, Sacrifice an artifact: Draw a card.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [aurelia_the_warleader](#aurelia-the-warleader), paragraphs 0, 1, 2, 3. Evidence: [tests/aurelia.test.mjs](../tests/aurelia.test.mjs), [tests/battlefield-entry.test.mjs](../tests/battlefield-entry.test.mjs), [tests/hotseat-ui.cjs](../tests/hotseat-ui.cjs), [tests/spell-resolution.test.mjs](../tests/spell-resolution.test.mjs), [tests/spell-resolution-ui.cjs](../tests/spell-resolution-ui.cjs), [tests/extra-combat.test.mjs](../tests/extra-combat.test.mjs), [tests/aurelia-ui.cjs](../tests/aurelia-ui.cjs), [tests/aurelia-combat.test.mjs](../tests/aurelia-combat.test.mjs), [tests/aurelia-actions-ui.cjs](../tests/aurelia-actions-ui.cjs), [tests/aurelia-utilities.test.mjs](../tests/aurelia-utilities.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] {1}, {T}, Discard a card: You gain 4 life.
+- [x] {1}, {T}, Pay 1 life: Create a 0/1 white Goat creature token.
+- [x] {1}, {T}, Sacrifice a creature: Return target artifact card from your graveyard to your hand.
+- [x] {1}, {T}, Sacrifice an artifact: Draw a card.
 
 #### 1 × Unwinding Clock (support)
 
 Oracle: [Scryfall](https://scryfall.com/card/c18/228/unwinding-clock?utm_source=api); Artifact; cost {4}.
 
-- [ ] Untap all artifacts you control during each other player's untap step.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [aurelia_the_warleader](#aurelia-the-warleader), paragraphs 0. Evidence: [tests/aurelia.test.mjs](../tests/aurelia.test.mjs), [tests/battlefield-entry.test.mjs](../tests/battlefield-entry.test.mjs), [tests/hotseat-ui.cjs](../tests/hotseat-ui.cjs), [tests/spell-resolution.test.mjs](../tests/spell-resolution.test.mjs), [tests/spell-resolution-ui.cjs](../tests/spell-resolution-ui.cjs), [tests/extra-combat.test.mjs](../tests/extra-combat.test.mjs), [tests/aurelia-ui.cjs](../tests/aurelia-ui.cjs), [tests/aurelia-combat.test.mjs](../tests/aurelia-combat.test.mjs), [tests/aurelia-actions-ui.cjs](../tests/aurelia-actions-ui.cjs), [tests/aurelia-utilities.test.mjs](../tests/aurelia-utilities.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] Untap all artifacts you control during each other player's untap step.
 
 #### 1 × Command Tower (land)
 
 Oracle: [Scryfall](https://scryfall.com/card/frc/22/command-tower?utm_source=api); Land; cost —.
 
-- [ ] {T}: Add one mana of any color in your commander's color identity.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [aurelia_the_warleader](#aurelia-the-warleader), paragraphs 0. Evidence: [tests/aurelia.test.mjs](../tests/aurelia.test.mjs), [tests/battlefield-entry.test.mjs](../tests/battlefield-entry.test.mjs), [tests/hotseat-ui.cjs](../tests/hotseat-ui.cjs), [tests/spell-resolution.test.mjs](../tests/spell-resolution.test.mjs), [tests/spell-resolution-ui.cjs](../tests/spell-resolution-ui.cjs), [tests/extra-combat.test.mjs](../tests/extra-combat.test.mjs), [tests/aurelia-ui.cjs](../tests/aurelia-ui.cjs), [tests/aurelia-combat.test.mjs](../tests/aurelia-combat.test.mjs), [tests/aurelia-actions-ui.cjs](../tests/aurelia-actions-ui.cjs), [tests/aurelia-utilities.test.mjs](../tests/aurelia-utilities.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] {T}: Add one mana of any color in your commander's color identity.
 
 #### 1 × Exotic Orchard (land)
 
 Oracle: [Scryfall](https://scryfall.com/card/mbc/79/exotic-orchard?utm_source=api); Land; cost —.
 
-- [ ] {T}: Add one mana of any color that a land an opponent controls could produce.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [aurelia_the_warleader](#aurelia-the-warleader), paragraphs 0. Evidence: [tests/aurelia.test.mjs](../tests/aurelia.test.mjs), [tests/battlefield-entry.test.mjs](../tests/battlefield-entry.test.mjs), [tests/hotseat-ui.cjs](../tests/hotseat-ui.cjs), [tests/spell-resolution.test.mjs](../tests/spell-resolution.test.mjs), [tests/spell-resolution-ui.cjs](../tests/spell-resolution-ui.cjs), [tests/extra-combat.test.mjs](../tests/extra-combat.test.mjs), [tests/aurelia-ui.cjs](../tests/aurelia-ui.cjs), [tests/aurelia-combat.test.mjs](../tests/aurelia-combat.test.mjs), [tests/aurelia-actions-ui.cjs](../tests/aurelia-actions-ui.cjs), [tests/aurelia-utilities.test.mjs](../tests/aurelia-utilities.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] {T}: Add one mana of any color that a land an opponent controls could produce.
 
 #### 1 × Path of Ancestry (land)
 
 Oracle: [Scryfall](https://scryfall.com/card/mbc/80/path-of-ancestry?utm_source=api); Land; cost —.
 
-- [ ] This land enters tapped.
-- [ ] {T}: Add one mana of any color in your commander's color identity. When that mana is spent to cast a creature spell that shares a creature type with your commander, scry 1. (Look at the top card of your library. You may put that card on the bottom.)
+Shared-card evidence: unchanged rules characteristics and Oracle text match [aurelia_the_warleader](#aurelia-the-warleader), paragraphs 0, 1. Evidence: [tests/aurelia.test.mjs](../tests/aurelia.test.mjs), [tests/battlefield-entry.test.mjs](../tests/battlefield-entry.test.mjs), [tests/hotseat-ui.cjs](../tests/hotseat-ui.cjs), [tests/spell-resolution.test.mjs](../tests/spell-resolution.test.mjs), [tests/spell-resolution-ui.cjs](../tests/spell-resolution-ui.cjs), [tests/extra-combat.test.mjs](../tests/extra-combat.test.mjs), [tests/aurelia-ui.cjs](../tests/aurelia-ui.cjs), [tests/aurelia-combat.test.mjs](../tests/aurelia-combat.test.mjs), [tests/aurelia-actions-ui.cjs](../tests/aurelia-actions-ui.cjs), [tests/aurelia-utilities.test.mjs](../tests/aurelia-utilities.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] This land enters tapped.
+- [x] {T}: Add one mana of any color in your commander's color identity. When that mana is spent to cast a creature spell that shares a creature type with your commander, scry 1. (Look at the top card of your library. You may put that card on the bottom.)
 
 #### 1 × Evolving Wilds (land)
 
 Oracle: [Scryfall](https://scryfall.com/card/msc/240/evolving-wilds?utm_source=api); Land; cost —.
 
-- [ ] {T}, Sacrifice this land: Search your library for a basic land card, put it onto the battlefield tapped, then shuffle.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] {T}, Sacrifice this land: Search your library for a basic land card, put it onto the battlefield tapped, then shuffle.
 
 #### 1 × Terramorphic Expanse (land)
 
 Oracle: [Scryfall](https://scryfall.com/card/msc/273/terramorphic-expanse?utm_source=api); Land; cost —.
 
-- [ ] {T}, Sacrifice this land: Search your library for a basic land card, put it onto the battlefield tapped, then shuffle.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] {T}, Sacrifice this land: Search your library for a basic land card, put it onto the battlefield tapped, then shuffle.
 
 #### 1 × Ash Barrens (land)
 
 Oracle: [Scryfall](https://scryfall.com/card/tmc/60/ash-barrens?utm_source=api); Land; cost —.
 
-- [ ] {T}: Add {C}.
-- [ ] Basic landcycling {1} ({1}, Discard this card: Search your library for a basic land card, reveal it, put it into your hand, then shuffle.)
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0, 1. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] {T}: Add {C}.
+- [x] Basic landcycling {1} ({1}, Discard this card: Search your library for a basic land card, reveal it, put it into your hand, then shuffle.)
 
 #### 1 × Myriad Landscape (land)
 
 Oracle: [Scryfall](https://scryfall.com/card/eoc/169/myriad-landscape?utm_source=api); Land; cost —.
 
-- [ ] This land enters tapped.
-- [ ] {T}: Add {C}.
-- [ ] {2}, {T}, Sacrifice this land: Search your library for up to two basic land cards that share a land type, put them onto the battlefield tapped, then shuffle.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0, 1, 2. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] This land enters tapped.
+- [x] {T}: Add {C}.
+- [x] {2}, {T}, Sacrifice this land: Search your library for up to two basic land cards that share a land type, put them onto the battlefield tapped, then shuffle.
 
 #### 1 × Reliquary Tower (land)
 
 Oracle: [Scryfall](https://scryfall.com/card/soc/398/reliquary-tower?utm_source=api); Land; cost —.
 
-- [ ] You have no maximum hand size.
-- [ ] {T}: Add {C}.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0, 1. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] You have no maximum hand size.
+- [x] {T}: Add {C}.
 
 #### 1 × Rogue's Passage (land)
 
 Oracle: [Scryfall](https://scryfall.com/card/hoc/212/rogues-passage?utm_source=api); Land; cost —.
 
-- [ ] {T}: Add {C}.
-- [ ] {4}, {T}: Target creature can't be blocked this turn.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0, 1. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] {T}: Add {C}.
+- [x] {4}, {T}: Target creature can't be blocked this turn.
 
 #### 1 × War Room (land)
 
 Oracle: [Scryfall](https://scryfall.com/card/soc/422/war-room?utm_source=api); Land; cost —.
 
-- [ ] {T}: Add {C}.
-- [ ] {3}, {T}, Pay life equal to the number of colors in your commanders' color identity: Draw a card.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0, 1. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] {T}: Add {C}.
+- [x] {3}, {T}, Pay life equal to the number of colors in your commanders' color identity: Draw a card.
 
 #### 1 × Buried Ruin (land)
 
 Oracle: [Scryfall](https://scryfall.com/card/eoc/150/buried-ruin?utm_source=api); Land; cost —.
 
-- [ ] {T}: Add {C}.
-- [ ] {2}, {T}, Sacrifice this land: Return target artifact card from your graveyard to your hand.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0, 1. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] {T}: Add {C}.
+- [x] {2}, {T}, Sacrifice this land: Return target artifact card from your graveyard to your hand.
 
 #### 1 × Field of Ruin (land)
 
 Oracle: [Scryfall](https://scryfall.com/card/moc/400/field-of-ruin?utm_source=api); Land; cost —.
 
-- [ ] {T}: Add {C}.
-- [ ] {2}, {T}, Sacrifice this land: Destroy target nonbasic land an opponent controls. Each player searches their library for a basic land card, puts it onto the battlefield, then shuffles.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0, 1. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] {T}: Add {C}.
+- [x] {2}, {T}, Sacrifice this land: Destroy target nonbasic land an opponent controls. Each player searches their library for a basic land card, puts it onto the battlefield, then shuffles.
 
 #### 1 × Ghost Quarter (land)
 
 Oracle: [Scryfall](https://scryfall.com/card/cm2/253/ghost-quarter?utm_source=api); Land; cost —.
 
-- [ ] {T}: Add {C}.
-- [ ] {T}, Sacrifice this land: Destroy target land. Its controller may search their library for a basic land card, put it onto the battlefield, then shuffle.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0, 1. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] {T}: Add {C}.
+- [x] {T}, Sacrifice this land: Destroy target land. Its controller may search their library for a basic land card, put it onto the battlefield, then shuffle.
 
 #### 1 × Scavenger Grounds (land)
 
 Oracle: [Scryfall](https://scryfall.com/card/msc/263/scavenger-grounds?utm_source=api); Land — Desert; cost —.
 
-- [ ] {T}: Add {C}.
-- [ ] {2}, {T}, Sacrifice a Desert: Exile all graveyards.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0, 1. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] {T}: Add {C}.
+- [x] {2}, {T}, Sacrifice a Desert: Exile all graveyards.
 
 #### 1 × Blast Zone (land)
 
 Oracle: [Scryfall](https://scryfall.com/card/cmm/987/blast-zone?utm_source=api); Land; cost —.
 
-- [ ] This land enters with a charge counter on it.
-- [ ] {T}: Add {C}.
-- [ ] {X}{X}, {T}: Put X charge counters on this land.
-- [ ] {3}, {T}, Sacrifice this land: Destroy each nonland permanent with mana value equal to the number of charge counters on this land.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0, 1, 2, 3. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] This land enters with a charge counter on it.
+- [x] {T}: Add {C}.
+- [x] {X}{X}, {T}: Put X charge counters on this land.
+- [x] {3}, {T}, Sacrifice this land: Destroy each nonland permanent with mana value equal to the number of charge counters on this land.
 
 #### 1 × Temple of the False God (land)
 
 Oracle: [Scryfall](https://scryfall.com/card/soc/416/temple-of-the-false-god?utm_source=api); Land; cost —.
 
-- [ ] {T}: Add {C}{C}. Activate only if you control five or more lands.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] {T}: Add {C}{C}. Activate only if you control five or more lands.
 
 #### 1 × Azorius Chancery (land)
 
@@ -6519,56 +6609,72 @@ Oracle: [Scryfall](https://scryfall.com/card/fdn/683/azorius-guildgate?utm_sourc
 
 Oracle: [Scryfall](https://scryfall.com/card/dsc/270/dimir-aqueduct?utm_source=api); Land; cost —.
 
-- [ ] This land enters tapped.
-- [ ] When this land enters, return a land you control to its owner's hand.
-- [ ] {T}: Add {U}{B}.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [kess_dissident_mage](#kess-dissident-mage), paragraphs 0, 1, 2. Evidence: [tests/kess.test.mjs](../tests/kess.test.mjs), [tests/kess-ui.cjs](../tests/kess-ui.cjs), [tests/network.test.mjs](../tests/network.test.mjs), [tests/mizzix.test.mjs](../tests/mizzix.test.mjs), [tests/kalamax.test.mjs](../tests/kalamax.test.mjs), [tests/niv-mizzet.test.mjs](../tests/niv-mizzet.test.mjs).
+
+- [x] This land enters tapped.
+- [x] When this land enters, return a land you control to its owner's hand.
+- [x] {T}: Add {U}{B}.
 
 #### 1 × Dismal Backwater (land)
 
 Oracle: [Scryfall](https://scryfall.com/card/tdm/254/dismal-backwater?utm_source=api); Land; cost —.
 
-- [ ] This land enters tapped.
-- [ ] When this land enters, you gain 1 life.
-- [ ] {T}: Add {U} or {B}.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [kess_dissident_mage](#kess-dissident-mage), paragraphs 0, 1, 2. Evidence: [tests/kess.test.mjs](../tests/kess.test.mjs), [tests/kess-ui.cjs](../tests/kess-ui.cjs), [tests/network.test.mjs](../tests/network.test.mjs), [tests/mizzix.test.mjs](../tests/mizzix.test.mjs), [tests/kalamax.test.mjs](../tests/kalamax.test.mjs), [tests/niv-mizzet.test.mjs](../tests/niv-mizzet.test.mjs).
+
+- [x] This land enters tapped.
+- [x] When this land enters, you gain 1 life.
+- [x] {T}: Add {U} or {B}.
 
 #### 1 × Dimir Guildgate (land)
 
 Oracle: [Scryfall](https://scryfall.com/card/fdn/688/dimir-guildgate?utm_source=api); Land — Gate; cost —.
 
-- [ ] This land enters tapped.
-- [ ] {T}: Add {U} or {B}.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [kess_dissident_mage](#kess-dissident-mage), paragraphs 0, 1. Evidence: [tests/kess.test.mjs](../tests/kess.test.mjs), [tests/kess-ui.cjs](../tests/kess-ui.cjs), [tests/network.test.mjs](../tests/network.test.mjs), [tests/mizzix.test.mjs](../tests/mizzix.test.mjs), [tests/kalamax.test.mjs](../tests/kalamax.test.mjs), [tests/niv-mizzet.test.mjs](../tests/niv-mizzet.test.mjs).
+
+- [x] This land enters tapped.
+- [x] {T}: Add {U} or {B}.
 
 #### 1 × Selesnya Sanctuary (land)
 
 Oracle: [Scryfall](https://scryfall.com/card/clu/246/selesnya-sanctuary?utm_source=api); Land; cost —.
 
-- [ ] This land enters tapped.
-- [ ] When this land enters, return a land you control to its owner's hand.
-- [ ] {T}: Add {G}{W}.
+Shared-card evidence: unchanged rules characteristics and Oracle text match [arahbo_roar_of_the_world](#arahbo-roar-of-the-world), paragraphs 0, 1, 2. Evidence: [tests/arahbo.test.mjs](../tests/arahbo.test.mjs), [tests/arahbo-combat.test.mjs](../tests/arahbo-combat.test.mjs), [tests/arahbo-utilities.test.mjs](../tests/arahbo-utilities.test.mjs), [tests/destruction.test.mjs](../tests/destruction.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/arahbo-ui.cjs](../tests/arahbo-ui.cjs), [tests/arahbo-actions-ui.cjs](../tests/arahbo-actions-ui.cjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs), [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/aurelia-utilities.test.mjs](../tests/aurelia-utilities.test.mjs), [tests/network.test.mjs](../tests/network.test.mjs).
+
+- [x] This land enters tapped.
+- [x] When this land enters, return a land you control to its owner's hand.
+- [x] {T}: Add {G}{W}.
 
 #### 4 × Forest (basic_land)
 
 Oracle: [Scryfall](https://scryfall.com/card/mdd/301/forest?utm_source=api); Basic Land — Forest; cost —.
 
-- [ ] ({T}: Add {G}.)
+Shared-card evidence: unchanged rules characteristics and Oracle text match [goreclaw_terror_of_qal_sisma](#goreclaw-terror-of-qal-sisma), paragraphs 0. Evidence: [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/goreclaw-ui.cjs](../tests/goreclaw-ui.cjs), [tests/combat.test.mjs](../tests/combat.test.mjs), [tests/phase-flow.test.mjs](../tests/phase-flow.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] ({T}: Add {G}.)
 
 #### 4 × Plains (basic_land)
 
 Oracle: [Scryfall](https://scryfall.com/card/mdd/292/plains?utm_source=api); Basic Land — Plains; cost —.
 
-- [ ] ({T}: Add {W}.)
+Shared-card evidence: unchanged rules characteristics and Oracle text match [aurelia_the_warleader](#aurelia-the-warleader), paragraphs 0. Evidence: [tests/aurelia.test.mjs](../tests/aurelia.test.mjs), [tests/battlefield-entry.test.mjs](../tests/battlefield-entry.test.mjs), [tests/hotseat-ui.cjs](../tests/hotseat-ui.cjs), [tests/spell-resolution.test.mjs](../tests/spell-resolution.test.mjs), [tests/spell-resolution-ui.cjs](../tests/spell-resolution-ui.cjs), [tests/extra-combat.test.mjs](../tests/extra-combat.test.mjs), [tests/aurelia-ui.cjs](../tests/aurelia-ui.cjs), [tests/aurelia-combat.test.mjs](../tests/aurelia-combat.test.mjs), [tests/aurelia-actions-ui.cjs](../tests/aurelia-actions-ui.cjs), [tests/aurelia-utilities.test.mjs](../tests/aurelia-utilities.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs), [tests/vehicles-ui.cjs](../tests/vehicles-ui.cjs).
+
+- [x] ({T}: Add {W}.)
 
 #### 4 × Island (basic_land)
 
 Oracle: [Scryfall](https://scryfall.com/card/mdd/294/island?utm_source=api); Basic Land — Island; cost —.
 
-- [ ] ({T}: Add {U}.)
+Shared-card evidence: unchanged rules characteristics and Oracle text match [talrand_sky_summoner](#talrand-sky-summoner), paragraphs 0. Evidence: [tests/talrand.test.mjs](../tests/talrand.test.mjs), [tests/talrand-ui.cjs](../tests/talrand-ui.cjs), [tests/network.test.mjs](../tests/network.test.mjs), [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/arahbo-utilities.test.mjs](../tests/arahbo-utilities.test.mjs), [tests/isshin-utilities.test.mjs](../tests/isshin-utilities.test.mjs), [tests/vehicles.test.mjs](../tests/vehicles.test.mjs).
+
+- [x] ({T}: Add {U}.)
 
 #### 4 × Swamp (basic_land)
 
 Oracle: [Scryfall](https://scryfall.com/card/mdd/296/swamp?utm_source=api); Basic Land — Swamp; cost —.
 
-- [ ] ({T}: Add {B}.)
+Shared-card evidence: unchanged rules characteristics and Oracle text match [isshin_two_heavens_as_one](#isshin-two-heavens-as-one), paragraphs 0. Evidence: [tests/isshin.test.mjs](../tests/isshin.test.mjs), [tests/isshin-utilities.test.mjs](../tests/isshin-utilities.test.mjs), [tests/isshin-ui.cjs](../tests/isshin-ui.cjs), [tests/network.test.mjs](../tests/network.test.mjs), [tests/goreclaw.test.mjs](../tests/goreclaw.test.mjs), [tests/aurelia-utilities.test.mjs](../tests/aurelia-utilities.test.mjs), [tests/arahbo.test.mjs](../tests/arahbo.test.mjs), [tests/extra-combat.test.mjs](../tests/extra-combat.test.mjs).
+
+- [x] ({T}: Add {B}.)
 
 
 <a id="hapatra-vizier-of-poisons"></a>

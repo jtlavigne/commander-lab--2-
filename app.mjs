@@ -1,4 +1,5 @@
 import {automaticFor} from './turn-settings.mjs';
+import {isCopyPlaceholder} from './token-catalog.mjs';
 import {decksReadyForOpening} from './opening-hand.mjs';
 import {createOpeningHandUI} from './opening-hand-ui.mjs';
 import {STEPS,ZONES,newGame,findCard,parseDeck,validateSession,changePlayerCount,commandersFor} from './engine.mjs';
@@ -386,6 +387,7 @@ function openCardActions(id,anchor){
  if(cardActionsMenu.matches(':popover-open')&&cardActionsInvoker===anchor){cardActionsMenu.hidePopover();return;}
  cardActionsInvoker?.setAttribute('aria-expanded','false');cardActionsInvoker=anchor;anchor.setAttribute('aria-expanded','true');cardActionsMenu.replaceChildren(el('h3','CARD ACTIONS'));
  const actions=found.card.manifested?[{id:'turn-face-up',label:'Turn face up (pay mana cost)',open:()=>dispatch({type:'turnFaceUp',id})}]:found.zone==='hand'?[{id:'mana',label:'Card abilities',open:()=>manaUI.openSource(id)}]:[{id:'counters',label:'Counters',open:rect=>openCounterMenu(id,rect)},{id:'mana',label:'Card abilities',open:()=>manaUI.openSource(id)},{id:'mana-settings',label:'Mana rules',open:()=>manaUI.openSettings(id)}];
+ if(found.zone==='battlefield')actions.push({id:'copy-token',label:'Create token copy',open:()=>openTokenDialog(id)});
  if(availableLoyaltyAbilities(g,found.owner,found.card).length||/loyalty abilities/i.test(cardFace(found.card).oracle_text||''))actions.push({id:'loyalty-settings',label:'Loyalty activations',open:()=>manaUI.openLoyaltySettings(id)});
  for(const action of actions){const item=button('',()=>{const rect=cardActionsMenu.getBoundingClientRect();cardActionsMenu.hidePopover();action.open(rect);},'card-action-item');item.setAttribute('role','menuitem');item.setAttribute('aria-haspopup','dialog');item.dataset.action=action.id;item.append(el('span',action.label),el('span','›','card-action-chevron'));cardActionsMenu.append(item);}
  const rect=anchor.getBoundingClientRect();cardActionsMenu.showPopover();cardActionsMenu.style.left=Math.max(16,Math.min(rect.left,innerWidth-cardActionsMenu.offsetWidth-16))+'px';cardActionsMenu.style.top=Math.max(16,Math.min(rect.bottom+6,innerHeight-cardActionsMenu.offsetHeight-16))+'px';cardActionsMenu.querySelector('[role=menuitem]').focus({preventScroll:true});
@@ -558,12 +560,19 @@ $('draw').onclick=()=>dispatch({type:'draw'});$('untap').onclick=()=>dispatch({t
 $('shuffle').onclick=()=>dispatch({type:'shuffle'});
 $('mulligan').onclick=()=>dispatch({type:'redraw'});
 $('undo').onclick=undo;$('openimport').onclick=()=>openImport();$('import-seat').onchange=()=>{$('player-name').value=g.players[Number($('import-seat').value)].name;};
-$('token').onclick=()=>{
+function openTokenDialog(copyId){
  const select=$('token-template');select.replaceChildren(new Option('Custom token',''));
- for(const [index,token] of (g.players[seat].tokenCatalog||[]).entries())select.add(new Option(token.name+(token.power!==undefined?' '+token.power+'/'+token.toughness:'')+' '+(token.colors||[]).join(''),String(index)));
- select.value=select.options.length>1?'0':'';select.onchange();$('token-dialog').showModal();
-};
-$('token-template').onchange=()=>{const custom=$('token-template').value==='';for(const id of ['token-name','token-text','token-power'])$(id).disabled=!custom;};
+ for(const [index,token] of (g.players[seat].tokenCatalog||[]).entries())if(!isCopyPlaceholder(token))select.add(new Option(token.name+(token.power!==undefined?' '+token.power+'/'+token.toughness:'')+' '+(token.colors||[]).join(''),String(index)));
+ const defaultTemplate=select.options[1]?.value||'';
+ const copies=el('optgroup');copies.label='Copy a battlefield permanent';
+ for(const [owner,player] of g.players.entries())for(const card of player.zones.battlefield)copies.append(new Option(player.name+' · '+(card.faceDown?'Face-down creature':cardFace(card).name),'copy:'+card.instance));
+ if(copies.children.length)select.append(copies);
+ select.value=copyId?'copy:'+copyId:defaultTemplate;$('token-copy-nonlegendary').checked=false;select.onchange();$('token-dialog').showModal();
+}
+$('token').onclick=()=>openTokenDialog();
+const copyException=el('label'),copyCheckbox=el('input');copyCheckbox.type='checkbox';copyCheckbox.id='token-copy-nonlegendary';copyException.append(copyCheckbox,document.createTextNode(" Not legendary (only if the copy effect says so)"));copyException.hidden=true;$('token-template').after(copyException);
+document.querySelector('label[for=token-template]').textContent='Token template or copy source';
+$('token-template').onchange=()=>{const value=$('token-template').value,custom=value==='';for(const id of ['token-name','token-text','token-power'])$(id).disabled=!custom;copyException.hidden=!value.startsWith('copy:');};
 $('help').onclick=()=>$('help-dialog').showModal();
 $('quickstats').onclick=()=>openStats(seat);
 $('quickpractice').onclick=()=>$('practice').click();
@@ -584,7 +593,7 @@ $('tab-stack').ondragenter=()=>{if(draggedId)setPanel('stack');};
 for(const b of document.querySelectorAll('[data-close]'))b.onclick=()=>b.closest('dialog').close();
 $('loadlabel').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('load').click();}};
 $('stats-form').onsubmit=e=>{e.preventDefault();const life=Number($('life-total').value),poison=Number($('poison-total').value),casts=Number($('command-casts').value),extra=[...$('partner-casts').querySelectorAll('input')],damage=g.players.map((_,i)=>Number($('damage-'+i).value));if(![life,poison,...damage].every(Number.isFinite)||![casts,...extra.map(input=>Number(input.value))].every(n=>Number.isSafeInteger(n)&&n>=0))return;dispatch({type:'playerStats',owner:statsSeat,name:$('seat-name').value.trim(),life,poison,damage,totalCasts:casts,casts:Object.fromEntries([...commandersFor(g,statsSeat).map((c,i)=>[c.instance,i?Number(extra.find(input=>input.dataset.commander===c.instance)?.value??c.commandCasts??0):casts])])});$('stats-dialog').close();};
-$('token-form').onsubmit=e=>{e.preventDefault();const name=$('token-name').value.trim(),count=Number($('token-count').value);if($('token-template').value!==''){dispatch({type:'token',templateIndex:Number($('token-template').value),count});$('token-dialog').close();return;}if(!name||!Number.isInteger(count)||count<1||count>50)return;const parts=($('token-power').value.trim()||name.match(/^[+-]?\d+\/[+-]?\d+/)?.[0]||'').split('/');dispatch({type:'token',name,count,text:$('token-text').value,power:parts[0]?.trim()||'0',toughness:parts[1]?.trim()||'0'});$('token-dialog').close();};
+$('token-form').onsubmit=e=>{e.preventDefault();const name=$('token-name').value.trim(),count=Number($('token-count').value),value=$('token-template').value;if(value.startsWith('copy:')){const id=value.slice(5),source=findCard(g,id);dispatch({type:'copyToken',id,count,battlefieldId:source?.card.battlefieldId||null,nonlegendary:$('token-copy-nonlegendary').checked});$('token-dialog').close();return;}if(value!==''){dispatch({type:'token',templateIndex:Number(value),count});$('token-dialog').close();return;}if(!name||!Number.isInteger(count)||count<1||count>50)return;const parts=($('token-power').value.trim()||name.match(/^[+-]?\d+\/[+-]?\d+/)?.[0]||'').split('/');dispatch({type:'token',name,count,text:$('token-text').value,power:parts[0]?.trim()||'0',toughness:parts[1]?.trim()||'0'});$('token-dialog').close();};
 document.addEventListener('keydown',e=>{
  if(e.altKey||e.target.closest('input,textarea,select')||document.querySelector('dialog[open]'))return;
  refreshHover();

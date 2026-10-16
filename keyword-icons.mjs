@@ -1,4 +1,4 @@
-import {activeRuleParagraphs} from './ability-effects.mjs';
+import {activeRuleParagraphs,keywordDeclarationText} from './ability-effects.mjs';
 import {keywordSet} from './creature-rules.mjs';
 
 // Display only the familiar keyword set requested for card footers. This list
@@ -33,7 +33,7 @@ const label=name=>name.charAt(0).toUpperCase()+name.slice(1);
 // provider's "other creatures have flying" clause. Card-wide Scryfall keywords
 // may describe both faces, so metadata alone is never enough to display one.
 function readKeywords(text,vocabulary){
- const clean=text.replace(/\([^()]*\)/g,'').trim().replace(/\.$/,'');
+ const clean=keywordDeclarationText(text,vocabulary);if(clean===null)return [];
  return vocabulary.filter(name=>{
   const tail=PARAMETERIZED.has(name)?'(?=$|[ :{0-9])':'(?=$|,| and |:)';
   return new RegExp('(?:^|, | and )'+escape(name)+tail,'i').test(clean)&&! /\b(?:as long as|unless)\b/i.test(clean);

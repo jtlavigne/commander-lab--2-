@@ -16,7 +16,15 @@ export function graveAbilityPermissions(g,owner,card){
  const grant=card.graveCastGrant;if(grant?.owner===owner&&grant.turn===turn&&grant.zoneChangeId===(card.zoneChangeId||null))result.push({key:'grant',label:'Granted cast this turn',graveyardExile:true});
  return result;
 }
-export function graveyardExileReplacement(g,card,owner){return !card.token&&!card.spellCopy&&!card.cardCopy&&(g.temporaryGraveyardRules||[]).some(rule=>rule.kind==='exile'&&rule.owner===owner&&rule.turn===g.turn+':'+g.active);}
+// "From anywhere" replacements belong to zone movement, so milling,
+// discarding and resolving spells obey the same providers as creature deaths.
+export function graveyardExileReplacement(g,card,owner){
+ if(!card.token&&!card.spellCopy&&!card.cardCopy&&(g.temporaryGraveyardRules||[]).some(rule=>rule.kind==='exile'&&rule.owner===owner&&rule.turn===g.turn+':'+g.active))return true;
+ return g.players.some((player,controller)=>!player.eliminated&&player.zones.battlefield.some(source=>!source.faceDown&&activeRuleParagraphs(source).some(({text})=>{
+  const rule=normalizeRules(text);
+  return /^If a card(?: or token)? would be put into a graveyard from anywhere, exile it instead\./i.test(rule)&&(!card.token||/or token/i.test(rule))||!card.token&&controller!==owner&&/^If a card would be put into an opponent's graveyard from anywhere, exile it instead\./i.test(rule);
+ })));
+}
 export function consumeGravePermission(g,owner,permission){
  if(!permission.provider)return;
  const source=g.players[owner].zones.battlefield.find(c=>c.instance===permission.provider);if(!source)throw Error('The casting permission is no longer available.');

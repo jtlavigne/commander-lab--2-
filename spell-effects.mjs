@@ -62,7 +62,7 @@ export function spellHasLegalChoices(g,owner,card,chosen){
  return choices.some(options=>{const text=spellText(card,options,g,owner),spec=isAura(card)||/\b(?:Instant|Sorcery)\b/.test(cardFace(card).type_line||'')?effectTargetSpec(spellTargetText(card,text),options):null;
   if(!spec||spec.optional)return true;
   const available=spellTargetOptions(g,owner,card,options);
-  return spec.groups?spec.groups.every(group=>available.some(t=>typeof group==='object'?t.groups?.includes(spec.groups.indexOf(group)):group==='own'?t.owner===owner:t.owner!==owner)):available.length>=(spec.min||1);
+  return spec.groups?spec.groups.every((group,index)=>spec.optionalGroupIndices?.includes(index)||available.some(t=>typeof group==='object'?t.groups?.includes(spec.groups.indexOf(group)):group==='own'?t.owner===owner:t.owner!==owner)):available.length>=(spec.min||1);
  });
 }
 export function currentSpellTargets(g,entry){

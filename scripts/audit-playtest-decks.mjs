@@ -33,6 +33,16 @@ for(const [deck,checked] of Object.entries(probes)){
 // paragraphs inherit that evidence across both lists without claiming the
 // remainder of either card is implemented.
 const batches=[
+ {deck:'atraxa',tests:['tests/entry-batches.test.mjs','tests/entry-replacements-ui.cjs','tests/network.test.mjs'],cards:{"Elspeth, Sun's Champion":[0]}},
+ {deck:'atraxa',tests:['tests/entry-replacements.test.mjs','tests/entry-replacements-ui.cjs','tests/network.test.mjs'],cards:{'Tamiyo, Compleated Sage':[0],"Vraska, Betrayal's Sting":[0]}},
+ {deck:'atraxa',tests:['tests/atraxa-duration.test.mjs','tests/atraxa-duration-ui.cjs','tests/network.test.mjs'],cards:{'The Chain Veil':[0,1],'Tamiyo, Field Researcher':[0,1],'Teferi, Master of Time':[0]}},
+ {deck:'atraxa',tests:['tests/atraxa-control.test.mjs','tests/network.test.mjs','tests/atraxa-library-ui.cjs'],cards:{'Ichormoon Gauntlet':[1],'Ashiok, Dream Render':[0,1]}},
+ {deck:'atraxa',tests:['tests/atraxa-control.test.mjs'],cards:{'Sword of Truth and Justice':[1]}},
+ {deck:'atraxa',tests:['tests/atraxa-delayed.test.mjs','tests/network.test.mjs','tests/atraxa-library-ui.cjs'],cards:{'Teferi, Hero of Dominaria':[0,1]}},
+ {deck:'atraxa',tests:['tests/atraxa-delayed.test.mjs'],cards:{"Vraska, Betrayal's Sting":[3],'Oath of Teferi':[0]}},
+ {deck:'atraxa',tests:['tests/atraxa-library.test.mjs','tests/atraxa-library-ui.cjs','tests/network.test.mjs'],cards:{'Narset, Parter of Veils':[0,1],'Sorin the Mirthless':[0]}},
+ {deck:'atraxa',tests:['tests/permanent-copy.test.mjs','tests/entry-batches.test.mjs'],cards:{'Tamiyo, Compleated Sage':[2]}},
+ {deck:'jace',tests:['tests/permanent-copy.test.mjs'],cards:{'Quantum Misalignment':[0],'Memnarch, the Warden':[0,1,2]}},
  {deck:'atraxa',tests:['tests/turn-effects.test.mjs','tests/playtest-decks-ui.cjs'],cards:{"Elspeth, Sun's Champion":[2],'Tamiyo, Field Researcher':[2],'Teferi, Hero of Dominaria':[2],'Teferi, Temporal Archmage':[2],'Teferi, Master of Time':[2,3],"Magistrate's Scepter":[1]}},
  {deck:'atraxa',tests:['tests/playtest-spells.test.mjs'],cards:{"An Offer You Can't Refuse":[0],"Dovin's Veto":[0,1],'Krosan Grip':[0,1],"Elspeth, Sun's Champion":[1]}},
  {deck:'jace',tests:['tests/polymorph.test.mjs','tests/playtest-decks-ui.cjs'],cards:{'Jace, Multiverse Architect':[2],'Identity Echo':[0],'Proteus Staff':[0],'Synthetic Destiny':[0],'Mass Polymorph':[0],"Primevals' Glorious Rebirth":[0,1]}}
@@ -40,7 +50,7 @@ const batches=[
 for(const batch of batches){const fixture=JSON.parse(await fs.readFile(new URL(batch.deck+'.json',base)));for(const [name,indices] of Object.entries(batch.cards)){const paragraphs=fixture.cards.find(c=>c.name===name).oracle_text.split('\n').filter(Boolean);for(const index of indices)evidence.set(canonical(paragraphs[index]),batch.tests);}}
 const output=[],lines=['# Exact playtest deck audit','',
  'Lists supplied on 2026-10-15. This report covers every non-empty Oracle paragraph in both exact lists, separately from the older 39-deck fixture. Current Oracle data came from Scryfall.','',
- '**Current verification:** 1,113 unit tests pass. Exact-deck, mana, planeswalker, and multiplayer Electron checks accompany this batch. These totals include the wider engine suite; they are not a count of fully implemented cards. Shared handlers now cover the tested extra turns, phasing, emblems, counterspell token payments, split second and reveal-and-replace effects. Remaining gaps include several token/copy/conditional sequences, trigger restrictions, continuous effects and other unchecked paragraphs below.','',
+ '**Current verification:** 1,259 unit and network tests pass. The token and entry UI checks cover manual permanent copies, art, reload, copied activations, entry-counter choices, doubled Elspeth tokens and reanimation. New copy probes cover Quantum Misalignment, Tamiyo’s exile-and-copy ability and copied Memnarch entry/attack triggers. These totals include the wider engine suite; they are not a count of fully implemented cards. Shared handlers also cover the tested extra turns, phasing, emblems, counterspell token payments, split second and reveal-and-replace effects. Remaining gaps include as-enters cloning (such as Spark Double), temporary copy effects (such as Cursed Mirror), additional copy exceptions, conditional sequences, trigger restrictions and other unchecked paragraphs below.','',
  '**PASS (regression)** means identical Oracle text has checked behavioral evidence in the maintained deck audit and the full unit suite passed. **FAIL (manual resolution)** means the current resolution compiler has no complete handler. **UNVERIFIED** means more behavioral evidence is needed; a recognized handler alone is not a pass. Static effects, trigger conditions, target rules and interactions can still be missing even when an effect compiles. No deck is certified fully working by this report.',''];
 for(const deck of ['atraxa','jace']){
  const fixture=JSON.parse(await fs.readFile(new URL(deck+'.json',base))),g=newGame(2);g.step=3;g.responseMode='hold';

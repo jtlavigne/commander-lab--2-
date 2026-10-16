@@ -4,6 +4,11 @@ import {fieldCards,isCreature,keywordSet,protectedFrom,combatStats} from './crea
 
 export function effectTargetSpec(text,choices={}){
  let m;
+ if(/another target permanent you control/i.test(text))return {kind:'card',zone:'battlefield',types:['permanent'],own:true,other:true,max:1};
+ if(/target nonland permanent card with mana value X from your graveyard/i.test(text))return {kind:'card',zone:'graveyard',types:['permanent'],permanent:true,exclude:'nonland',own:true,manaValue:choices.x||0,exactManaValue:true,max:1};
+ // Support on a permanent excludes itself; a spell can support any creature.
+ // Targets are announced before priority, unlike Bolster's resolution choice.
+ if((m=text.match(/(?:^|\n)Support (\d+)(?:\.|\s*\(|$)/i)))return {kind:'card',zone:'battlefield',types:['creature'],support:true,optional:true,min:0,max:Number(m[1])};
  if(/another target (?:planeswalker or creature|creature or planeswalker) you control/i.test(text))return {kind:'card',zone:'battlefield',types:['creature','planeswalker'],own:true,other:true,max:1};
  if(/any number of target permanents/i.test(text))return {kind:'card',zone:'battlefield',types:['permanent'],optional:true,max:100};
  if(/up to one target instant card and\/or up to one target sorcery card from your graveyard each with mana value X or less/i.test(text))return {kind:'card',groups:[{text:'target instant card from your graveyard with mana value X or less.',label:'Instant'},{text:'target sorcery card from your graveyard with mana value X or less.',label:'Sorcery'}],optional:true,optionalGroups:true,repeated:true,min:0,max:2};
@@ -24,7 +29,7 @@ export function effectTargetSpec(text,choices={}){
   const groups=text.split(/\.\s+|\n/).filter(part=>/\btarget\b/i.test(part)).map(text=>({text}));return {kind:'card',groups,min:groups.length,max:groups.length};
  }
  if(/target (?:noncreature )?spell|target enchantment, instant, or sorcery spell|target instant or sorcery spell/i.test(text))return {kind:'card',zone:'stack',spell:true,types:/target enchantment, instant, or sorcery spell/i.test(text)?['enchantment','instant','sorcery']:/target instant or sorcery spell/i.test(text)?['instant','sorcery']:undefined,exclude:/target noncreature spell/i.test(text)?'noncreature':undefined,own:/spell you control/i.test(text),manaValue:text.match(/spell with mana value (\d+) or less/i)?.[1]!==undefined?Number(text.match(/spell with mana value (\d+) or less/i)[1]):undefined,max:1};
- if(/target creature you control[^]*target creature you don't control/i.test(text))return {kind:'card',zone:'battlefield',types:['creature'],groups:['own','opponent'],min:2,max:2};
+ if(/target creature you control[^]*target creature you don't control/i.test(text))return {kind:'card',zone:'battlefield',types:['creature'],groups:['own','opponent'],optionalGroupIndices:/up to one target creature you don't control/i.test(text)?[1]:[],min:/up to one target creature you don't control/i.test(text)?1:2,max:2};
  if(/another target creature or land you control/i.test(text))return {kind:'card',zone:'battlefield',types:['creature','land'],own:true,other:true,max:1};
  if(/target creature with flying/i.test(text))return {kind:'card',zone:'battlefield',types:['creature'],keyword:'flying',max:1};
  if(/up to four target cards from your graveyard/i.test(text))return {kind:'card',zone:'graveyard',own:true,multiGrave:true,optional:true,max:4};
@@ -40,7 +45,8 @@ export function effectTargetSpec(text,choices={}){
  if(/target (?:opponent|player)(?:'s graveyard)?/i.test(text))return {kind:'player',opponent:/target opponent/i.test(text)};
  if((m=text.match(/target (artifact )?card from (your|a) graveyard/i)))return {kind:'card',zone:'graveyard',type:m[1]?'Artifact':null,own:m[2]==='your'};
  if(/target Human you control/i.test(text))return {kind:'card',zone:'battlefield',types:['creature'],subtype:'Human',own:true,max:1};
- if((m=text.match(/target (nontoken |noncreature |nonland |nonbasic )?(creature|planeswalker|artifact|enchantment|land|permanent)(?:,? (?:or )?(creature|planeswalker|artifact|enchantment|land))?(?:,? or (land))?( you (?:don't )?control| an opponent controls| defending player controls| that player controls)?/i)))return {kind:'card',zone:'battlefield',types:[m[2],m[3],m[4]].filter(Boolean),exclude:m[1]?.trim(),own:m[5]===' you control',opponent:/don't|opponent/.test(m[5]||''),defender:/defending|that player/.test(m[5]||''),optional:/up to (?:one|three) target/i.test(text),max:/up to three target/i.test(text)?3:1};
+ if((m=text.match(/up to (one|two|three|\d+) target (nonland )?(creatures?|permanents?)( you (?:don't )?control| an opponent controls)?/i)))return {kind:'card',zone:'battlefield',types:[m[3].toLowerCase().replace(/s$/,'')],exclude:m[2]?'nonland':undefined,own:m[4]===' you control',opponent:/don't|opponent/.test(m[4]||''),optional:true,min:0,max:({one:1,two:2,three:3}[m[1].toLowerCase()]??Number(m[1]))};
+ if((m=text.match(/target (nontoken |noncreature |nonland |nonbasic )?(creature|planeswalker|artifact|enchantment|land|permanent)(?:,? (?:or )?(creature|planeswalker|artifact|enchantment|land))?(?:,? or (land))?( you (?:don't )?control| you own| an opponent controls| defending player controls| that player controls)?/i)))return {kind:'card',zone:'battlefield',types:[m[2],m[3],m[4]].filter(Boolean),exclude:m[1]?.trim(),own:m[5]===' you control',owned:m[5]===' you own',opponent:/don't|opponent/.test(m[5]||''),defender:/defending|that player/.test(m[5]||''),optional:/up to (?:one|three) target/i.test(text),max:/up to three target/i.test(text)?3:1};
  return null;
 }
 export function effectTargetOptions(g,entry){
@@ -52,12 +58,15 @@ export function effectTargetOptions(g,entry){
   const type=(card.layout==='split'&&spec.zone==='graveyard'?card.type_line:cardFace(card).type_line)||'';
   if(spec.spell&&card.instance===source.instance)return false;
   if(spec.permanent&&/\b(?:Instant|Sorcery)\b/.test(type)||spec.manaValue!==undefined&&manaValue(card,{x,onStack:spec.zone==='stack'})>spec.manaValue)return false;
+  if(spec.exactManaValue&&manaValue(card)!==spec.manaValue)return false;
   if(spec.combat&&(!g.combat||g.step<5||g.step>8||!(spec.combat!=='blocking'&&g.combat.attackers.some(a=>a.id===card.instance)||spec.combat!=='attacking'&&g.combat.blocks.some(b=>b.blocker===card.instance))))return false;
   if(spec.attacking&&!g.combat?.attackers.some(a=>a.id===card.instance))return false;
   if(spec.keyword&&!keywordSet(g,controller,card).has(spec.keyword))return false;
   if(spec.lesserPower){const found=findCard(g,source.instance),live=found?.zone==='battlefield'&&(found.card.battlefieldId||null)===(source.battlefieldId||null),power=live?combatStats(g,found.owner,found.card)?.power:source.lastKnownPower;if(!(combatStats(g,controller,card)?.power<power))return false;}
   if(spec.subtype&&!new RegExp('\\b'+spec.subtype+'\\b').test(type))return false;
-  if(spec.legendary&&!/\bLegendary\b/.test(type)||spec.other&&card.instance===source.instance)return false;
+  if(spec.legendary&&!/\bLegendary\b/.test(type)||spec.other&&card.instance===source.instance||spec.support&&card.instance===source.instance&&/\b(?:Artifact|Battle|Creature|Enchantment|Land|Planeswalker)\b/.test(cardFace(source).type_line||''))return false;
+  // Ownership and control differ after a permanent changes sides.
+  if(spec.owned&&(card.ownerSeat??controller)!==owner)return false;
   if(spec.own&&controller!==owner||spec.opponent&&controller===owner||spec.defender&&controller!==(event?.defender??event?.target?.owner))return false;
   if(spec.type&&!type.includes(spec.type)||spec.types&&!spec.types.includes('permanent')&&!spec.types.some(t=>new RegExp('\\b'+t+'\\b','i').test(type)))return false;
   if(spec.exclude==='noncreature'&&isCreature(card)||spec.exclude==='nonland'&&/\bLand\b/.test(type)||spec.exclude==='nonbasic'&&/\bBasic\b/.test(type))return false;
@@ -75,6 +84,10 @@ export function groupedTargets(spec,targets,owner){
  }
  if(spec.repeated){if(targets.length!==spec.groups.length||targets.some((target,i)=>!target?.groups?.includes(i)))throw Error('Choose a legal target for each instruction.');return targets.map((target,group)=>({...target,group}));}
  const ordered=spec.groups.map((group,i)=>targets.find(target=>typeof group==='object'?target.groups?.includes(i):group==='own'?target.owner===owner:target.owner!==owner));
- if(targets.length!==spec.groups.length||ordered.some(t=>!t)||new Set(ordered.map(t=>t.key)).size!==ordered.length)throw Error(spec.groups.every(g=>typeof g==='string')?'Choose one creature you control and one creature you do not control.':'Choose one legal target for each required group.');
- return ordered.map((target,group)=>({...target,group}));
+ // An optional role may be absent, but a selected target cannot fill a
+ // missing required role or duplicate another role's target. Keep role indices
+ // stable so copies and partial resolution still know which creature fights.
+ const selected=ordered.filter(Boolean);
+ if(targets.length!==selected.length||ordered.some((t,i)=>!t&&!spec.optionalGroupIndices?.includes(i))||new Set(selected.map(t=>t.key)).size!==selected.length)throw Error(spec.groups.every(g=>typeof g==='string')?'Choose one creature you control and '+(spec.optionalGroupIndices?.includes(1)?'up to one':'one')+' creature you do not control for the required groups.':'Choose one legal target for each required group.');
+ return ordered.flatMap((target,group)=>target?[{...target,group}]:[]);
 }

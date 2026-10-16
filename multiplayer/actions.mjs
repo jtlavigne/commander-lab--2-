@@ -22,7 +22,7 @@ const cardZones={
 };
 
 const sharedActions=new Set([...OPENING_ACTIONS,...LOBBY_ACTIONS,...seatActions,...turnActions,...hostActions,...Object.keys(cardZones),
- 'shuffle','redraw','untap','counter','oracleChoice','counterChoice','destructionChoice','proliferate','triggerTarget','manualResolved','confirmBlockers','token','import']);
+ 'shuffle','redraw','untap','counter','oracleChoice','counterChoice','destructionChoice','proliferate','triggerTarget','manualResolved','confirmBlockers','token','copyToken','import']);
 
 // Local hotseat and shared play use the same gameplay implementation.
 // This adapter only enforces permissions and removes local-only packet data.

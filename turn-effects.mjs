@@ -16,6 +16,8 @@ export function startNextTurn(g){
   g.active=g.players[g.normalTurnNext].eliminated?nextLivingSeat(g,(g.normalTurnNext+g.players.length-1)%g.players.length):g.normalTurnNext;
   g.turn++;delete g.normalTurnNext;delete g.extraTurn;
  }else{g.active=nextLivingSeat(g,previous);if(g.active<=previous)g.turn++;}
+ // Until-your-next-turn effects expire before that turn's untap and upkeep.
+ if(g.delayedTriggers)g.delayedTriggers=g.delayedTriggers.filter(e=>!e.untilNextTurn||e.owner!==g.active);
  // The existing turn stamp is used by loyalty, mana and once-per-turn effects.
  // Extra turns increment its serial even if the same player acts twice.
 }

@@ -1,13 +1,13 @@
 {
     "name": "commander-lab",
-    "version": "0.1.0-test.2",
+    "version": "0.1.0-test.3",
     "private": true,
     "description": "Manual Commander desktop playtester",
     "main": "main.cjs",
     "scripts": {
         "start": "node launch.cjs .",
         "test": "node --test tests/*.test.mjs",
-        "test:ui": "node launch.cjs tests/ui.cjs && node launch.cjs tests/planeswalker-ui.cjs && node launch.cjs tests/mana-ui.cjs && node launch.cjs tests/combat-ui.cjs && node launch.cjs tests/goreclaw-ui.cjs && node launch.cjs tests/hotseat-ui.cjs && node launch.cjs tests/spell-resolution-ui.cjs && node launch.cjs tests/aurelia-ui.cjs && node launch.cjs tests/network-ui.cjs && node launch.cjs tests/controller-ui.cjs && node launch.cjs tests/aurelia-actions-ui.cjs && node launch.cjs tests/board-interface-ui.cjs && node tests/launch-profiles-ui.cjs && node launch.cjs tests/cast-popup-ui.cjs && node launch.cjs tests/arahbo-ui.cjs && node launch.cjs tests/lobby-ui.cjs && node launch.cjs tests/color-identity-ui.cjs && node launch.cjs tests/vehicles-ui.cjs && node launch.cjs tests/arahbo-actions-ui.cjs && node launch.cjs tests/isshin-ui.cjs && node launch.cjs tests/fynn-ui.cjs && node launch.cjs tests/talrand-ui.cjs && node launch.cjs tests/mizzix-ui.cjs && node launch.cjs tests/kalamax-ui.cjs && node launch.cjs tests/niv-mizzet-ui.cjs && node launch.cjs tests/theme-ui.cjs && node launch.cjs tests/kess-ui.cjs && node launch.cjs tests/turn-presentation-ui.cjs && node launch.cjs tests/counter-effects-ui.cjs && node launch.cjs tests/card-motion-ui.cjs && node launch.cjs tests/keyword-icons-ui.cjs && node launch.cjs tests/token-catalog-ui.cjs && node launch.cjs tests/playtest-decks-ui.cjs",
+        "test:ui": "node launch.cjs tests/ui.cjs && node launch.cjs tests/planeswalker-ui.cjs && node launch.cjs tests/mana-ui.cjs && node launch.cjs tests/combat-ui.cjs && node launch.cjs tests/goreclaw-ui.cjs && node launch.cjs tests/hotseat-ui.cjs && node launch.cjs tests/spell-resolution-ui.cjs && node launch.cjs tests/aurelia-ui.cjs && node launch.cjs tests/network-ui.cjs && node launch.cjs tests/controller-ui.cjs && node launch.cjs tests/aurelia-actions-ui.cjs && node launch.cjs tests/board-interface-ui.cjs && node tests/launch-profiles-ui.cjs && node launch.cjs tests/cast-popup-ui.cjs && node launch.cjs tests/arahbo-ui.cjs && node launch.cjs tests/lobby-ui.cjs && node launch.cjs tests/color-identity-ui.cjs && node launch.cjs tests/vehicles-ui.cjs && node launch.cjs tests/arahbo-actions-ui.cjs && node launch.cjs tests/isshin-ui.cjs && node launch.cjs tests/fynn-ui.cjs && node launch.cjs tests/talrand-ui.cjs && node launch.cjs tests/mizzix-ui.cjs && node launch.cjs tests/kalamax-ui.cjs && node launch.cjs tests/niv-mizzet-ui.cjs && node launch.cjs tests/theme-ui.cjs && node launch.cjs tests/kess-ui.cjs && node launch.cjs tests/turn-presentation-ui.cjs && node launch.cjs tests/counter-effects-ui.cjs && node launch.cjs tests/card-motion-ui.cjs && node launch.cjs tests/keyword-icons-ui.cjs && node launch.cjs tests/token-catalog-ui.cjs && node launch.cjs tests/playtest-decks-ui.cjs && node launch.cjs tests/keyword-actions-ui.cjs && node launch.cjs tests/atraxa-library-ui.cjs && node launch.cjs tests/atraxa-duration-ui.cjs && node launch.cjs tests/atraxa-activations-ui.cjs && node launch.cjs tests/entry-replacements-ui.cjs && node launch.cjs tests/entry-routes-ui.cjs && node launch.cjs tests/updates-ui.cjs",
         "test:ui:planeswalkers": "node launch.cjs tests/planeswalker-ui.cjs",
         "test:ui:mana": "node launch.cjs tests/mana-ui.cjs",
         "test:ui:combat": "node launch.cjs tests/combat-ui.cjs",
@@ -45,14 +45,23 @@
         "test:ui:keywords": "node launch.cjs tests/keyword-icons-ui.cjs",
         "test:ui:tokens": "node launch.cjs tests/token-catalog-ui.cjs",
         "test:ui:playtest-decks": "node launch.cjs tests/playtest-decks-ui.cjs",
+        "test:ui:keyword-actions": "node launch.cjs tests/keyword-actions-ui.cjs",
+        "audit:keywords": "node scripts/audit-keywords.mjs",
         "audit:playtest-decks": "node scripts/audit-playtest-decks.mjs",
-        "dist:win": "electron-builder --win --x64 --publish never && node scripts/release-checksums.mjs"
+        "dist:win": "electron-builder --win --x64 --publish never && node scripts/release-checksums.mjs",
+        "test:ui:atraxa-library": "node launch.cjs tests/atraxa-library-ui.cjs",
+        "test:ui:atraxa-duration": "node launch.cjs tests/atraxa-duration-ui.cjs",
+        "test:ui:atraxa-activations": "node launch.cjs tests/atraxa-activations-ui.cjs",
+        "test:ui:entry-replacements": "node launch.cjs tests/entry-replacements-ui.cjs",
+        "test:ui:entry-routes": "node launch.cjs tests/entry-routes-ui.cjs",
+        "test:ui:updates": "node launch.cjs tests/updates-ui.cjs"
     },
     "devDependencies": {
         "electron": "44.7.1",
         "electron-builder": "26.15.3"
     },
     "dependencies": {
+        "electron-updater": "6.8.9",
         "ws": "^8.22.0"
     }
 }

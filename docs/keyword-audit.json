@@ -1,0 +1,3735 @@
+{
+  "rulesDate": "2026-09-25",
+  "rulesUrl": "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt",
+  "documentUrl": "https://docs.google.com/document/d/1VDbfPI59vyM8S704KoHreT3vOI_2KiHnVp6UM9ay-_s/edit",
+  "actions": [
+    {
+      "name": "Activate",
+      "rule": "701.2",
+      "canonicalName": "Activate",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "action-permissions.mjs",
+        "app.mjs",
+        "casting.mjs",
+        "combat-effects.mjs",
+        "controller.mjs",
+        "game-actions.mjs",
+        "mana.mjs",
+        "oracle-effects.mjs",
+        "planeswalker.mjs"
+      ],
+      "testCandidates": [
+        "tests/controller.test.mjs",
+        "tests/counter-costs.test.mjs",
+        "tests/game-actions.test.mjs",
+        "tests/keyword-icons.test.mjs",
+        "tests/network.test.mjs",
+        "tests/planeswalker.test.mjs",
+        "tests/polymorph.test.mjs",
+        "tests/turn-effects.test.mjs",
+        "tests/vehicles.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Attach",
+      "rule": "701.3",
+      "canonicalName": "Attach",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "engine.mjs",
+        "mana.mjs",
+        "oracle-effects.mjs",
+        "reanimation.mjs"
+      ],
+      "testCandidates": [
+        "tests/arahbo.test.mjs",
+        "tests/fynn.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Behold",
+      "rule": "701.4",
+      "canonicalName": "Behold",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Cast",
+      "rule": "701.5",
+      "canonicalName": "Cast",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "action-permissions.mjs",
+        "app.mjs",
+        "card-state.mjs",
+        "cast-presentation.mjs",
+        "casting.mjs",
+        "combat-effects.mjs",
+        "engine.mjs",
+        "game-actions.mjs",
+        "grave-casting.mjs",
+        "mana.mjs",
+        "oracle-effects.mjs",
+        "permission-effects.mjs",
+        "planeswalker.mjs",
+        "play-events.mjs",
+        "spell-copy-rules.mjs",
+        "spell-costs.mjs",
+        "spell-rules.mjs",
+        "temporal-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/arahbo.test.mjs",
+        "tests/aurelia-combat.test.mjs",
+        "tests/aurelia-utilities.test.mjs",
+        "tests/board-interface.test.mjs",
+        "tests/color-identity.test.mjs",
+        "tests/counter-effects.test.mjs",
+        "tests/entry-casting.test.mjs",
+        "tests/fynn.test.mjs",
+        "tests/game-actions.test.mjs",
+        "tests/goreclaw.test.mjs",
+        "tests/isshin.test.mjs",
+        "tests/kalamax.test.mjs",
+        "tests/kess.test.mjs",
+        "tests/lobby.test.mjs",
+        "tests/mana-preview.test.mjs",
+        "tests/mana.test.mjs",
+        "tests/mizzix.test.mjs",
+        "tests/network.test.mjs",
+        "tests/niv-mizzet.test.mjs",
+        "tests/planeswalker.test.mjs",
+        "tests/playtest-spells.test.mjs",
+        "tests/polymorph.test.mjs",
+        "tests/spell-resolution.test.mjs",
+        "tests/tabletop.test.mjs",
+        "tests/talrand.test.mjs",
+        "tests/token-catalog.test.mjs",
+        "tests/turn-effects.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Counter",
+      "rule": "701.6",
+      "canonicalName": "Counter",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "ability-effects.mjs",
+        "app.mjs",
+        "card-preview.mjs",
+        "card-state.mjs",
+        "casting.mjs",
+        "combat-effects.mjs",
+        "combat.mjs",
+        "counter-costs.mjs",
+        "counter-effects.mjs",
+        "engine.mjs",
+        "game-actions.mjs",
+        "keyword-actions.mjs",
+        "mana.mjs",
+        "oracle-effects.mjs",
+        "player-counters.mjs",
+        "spell-costs.mjs",
+        "stack-effects.mjs",
+        "temporal-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/aurelia-combat.test.mjs",
+        "tests/card-state.test.mjs",
+        "tests/combat.test.mjs",
+        "tests/counter-costs.test.mjs",
+        "tests/counter-effects.test.mjs",
+        "tests/fynn.test.mjs",
+        "tests/game-actions.test.mjs",
+        "tests/goreclaw.test.mjs",
+        "tests/isshin.test.mjs",
+        "tests/kess.test.mjs",
+        "tests/mana-preview.test.mjs",
+        "tests/mana.test.mjs",
+        "tests/mizzix.test.mjs",
+        "tests/network.test.mjs",
+        "tests/playtest-decks.test.mjs",
+        "tests/playtest-spells.test.mjs",
+        "tests/spell-resolution.test.mjs",
+        "tests/talrand.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Create",
+      "rule": "701.7",
+      "canonicalName": "Create",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "combat-effects.mjs",
+        "game-actions.mjs",
+        "oracle-effects.mjs",
+        "permanent-copy.mjs",
+        "token-catalog.mjs",
+        "tokens.mjs"
+      ],
+      "testCandidates": [
+        "tests/card-cache.test.mjs",
+        "tests/fynn.test.mjs",
+        "tests/isshin.test.mjs",
+        "tests/keyword-icons.test.mjs",
+        "tests/mizzix.test.mjs",
+        "tests/network.test.mjs",
+        "tests/niv-mizzet.test.mjs",
+        "tests/permanent-copy.test.mjs",
+        "tests/playtest-decks.test.mjs",
+        "tests/token-catalog.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Destroy",
+      "rule": "701.8",
+      "canonicalName": "Destroy",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "oracle-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/goreclaw.test.mjs",
+        "tests/isshin-utilities.test.mjs",
+        "tests/keyword-icons.test.mjs",
+        "tests/planeswalker.test.mjs",
+        "tests/playtest-spells.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Discard",
+      "rule": "701.9",
+      "canonicalName": "Discard",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "casting.mjs",
+        "engine.mjs",
+        "library-effects.mjs",
+        "mana.mjs",
+        "oracle-effects.mjs",
+        "spell-rules.mjs"
+      ],
+      "testCandidates": [
+        "tests/aurelia-utilities.test.mjs",
+        "tests/fynn.test.mjs",
+        "tests/goreclaw.test.mjs",
+        "tests/kess.test.mjs",
+        "tests/mizzix.test.mjs",
+        "tests/niv-mizzet.test.mjs",
+        "tests/phase-flow.test.mjs",
+        "tests/talrand.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Double",
+      "rule": "701.10",
+      "canonicalName": "Double",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "combat.mjs",
+        "counter-effects.mjs",
+        "creature-rules.mjs",
+        "mana.mjs",
+        "oracle-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/aurelia-combat.test.mjs",
+        "tests/card-cache.test.mjs",
+        "tests/card-client.test.mjs",
+        "tests/card-state.test.mjs",
+        "tests/color-identity.test.mjs",
+        "tests/combat.test.mjs",
+        "tests/counter-effects.test.mjs",
+        "tests/isshin.test.mjs",
+        "tests/kess.test.mjs",
+        "tests/keyword-icons.test.mjs",
+        "tests/mana-preview.test.mjs",
+        "tests/network.test.mjs",
+        "tests/permanent-copy.test.mjs",
+        "tests/spell-resolution.test.mjs",
+        "tests/talrand.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Triple",
+      "rule": "701.11",
+      "canonicalName": "Triple",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "mana.mjs"
+      ],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Exchange",
+      "rule": "701.12",
+      "canonicalName": "Exchange",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Exile",
+      "rule": "701.13",
+      "canonicalName": "Exile",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "casting.mjs",
+        "combat-effects.mjs",
+        "combat.mjs",
+        "engine.mjs",
+        "game-actions.mjs",
+        "game-outcome.mjs",
+        "grave-casting.mjs",
+        "library-effects.mjs",
+        "linked-cards.mjs",
+        "mana-preview.mjs",
+        "mana.mjs",
+        "oracle-effects.mjs",
+        "permanent-copy.mjs",
+        "permission-effects.mjs",
+        "polymorph.mjs",
+        "spell-lifecycle.mjs",
+        "spell-rules.mjs",
+        "tokens.mjs"
+      ],
+      "testCandidates": [
+        "tests/arahbo-combat.test.mjs",
+        "tests/arahbo.test.mjs",
+        "tests/aurelia-combat.test.mjs",
+        "tests/aurelia-utilities.test.mjs",
+        "tests/board-interface.test.mjs",
+        "tests/combat.test.mjs",
+        "tests/destruction.test.mjs",
+        "tests/entry-casting.test.mjs",
+        "tests/extra-combat.test.mjs",
+        "tests/fynn.test.mjs",
+        "tests/game-actions.test.mjs",
+        "tests/goreclaw.test.mjs",
+        "tests/isshin-utilities.test.mjs",
+        "tests/isshin.test.mjs",
+        "tests/kess.test.mjs",
+        "tests/life-effects.test.mjs",
+        "tests/mizzix.test.mjs",
+        "tests/network.test.mjs",
+        "tests/niv-mizzet.test.mjs",
+        "tests/permanent-copy.test.mjs",
+        "tests/planeswalker.test.mjs",
+        "tests/polymorph.test.mjs",
+        "tests/spell-resolution.test.mjs",
+        "tests/tabletop.test.mjs",
+        "tests/talrand.test.mjs",
+        "tests/turn-effects.test.mjs",
+        "tests/vehicles.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Fight",
+      "rule": "701.14",
+      "canonicalName": "Fight",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "oracle-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/fynn.test.mjs",
+        "tests/goreclaw.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Goad",
+      "rule": "701.15",
+      "canonicalName": "Goad",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "creature-rules.mjs",
+        "oracle-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/isshin.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Investigate",
+      "rule": "701.16",
+      "canonicalName": "Investigate",
+      "status": "tested-scope",
+      "scope": "Standalone/repeated actions, functional Clues, separate action triggers, response timing.",
+      "sourceCandidates": [
+        "combat-effects.mjs",
+        "keyword-actions.mjs",
+        "token-catalog.mjs"
+      ],
+      "testCandidates": [
+        "tests/network.test.mjs"
+      ],
+      "evidence": [
+        "tests/keyword-actions.test.mjs",
+        "tests/network.test.mjs",
+        "tests/keyword-actions-ui.cjs"
+      ]
+    },
+    {
+      "name": "Mill",
+      "rule": "701.17",
+      "canonicalName": "Mill",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [
+        "tests/kess.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Play",
+      "rule": "701.18",
+      "canonicalName": "Play",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "card-preview.mjs",
+        "cast-presentation.mjs",
+        "casting.mjs",
+        "combat-effects.mjs",
+        "engine.mjs",
+        "game-actions.mjs",
+        "grave-casting.mjs",
+        "hand-dock.mjs",
+        "lands.mjs",
+        "library-effects.mjs",
+        "opening-hand.mjs",
+        "oracle-effects.mjs",
+        "permission-effects.mjs",
+        "secret-choices.mjs",
+        "stack-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/arahbo.test.mjs",
+        "tests/aurelia-combat.test.mjs",
+        "tests/board-interface.test.mjs",
+        "tests/empty-combat.test.mjs",
+        "tests/entry-casting.test.mjs",
+        "tests/game-actions.test.mjs",
+        "tests/isshin.test.mjs",
+        "tests/kalamax.test.mjs",
+        "tests/lobby.test.mjs",
+        "tests/mana.test.mjs",
+        "tests/mizzix.test.mjs",
+        "tests/network.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Regenerate",
+      "rule": "701.19",
+      "canonicalName": "Regenerate",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Reveal",
+      "rule": "701.20",
+      "canonicalName": "Reveal",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "cast-presentation.mjs",
+        "library-effects.mjs",
+        "mana.mjs",
+        "oracle-effects.mjs",
+        "permission-effects.mjs",
+        "play-events.mjs",
+        "polymorph.mjs",
+        "secret-choices.mjs"
+      ],
+      "testCandidates": [
+        "tests/battlefield-entry.test.mjs",
+        "tests/card-state.test.mjs",
+        "tests/combat.test.mjs",
+        "tests/kalamax.test.mjs",
+        "tests/mizzix.test.mjs",
+        "tests/network.test.mjs",
+        "tests/niv-mizzet.test.mjs",
+        "tests/polymorph.test.mjs",
+        "tests/spell-resolution.test.mjs",
+        "tests/tabletop.test.mjs",
+        "tests/talrand.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Sacrifice",
+      "rule": "701.21",
+      "canonicalName": "Sacrifice",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "casting.mjs",
+        "combat-effects.mjs",
+        "combat.mjs",
+        "effect-targets.mjs",
+        "mana-preview.mjs",
+        "mana.mjs",
+        "oracle-effects.mjs",
+        "reanimation.mjs",
+        "spell-rules.mjs",
+        "temporal-effects.mjs",
+        "token-catalog.mjs"
+      ],
+      "testCandidates": [
+        "tests/aurelia-utilities.test.mjs",
+        "tests/destruction.test.mjs",
+        "tests/fynn.test.mjs",
+        "tests/goreclaw.test.mjs",
+        "tests/isshin.test.mjs",
+        "tests/kalamax.test.mjs",
+        "tests/kess.test.mjs",
+        "tests/life-effects.test.mjs",
+        "tests/mana-preview.test.mjs",
+        "tests/mana.test.mjs",
+        "tests/network.test.mjs",
+        "tests/niv-mizzet.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Scry",
+      "rule": "701.22",
+      "canonicalName": "Scry",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "combat-effects.mjs",
+        "library-effects.mjs",
+        "mana.mjs",
+        "oracle-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/arahbo-utilities.test.mjs",
+        "tests/aurelia-utilities.test.mjs",
+        "tests/keyword-icons.test.mjs",
+        "tests/network.test.mjs",
+        "tests/planeswalker.test.mjs",
+        "tests/playtest-decks.test.mjs",
+        "tests/response-settings.test.mjs",
+        "tests/spell-resolution.test.mjs",
+        "tests/talrand.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Search",
+      "rule": "701.23",
+      "canonicalName": "Search",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "card-preview.mjs",
+        "combat.mjs",
+        "engine.mjs",
+        "game-actions.mjs",
+        "mana-preview.mjs",
+        "mana.mjs",
+        "oracle-effects.mjs",
+        "token-catalog.mjs"
+      ],
+      "testCandidates": [
+        "tests/arahbo.test.mjs",
+        "tests/aurelia-utilities.test.mjs",
+        "tests/discovery.test.mjs",
+        "tests/goreclaw.test.mjs",
+        "tests/isshin.test.mjs",
+        "tests/kalamax.test.mjs",
+        "tests/kess.test.mjs",
+        "tests/life-effects.test.mjs",
+        "tests/mana-preview.test.mjs",
+        "tests/mizzix.test.mjs",
+        "tests/network.test.mjs",
+        "tests/spell-resolution.test.mjs",
+        "tests/talrand.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Shuffle",
+      "rule": "701.24",
+      "canonicalName": "Shuffle",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "combat-effects.mjs",
+        "engine.mjs",
+        "game-actions.mjs",
+        "library-effects.mjs",
+        "mana.mjs",
+        "opening-hand.mjs",
+        "oracle-effects.mjs",
+        "permission-effects.mjs",
+        "polymorph.mjs"
+      ],
+      "testCandidates": [
+        "tests/aurelia-utilities.test.mjs",
+        "tests/combat.test.mjs",
+        "tests/game-actions.test.mjs",
+        "tests/isshin.test.mjs",
+        "tests/kess.test.mjs",
+        "tests/network.test.mjs",
+        "tests/spell-resolution.test.mjs",
+        "tests/talrand.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Surveil",
+      "rule": "701.25",
+      "canonicalName": "Surveil",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "library-effects.mjs",
+        "permission-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/kess.test.mjs",
+        "tests/network.test.mjs",
+        "tests/talrand.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Tap and Untap",
+      "rule": "701.26",
+      "canonicalName": "Tap and Untap",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Transform",
+      "rule": "701.27",
+      "canonicalName": "Transform",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "camera.mjs",
+        "card-state.mjs",
+        "engine.mjs",
+        "hand-dock.mjs",
+        "oracle-effects.mjs",
+        "turn-presentation.mjs"
+      ],
+      "testCandidates": [
+        "tests/permanent-copy.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Convert",
+      "rule": "701.28",
+      "canonicalName": "Convert",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Fateseal",
+      "rule": "701.29",
+      "canonicalName": "Fateseal",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Clash",
+      "rule": "701.30",
+      "canonicalName": "Clash",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Planeswalk",
+      "rule": "701.31",
+      "canonicalName": "Planeswalk",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Set in Motion",
+      "rule": "701.32",
+      "canonicalName": "Set in Motion",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Abandon",
+      "rule": "701.33",
+      "canonicalName": "Abandon",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Proliferate",
+      "rule": "701.34",
+      "canonicalName": "Proliferate",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "casting.mjs",
+        "combat.mjs",
+        "counter-effects.mjs",
+        "engine.mjs",
+        "game-actions.mjs",
+        "oracle-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/counter-effects.test.mjs",
+        "tests/fynn.test.mjs",
+        "tests/mana.test.mjs",
+        "tests/mizzix.test.mjs",
+        "tests/network.test.mjs",
+        "tests/planeswalker.test.mjs",
+        "tests/playtest-decks.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Detain",
+      "rule": "701.35",
+      "canonicalName": "Detain",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Populate",
+      "rule": "701.36",
+      "canonicalName": "Populate",
+      "status": "tested-scope",
+      "scope": "Mandatory own-creature-token choice; copies characteristics without counters/damage/tapping; no-token continuation.",
+      "sourceCandidates": [
+        "keyword-actions.mjs",
+        "oracle-effects.mjs"
+      ],
+      "testCandidates": [],
+      "evidence": [
+        "tests/keyword-actions.test.mjs",
+        "tests/keyword-actions-ui.cjs"
+      ]
+    },
+    {
+      "name": "Monstrosity",
+      "rule": "701.37",
+      "canonicalName": "Monstrosity",
+      "status": "tested-scope",
+      "scope": "Once per battlefield incarnation, including zero; counter replacements precede designation and trigger; save/reload.",
+      "sourceCandidates": [
+        "combat-effects.mjs",
+        "keyword-actions.mjs"
+      ],
+      "testCandidates": [],
+      "evidence": [
+        "tests/keyword-actions.test.mjs"
+      ]
+    },
+    {
+      "name": "Vote",
+      "rule": "701.38",
+      "canonicalName": "Vote",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Bolster",
+      "rule": "701.39",
+      "canonicalName": "Bolster",
+      "status": "tested-scope",
+      "scope": "Least current toughness and ties; no targeting; mandatory seat-owned choice; counter replacements and reconnect.",
+      "sourceCandidates": [
+        "effect-targets.mjs",
+        "keyword-actions.mjs",
+        "oracle-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/network.test.mjs"
+      ],
+      "evidence": [
+        "tests/keyword-actions.test.mjs",
+        "tests/network.test.mjs",
+        "tests/keyword-actions-ui.cjs"
+      ]
+    },
+    {
+      "name": "Manifest",
+      "rule": "701.40",
+      "canonicalName": "Manifest",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "face-down-state.mjs"
+      ],
+      "testCandidates": [
+        "tests/counter-costs.test.mjs",
+        "tests/deck-source.test.mjs",
+        "tests/network.test.mjs",
+        "tests/talrand.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Support",
+      "rule": "701.41",
+      "canonicalName": "Support",
+      "status": "tested-scope",
+      "scope": "Announced optional creature targets on either side; permanent excludes itself; legal-target recheck, counter replacements, Patron triggers.",
+      "sourceCandidates": [
+        "combat.mjs",
+        "effect-targets.mjs",
+        "keyword-actions.mjs"
+      ],
+      "testCandidates": [
+        "tests/combat.test.mjs",
+        "tests/game-actions.test.mjs",
+        "tests/goreclaw.test.mjs",
+        "tests/life-effects.test.mjs"
+      ],
+      "evidence": [
+        "tests/keyword-actions.test.mjs",
+        "tests/keyword-actions-ui.cjs"
+      ]
+    },
+    {
+      "name": "Meld",
+      "rule": "701.42",
+      "canonicalName": "Meld",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Exert",
+      "rule": "701.43",
+      "canonicalName": "Exert",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "combat-effects.mjs",
+        "combat.mjs",
+        "creature-rules.mjs",
+        "game-actions.mjs",
+        "mana.mjs"
+      ],
+      "testCandidates": [
+        "tests/arahbo-combat.test.mjs",
+        "tests/aurelia-combat.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Explore",
+      "rule": "701.44",
+      "canonicalName": "Explore",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "casting.mjs"
+      ],
+      "testCandidates": [
+        "tests/kalamax.test.mjs",
+        "tests/mana.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Assemble",
+      "rule": "701.45",
+      "canonicalName": "Assemble",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Adapt",
+      "rule": "701.46",
+      "canonicalName": "Adapt",
+      "status": "tested-scope",
+      "scope": "Checks +1/+1 counters at resolution; repeated activations and source incarnation; counter replacements.",
+      "sourceCandidates": [
+        "keyword-actions.mjs"
+      ],
+      "testCandidates": [],
+      "evidence": [
+        "tests/keyword-actions.test.mjs"
+      ]
+    },
+    {
+      "name": "Amass",
+      "rule": "701.47",
+      "canonicalName": "Amass",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Learn",
+      "rule": "701.48",
+      "canonicalName": "Learn",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Venture into the Dungeon",
+      "rule": "701.49",
+      "canonicalName": "Venture into the Dungeon",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Connive",
+      "rule": "701.50",
+      "canonicalName": "Connive",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Open an Attraction",
+      "rule": "701.51",
+      "canonicalName": "Open an Attraction",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Roll to Visit Your Attractions",
+      "rule": "701.52",
+      "canonicalName": "Roll to Visit Your Attractions",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Incubate",
+      "rule": "701.53",
+      "canonicalName": "Incubate",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "The Ring Tempts You",
+      "rule": "701.54",
+      "canonicalName": "The Ring Tempts You",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Face a Villainous Choice",
+      "rule": "701.55",
+      "canonicalName": "Face a Villainous Choice",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Time Travel",
+      "rule": "701.56",
+      "canonicalName": "Time Travel",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Discover",
+      "rule": "701.57",
+      "canonicalName": "Discover",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "counter-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/discovery.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Cloak",
+      "rule": "701.58",
+      "canonicalName": "Cloak",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Collect Evidence",
+      "rule": "701.59",
+      "canonicalName": "Collect Evidence",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Suspect",
+      "rule": "701.60",
+      "canonicalName": "Suspect",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Forage",
+      "rule": "701.61",
+      "canonicalName": "Forage",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Manifest Dread",
+      "rule": "701.62",
+      "canonicalName": "Manifest Dread",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Endure",
+      "rule": "701.63",
+      "canonicalName": "Endure",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Harness",
+      "rule": "701.64",
+      "canonicalName": "Harness",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Airbend",
+      "rule": "701.65",
+      "canonicalName": "Airbend",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Earthbend",
+      "rule": "701.66",
+      "canonicalName": "Earthbend",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Waterbend",
+      "rule": "701.67",
+      "canonicalName": "Waterbend",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Blight",
+      "rule": "701.68",
+      "canonicalName": "Blight",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Heal",
+      "rule": "701.69",
+      "canonicalName": "Heal",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Recruit",
+      "rule": "701.70",
+      "canonicalName": "Recruit",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Empower Jace",
+      "rule": "701.71",
+      "canonicalName": "Empower Jace",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    }
+  ],
+  "documentEntries": [
+    {
+      "name": "Deathtouch",
+      "section": "Evergreen Keywords",
+      "rule": "702.2",
+      "canonicalName": "Deathtouch",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "combat-effects.mjs",
+        "combat.mjs",
+        "creature-rules.mjs",
+        "oracle-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/aurelia-utilities.test.mjs",
+        "tests/combat.test.mjs",
+        "tests/destruction.test.mjs",
+        "tests/fynn.test.mjs",
+        "tests/goreclaw.test.mjs",
+        "tests/keyword-icons.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Defender",
+      "section": "Evergreen Keywords",
+      "rule": "702.3",
+      "canonicalName": "Defender",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "board-interaction.mjs",
+        "combat-effects.mjs",
+        "combat.mjs",
+        "creature-rules.mjs",
+        "effect-targets.mjs",
+        "game-actions.mjs",
+        "game-outcome.mjs",
+        "oracle-effects.mjs",
+        "phase-flow.mjs",
+        "tokens.mjs"
+      ],
+      "testCandidates": [
+        "tests/arahbo-combat.test.mjs",
+        "tests/aurelia-combat.test.mjs",
+        "tests/board-interface.test.mjs",
+        "tests/combat.test.mjs",
+        "tests/fynn.test.mjs",
+        "tests/isshin.test.mjs",
+        "tests/keyword-icons.test.mjs",
+        "tests/network.test.mjs",
+        "tests/permanent-copy.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Double Strike",
+      "section": "Evergreen Keywords",
+      "rule": "702.4",
+      "canonicalName": "Double Strike",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "combat.mjs",
+        "creature-rules.mjs",
+        "oracle-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/aurelia-combat.test.mjs",
+        "tests/combat.test.mjs",
+        "tests/keyword-icons.test.mjs",
+        "tests/spell-resolution.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Enchant",
+      "section": "Evergreen Keywords",
+      "rule": "702.5",
+      "canonicalName": "Enchant",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "attachments.mjs",
+        "reanimation.mjs"
+      ],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Equip",
+      "section": "Evergreen Keywords",
+      "rule": "702.6",
+      "canonicalName": "Equip",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "mana.mjs"
+      ],
+      "testCandidates": [
+        "tests/arahbo.test.mjs",
+        "tests/aurelia-utilities.test.mjs",
+        "tests/fynn.test.mjs",
+        "tests/goreclaw.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "First Strike",
+      "section": "Evergreen Keywords",
+      "rule": "702.7",
+      "canonicalName": "First Strike",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "combat.mjs",
+        "creature-rules.mjs",
+        "oracle-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/arahbo-combat.test.mjs",
+        "tests/arahbo.test.mjs",
+        "tests/aurelia-combat.test.mjs",
+        "tests/combat.test.mjs",
+        "tests/extra-combat.test.mjs",
+        "tests/keyword-icons.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Flash",
+      "section": "Evergreen Keywords",
+      "rule": "702.8",
+      "canonicalName": "Flash",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "casting.mjs",
+        "spell-rules.mjs"
+      ],
+      "testCandidates": [
+        "tests/arahbo.test.mjs",
+        "tests/keyword-icons.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Flying",
+      "section": "Evergreen Keywords",
+      "rule": "702.9",
+      "canonicalName": "Flying",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "combat-effects.mjs",
+        "creature-rules.mjs",
+        "effect-targets.mjs",
+        "oracle-effects.mjs",
+        "token-catalog.mjs"
+      ],
+      "testCandidates": [
+        "tests/aurelia-combat.test.mjs",
+        "tests/aurelia-utilities.test.mjs",
+        "tests/combat.test.mjs",
+        "tests/extra-combat.test.mjs",
+        "tests/fynn.test.mjs",
+        "tests/goreclaw.test.mjs",
+        "tests/isshin.test.mjs",
+        "tests/kess.test.mjs",
+        "tests/keyword-icons.test.mjs",
+        "tests/niv-mizzet.test.mjs",
+        "tests/permanent-copy.test.mjs",
+        "tests/planeswalker.test.mjs",
+        "tests/playtest-decks.test.mjs",
+        "tests/talrand.test.mjs",
+        "tests/token-catalog.test.mjs",
+        "tests/turn-effects.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Haste",
+      "section": "Evergreen Keywords",
+      "rule": "702.10",
+      "canonicalName": "Haste",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "combat-effects.mjs",
+        "creature-rules.mjs",
+        "oracle-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/arahbo.test.mjs",
+        "tests/aurelia-combat.test.mjs",
+        "tests/aurelia-utilities.test.mjs",
+        "tests/combat.test.mjs",
+        "tests/extra-combat.test.mjs",
+        "tests/goreclaw.test.mjs",
+        "tests/isshin.test.mjs",
+        "tests/keyword-icons.test.mjs",
+        "tests/mana-preview.test.mjs",
+        "tests/niv-mizzet.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Lifelink",
+      "section": "Evergreen Keywords",
+      "rule": "702.15",
+      "canonicalName": "Lifelink",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "combat-effects.mjs",
+        "combat.mjs",
+        "creature-rules.mjs",
+        "oracle-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/arahbo-combat.test.mjs",
+        "tests/arahbo.test.mjs",
+        "tests/aurelia-combat.test.mjs",
+        "tests/aurelia-utilities.test.mjs",
+        "tests/combat.test.mjs",
+        "tests/fynn.test.mjs",
+        "tests/isshin.test.mjs",
+        "tests/keyword-icons.test.mjs",
+        "tests/niv-mizzet.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Menace",
+      "section": "Evergreen Keywords",
+      "rule": "702.111",
+      "canonicalName": "Menace",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "combat.mjs",
+        "creature-rules.mjs"
+      ],
+      "testCandidates": [
+        "tests/aurelia-utilities.test.mjs",
+        "tests/combat.test.mjs",
+        "tests/isshin.test.mjs",
+        "tests/keyword-icons.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Protection",
+      "section": "Evergreen Keywords",
+      "rule": "702.16",
+      "canonicalName": "Protection",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "creature-rules.mjs",
+        "oracle-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/arahbo.test.mjs",
+        "tests/aurelia-combat.test.mjs",
+        "tests/board-interface.test.mjs",
+        "tests/card-state.test.mjs",
+        "tests/fynn.test.mjs",
+        "tests/goreclaw.test.mjs",
+        "tests/kess.test.mjs",
+        "tests/keyword-icons.test.mjs",
+        "tests/niv-mizzet.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Prowess",
+      "section": "Evergreen Keywords",
+      "rule": "702.108",
+      "canonicalName": "Prowess",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [
+        "tests/keyword-icons.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Reach",
+      "section": "Evergreen Keywords",
+      "rule": "702.17",
+      "canonicalName": "Reach",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "creature-rules.mjs"
+      ],
+      "testCandidates": [
+        "tests/arahbo-combat.test.mjs",
+        "tests/combat.test.mjs",
+        "tests/fynn.test.mjs",
+        "tests/goreclaw.test.mjs",
+        "tests/keyword-icons.test.mjs",
+        "tests/mana-preview.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Trample",
+      "section": "Evergreen Keywords",
+      "rule": "702.19",
+      "canonicalName": "Trample",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "combat-effects.mjs",
+        "combat.mjs",
+        "creature-rules.mjs",
+        "oracle-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/arahbo.test.mjs",
+        "tests/aurelia-combat.test.mjs",
+        "tests/combat.test.mjs",
+        "tests/fynn.test.mjs",
+        "tests/goreclaw.test.mjs",
+        "tests/keyword-icons.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Vigilance",
+      "section": "Evergreen Keywords",
+      "rule": "702.20",
+      "canonicalName": "Vigilance",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "combat-effects.mjs",
+        "combat.mjs",
+        "creature-rules.mjs",
+        "oracle-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/arahbo-combat.test.mjs",
+        "tests/arahbo.test.mjs",
+        "tests/aurelia-combat.test.mjs",
+        "tests/aurelia-utilities.test.mjs",
+        "tests/combat.test.mjs",
+        "tests/extra-combat.test.mjs",
+        "tests/goreclaw.test.mjs",
+        "tests/keyword-icons.test.mjs",
+        "tests/planeswalker.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Ward",
+      "section": "Evergreen Keywords",
+      "rule": "702.21",
+      "canonicalName": "Ward",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [
+        "tests/keyword-icons.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Attach",
+      "section": "Keyword Actions",
+      "rule": "701.3",
+      "canonicalName": "Attach",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "engine.mjs",
+        "mana.mjs",
+        "oracle-effects.mjs",
+        "reanimation.mjs"
+      ],
+      "testCandidates": [
+        "tests/arahbo.test.mjs",
+        "tests/fynn.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Clash",
+      "section": "Keyword Actions",
+      "rule": "701.30",
+      "canonicalName": "Clash",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Counter",
+      "section": "Keyword Actions",
+      "rule": "701.6",
+      "canonicalName": "Counter",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "ability-effects.mjs",
+        "app.mjs",
+        "card-preview.mjs",
+        "card-state.mjs",
+        "casting.mjs",
+        "combat-effects.mjs",
+        "combat.mjs",
+        "counter-costs.mjs",
+        "counter-effects.mjs",
+        "engine.mjs",
+        "game-actions.mjs",
+        "keyword-actions.mjs",
+        "mana.mjs",
+        "oracle-effects.mjs",
+        "player-counters.mjs",
+        "spell-costs.mjs",
+        "stack-effects.mjs",
+        "temporal-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/aurelia-combat.test.mjs",
+        "tests/card-state.test.mjs",
+        "tests/combat.test.mjs",
+        "tests/counter-costs.test.mjs",
+        "tests/counter-effects.test.mjs",
+        "tests/fynn.test.mjs",
+        "tests/game-actions.test.mjs",
+        "tests/goreclaw.test.mjs",
+        "tests/isshin.test.mjs",
+        "tests/kess.test.mjs",
+        "tests/mana-preview.test.mjs",
+        "tests/mana.test.mjs",
+        "tests/mizzix.test.mjs",
+        "tests/network.test.mjs",
+        "tests/playtest-decks.test.mjs",
+        "tests/playtest-spells.test.mjs",
+        "tests/spell-resolution.test.mjs",
+        "tests/talrand.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Reconfigure",
+      "section": "Keyword Actions",
+      "rule": "702.151",
+      "canonicalName": "Reconfigure",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Regeneration",
+      "section": "Keyword Actions",
+      "rule": "701.19",
+      "canonicalName": "Regenerate",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Sacrifice",
+      "section": "Keyword Actions",
+      "rule": "701.21",
+      "canonicalName": "Sacrifice",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "casting.mjs",
+        "combat-effects.mjs",
+        "combat.mjs",
+        "effect-targets.mjs",
+        "mana-preview.mjs",
+        "mana.mjs",
+        "oracle-effects.mjs",
+        "reanimation.mjs",
+        "spell-rules.mjs",
+        "temporal-effects.mjs",
+        "token-catalog.mjs"
+      ],
+      "testCandidates": [
+        "tests/aurelia-utilities.test.mjs",
+        "tests/destruction.test.mjs",
+        "tests/fynn.test.mjs",
+        "tests/goreclaw.test.mjs",
+        "tests/isshin.test.mjs",
+        "tests/kalamax.test.mjs",
+        "tests/kess.test.mjs",
+        "tests/life-effects.test.mjs",
+        "tests/mana-preview.test.mjs",
+        "tests/mana.test.mjs",
+        "tests/network.test.mjs",
+        "tests/niv-mizzet.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Scry",
+      "section": "Keyword Actions",
+      "rule": "701.22",
+      "canonicalName": "Scry",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "combat-effects.mjs",
+        "library-effects.mjs",
+        "mana.mjs",
+        "oracle-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/arahbo-utilities.test.mjs",
+        "tests/aurelia-utilities.test.mjs",
+        "tests/keyword-icons.test.mjs",
+        "tests/network.test.mjs",
+        "tests/planeswalker.test.mjs",
+        "tests/playtest-decks.test.mjs",
+        "tests/response-settings.test.mjs",
+        "tests/spell-resolution.test.mjs",
+        "tests/talrand.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Tap/untap",
+      "section": "Keyword Actions",
+      "rule": "701.26",
+      "canonicalName": "Tap and Untap",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Absorb",
+      "section": "Expansion Keywords",
+      "rule": "702.64",
+      "canonicalName": "Absorb",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Adapt",
+      "section": "Expansion Keywords",
+      "rule": "701.46",
+      "canonicalName": "Adapt",
+      "status": "tested-scope",
+      "scope": "Checks +1/+1 counters at resolution; repeated activations and source incarnation; counter replacements.",
+      "sourceCandidates": [
+        "keyword-actions.mjs"
+      ],
+      "testCandidates": [],
+      "evidence": [
+        "tests/keyword-actions.test.mjs"
+      ]
+    },
+    {
+      "name": "Adventure",
+      "section": "Expansion Keywords",
+      "rule": null,
+      "canonicalName": "Adventure",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Affinity",
+      "section": "Expansion Keywords",
+      "rule": "702.41",
+      "canonicalName": "Affinity",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "casting.mjs"
+      ],
+      "testCandidates": [
+        "tests/keyword-icons.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Afterlife",
+      "section": "Expansion Keywords",
+      "rule": "702.135",
+      "canonicalName": "Afterlife",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Aftermath",
+      "section": "Expansion Keywords",
+      "rule": "702.127",
+      "canonicalName": "Aftermath",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Alliance",
+      "section": "Expansion Keywords",
+      "rule": null,
+      "canonicalName": "Alliance",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Amplify",
+      "section": "Expansion Keywords",
+      "rule": "702.38",
+      "canonicalName": "Amplify",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Annihilator",
+      "section": "Expansion Keywords",
+      "rule": "702.86",
+      "canonicalName": "Annihilator",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Aura Swap",
+      "section": "Expansion Keywords",
+      "rule": "702.65",
+      "canonicalName": "Aura Swap",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Banding",
+      "section": "Expansion Keywords",
+      "rule": "702.22",
+      "canonicalName": "Banding",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Battle Cry",
+      "section": "Expansion Keywords",
+      "rule": "702.91",
+      "canonicalName": "Battle Cry",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "combat-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/aurelia-combat.test.mjs",
+        "tests/isshin.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Bestow",
+      "section": "Expansion Keywords",
+      "rule": "702.103",
+      "canonicalName": "Bestow",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Blitz",
+      "section": "Expansion Keywords",
+      "rule": "702.152",
+      "canonicalName": "Blitz",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Bloodrush",
+      "section": "Expansion Keywords",
+      "rule": null,
+      "canonicalName": "Bloodrush",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [
+        "tests/fynn.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Bloodthirst",
+      "section": "Expansion Keywords",
+      "rule": "702.54",
+      "canonicalName": "Bloodthirst",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Bolster",
+      "section": "Expansion Keywords",
+      "rule": "701.39",
+      "canonicalName": "Bolster",
+      "status": "tested-scope",
+      "scope": "Least current toughness and ties; no targeting; mandatory seat-owned choice; counter replacements and reconnect.",
+      "sourceCandidates": [
+        "effect-targets.mjs",
+        "keyword-actions.mjs",
+        "oracle-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/network.test.mjs"
+      ],
+      "evidence": [
+        "tests/keyword-actions.test.mjs",
+        "tests/network.test.mjs",
+        "tests/keyword-actions-ui.cjs"
+      ]
+    },
+    {
+      "name": "Bushido",
+      "section": "Expansion Keywords",
+      "rule": "702.45",
+      "canonicalName": "Bushido",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Buyback",
+      "section": "Expansion Keywords",
+      "rule": "702.27",
+      "canonicalName": "Buyback",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "casting.mjs",
+        "mana.mjs",
+        "spell-lifecycle.mjs",
+        "spell-rules.mjs"
+      ],
+      "testCandidates": [
+        "tests/mizzix.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Cascade",
+      "section": "Expansion Keywords",
+      "rule": "702.85",
+      "canonicalName": "Cascade",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [
+        "tests/battlefield-entry.test.mjs",
+        "tests/keyword-icons.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Casualty",
+      "section": "Expansion Keywords",
+      "rule": "702.153",
+      "canonicalName": "Casualty",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Champion",
+      "section": "Expansion Keywords",
+      "rule": "702.72",
+      "canonicalName": "Champion",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [
+        "tests/counter-costs.test.mjs",
+        "tests/counter-effects.test.mjs",
+        "tests/goreclaw.test.mjs",
+        "tests/network.test.mjs",
+        "tests/playtest-spells.test.mjs",
+        "tests/turn-effects.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Changeling",
+      "section": "Expansion Keywords",
+      "rule": "702.73",
+      "canonicalName": "Changeling",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [
+        "tests/keyword-icons.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Channel",
+      "section": "Expansion Keywords",
+      "rule": null,
+      "canonicalName": "Channel",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Cipher",
+      "section": "Expansion Keywords",
+      "rule": "702.99",
+      "canonicalName": "Cipher",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Connive",
+      "section": "Expansion Keywords",
+      "rule": "701.50",
+      "canonicalName": "Connive",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Conspire",
+      "section": "Expansion Keywords",
+      "rule": "702.78",
+      "canonicalName": "Conspire",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Convoke",
+      "section": "Expansion Keywords",
+      "rule": "702.51",
+      "canonicalName": "Convoke",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "casting.mjs"
+      ],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Coven",
+      "section": "Expansion Keywords",
+      "rule": null,
+      "canonicalName": "Coven",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Crew",
+      "section": "Expansion Keywords",
+      "rule": "702.122",
+      "canonicalName": "Crew",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "casting.mjs",
+        "mana.mjs",
+        "vehicles.mjs"
+      ],
+      "testCandidates": [
+        "tests/goreclaw.test.mjs",
+        "tests/permanent-copy.test.mjs",
+        "tests/vehicles.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Cumulative Upkeep",
+      "section": "Expansion Keywords",
+      "rule": "702.24",
+      "canonicalName": "Cumulative Upkeep",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "combat-effects.mjs",
+        "temporal-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/talrand.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Cycling",
+      "section": "Expansion Keywords",
+      "rule": "702.29",
+      "canonicalName": "Cycling",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "casting.mjs",
+        "mana.mjs"
+      ],
+      "testCandidates": [
+        "tests/aurelia-utilities.test.mjs",
+        "tests/talrand.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Dash",
+      "section": "Expansion Keywords",
+      "rule": "702.109",
+      "canonicalName": "Dash",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Daybound/Nightbound",
+      "section": "Expansion Keywords",
+      "rule": "702.145",
+      "canonicalName": "Daybound/Nightbound",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Delve",
+      "section": "Expansion Keywords",
+      "rule": "702.66",
+      "canonicalName": "Delve",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "casting.mjs",
+        "mana.mjs",
+        "spell-rules.mjs"
+      ],
+      "testCandidates": [
+        "tests/kess.test.mjs",
+        "tests/talrand.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Detain",
+      "section": "Expansion Keywords",
+      "rule": "701.35",
+      "canonicalName": "Detain",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Devour",
+      "section": "Expansion Keywords",
+      "rule": "702.82",
+      "canonicalName": "Devour",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Disturb",
+      "section": "Expansion Keywords",
+      "rule": "702.146",
+      "canonicalName": "Disturb",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Dredge",
+      "section": "Expansion Keywords",
+      "rule": "702.52",
+      "canonicalName": "Dredge",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Echo",
+      "section": "Expansion Keywords",
+      "rule": "702.30",
+      "canonicalName": "Echo",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [
+        "tests/polymorph.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Embalm",
+      "section": "Expansion Keywords",
+      "rule": "702.128",
+      "canonicalName": "Embalm",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Emerge",
+      "section": "Expansion Keywords",
+      "rule": "702.119",
+      "canonicalName": "Emerge",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Entwine",
+      "section": "Expansion Keywords",
+      "rule": "702.42",
+      "canonicalName": "Entwine",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "spell-rules.mjs"
+      ],
+      "testCandidates": [
+        "tests/aurelia-combat.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Epic",
+      "section": "Expansion Keywords",
+      "rule": "702.50",
+      "canonicalName": "Epic",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [
+        "tests/mizzix.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Escape",
+      "section": "Expansion Keywords",
+      "rule": "702.138",
+      "canonicalName": "Escape",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "board-interaction.mjs",
+        "card-preview.mjs",
+        "card-state.mjs",
+        "grave-casting.mjs",
+        "life-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/kess.test.mjs",
+        "tests/launch-profile.test.mjs",
+        "tests/network.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Evoke",
+      "section": "Expansion Keywords",
+      "rule": "702.74",
+      "canonicalName": "Evoke",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Evolve",
+      "section": "Expansion Keywords",
+      "rule": "702.100",
+      "canonicalName": "Evolve",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Exalted",
+      "section": "Expansion Keywords",
+      "rule": "702.83",
+      "canonicalName": "Exalted",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "combat-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/arahbo-combat.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Exert",
+      "section": "Expansion Keywords",
+      "rule": "701.43",
+      "canonicalName": "Exert",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "combat-effects.mjs",
+        "combat.mjs",
+        "creature-rules.mjs",
+        "game-actions.mjs",
+        "mana.mjs"
+      ],
+      "testCandidates": [
+        "tests/arahbo-combat.test.mjs",
+        "tests/aurelia-combat.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Exploit",
+      "section": "Expansion Keywords",
+      "rule": "702.110",
+      "canonicalName": "Exploit",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Explore",
+      "section": "Expansion Keywords",
+      "rule": "701.44",
+      "canonicalName": "Explore",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "casting.mjs"
+      ],
+      "testCandidates": [
+        "tests/kalamax.test.mjs",
+        "tests/mana.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Extort",
+      "section": "Expansion Keywords",
+      "rule": "702.101",
+      "canonicalName": "Extort",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [
+        "tests/color-identity.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Fabricated",
+      "section": "Expansion Keywords",
+      "rule": "702.123",
+      "canonicalName": "Fabricate",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Fading",
+      "section": "Expansion Keywords",
+      "rule": "702.32",
+      "canonicalName": "Fading",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "card-state.mjs"
+      ],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Fateseal",
+      "section": "Expansion Keywords",
+      "rule": "701.29",
+      "canonicalName": "Fateseal",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Fear",
+      "section": "Expansion Keywords",
+      "rule": "702.36",
+      "canonicalName": "Fear",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "creature-rules.mjs"
+      ],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Flanking",
+      "section": "Expansion Keywords",
+      "rule": "702.25",
+      "canonicalName": "Flanking",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Flashback",
+      "section": "Expansion Keywords",
+      "rule": "702.34",
+      "canonicalName": "Flashback",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "casting.mjs",
+        "engine.mjs",
+        "grave-casting.mjs",
+        "mana.mjs",
+        "oracle-effects.mjs",
+        "spell-rules.mjs"
+      ],
+      "testCandidates": [
+        "tests/aurelia-combat.test.mjs",
+        "tests/game-actions.test.mjs",
+        "tests/kess.test.mjs",
+        "tests/mizzix.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Flip",
+      "section": "Expansion Keywords",
+      "rule": null,
+      "canonicalName": "Flip",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "controller.mjs"
+      ],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Forecast",
+      "section": "Expansion Keywords",
+      "rule": "702.57",
+      "canonicalName": "Forecast",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Foretell",
+      "section": "Expansion Keywords",
+      "rule": "702.143",
+      "canonicalName": "Foretell",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Frenzy",
+      "section": "Expansion Keywords",
+      "rule": "702.68",
+      "canonicalName": "Frenzy",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Graft",
+      "section": "Expansion Keywords",
+      "rule": "702.58",
+      "canonicalName": "Graft",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "card-state.mjs"
+      ],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Gravestorm",
+      "section": "Expansion Keywords",
+      "rule": "702.69",
+      "canonicalName": "Gravestorm",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Haunt",
+      "section": "Expansion Keywords",
+      "rule": "702.55",
+      "canonicalName": "Haunt",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Hideaway",
+      "section": "Expansion Keywords",
+      "rule": "702.75",
+      "canonicalName": "Hideaway",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Horsemanship",
+      "section": "Expansion Keywords",
+      "rule": "702.31",
+      "canonicalName": "Horsemanship",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "creature-rules.mjs"
+      ],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Imprint",
+      "section": "Expansion Keywords",
+      "rule": null,
+      "canonicalName": "Imprint",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "oracle-effects.mjs"
+      ],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Indestructible",
+      "section": "Expansion Keywords",
+      "rule": "702.12",
+      "canonicalName": "Indestructible",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "combat.mjs",
+        "creature-rules.mjs",
+        "oracle-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/arahbo.test.mjs",
+        "tests/aurelia-combat.test.mjs",
+        "tests/combat.test.mjs",
+        "tests/counter-costs.test.mjs",
+        "tests/destruction.test.mjs",
+        "tests/fynn.test.mjs",
+        "tests/goreclaw.test.mjs",
+        "tests/kess.test.mjs",
+        "tests/keyword-icons.test.mjs",
+        "tests/network.test.mjs",
+        "tests/permanent-copy.test.mjs",
+        "tests/playtest-spells.test.mjs",
+        "tests/spell-resolution.test.mjs",
+        "tests/talrand.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Inspired",
+      "section": "Expansion Keywords",
+      "rule": null,
+      "canonicalName": "Inspired",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Investigate",
+      "section": "Expansion Keywords",
+      "rule": "701.16",
+      "canonicalName": "Investigate",
+      "status": "tested-scope",
+      "scope": "Standalone/repeated actions, functional Clues, separate action triggers, response timing.",
+      "sourceCandidates": [
+        "combat-effects.mjs",
+        "keyword-actions.mjs",
+        "token-catalog.mjs"
+      ],
+      "testCandidates": [
+        "tests/network.test.mjs"
+      ],
+      "evidence": [
+        "tests/keyword-actions.test.mjs",
+        "tests/network.test.mjs",
+        "tests/keyword-actions-ui.cjs"
+      ]
+    },
+    {
+      "name": "Jump-start",
+      "section": "Expansion Keywords",
+      "rule": "702.133",
+      "canonicalName": "Jump-start",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Kicker",
+      "section": "Expansion Keywords",
+      "rule": "702.33",
+      "canonicalName": "Kicker",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "mana.mjs",
+        "spell-rules.mjs"
+      ],
+      "testCandidates": [
+        "tests/talrand.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Level up",
+      "section": "Expansion Keywords",
+      "rule": "702.87",
+      "canonicalName": "Level up",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Landwalk",
+      "section": "Expansion Keywords",
+      "rule": "702.14",
+      "canonicalName": "Landwalk",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "creature-rules.mjs"
+      ],
+      "testCandidates": [
+        "tests/arahbo-combat.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Living Weapon",
+      "section": "Expansion Keywords",
+      "rule": "702.92",
+      "canonicalName": "Living Weapon",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Madness",
+      "section": "Expansion Keywords",
+      "rule": "702.35",
+      "canonicalName": "Madness",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Manifest",
+      "section": "Expansion Keywords",
+      "rule": "701.40",
+      "canonicalName": "Manifest",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "face-down-state.mjs"
+      ],
+      "testCandidates": [
+        "tests/counter-costs.test.mjs",
+        "tests/deck-source.test.mjs",
+        "tests/network.test.mjs",
+        "tests/talrand.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Meld",
+      "section": "Expansion Keywords",
+      "rule": "701.42",
+      "canonicalName": "Meld",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Mentor",
+      "section": "Expansion Keywords",
+      "rule": "702.134",
+      "canonicalName": "Mentor",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "combat-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/aurelia-combat.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Miracle",
+      "section": "Expansion Keywords",
+      "rule": "702.94",
+      "canonicalName": "Miracle",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "combat-effects.mjs",
+        "engine.mjs",
+        "oracle-effects.mjs",
+        "permission-effects.mjs",
+        "spell-rules.mjs"
+      ],
+      "testCandidates": [
+        "tests/network.test.mjs",
+        "tests/niv-mizzet.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Modular",
+      "section": "Expansion Keywords",
+      "rule": "702.43",
+      "canonicalName": "Modular",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "card-state.mjs"
+      ],
+      "testCandidates": [
+        "tests/card-state.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Monstrosity",
+      "section": "Expansion Keywords",
+      "rule": "701.37",
+      "canonicalName": "Monstrosity",
+      "status": "tested-scope",
+      "scope": "Once per battlefield incarnation, including zero; counter replacements precede designation and trigger; save/reload.",
+      "sourceCandidates": [
+        "combat-effects.mjs",
+        "keyword-actions.mjs"
+      ],
+      "testCandidates": [],
+      "evidence": [
+        "tests/keyword-actions.test.mjs"
+      ]
+    },
+    {
+      "name": "Morph and Megamorph",
+      "section": "Expansion Keywords",
+      "rule": "702.37",
+      "canonicalName": "Morph and Megamorph",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Mutate",
+      "section": "Expansion Keywords",
+      "rule": "702.140",
+      "canonicalName": "Mutate",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "game-actions.mjs"
+      ],
+      "testCandidates": [
+        "tests/keyword-icons.test.mjs",
+        "tests/network.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Ninjutsu",
+      "section": "Expansion Keywords",
+      "rule": "702.49",
+      "canonicalName": "Ninjutsu",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Offering",
+      "section": "Expansion Keywords",
+      "rule": "702.48",
+      "canonicalName": "Offering",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [
+        "tests/mizzix.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Overload",
+      "section": "Expansion Keywords",
+      "rule": "702.96",
+      "canonicalName": "Overload",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "spell-effects.mjs",
+        "spell-rules.mjs"
+      ],
+      "testCandidates": [
+        "tests/kess.test.mjs",
+        "tests/mizzix.test.mjs",
+        "tests/talrand.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Persist",
+      "section": "Expansion Keywords",
+      "rule": "702.79",
+      "canonicalName": "Persist",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "camera.mjs",
+        "combat-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/combat.test.mjs",
+        "tests/goreclaw.test.mjs",
+        "tests/mizzix.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Phasing",
+      "section": "Expansion Keywords",
+      "rule": "702.26",
+      "canonicalName": "Phasing",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "game-outcome.mjs"
+      ],
+      "testCandidates": [
+        "tests/turn-effects.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Poisonous",
+      "section": "Expansion Keywords",
+      "rule": "702.70",
+      "canonicalName": "Poisonous",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Populate",
+      "section": "Expansion Keywords",
+      "rule": "701.36",
+      "canonicalName": "Populate",
+      "status": "tested-scope",
+      "scope": "Mandatory own-creature-token choice; copies characteristics without counters/damage/tapping; no-token continuation.",
+      "sourceCandidates": [
+        "keyword-actions.mjs",
+        "oracle-effects.mjs"
+      ],
+      "testCandidates": [],
+      "evidence": [
+        "tests/keyword-actions.test.mjs",
+        "tests/keyword-actions-ui.cjs"
+      ]
+    },
+    {
+      "name": "Proliferate",
+      "section": "Expansion Keywords",
+      "rule": "701.34",
+      "canonicalName": "Proliferate",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "casting.mjs",
+        "combat.mjs",
+        "counter-effects.mjs",
+        "engine.mjs",
+        "game-actions.mjs",
+        "oracle-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/counter-effects.test.mjs",
+        "tests/fynn.test.mjs",
+        "tests/mana.test.mjs",
+        "tests/mizzix.test.mjs",
+        "tests/network.test.mjs",
+        "tests/planeswalker.test.mjs",
+        "tests/playtest-decks.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Provoke",
+      "section": "Expansion Keywords",
+      "rule": "702.39",
+      "canonicalName": "Provoke",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Prowl",
+      "section": "Expansion Keywords",
+      "rule": "702.76",
+      "canonicalName": "Prowl",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Rampage",
+      "section": "Expansion Keywords",
+      "rule": "702.23",
+      "canonicalName": "Rampage",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Rebound",
+      "section": "Expansion Keywords",
+      "rule": "702.88",
+      "canonicalName": "Rebound",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "combat-effects.mjs",
+        "engine.mjs",
+        "spell-lifecycle.mjs",
+        "spell-rules.mjs"
+      ],
+      "testCandidates": [
+        "tests/aurelia-combat.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Recover",
+      "section": "Expansion Keywords",
+      "rule": "702.59",
+      "canonicalName": "Recover",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [
+        "tests/controller.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Reinforce",
+      "section": "Expansion Keywords",
+      "rule": "702.77",
+      "canonicalName": "Reinforce",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Renown",
+      "section": "Expansion Keywords",
+      "rule": "702.112",
+      "canonicalName": "Renown",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Replicate",
+      "section": "Expansion Keywords",
+      "rule": "702.56",
+      "canonicalName": "Replicate",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Retrace",
+      "section": "Expansion Keywords",
+      "rule": "702.81",
+      "canonicalName": "Retrace",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Riot",
+      "section": "Expansion Keywords",
+      "rule": "702.136",
+      "canonicalName": "Riot",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Ripple",
+      "section": "Expansion Keywords",
+      "rule": "702.60",
+      "canonicalName": "Ripple",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Scavenge",
+      "section": "Expansion Keywords",
+      "rule": "702.97",
+      "canonicalName": "Scavenge",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Shadow",
+      "section": "Expansion Keywords",
+      "rule": "702.28",
+      "canonicalName": "Shadow",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "creature-rules.mjs"
+      ],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Shroud",
+      "section": "Expansion Keywords",
+      "rule": "702.18",
+      "canonicalName": "Shroud",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "creature-rules.mjs",
+        "effect-targets.mjs",
+        "keyword-actions.mjs",
+        "oracle-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/arahbo.test.mjs",
+        "tests/aurelia-utilities.test.mjs",
+        "tests/counter-effects.test.mjs",
+        "tests/goreclaw.test.mjs",
+        "tests/kess.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Soulbond",
+      "section": "Expansion Keywords",
+      "rule": "702.95",
+      "canonicalName": "Soulbond",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "ability-effects.mjs",
+        "combat-effects.mjs",
+        "combat.mjs",
+        "engine.mjs",
+        "oracle-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/niv-mizzet.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Soulshift",
+      "section": "Expansion Keywords",
+      "rule": "702.46",
+      "canonicalName": "Soulshift",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Spectacle",
+      "section": "Expansion Keywords",
+      "rule": "702.137",
+      "canonicalName": "Spectacle",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Splice",
+      "section": "Expansion Keywords",
+      "rule": "702.47",
+      "canonicalName": "Splice",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "casting.mjs",
+        "combat-effects.mjs",
+        "combat.mjs",
+        "engine.mjs",
+        "mana-preview.mjs",
+        "opening-hand.mjs",
+        "oracle-effects.mjs",
+        "turn-plan.mjs"
+      ],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Split Second",
+      "section": "Expansion Keywords",
+      "rule": "702.61",
+      "canonicalName": "Split Second",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "action-permissions.mjs",
+        "spell-rules.mjs"
+      ],
+      "testCandidates": [
+        "tests/playtest-spells.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Storm",
+      "section": "Expansion Keywords",
+      "rule": "702.40",
+      "canonicalName": "Storm",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "combat-effects.mjs",
+        "engine.mjs",
+        "spell-rules.mjs"
+      ],
+      "testCandidates": [
+        "tests/engine.test.mjs",
+        "tests/isshin.test.mjs",
+        "tests/kalamax.test.mjs",
+        "tests/mizzix.test.mjs",
+        "tests/network.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Sunburst",
+      "section": "Expansion Keywords",
+      "rule": "702.44",
+      "canonicalName": "Sunburst",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "card-state.mjs"
+      ],
+      "testCandidates": [
+        "tests/entry-casting.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Support",
+      "section": "Expansion Keywords",
+      "rule": "701.41",
+      "canonicalName": "Support",
+      "status": "tested-scope",
+      "scope": "Announced optional creature targets on either side; permanent excludes itself; legal-target recheck, counter replacements, Patron triggers.",
+      "sourceCandidates": [
+        "combat.mjs",
+        "effect-targets.mjs",
+        "keyword-actions.mjs"
+      ],
+      "testCandidates": [
+        "tests/combat.test.mjs",
+        "tests/game-actions.test.mjs",
+        "tests/goreclaw.test.mjs",
+        "tests/life-effects.test.mjs"
+      ],
+      "evidence": [
+        "tests/keyword-actions.test.mjs",
+        "tests/keyword-actions-ui.cjs"
+      ]
+    },
+    {
+      "name": "Surveil",
+      "section": "Expansion Keywords",
+      "rule": "701.25",
+      "canonicalName": "Surveil",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "library-effects.mjs",
+        "permission-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/kess.test.mjs",
+        "tests/network.test.mjs",
+        "tests/talrand.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Suspend",
+      "section": "Expansion Keywords",
+      "rule": "702.62",
+      "canonicalName": "Suspend",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Totem Armor",
+      "section": "Expansion Keywords",
+      "rule": "702.89",
+      "canonicalName": "Umbra armor",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "combat.mjs",
+        "destruction.mjs"
+      ],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Transfigure",
+      "section": "Expansion Keywords",
+      "rule": "702.71",
+      "canonicalName": "Transfigure",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Transform",
+      "section": "Expansion Keywords",
+      "rule": "701.27",
+      "canonicalName": "Transform",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "camera.mjs",
+        "card-state.mjs",
+        "engine.mjs",
+        "hand-dock.mjs",
+        "oracle-effects.mjs",
+        "turn-presentation.mjs"
+      ],
+      "testCandidates": [
+        "tests/permanent-copy.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Transmute",
+      "section": "Expansion Keywords",
+      "rule": "702.53",
+      "canonicalName": "Transmute",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Tribute",
+      "section": "Expansion Keywords",
+      "rule": "702.104",
+      "canonicalName": "Tribute",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Undying",
+      "section": "Expansion Keywords",
+      "rule": "702.93",
+      "canonicalName": "Undying",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "combat-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/combat.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Unearth",
+      "section": "Expansion Keywords",
+      "rule": "702.84",
+      "canonicalName": "Unearth",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Unleash",
+      "section": "Expansion Keywords",
+      "rule": "702.98",
+      "canonicalName": "Unleash",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Wither",
+      "section": "Expansion Keywords",
+      "rule": "702.80",
+      "canonicalName": "Wither",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "combat.mjs",
+        "creature-rules.mjs"
+      ],
+      "testCandidates": [
+        "tests/keyword-icons.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Addendum",
+      "section": "Ability Keywords",
+      "rule": null,
+      "canonicalName": "Addendum",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "oracle-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/aurelia-combat.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Battalion",
+      "section": "Ability Keywords",
+      "rule": null,
+      "canonicalName": "Battalion",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Chroma",
+      "section": "Ability Keywords",
+      "rule": null,
+      "canonicalName": "Chroma",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Domain",
+      "section": "Ability Keywords",
+      "rule": null,
+      "canonicalName": "Domain",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [
+        "tests/talrand.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Enrage",
+      "section": "Ability Keywords",
+      "rule": null,
+      "canonicalName": "Enrage",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [
+        "tests/goreclaw.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Fateful Hour",
+      "section": "Ability Keywords",
+      "rule": null,
+      "canonicalName": "Fateful Hour",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Ferocious",
+      "section": "Ability Keywords",
+      "rule": null,
+      "canonicalName": "Ferocious",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Grandeur",
+      "section": "Ability Keywords",
+      "rule": null,
+      "canonicalName": "Grandeur",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Hellbent",
+      "section": "Ability Keywords",
+      "rule": null,
+      "canonicalName": "Hellbent",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Heroic",
+      "section": "Ability Keywords",
+      "rule": null,
+      "canonicalName": "Heroic",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [
+        "tests/arahbo.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Join forces",
+      "section": "Ability Keywords",
+      "rule": null,
+      "canonicalName": "Join forces",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Kinship",
+      "section": "Ability Keywords",
+      "rule": null,
+      "canonicalName": "Kinship",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Landfall",
+      "section": "Ability Keywords",
+      "rule": null,
+      "canonicalName": "Landfall",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Metalcraft",
+      "section": "Ability Keywords",
+      "rule": null,
+      "canonicalName": "Metalcraft",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [
+        "tests/arahbo.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Morbid",
+      "section": "Ability Keywords",
+      "rule": null,
+      "canonicalName": "Morbid",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Radiance",
+      "section": "Ability Keywords",
+      "rule": null,
+      "canonicalName": "Radiance",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Raid",
+      "section": "Ability Keywords",
+      "rule": null,
+      "canonicalName": "Raid",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Rally",
+      "section": "Ability Keywords",
+      "rule": null,
+      "canonicalName": "Rally",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Sweep",
+      "section": "Ability Keywords",
+      "rule": null,
+      "canonicalName": "Sweep",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "oracle-effects.mjs"
+      ],
+      "testCandidates": [],
+      "evidence": []
+    },
+    {
+      "name": "Threshold",
+      "section": "Ability Keywords",
+      "rule": null,
+      "canonicalName": "Threshold",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [
+        "app.mjs",
+        "oracle-effects.mjs",
+        "permission-effects.mjs"
+      ],
+      "testCandidates": [
+        "tests/aurelia-utilities.test.mjs",
+        "tests/kess.test.mjs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Undergrowth",
+      "section": "Ability Keywords",
+      "rule": null,
+      "canonicalName": "Undergrowth",
+      "status": "not-verified",
+      "scope": null,
+      "sourceCandidates": [],
+      "testCandidates": [],
+      "evidence": []
+    }
+  ]
+}

@@ -12,7 +12,7 @@ import {landPlayError} from './lands.mjs';
 import {pendingEntry,payLife} from './life-effects.mjs';
 import {triggerNeedsTarget,resolveCombatTrigger,queueCombatTriggers,snapshotCard,triggerOrderGroup,confirmTriggerOrder,closeTriggerOrders} from './combat-effects.mjs';
 import {stateBasedActions,removePermanents} from './combat.mjs';
-import {applyOracleEffect,applyCounterEvents,continueOracleCast} from './oracle-effects.mjs';
+import {enterPermanents,applyOracleEffect,applyCounterEvents,continueOracleCast} from './oracle-effects.mjs';
 import {combatStats} from './creature-rules.mjs';
 import {spellAnnouncement,currentSpellTargets,spellHasLegalChoices,spellModes} from './spell-effects.mjs';
 import {effectTargetSpec,effectTargetOptions,groupedTargets} from './effect-targets.mjs';
@@ -158,7 +158,7 @@ export function resolveTop(g){
   if(to==='battlefield'){
    const target=isAura(entry.card)?currentSpellTargets(g,entry)[0]:null;
    if(isAura(entry.card)&&!target){transfer(g,entry.card.instance,'graveyard',entry.card.ownerSeat??entry.owner);note(g,entry.card.name+' does not resolve: its Aura target is illegal.');}
-   else transfer(g,entry.card.instance,to,entry.owner,undefined,{attachTo:target?.id});
+   else enterPermanents(g,entry,[{id:entry.card.instance,owner:entry.owner,...(target?{attachTo:target.id}:{})}]);
   }
   else{
    const spec=effectTargetSpec(text,{x:entry.castX,kicks:entry.card.castKicks}),targets=spec?currentSpellTargets(g,entry):[];

@@ -11,10 +11,139 @@ import {manaAbilities} from '../mana.mjs';
 import {projectGame,compactView,expandView,diff,applyPatch,digest} from '../multiplayer/protocol.mjs';
 import {createGameServer} from '../multiplayer/server.mjs';
 import {queueCombatTriggers} from '../combat-effects.mjs';
+import {applyOracleEffect} from '../oracle-effects.mjs';
 const {createGameClient}=createRequire(import.meta.url)('../multiplayer/client.cjs');
 const card=(name,extra={})=>({instance:crypto.randomUUID(),name,type_line:'Basic Land — Forest',oracle_text:'({T}: Add {G}.)',counters:{},face:0,...extra});
 function game(count=2){const g=newGame(count);g.step=3;g.responseMode='hold';for(const [i,p] of g.players.entries()){p.zones.hand=[card('Private hand '+i)];p.zones.library=[card('Secret draw '+i),card('Secret next '+i)];}return g;}
+
+test('keyword resolution choices are seat-owned and resume across two-client reconnect',async t=>{
+ const seed=game(),creature=card('Bolster choice',{type_line:'Creature',power:'2',toughness:'2',battlefieldId:'choice-field'});seed.players[0].zones.battlefield=[creature];
+ applyOracleEffect(seed,{owner:0,name:'Keyword test',source:card('Keyword test'),text:'Bolster 2. Investigate.'});
+ const {clients}=await setup(t,2,{seed,checkpoint:true}),[host,peer]=clients;
+ assert.equal(host.snapshot.game.pendingEffect.step.op,'bolster');assert.equal(peer.snapshot.game.pendingEffect.kind,'remote-choice');
+ await assert.rejects(peer.send({type:'oracleChoice',keys:[creature.instance]}));
+ peer.disconnectForTest();await host.send({type:'oracleChoice',keys:[creature.instance]});await eventually(()=>peer.snapshot.revision===host.snapshot.revision);
+ for(const client of clients){const p=client.snapshot.game.players[0];assert.equal(client.snapshot.game.pendingEffect,undefined);assert.equal(p.zones.battlefield.find(c=>c.instance===creature.instance).counters['+1/+1'],2);assert.equal(p.zones.battlefield.filter(c=>c.name==='Clue').length,1);}
+ assert.ok(peer.snapshot.game.players[0].zones.hand.every(c=>c.hidden));
+});
 async function eventually(fn){const start=Date.now();while(!fn()){if(Date.now()-start>5000)throw Error('Timed out waiting for synchronization.');await new Promise(r=>setTimeout(r,10));}}
+
+test('searched permanent entry keeps the library private and resumes before shuffle and draw across clients',async t=>{
+ const records=JSON.parse(await fs.readFile(new URL('./fixtures/commander/oracle/atraxa_praetors_voice.json',import.meta.url))).cards,seed=game(),make=(name,id)=>card(name,{...records.find(c=>c.name===name),instance:id});
+ for(const [name,id,owner] of [['Doubling Season','search-double',0],['Vorinclex, Monstrous Raider','search-half',1]]){const c=make(name,id);seed.players[owner].zones.hand.push(c);transfer(seed,id,'battlefield',owner);}
+ const land=make('Blast Zone','search-land'),spell=card('Search then draw',{instance:'entry-search',type_line:'Sorcery',mana_cost:'{0}',oracle_text:'Search your library for a land card, put it onto the battlefield tapped, then shuffle. Draw a card.'});seed.players[0].zones.hand.push(spell);seed.players[0].zones.library.unshift(land);
+ const {clients}=await setup(t,2,{seed,checkpoint:true}),[host,peer]=clients,sync=()=>eventually(()=>peer.snapshot.revision===host.snapshot.revision);
+ await host.send({type:'cast',id:spell.instance});await sync();await host.send({type:'pass'});await sync();await peer.send({type:'pass'});await sync();assert.equal(host.snapshot.game.pendingEffect.step.op,'search');assert.ok(host.snapshot.game.players[0].zones.library.some(c=>c.name==='Secret draw 0'));assert.ok(peer.snapshot.game.players[0].zones.library.every(c=>c.hidden));
+ await host.send({type:'oracleChoice',keys:[land.instance]});await sync();assert.equal(host.snapshot.game.pendingEffect.kind,'counter-choice');assert.equal(peer.snapshot.game.pendingEffect.kind,'remote-choice');assert.equal(host.snapshot.game.players[0].zones.library.length,3);assert.equal(host.snapshot.game.players[0].zones.hand.length,1);
+ const key=host.snapshot.game.pendingEffect.plan.states[0].providers.find(r=>r.operation==='double').key;await assert.rejects(peer.send({type:'counterChoice',key}),/choosing/);peer.disconnectForTest();await host.send({type:'counterChoice',key});await sync();
+ for(const c of clients){const p=c.snapshot.game.players[0],entered=p.zones.battlefield.find(c=>c.instance===land.instance);assert.equal(entered.counters.charge,1);assert.equal(entered.tapped,true);assert.equal(p.zones.library.length,1);assert.equal(p.zones.hand.length,2);assert.equal(c.snapshot.game.stack.length,0);assert.equal(c.snapshot.game.pendingEffect,undefined);assert.ok(p.zones.library.every(c=>c.hidden));}assert.ok(peer.snapshot.game.players[0].zones.hand.every(c=>c.hidden));assert.ok(!JSON.stringify(peer.snapshot).includes('Secret draw 0'));
+});
+
+test('Oath delayed entry replacements belong to the returning owner across multiplayer reconnect',async t=>{
+ const records=JSON.parse(await fs.readFile(new URL('./fixtures/commander/oracle/atraxa_praetors_voice.json',import.meta.url))).cards,seed=game(),make=(name,id)=>card(name,{...records.find(c=>c.name===name),instance:id});
+ for(const [name,id] of [['Doubling Season','oath-double'],["Lae'zel, Vlaakith's Champion",'oath-add']]){const c=make(name,id);seed.players[1].zones.hand.push(c);transfer(seed,id,'battlefield',1);}
+ const visitor=card('Borrowed counter creature',{instance:'oath-visitor',type_line:'Creature',power:'0',toughness:'0',oracle_text:'This creature enters with two +1/+1 counters on it.\nWhen this creature enters, draw a card.',ownerSeat:1}),oath=make('Oath of Teferi','oath-source');seed.players[0].zones.hand.push(visitor,oath);transfer(seed,visitor.instance,'battlefield',0,undefined,{deferTriggers:true});seed.players[0].mana=[{type:'C',amount:3},{type:'U',amount:1},{type:'W',amount:1}];
+ const {clients}=await setup(t,2,{seed,checkpoint:true}),[host,peer]=clients,sync=()=>eventually(()=>peer.snapshot.revision===host.snapshot.revision),pass=async()=>{await host.send({type:'pass'});await sync();await peer.send({type:'pass'});await sync();};
+ await host.send({type:'cast',id:oath.instance});await sync();await pass();await host.send({type:'triggerTarget',id:host.snapshot.game.stack.at(-1).id,keys:['card:'+visitor.instance]});await sync();await pass();assert.equal(peer.snapshot.game.players[1].zones.exile[0].instance,visitor.instance);await host.send({type:'move',id:oath.instance,to:'graveyard'});await sync();await host.send({type:'step',step:10});await sync();await pass();
+ assert.equal(peer.snapshot.game.pendingEffect.kind,'counter-choice');assert.equal(host.snapshot.game.pendingEffect.kind,'remote-choice');assert.equal(peer.snapshot.game.players[1].zones.exile[0].instance,visitor.instance);const key=peer.snapshot.game.pendingEffect.plan.states[0].providers.find(r=>r.operation==='add').key;await assert.rejects(host.send({type:'counterChoice',key}),/choosing/);peer.disconnectForTest();await host.send({type:'responseMode',mode:'prompt'});await sync();await peer.send({type:'counterChoice',key});await sync();
+ for(const c of clients){const returned=c.snapshot.game.players[1].zones.battlefield.find(c=>c.instance===visitor.instance);assert.equal(returned.counters['+1/+1'],6);assert.equal(returned.ownerSeat,1);assert.equal(c.snapshot.game.stack.length,1);}await pass();assert.equal(peer.snapshot.game.players[1].zones.hand.length,2);assert.ok(host.snapshot.game.players[1].zones.hand.every(c=>c.hidden));
+});
+
+test('copied token entry choices synchronize without phantom hand cards and survive reconnect',async t=>{
+ const records=JSON.parse(await fs.readFile(new URL('./fixtures/commander/oracle/atraxa_praetors_voice.json',import.meta.url))).cards,seed=game(),make=(name,id)=>card(name,{...records.find(c=>c.name===name),instance:id});
+ const source=make('Tamiyo, Field Researcher','copy-walker');seed.players[1].zones.hand.push(source);transfer(seed,source.instance,'battlefield',1);source.counters.loyalty=1;
+ for(const [name,id] of [['Vorinclex, Monstrous Raider','copy-double'],["Lae'zel, Vlaakith's Champion",'copy-add']]){const c=make(name,id);seed.players[0].zones.hand.push(c);transfer(seed,c.instance,'battlefield',0);}
+ seed.players[0].zones.library.push(card('Third secret draw'),card('Remaining library'));
+ const {clients}=await setup(t,2,{seed,checkpoint:true}),[host,peer]=clients,sync=()=>eventually(()=>peer.snapshot.revision===host.snapshot.revision);
+ await host.send({type:'copyToken',id:source.instance,count:2,nonlegendary:true});await sync();
+ assert.equal(host.snapshot.game.pendingEffect.kind,'counter-choice');assert.equal(peer.snapshot.game.pendingEffect.kind,'remote-choice');
+ assert.equal(host.snapshot.game.players[0].zones.hand.length,1);assert.equal(peer.snapshot.game.players[0].zones.hand.length,1);assert.ok(!host.snapshot.game.players[0].zones.battlefield.some(c=>c.token));
+ const key=host.snapshot.game.pendingEffect.plan.states[0].providers.find(r=>r.operation==='add').key;
+ await assert.rejects(peer.send({type:'counterChoice',key}),/choosing/);peer.disconnectForTest();await host.send({type:'counterChoice',key});await sync();
+ assert.ok(!peer.snapshot.game.players[0].zones.battlefield.some(c=>c.token));const next=host.snapshot.game.pendingEffect.plan.states[1].providers.find(r=>r.operation==='double').key;await host.send({type:'counterChoice',key:next});await sync();
+ for(const client of clients){const copies=client.snapshot.game.players[0].zones.battlefield.filter(c=>c.token);assert.deepEqual(copies.map(c=>c.counters.loyalty),[10,9]);assert.ok(copies.every(c=>c.oracle_text===source.oracle_text&&!c.type_line.includes('Legendary')));assert.equal(client.snapshot.game.players[1].zones.battlefield[0].counters.loyalty,1);assert.equal(client.snapshot.game.pendingEffect,undefined);}
+ // Copied rules remain executable after replication, with each copy retaining
+ // its own loyalty and once-per-turn activation history.
+ const first=host.snapshot.game.players[0].zones.battlefield.find(c=>c.token);await host.send({type:'loyalty',id:first.instance,index:2});await sync();assert.equal(peer.snapshot.game.stack.length,1);assert.equal(peer.snapshot.game.players[0].zones.battlefield.find(c=>c.instance===first.instance).counters.loyalty,3);
+ await host.send({type:'pass'});await sync();await peer.send({type:'pass'});await sync();assert.equal(host.snapshot.game.players[0].zones.hand.length,4);assert.ok(peer.snapshot.game.players[0].zones.hand.every(c=>c.hidden));
+});
+
+test('reanimation entry choices defer life loss and resolve once across two-client reconnect',async t=>{
+ const records=(await Promise.all(['atraxa_praetors_voice','kess_dissident_mage'].map(async name=>JSON.parse(await fs.readFile(new URL('./fixtures/commander/oracle/'+name+'.json',import.meta.url))).cards))).flat(),seed=game(),make=(name,id)=>card(name,{...records.find(c=>c.name===name),instance:id});
+ for(const [name,id] of [['Vorinclex, Monstrous Raider','reanimate-double'],["Lae'zel, Vlaakith's Champion",'reanimate-add']]){const c=make(name,id);seed.players[0].zones.hand.push(c);transfer(seed,c.instance,'battlefield',0);}
+ const spell=make('Reanimate','reanimate-spell'),target=card('Returning creature',{instance:'reanimate-target',type_line:'Creature',mana_cost:'{3}',power:'0',toughness:'0',oracle_text:'This creature enters with two +1/+1 counters on it.\n{T}: Add {G}.',ownerSeat:1,zoneChangeId:'old-grave'});seed.players[1].zones.graveyard=[target];seed.players[0].zones.hand.push(spell);seed.players[0].mana=[{type:'B',amount:1}];
+ const {clients}=await setup(t,2,{seed,checkpoint:true}),[host,peer]=clients,sync=()=>eventually(()=>peer.snapshot.revision===host.snapshot.revision);
+ await host.send({type:'cast',id:spell.instance,options:{targets:['card:'+target.instance]}});await sync();await host.send({type:'pass'});await sync();await peer.send({type:'pass'});await sync();
+ assert.equal(host.snapshot.game.pendingEffect.kind,'counter-choice');assert.equal(peer.snapshot.game.pendingEffect.kind,'remote-choice');assert.equal(host.snapshot.game.players[0].life,40);assert.equal(peer.snapshot.game.players[1].zones.graveyard.length,1);
+ const key=host.snapshot.game.pendingEffect.plan.states[0].providers.find(r=>r.operation==='add').key;await assert.rejects(peer.send({type:'counterChoice',key}),/choosing/);peer.disconnectForTest();await host.send({type:'counterChoice',key});await sync();
+ for(const client of clients){const g=client.snapshot.game,c=g.players[0].zones.battlefield.find(c=>c.instance===target.instance);assert.equal(c.ownerSeat,1);assert.equal(c.counters['+1/+1'],6);assert.equal(g.players[0].life,37);assert.equal(g.players[1].zones.graveyard.length,0);assert.equal(g.players[0].zones.graveyard[0].instance,spell.instance);assert.equal(g.stack.length,0);assert.equal(g.pendingEffect,undefined);}
+});
+test('Oath delayed return preserves owner and exile identity through source removal and reconnect',async t=>{
+ const records=JSON.parse(await fs.readFile(new URL('./fixtures/commander/oracle/atraxa_praetors_voice.json',import.meta.url))).cards,seed=game(),target=card('Borrowed artifact',{type_line:'Artifact',oracle_text:'',ownerSeat:1}),oath=card('Oath',{...records.find(c=>c.name==='Oath of Teferi'),instance:'return-oath'});
+ seed.players[0].zones.battlefield=[target];seed.players[0].zones.hand.push(oath);transfer(seed,oath.instance,'battlefield',0);
+ const {clients}=await setup(t,2,{seed,checkpoint:true}),[host,peer]=clients,sync=()=>eventually(()=>peer.snapshot.revision===host.snapshot.revision),pass=async()=>{await host.send({type:'pass'});await sync();await peer.send({type:'pass'});await sync();};
+ await host.send({type:'triggerTarget',id:host.snapshot.game.stack.at(-1).id,keys:['card:'+target.instance]});await sync();await pass();assert.equal(peer.snapshot.game.players[1].zones.exile[0].instance,target.instance);
+ await host.send({type:'move',id:oath.instance,to:'graveyard'});await sync();await host.send({type:'step',step:10});await sync();peer.disconnectForTest();await host.send({type:'pass'});await sync();await peer.send({type:'pass'});await sync();
+ for(const client of clients){assert.equal(client.snapshot.game.players[1].zones.battlefield[0].instance,target.instance);assert.equal(client.snapshot.game.players[0].zones.battlefield.length,0);assert.equal(client.snapshot.game.delayedTriggers.length,0);}
+});
+test('Teferi delayed untap uses a new response window and survives reconnect while choosing opposing lands',async t=>{
+ const records=JSON.parse(await fs.readFile(new URL('./fixtures/commander/oracle/atraxa_praetors_voice.json',import.meta.url))).cards,seed=game(),teferi=card('Teferi',{...records.find(c=>c.name==='Teferi, Hero of Dominaria'),instance:'delay-teferi'}),land=card('Opponent land',{tapped:true});
+ seed.players[0].zones.hand.push(teferi);transfer(seed,teferi.instance,'battlefield',0);seed.players[1].zones.battlefield=[land];
+ const {clients}=await setup(t,2,{seed,checkpoint:true}),[host,peer]=clients,sync=()=>eventually(()=>peer.snapshot.revision===host.snapshot.revision),pass=async()=>{await host.send({type:'pass'});await sync();await peer.send({type:'pass'});await sync();};
+ await host.send({type:'loyalty',id:teferi.instance,index:0});await sync();await pass();assert.equal(host.snapshot.game.delayedTriggers.length,1);await host.send({type:'step',step:10});await sync();assert.equal(host.snapshot.game.stack.length,1);assert.equal(peer.snapshot.game.players[1].zones.battlefield[0].tapped,true);await pass();
+ assert.equal(host.snapshot.game.pendingEffect.step.op,'chooseUntapLands');await assert.rejects(peer.send({type:'oracleChoice',keys:[land.instance]}),/choosing/);peer.disconnectForTest();await host.send({type:'oracleChoice',keys:[land.instance]});await sync();assert.equal(peer.snapshot.game.players[1].zones.battlefield[0].tapped,false);assert.equal(host.snapshot.game.pendingEffect,undefined);
+});
+test('Narset library choice reveals only the selected card across two-client reconnect',async t=>{
+ const records=JSON.parse(await fs.readFile(new URL('./fixtures/commander/oracle/atraxa_praetors_voice.json',import.meta.url))).cards,seed=game(),narset=card('Narset',{...records.find(c=>c.name==='Narset, Parter of Veils'),instance:'narset'});
+ seed.players[0].zones.hand.push(narset);transfer(seed,narset.instance,'battlefield',0);const chosen=card('Chosen',{type_line:'Instant',oracle_text:''});seed.players[0].zones.library=[chosen,card('Hidden land'),card('Hidden land 2'),card('Hidden land 3'),card('Unseen fifth')];
+ const {clients}=await setup(t,2,{seed,checkpoint:true}),[host,peer]=clients,sync=()=>eventually(()=>peer.snapshot.revision===host.snapshot.revision);
+ await host.send({type:'loyalty',id:narset.instance,index:0});await sync();assert.equal(host.snapshot.game.stack.length,1);await host.send({type:'pass'});await sync();await peer.send({type:'pass'});await sync();
+ assert.equal(host.snapshot.game.pendingEffect.step.op,'selectLook');assert.ok(peer.snapshot.game.players[0].zones.library.every(c=>c.hidden));await assert.rejects(peer.send({type:'oracleChoice',keys:[chosen.instance]}),/choosing/);
+ peer.disconnectForTest();await host.send({type:'oracleChoice',keys:[chosen.instance]});await sync();assert.deepEqual(peer.snapshot.game.players[0].zones.library.filter(c=>!c.hidden).map(c=>c.name),['Chosen']);
+ await host.send({type:'oracleChoice',keys:[]});await sync();assert.equal(host.snapshot.game.players[0].zones.hand.at(-1).name,'Chosen');assert.ok(peer.snapshot.game.players[0].zones.hand.every(c=>c.hidden));assert.equal(peer.snapshot.game.pendingEffect,undefined);
+});
+test('Tamiyo damage watch survives source removal and reconnect, then draws privately through combat responses',async t=>{
+ const records=JSON.parse(await fs.readFile(new URL('./fixtures/commander/oracle/atraxa_praetors_voice.json',import.meta.url))).cards,seed=game(),tami=card('Tamiyo',{...records.find(c=>c.name==='Tamiyo, Field Researcher'),instance:'tamiyo'}),creature=card('Attacker',{type_line:'Creature',oracle_text:'',power:'2',toughness:'3',instance:'attacker'});seed.players[0].zones.hand.push(tami,creature);transfer(seed,tami.instance,'battlefield',0);transfer(seed,creature.instance,'battlefield',0);creature.summoningSick=false;
+ const {clients}=await setup(t,2,{seed,checkpoint:true}),[host,peer]=clients,sync=()=>eventually(()=>peer.snapshot.revision===host.snapshot.revision),pass=async()=>{await host.send({type:'pass'});await sync();await peer.send({type:'pass'});await sync();};
+ await host.send({type:'loyalty',id:tami.instance,index:0});await sync();await host.send({type:'triggerTarget',id:host.snapshot.game.stack.at(-1).id,keys:['card:'+creature.instance]});await sync();await pass();await host.send({type:'move',id:tami.instance,to:'graveyard'});await sync();await host.send({type:'step',step:5});await sync();await host.send({type:'attacker',id:creature.instance,target:'player:1',selected:true});await sync();await host.send({type:'confirmAttackers'});await sync();await host.send({type:'step',step:6});await sync();await peer.send({type:'confirmBlockers'});await sync();await host.send({type:'step',step:7});await sync();
+ peer.disconnectForTest();await host.send({type:'damage'});await sync();assert.equal(host.snapshot.game.stack.length,1);assert.equal(host.snapshot.game.players[0].zones.hand.length,1);await pass();for(const c of clients){assert.equal(c.snapshot.game.players[1].life,38);assert.equal(c.snapshot.game.players[0].zones.hand.length,2);assert.equal(c.snapshot.game.delayedTriggers[0].kind,'damage');}assert.ok(peer.snapshot.game.players[0].zones.hand.every(c=>c.hidden));
+});
+
+test('Chain Veil loyalty history persists after source movement and reconnect but not into the next turn',async t=>{
+ const records=JSON.parse(await fs.readFile(new URL('./fixtures/commander/oracle/atraxa_praetors_voice.json',import.meta.url))).cards,seed=game(),make=(name,id)=>card(name,{...records.find(c=>c.name===name),instance:id}),veil=make('The Chain Veil','veil'),walker=make('Tamiyo, Field Researcher','walker');seed.players[0].zones.hand.push(veil,walker);transfer(seed,veil.instance,'battlefield',0);transfer(seed,walker.instance,'battlefield',0);
+ const {clients}=await setup(t,2,{seed,checkpoint:true}),[host,peer]=clients,sync=()=>eventually(()=>peer.snapshot.revision===host.snapshot.revision),pass=async()=>{await host.send({type:'pass'});await sync();await peer.send({type:'pass'});await sync();};
+ await host.send({type:'loyalty',id:walker.instance,index:0});await sync();await host.send({type:'triggerTarget',id:host.snapshot.game.stack.at(-1).id,keys:[]});await sync();await pass();peer.disconnectForTest();await host.send({type:'move',id:walker.instance,to:'graveyard'});await sync();await host.send({type:'step',step:10});await sync();assert.equal(host.snapshot.game.stack.length,0);assert.equal(peer.snapshot.game.loyaltyHistory.counts[0],1);
+ await host.send({type:'endTurn'});await sync();await peer.send({type:'endTurn'});await sync();await host.send({type:'step',step:10});await sync();assert.equal(host.snapshot.game.stack.length,1);await pass();for(const c of clients){assert.equal(c.snapshot.game.players[0].life,38);assert.equal(c.snapshot.game.pendingEffect,undefined);}
+});
+
+test('Gauntlet counter choices stay with the casting player across three-client reconnect',async t=>{
+ const records=JSON.parse(await fs.readFile(new URL('./fixtures/commander/oracle/atraxa_praetors_voice.json',import.meta.url))).cards,seed=game(3),gauntlet=card('Gauntlet',{...records.find(c=>c.name==='Ichormoon Gauntlet'),instance:'gauntlet'}),target=card('Counter artifact',{type_line:'Artifact',oracle_text:'',counters:{charge:2,oil:1},battlefieldId:'target-field'}),spell=card('Spell',{type_line:'Instant',oracle_text:'You gain 1 life.',mana_cost:'{1}'});
+ seed.players[0].zones.hand.push(gauntlet,spell);transfer(seed,gauntlet.instance,'battlefield',0);seed.players[1].zones.battlefield=[target];seed.players[0].mana=[{type:'C',amount:1}];
+ const {clients}=await setup(t,3,{seed,checkpoint:true}),[host,peer,third]=clients,sync=()=>eventually(()=>clients.every(c=>c.snapshot.revision===host.snapshot.revision));
+ await host.send({type:'cast',id:spell.instance});await sync();await host.send({type:'triggerTarget',id:host.snapshot.game.stack.at(-1).id,keys:['card:'+target.instance]});await sync();for(const c of clients){await c.send({type:'pass'});await sync();}
+ assert.equal(host.snapshot.game.pendingEffect.step.op,'chooseCounterKind');assert.equal(peer.snapshot.game.pendingEffect.kind,'remote-choice');await assert.rejects(peer.send({type:'oracleChoice',keys:['oil']}),/choosing/);await assert.rejects(host.send({type:'oracleChoice',keys:['loyalty']}),/available/);
+ third.disconnectForTest();await host.send({type:'oracleChoice',keys:['oil']});await sync();for(const c of clients){assert.deepEqual(c.snapshot.game.players[1].zones.battlefield[0].counters,{charge:2,oil:2});assert.equal(c.snapshot.game.stack.length,1);assert.equal(c.snapshot.game.pendingEffect,undefined);}
+});
+
+test('Ashiok self-search prohibition and mill-exile resolution converge without disclosing library choices',async t=>{
+ const records=JSON.parse(await fs.readFile(new URL('./fixtures/commander/oracle/atraxa_praetors_voice.json',import.meta.url))).cards,seed=game(),a=card('Ashiok',{...records.find(c=>c.name==='Ashiok, Dream Render'),instance:'ashiok'}),tutor=card('Tutor',{type_line:'Instant',oracle_text:'Search your library for a card, put that card into your hand, then shuffle.',mana_cost:'{1}'});
+ seed.players[0].zones.hand.push(a);transfer(seed,a.instance,'battlefield',0);seed.players[1].zones.hand.push(tutor);seed.players[1].mana=[{type:'C',amount:1}];seed.priority={seat:1,passes:0};
+ const {clients}=await setup(t,2,{seed,checkpoint:true}),[host,peer]=clients,sync=()=>eventually(()=>peer.snapshot.revision===host.snapshot.revision);
+ await peer.send({type:'cast',id:tutor.instance});await sync();await peer.send({type:'pass'});await sync();await host.send({type:'pass'});await sync();assert.equal(peer.snapshot.game.pendingEffect,undefined);assert.equal(peer.snapshot.game.players[1].zones.hand.length,1);assert.ok(peer.snapshot.game.players[1].zones.library.every(c=>c.hidden));
+ await host.send({type:'loyalty',id:a.instance,index:0});await sync();await host.send({type:'triggerTarget',id:host.snapshot.game.stack.at(-1).id,keys:['player:1']});await sync();await host.send({type:'pass'});await sync();await peer.send({type:'pass'});await sync();
+ for(const c of clients){assert.equal(c.snapshot.game.pendingEffect,undefined);assert.equal(c.snapshot.game.players[1].zones.library.length,0);assert.equal(c.snapshot.game.players[1].zones.graveyard.length,0);assert.equal(c.snapshot.game.players[1].zones.exile.length,3);assert.equal(c.snapshot.game.players[1].failedDraw,undefined);}
+});
+
+test('token copies retain working abilities across two-client packets and reconnect',async t=>{
+ const seed=game(),source=card('Public mana rock',{type_line:'Artifact',oracle_text:'{T}: Add {G}.',battlefieldId:'rock-field',mana_cost:'{2}'});seed.players[0].zones.battlefield=[source];
+ const {clients}=await setup(t,2,{seed,checkpoint:true}),[host,peer]=clients,sync=()=>eventually(()=>peer.snapshot.revision===host.snapshot.revision);
+ await assert.rejects(peer.send({type:'copyToken',id:seed.players[0].zones.hand[0].instance,count:1}),/eligible/);
+ await peer.send({type:'copyToken',id:source.instance,count:2});await sync();
+ const copies=peer.snapshot.game.players[1].zones.battlefield;assert.equal(copies.length,2);assert.equal(copies[0].oracle_text,source.oracle_text);
+ const ability=manaAbilities(peer.snapshot.game,1,copies[0])[0];host.disconnectForTest();await peer.send({type:'activate',id:copies[0].instance,ability:ability.id});await sync();
+ for(const client of clients){const p=client.snapshot.game.players[1];assert.equal(p.mana[0].type,'G');assert.equal(p.mana[0].amount,1);assert.equal(p.zones.battlefield[0].tapped,true);assert.equal(p.zones.battlefield[1].tapped,false);assert.equal(p.zones.battlefield[1].oracle_text,source.oracle_text);}
+ assert.ok(peer.snapshot.game.players[0].zones.hand.every(c=>c.hidden));
+});
 async function setup(t,count=2,{checkpoint=false,seed:customSeed}={}){
  const dir=checkpoint?await fs.mkdtemp(path.join(tmpdir(),'commander-net-')):undefined,server=await createGameServer({checkpointDirectory:dir,heartbeatMs:1000}),seed=customSeed||game(count),room=await server.createRoom(seed),clients=[];
  t.after(async()=>{for(const c of clients)c.close();await server.close();if(dir){assert.ok(path.resolve(dir).startsWith(path.resolve(tmpdir())+path.sep+'commander-net-'));await fs.rm(dir,{recursive:true,force:true});}});
@@ -291,4 +420,39 @@ test('token creation triggers survive shared validation, response priority and r
  const {clients}=await setup(t,2,{seed,checkpoint:true}),[host,peer]=clients,sync=()=>eventually(()=>peer.snapshot.revision===host.snapshot.revision);
  await host.send({type:'token',templateIndex:0,count:3});await sync();assert.equal(host.snapshot.game.stack.length,1);assert.equal(host.snapshot.game.stack[0].combatTrigger.event.kind,'create-token');assert.equal(host.snapshot.game.players[0].zones.battlefield[0].counters.story,undefined);
  peer.disconnectForTest();await host.send({type:'pass'});await sync();assert.equal(peer.snapshot.game.stack.length,1);await peer.send({type:'pass'});await sync();assert.equal(peer.snapshot.game.stack.length,0);assert.equal(peer.snapshot.game.players[0].zones.battlefield[0].counters.story,1);
+});
+
+test('Smell Fear optional fight targets and proliferate continuation survive two-client responses and reconnect',async t=>{
+ const records=JSON.parse(await fs.readFile(new URL('./fixtures/commander/oracle/atraxa_praetors_voice.json',import.meta.url))).cards,seed=game(),spell=card('Smell Fear',{...records.find(c=>c.name==='Smell Fear'),instance:'smell'}),own=card('Friendly',{type_line:'Creature',oracle_text:'',power:'2',toughness:'2',instance:'fighter'}),other=card('Opponent',{type_line:'Creature',oracle_text:'',power:'3',toughness:'4',instance:'enemy'});
+ seed.players[0].zones.hand.push(spell,own);seed.players[1].zones.hand.push(other);transfer(seed,own.instance,'battlefield',0);transfer(seed,other.instance,'battlefield',1);own.counters={'+1/+1':1};seed.players[0].mana=[{type:'G',amount:2}];
+ const {clients}=await setup(t,2,{seed,checkpoint:true}),[host,peer]=clients,sync=()=>eventually(()=>peer.snapshot.revision===host.snapshot.revision);
+ await assert.rejects(host.send({type:'cast',id:spell.instance,options:{targets:['card:'+other.instance]}}),/required group/);
+ await host.send({type:'cast',id:spell.instance,options:{targets:['card:'+own.instance,'card:'+other.instance]}});await sync();assert.equal(peer.snapshot.game.stack[0].targets.length,2);assert.equal(peer.snapshot.game.players[1].zones.battlefield[0].markedDamage,undefined);
+ await host.send({type:'pass'});await sync();await peer.send({type:'pass'});await sync();assert.equal(host.snapshot.game.pendingEffect.kind,'proliferate');assert.equal(peer.snapshot.game.pendingEffect.kind,'remote-choice');await assert.rejects(peer.send({type:'proliferate',ids:[own.instance]}));
+ peer.disconnectForTest();await host.send({type:'proliferate',ids:[own.instance]});await sync();
+ for(const c of clients){assert.equal(c.snapshot.game.pendingEffect,undefined);assert.equal(c.snapshot.game.players[0].zones.battlefield[0].markedDamage,3);assert.equal(c.snapshot.game.players[0].zones.battlefield[0].counters['+1/+1'],2);assert.equal(c.snapshot.game.players[1].zones.graveyard[0].instance,other.instance);}
+ assert.ok(peer.snapshot.game.players[0].zones.hand.every(c=>c.hidden));
+});
+
+test('Staff ownership targets and life-paid draw preserve response windows and private cards across clients',async t=>{
+ const records=JSON.parse(await fs.readFile(new URL('./fixtures/commander/oracle/atraxa_praetors_voice.json',import.meta.url))).cards,seed=game(),staff=card('Staff',{...records.find(c=>c.name==='Staff of Compleation'),instance:'staff'}),mine=card('My stolen permanent',{type_line:'Artifact',oracle_text:'',ownerSeat:0,instance:'mine'}),theirs=card('Borrowed permanent',{type_line:'Artifact',oracle_text:'',ownerSeat:1,instance:'theirs'});
+ seed.players[0].zones.hand.push(staff);transfer(seed,staff.instance,'battlefield',0);seed.players[1].zones.battlefield=[mine];seed.players[0].zones.battlefield.push(theirs);
+ const {clients}=await setup(t,2,{seed,checkpoint:true}),[host,peer]=clients,sync=()=>eventually(()=>peer.snapshot.revision===host.snapshot.revision),pass=async()=>{await host.send({type:'pass'});await sync();await peer.send({type:'pass'});await sync();};
+ await assert.rejects(host.send({type:'activate',id:staff.instance,ability:'action:0',choice:{targets:['card:'+theirs.instance]}}),/legal ability targets/);assert.equal(host.snapshot.game.players[0].life,40);
+ await host.send({type:'activate',id:staff.instance,ability:'action:0',choice:{targets:['card:'+mine.instance]}});await sync();assert.equal(peer.snapshot.game.players[0].life,39);assert.equal(peer.snapshot.game.players[1].zones.battlefield.length,1);await pass();assert.equal(peer.snapshot.game.players[0].zones.graveyard[0].instance,mine.instance);
+ await host.send({type:'manaAdd',counts:{C:5}});await sync();await host.send({type:'activate',id:staff.instance,ability:'action:4'});await sync();await pass();assert.equal(host.snapshot.game.players[0].zones.battlefield[0].tapped,false);
+ const before=host.snapshot.game.players[0].zones.hand.length;await host.send({type:'activate',id:staff.instance,ability:'action:3'});await sync();assert.equal(peer.snapshot.game.players[0].life,35);assert.equal(host.snapshot.game.players[0].zones.hand.length,before);peer.disconnectForTest();await pass();
+ assert.equal(host.snapshot.game.players[0].zones.hand.length,before+1);assert.ok(host.snapshot.game.players[0].zones.hand.some(c=>c.name==='Secret draw 0'));assert.ok(peer.snapshot.game.players[0].zones.hand.every(c=>c.hidden));
+});
+
+test('cast-entry replacements stay before entry and belong to the entering controller across three-client reconnect',async t=>{
+ const records=JSON.parse(await fs.readFile(new URL('./fixtures/commander/oracle/atraxa_praetors_voice.json',import.meta.url))).cards,seed=game(3),make=(name,id)=>card(name,{...records.find(c=>c.name===name),instance:id}),season=make('Doubling Season','entry-season'),walker=make('Tamiyo, Compleated Sage','entry-walker');seed.active=1;seed.players[1].zones.hand.push(season,walker);transfer(seed,season.instance,'battlefield',1);seed.players[1].mana=[{type:'C',amount:2},{type:'G',amount:1},{type:'U',amount:1}];
+ const {clients}=await setup(t,3,{seed,checkpoint:true}),[host,peer,third]=clients,sync=()=>eventually(()=>clients.every(c=>c.snapshot.revision===host.snapshot.revision));
+ assert.ok(host.snapshot.game.players[1].zones.hand.every(c=>c.hidden));await peer.send({type:'cast',id:walker.instance,options:{allowLife:true}});await sync();assert.equal(host.snapshot.game.players[1].life,38);
+ for(const c of [peer,third,host]){await c.send({type:'pass'});await sync();}
+ assert.equal(peer.snapshot.game.pendingEffect.kind,'counter-choice');assert.equal(host.snapshot.game.pendingEffect.kind,'remote-choice');assert.equal(peer.snapshot.game.pendingEffect.owner,1);assert.ok(clients.every(c=>c.snapshot.game.stack.some(e=>e.card?.instance===walker.instance)));assert.ok(clients.every(c=>!c.snapshot.game.players[1].zones.battlefield.some(e=>e.instance===walker.instance)));
+ const key=peer.snapshot.game.pendingEffect.plan.states[0].providers.find(r=>r.operation==='subtract').key;await assert.rejects(host.send({type:'counterChoice',key}),/choosing/);await assert.rejects(third.send({type:'pass'}),/replacement choices/);
+ peer.disconnectForTest();await host.send({type:'responseMode',mode:'auto'});await sync();assert.equal(peer.snapshot.game.pendingEffect.entryRequests[0].id,walker.instance);await peer.send({type:'counterChoice',key});await sync();
+ for(const c of clients){assert.equal(c.snapshot.game.pendingEffect,undefined);assert.equal(c.snapshot.game.stack.length,0);assert.equal(c.snapshot.game.players[1].zones.battlefield.find(e=>e.instance===walker.instance).counters.loyalty,6);assert.equal(c.snapshot.game.players[1].life,38);}
+ assert.ok(host.snapshot.game.players[1].zones.hand.every(c=>c.hidden));
 });

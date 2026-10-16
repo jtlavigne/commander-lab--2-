@@ -1,3 +1,4 @@
+import {activatedLoyaltyThisTurn} from './planeswalker.mjs';
 import {emblemSources} from './rule-sources.mjs';
 import {publicManifest} from './face-down-state.mjs';
 import {gainLife} from './resource-rules.mjs';
@@ -20,6 +21,17 @@ const number=value=>({a:1,an:1,one:1,two:2,three:3,four:4,five:5}[value?.toLower
 export const snapshotCard=card=>{if(card.faceDown&&card.manifested)return publicManifest(card);const {localImages,card_faces,...rest}=card;return {...structuredClone(rest),...cardFace({...card,localImages:undefined,card_faces:card_faces?.map(({localImages,image_uris,...face})=>face)}),localImages:undefined,card_faces:undefined};};
 function eventMatches(g,condition,event,source,owner){
  condition=condition.trim();if(['attack','block'].includes(event.kind))condition=condition.replace(/attacks or blocks$/i,event.kind==='attack'?'attacks':'blocks');const card=event.card,controller=event.owner;
+ if(event.kind==='counter'){
+  const self=condition.match(/^one or more ([+-]\d+\/[+-]\d+|[a-z]+) counters? are put on (.+)$/i);
+  if(self)return card?.instance===source.instance&&selfSubject(self[2],source)&&(event.counters?.[self[1].toLowerCase()]||0)>0;
+  const placed=condition.match(/^you put one or more (?:([+-]\d+\/[+-]\d+|[a-z]+) )?counters? on a creature (you control|you don't control)$/i);
+  return !!placed&&controller===owner&&!!card&&isCreature(card)&&(placed[2]==='you control'?event.target.owner===owner:event.target.owner!==owner)&&(!placed[1]||(event.counters?.[placed[1].toLowerCase()]||0)>0);
+ }
+ if(event.kind==='keyword-action'){
+  if(event.action==='investigate')return /^you investigate$/i.test(condition)&&owner===controller||/^an opponent investigates$/i.test(condition)&&owner!==controller||/^a player investigates$/i.test(condition);
+  if(event.action==='monstrosity'){const m=condition.match(/^(.+?) becomes monstrous$/i);return !!m&&card?.instance===source.instance&&selfSubject(m[1],source);}
+  return false;
+ }
  if(['enter','attack'].includes(event.kind))condition=condition.replace(/enters or attacks$/i,event.kind==='enter'?'enters':'attacks');
  if(event.kind==='attack'&&/ attacks for the first time each turn$/i.test(condition))return card?.instance===source.instance&&selfSubject(condition.replace(/ attacks for the first time each turn$/i,''),source)&&card.attackHistory?.count===1;
  if(event.kind==='begin-combat')return /^(?:combat on your turn|your combat phase)$/i.test(condition)&&owner===g.active||/^each combat$/i.test(condition)||/^combat on each opponent's turn$/i.test(condition)&&owner!==g.active;
@@ -77,6 +89,7 @@ function eventMatches(g,condition,event,source,owner){
 function interveningCondition(g,text,event,source,owner){
  const match=text.match(/^if (.+?), (.+)$/i);if(!match)return {text,valid:true};
  let valid=false;
+ const noLoyalty=/^you didn't activate a loyalty ability of a planeswalker this turn$/i.test(match[1]);if(noLoyalty)valid=!activatedLoyaltyThisTurn(g,owner);
  const power=match[1].match(/^you control a creature with power (\d+) or greater$/i);
  const life=match[1].match(/^you have (\d+) or more life$/i);if(life)valid=g.players[owner].life>=Number(life[1]);
  const opponentLife=/^that opponent has more life than another of your opponents$/i.test(match[1]);if(opponentLife)valid=event.defender!==owner&&g.players.some((p,seat)=>seat!==owner&&seat!==event.defender&&g.players[event.defender]?.life>p.life);
@@ -89,7 +102,7 @@ function interveningCondition(g,text,event,source,owner){
  if(power)valid=g.players[owner].zones.battlefield.some(c=>isCreature(c)&&Number(combatStats(g,owner,c)?.power)>=Number(power[1]));
  if(/^it doesn't have the same name as another creature you control or a creature card in your graveyard$/i.test(match[1]))valid=!event.card.token&&![...g.players[owner].zones.battlefield.filter(c=>c.instance!==event.card.instance),...g.players[owner].zones.graveyard].some(c=>isCreature(c)&&cardFace(c).name===cardFace(event.card).name);
  // Unknown intervening conditions must remain a manual effect, not disappear.
- return power||life||opponentLife||firstCombat||main||sourceZone||onBattlefield||tapped||/^it doesn't have the same name/.test(match[1])?{text:match[2],valid}:{text,valid:true};
+ return noLoyalty||power||life||opponentLife||firstCombat||main||sourceZone||onBattlefield||tapped||/^it doesn't have the same name/.test(match[1])?{text:match[2],valid}:{text,valid:true};
 }
 export function queueCombatTriggers(g,events,observers=fieldCards(g).map(({card,owner})=>({card:snapshotCard(card),owner}))){
  observers=[...observers,...emblemSources(g).map(({card,owner})=>({card:snapshotCard(card),owner}))];
@@ -97,6 +110,13 @@ export function queueCombatTriggers(g,events,observers=fieldCards(g).map(({card,
  const queued=[];
  for(const event of events)if(event.kind==='leave'&&event.card.reanimationLink)queued.push(make(event.card,event.card.reanimationLink.abilityOwner,"That creature's controller sacrifices it.",event));
  for(const event of events)if(event.kind==='miracle')queued.push(make(event.card,event.owner,'You may cast this card for its miracle cost.',event));
+ // A damage batch may contain multiple recipients for the same creature
+ // (trample). Each watched source triggers once per simultaneous damage event;
+ // another strike step or another resolving effect is a separate event.
+ for(const effect of g.delayedTriggers||[])if(effect.kind==='damage'&&!g.players[effect.owner].eliminated){
+  const matched=events.filter(e=>e.kind==='damage'&&e.amount>0&&(!effect.combatOnly||e.combat===true)&&effect.targets.some(t=>t.id===e.card?.instance&&t.battlefieldId===(e.card.battlefieldId||null)));
+  for(const event of new Map(matched.map(e=>[e.card.instance,e])).values())queued.push(make(effect.source,effect.owner,effect.text,event));
+ }
  const usedDelayed=new Set();for(const event of events)if(['upkeep','end-step'].includes(event.kind))for(const effect of g.delayedTriggers||[])if((effect.kind||'upkeep')===event.kind&&(event.kind!=='upkeep'||effect.afterTurn!==g.turn+':'+g.active)&&!g.players[effect.owner].eliminated){queued.push(make(effect.source,effect.owner,effect.text,event));usedDelayed.add(effect);}
  if(usedDelayed.size)g.delayedTriggers=g.delayedTriggers.filter(e=>!usedDelayed.has(e));
  if(events.some(e=>e.kind==='upkeep')){
@@ -133,7 +153,7 @@ export function queueCombatTriggers(g,events,observers=fieldCards(g).map(({card,
   if(command&&!/^Eminence — /i.test(text))continue;
   const line=rulesText({oracle_text:text}).replace(/^[A-Za-z ]+ — /,''),trigger=line.match(/^Whenever (you cast .+? spell), (.+)$/i)||line.match(/^(?:When|Whenever|At the beginning of) (.+?), ([^]+)$/i);if(!trigger)continue;
   const matched=events.filter(event=>eventMatches(g,trigger[1],event,source,owner));
-  const grouped=matched[0]?.kind==='block'&&!/blocks? a creature$/i.test(trigger[1])?[...new Map(matched.map(e=>[e.card.instance,e])).values()]:/one or more/i.test(trigger[1])&&matched[0]?.kind==='damage'?[...new Map(matched.map(e=>[e.target.owner,e])).values()]:/one or more|^you attacks?$/i.test(trigger[1])?matched.slice(0,1):matched;
+  const grouped=matched[0]?.kind==='counter'?[...new Map(matched.map(e=>[e.target.id,e])).values()]:matched[0]?.kind==='block'&&!/blocks? a creature$/i.test(trigger[1])?[...new Map(matched.map(e=>[e.card.instance,e])).values()]:/one or more/i.test(trigger[1])&&matched[0]?.kind==='damage'?[...new Map(matched.map(e=>[e.target.owner,e])).values()]:/one or more|^you attacks?$/i.test(trigger[1])?matched.slice(0,1):matched;
   const limited=/ This ability triggers only once each turn\.$/i.test(trigger[2]);
   const effects=trigger[2].replace(/ This ability triggers only once each turn\.$/i,'');
   const playerAttacks=/^(?:a player|you|an opponent) attacks? (?:a player|one of your opponents|another one of your opponents)$/i.test(trigger[1]);
@@ -244,5 +264,6 @@ export function moveDeadPermanent(g,owner,card,option){
 }
 export function validateCombatTrigger(entry,fail){
  if(entry.orderBatch!==undefined&&typeof entry.orderBatch!=='string'||entry.orderOpen!==undefined&&typeof entry.orderOpen!=='boolean')fail();
- if(!entry.combatTrigger)return;const t=entry.combatTrigger;if(!t.event||!['create-token','leave','miracle','draw','counter-spell','copy','cycle','targeted-spell','reflexive','end-combat','sacrifice','spent-mana','rebound','begin-combat','attack','exert','block','damage','die','enter','cast','activate','upkeep','end-step','receive-damage','tap-mana','graveyard'].includes(t.event.kind)||t.target&&(!['player','card'].includes(t.target.kind)||!Number.isInteger(t.target.owner)||t.target.owner<0||t.target.owner>3)||t.returnCounter!==undefined&&!['+1/+1','-1/-1'].includes(t.returnCounter)||t.keyword!==undefined&&!['mentor','melee','battle cry'].includes(t.keyword))fail();
+ if(entry.combatTrigger?.event?.kind==='keyword-action'&&!['investigate','monstrosity'].includes(entry.combatTrigger.event.action))fail();
+ if(!entry.combatTrigger)return;const t=entry.combatTrigger;if(!t.event||!['keyword-action','counter','create-token','leave','miracle','draw','counter-spell','copy','cycle','targeted-spell','reflexive','end-combat','sacrifice','spent-mana','rebound','begin-combat','attack','exert','block','damage','die','enter','cast','activate','upkeep','end-step','receive-damage','tap-mana','graveyard'].includes(t.event.kind)||t.target&&(!['player','card'].includes(t.target.kind)||!Number.isInteger(t.target.owner)||t.target.owner<0||t.target.owner>3)||t.returnCounter!==undefined&&!['+1/+1','-1/-1'].includes(t.returnCounter)||t.keyword!==undefined&&!['mentor','melee','battle cry'].includes(t.keyword))fail();
 }

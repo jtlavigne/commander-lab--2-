@@ -5,6 +5,9 @@ import {actionRestriction} from './action-permissions.mjs';
 
 const clean=normalizeRules;
 export const loyaltyTurn=g=>g.turn+':'+g.active;
+// Player history is independent of a permanent's current incarnation. A walker
+// leaving, changing controllers or losing its abilities cannot undo activation.
+export const activatedLoyaltyThisTurn=(g,owner)=>g.loyaltyHistory?.turn===loyaltyTurn(g)&&(g.loyaltyHistory.counts[owner]||0)>0;
 const paragraphs=card=>activeRuleParagraphs(card).map(p=>p.text);
 function parseLoyalty(text,paragraph){
  const match=text.trim().match(/^([^:]+):\s*(.+)$/);if(!match)return null;
@@ -63,7 +66,12 @@ export function loyaltyStatus(g,owner,card){
 export function activateLoyaltyCost(g,owner,card,ref,x=0,options={}){
  const status=loyaltyStatus(g,owner,card);if(status.reason)throw Error(status.reason);
  const abilities=availableLoyaltyAbilities(g,owner,card),ability=getLoyaltyAbility(g,owner,card,ref);if(!ability)throw Error('Loyalty ability no longer available.');
- const result=payLoyaltyCost(card,abilities.findIndex(a=>a.key===ability.key),x,abilities,options);card.loyaltyActivations={turn:loyaltyTurn(g),used:status.used+1};return result;
+ const result=payLoyaltyCost(card,abilities.findIndex(a=>a.key===ability.key),x,abilities,options);card.loyaltyActivations={turn:loyaltyTurn(g),used:status.used+1};
+ if(/\bPlaneswalker\b/.test(cardFace(card).type_line||'')){
+  if(g.loyaltyHistory?.turn!==loyaltyTurn(g))g.loyaltyHistory={turn:loyaltyTurn(g),counts:g.players.map(()=>0)};
+  g.loyaltyHistory.counts[owner]++;
+ }
+ return result;
 }
 export function applyLoyaltyPermission(g,owner,text){
  text=clean(text);let extra=0,limit=0;
@@ -75,7 +83,8 @@ export function applyLoyaltyPermission(g,owner,text){
 export function validateLoyaltyState(g,card){
  const validTurn=value=>typeof value==='string'&&/^\d+:[0-3]$/.test(value),whole=n=>Number.isSafeInteger(n)&&n>=0&&n<=999999;
  if(card){if(card.loyaltyActivations&&(!validTurn(card.loyaltyActivations.turn)||!whole(card.loyaltyActivations.used))||card.loyaltyExtra&&(!validTurn(card.loyaltyExtra.turn)||!whole(card.loyaltyExtra.amount))||card.loyaltyAttachment!==undefined&&typeof card.loyaltyAttachment!=='string'||card.classLevel!==undefined&&(!whole(card.classLevel)||card.classLevel<1))throw Error('Invalid loyalty state.');}
- else if(g.loyaltyEffects&&(!Array.isArray(g.loyaltyEffects)||g.loyaltyEffects.length>100||g.loyaltyEffects.some(e=>!e||!validTurn(e.turn)||!Number.isInteger(e.owner)||e.owner<0||e.owner>3||!whole(e.extra)||!whole(e.limit))))throw Error('Invalid loyalty effects.');
+ else if(g.loyaltyHistory&&(!validTurn(g.loyaltyHistory.turn)||!Array.isArray(g.loyaltyHistory.counts)||g.loyaltyHistory.counts.length!==g.players.length||g.loyaltyHistory.counts.some(n=>!whole(n))))throw Error('Invalid loyalty history.');
+ if(!card&&g.loyaltyEffects&&(!Array.isArray(g.loyaltyEffects)||g.loyaltyEffects.length>100||g.loyaltyEffects.some(e=>!e||!validTurn(e.turn)||!Number.isInteger(e.owner)||e.owner<0||e.owner>3||!whole(e.extra)||!whole(e.limit))))throw Error('Invalid loyalty effects.');
 }
 
 export function loyaltyAbilities(card){

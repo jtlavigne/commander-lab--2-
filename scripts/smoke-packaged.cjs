@@ -4,9 +4,13 @@ const path=require('node:path');
 const assert=require('node:assert/strict');
 const WebSocket=require('ws');
 const version=require('../package.json').version;
+const directory=path.resolve(process.argv[2]||'release');
+const yaml=require('js-yaml'),fs=require('node:fs');
+const updateConfig=yaml.load(fs.readFileSync(path.join(directory,'win-unpacked/resources/app-update.yml'),'utf8'));
+assert.equal(updateConfig.provider,'github');assert.equal(updateConfig.owner,'jtlavigne');assert.equal(updateConfig.repo,'commander-lab--2-');assert.equal(updateConfig.channel,'test');
 const env={...process.env};delete env.ELECTRON_RUN_AS_NODE;
 const profile='qa-release-'+Date.now();
-const child=spawn(path.resolve('release/win-unpacked/Commander Lab.exe'),['--profile='+profile,'--remote-debugging-port=0'],{env,windowsHide:true,stdio:['ignore','ignore','pipe']});
+const child=spawn(path.join(directory,'win-unpacked/Commander Lab.exe'),['--profile='+profile,'--remote-debugging-port=0'],{env,windowsHide:true,stdio:['ignore','ignore','pipe']});
 let socket;
 const deadline=setTimeout(()=>{child.kill();console.error('Packaged app smoke test timed out');process.exitCode=1;},30000);
 const endpoint=new Promise((resolve,reject)=>{
@@ -30,7 +34,9 @@ const endpoint=new Promise((resolve,reject)=>{
   const title=execFileSync('powershell.exe',['-NoProfile','-Command',`(Get-Process -Id ${child.pid}).MainWindowTitle`],{encoding:'utf8',windowsHide:true});
   assert.ok(title.includes('v'+version)&&title.includes(profile),'Versioned native title and packaged profile flag: '+title);
   const result=await send('Runtime.evaluate',{expression:"new Promise(resolve=>{const img=new Image();img.onload=()=>resolve(img.naturalWidth>0);img.onerror=()=>resolve(false);img.src='./assets/commander-lab-card-back.png';})",awaitPromise:true,returnByValue:true},sessionId);assert.equal(result.result.value,true,'Bundled card artwork loads');
-  console.log('Packaged Windows smoke passed: ASAR renderer, launch menu, preload, version, profile and bundled art.');
+  const update=await send('Runtime.evaluate',{expression:"window.appUpdates.status()",awaitPromise:true,returnByValue:true},sessionId);
+  assert.equal(update.result.value.currentVersion,version);assert.equal(update.result.value.status,'unsupported');assert.match(update.result.value.message,/setup.exe/);
+  console.log('Packaged Windows smoke passed: ASAR renderer, launch menu, preload, version, profile, bundled art, update configuration and ZIP guidance.');
  }finally{clearTimeout(deadline);socket?.close();child.kill();}
 })().catch(error=>{console.error(error);process.exitCode=1;});
 

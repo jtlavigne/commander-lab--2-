@@ -3489,10 +3489,10 @@
     ]
   },
   "atraxa_praetors_voice": {
-    "status": "In progress: shared counters, Tekuthal costs and cast-to-entry metadata verified",
+    "status": "In progress: shared search, deployment, polymorph and delayed-return entry replacements verified",
     "oracle_verified": true,
     "active_decklist_source": "commander_test_decks_color_fixes.csv",
-    "last_verified": "2026-10-14",
+    "last_verified": "2026-10-15",
     "checks": {
       "focus_0": false,
       "focus_1": false,
@@ -3504,6 +3504,277 @@
     "verified_paragraphs": {
       "Tekuthal, Inquiry Dominus": [
         2
+      ],
+      "Narset, Parter of Veils": [
+        0,
+        1
+      ],
+      "Sorin the Mirthless": [
+        0
+      ],
+      "Experimental Augury": [
+        0
+      ],
+      "Teferi, Hero of Dominaria": [
+        0,
+        1
+      ],
+      "Vraska, Betrayal's Sting": [
+        0,
+        3
+      ],
+      "Oath of Teferi": [
+        0
+      ],
+      "Ichormoon Gauntlet": [
+        1
+      ],
+      "Ashiok, Dream Render": [
+        0,
+        1
+      ],
+      "Sword of Truth and Justice": [
+        1
+      ],
+      "Evolution Sage": [
+        0
+      ],
+      "Contagion Clasp": [
+        0,
+        1
+      ],
+      "Contagion Engine": [
+        0,
+        1
+      ],
+      "Karn's Bastion": [
+        0,
+        1
+      ],
+      "Bloated Contaminator": [
+        0,
+        1,
+        2
+      ],
+      "Cankerbloom": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Heroic Intervention": [
+        0
+      ],
+      "Sol Ring": [
+        0
+      ],
+      "Arcane Signet": [
+        0
+      ],
+      "Commander's Sphere": [
+        0,
+        1
+      ],
+      "Mind Stone": [
+        0,
+        1
+      ],
+      "Thought Vessel": [
+        0,
+        1
+      ],
+      "Wayfarer's Bauble": [
+        0
+      ],
+      "Worn Powerstone": [
+        0,
+        1
+      ],
+      "Burnished Hart": [
+        0
+      ],
+      "Solemn Simulacrum": [
+        0,
+        1
+      ],
+      "Swiftfoot Boots": [
+        0,
+        1
+      ],
+      "Lightning Greaves": [
+        0,
+        1
+      ],
+      "Skullclamp": [
+        0,
+        1,
+        2
+      ],
+      "Tormod's Crypt": [
+        0
+      ],
+      "Relic of Progenitus": [
+        0,
+        1
+      ],
+      "Nihil Spellbomb": [
+        0,
+        1
+      ],
+      "Soul-Guide Lantern": [
+        0,
+        1,
+        2
+      ],
+      "Meteor Golem": [
+        0
+      ],
+      "Duplicant": [
+        0,
+        1
+      ],
+      "Steel Hellkite": [
+        0,
+        1,
+        2
+      ],
+      "Wurmcoil Engine": [
+        0,
+        1
+      ],
+      "Trading Post": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Unwinding Clock": [
+        0
+      ],
+      "Command Tower": [
+        0
+      ],
+      "Exotic Orchard": [
+        0
+      ],
+      "Path of Ancestry": [
+        0,
+        1
+      ],
+      "Evolving Wilds": [
+        0
+      ],
+      "Terramorphic Expanse": [
+        0
+      ],
+      "Ash Barrens": [
+        0,
+        1
+      ],
+      "Myriad Landscape": [
+        0,
+        1,
+        2
+      ],
+      "Reliquary Tower": [
+        0,
+        1
+      ],
+      "Rogue's Passage": [
+        0,
+        1
+      ],
+      "War Room": [
+        0,
+        1
+      ],
+      "Buried Ruin": [
+        0,
+        1
+      ],
+      "Field of Ruin": [
+        0,
+        1
+      ],
+      "Ghost Quarter": [
+        0,
+        1
+      ],
+      "Scavenger Grounds": [
+        0,
+        1
+      ],
+      "Blast Zone": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Temple of the False God": [
+        0
+      ],
+      "Dimir Aqueduct": [
+        0,
+        1,
+        2
+      ],
+      "Dismal Backwater": [
+        0,
+        1,
+        2
+      ],
+      "Dimir Guildgate": [
+        0,
+        1
+      ],
+      "Selesnya Sanctuary": [
+        0,
+        1,
+        2
+      ],
+      "Forest": [
+        0
+      ],
+      "Plains": [
+        0
+      ],
+      "Island": [
+        0
+      ],
+      "Swamp": [
+        0
+      ],
+      "The Chain Veil": [
+        0,
+        1
+      ],
+      "Tamiyo, Field Researcher": [
+        0,
+        1
+      ],
+      "Teferi, Master of Time": [
+        0
+      ],
+      "Staff of Compleation": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "Smell Fear": [
+        0,
+        1
+      ],
+      "Tamiyo, Compleated Sage": [
+        0,
+        2
+      ],
+      "Doubling Season": [
+        0
+      ],
+      "Elspeth, Sun's Champion": [
+        0
       ]
     },
     "evidence": [
@@ -3511,16 +3782,899 @@
       "tests/counter-effects-ui.cjs",
       "tests/network.test.mjs",
       "tests/counter-costs.test.mjs",
-      "tests/entry-casting.test.mjs"
+      "tests/entry-casting.test.mjs",
+      "tests/atraxa-library.test.mjs",
+      "tests/atraxa-library-ui.cjs",
+      "tests/atraxa-delayed.test.mjs",
+      "tests/atraxa-control.test.mjs",
+      "tests/atraxa-duration.test.mjs",
+      "tests/atraxa-duration-ui.cjs",
+      "tests/commander-evidence.test.mjs",
+      "tests/atraxa-activations.test.mjs",
+      "tests/atraxa-activations-ui.cjs",
+      "tests/entry-replacements.test.mjs",
+      "tests/entry-replacements-ui.cjs",
+      "tests/entry-batches.test.mjs",
+      "tests/permanent-copy.test.mjs",
+      "tests/entry-routes.test.mjs",
+      "tests/entry-routes-ui.cjs"
     ],
     "limitations": [
-      "Oracle retrieval is complete: 100 copies across 88 records. Counter coverage includes 37 focused cases, the renderer workflow, and real three-client spell/loyalty-cost reconnect cases; the complete card-action audit is still pending.",
-      "Shared counter plans handle Oracle effects, positive loyalty activation costs, affected-player replacement order, each counter kind, player counters, repeated proliferates and Deepglow-style doubling. Negative loyalty costs preserve zero so state-based actions remove the walker while its ability remains on the stack. Distributed counter-removal activation costs now have Tekuthal unit/renderer/network evidence; entry counters, damage counters and the remaining provider paragraphs are still pending.",
-      "Cast-to-entry metadata is verified with real Tamiyo/Vraska, X and sunburst fixtures, renderer reload, and a three-client reconnect (1,045 unit tests pass). Ordinary compleated entry amounts now use actual Phyrexian life payment; unrelated life costs do not reduce loyalty. External entry-counter replacements and their ordering/trigger timing are not yet connected, so compleated/provider paragraphs remain unchecked.",
-      "Pending planeswalker families: compleated ordering with external entry-counter replacements, temporary type/ability changes, poison floors, delayed land untaps, library insertion, phasing, emblems, temporary combat-damage grants, extra turns, private library choices, draw/search restrictions and graveyard milling/exile.",
-      "Pending shared actions: Oath blink/return, Chain Veil turn-wide activation tracking, Gauntlet counter-kind choice, equipment combat-counter/proliferate sequences, optional fight roles, Staff life-cost abilities and the new Azorius lands.",
-      "Finish the card-action audit, focused Electron and multiplayer scenarios, and full regression before fetching Hapatra.",
-      "User-requested next gate: after Atraxa is fully verified, take a break from the deck queue to refactor shared paths for efficiency and readability, preserve current gameplay, and add useful section/behavior comments before continuing later decks."
-    ]
+      "Oracle retrieval is complete: 100 copies across 88 records. The paragraph boxes below define the verified scope; Atraxa all-card actions, complete-deck Electron and final regression gates remain open. Overall completion is 10/39 decks; do not fetch Hapatra yet.",
+      "Current checkpoint: 1,259 unit/network tests pass. Eleven new entry-route cases, two real two-client reconnect/choice-ownership cases, the entry-routes Electron workflow and existing entry-replacement, playtest-deck and Atraxa-library Electron regressions pass. Historical checkpoint details are preserved in docs/rules-implementation.md.",
+      "Shared staged entries now cover permanent spells, manual and resolved token copies, ordinary token instructions, Populate, the implemented reanimation families, searches, hand deployment, polymorph reveals, shuffle/reveal entry, Sun Titan-style returns and tracked end-step returns. Counter replacements precede entry; later instructions wait. Incoming batch companions cannot change counter or tapped-entry replacements. Library privacy and revealed-card scope survive saved choices.",
+      "Remaining entry work: legacy direct/tabletop moves and Myriad entry counters; complete pre-entry handling of variable values, shock-life choices, manual conditions, as-enters cloning and temporary copy effects. The current shared operation does not certify every replacement effect or entry permission.",
+      "Damage counter replacements, remaining provider interactions, temporary type/ability changes, remaining planeswalker/emblem/phasing/extra-turn paragraph audits, combat equipment and the new Azorius lands remain open until supported by their own scenario evidence. Existing related tests do not automatically certify these unchecked paragraphs.",
+      "53 shared cards reuse earlier completed-deck evidence only when full rules characteristics and Oracle text match. Each reuse links its original source deck and tests. This is separate from Atraxa-specific interactions and final complete-deck gates.",
+      "After Atraxa is fully verified, follow the user-requested efficiency/readability refactor with useful section and behavior comments, preserving current gameplay, before continuing later decks."
+    ],
+    "reused_cards": {
+      "Evolution Sage": {
+        "deck": "fynn_the_fangbearer",
+        "paragraphs": [
+          0
+        ],
+        "evidence": [
+          "tests/fynn.test.mjs",
+          "tests/fynn-ui.cjs",
+          "tests/network.test.mjs",
+          "tests/goreclaw.test.mjs",
+          "tests/arahbo.test.mjs",
+          "tests/isshin-utilities.test.mjs",
+          "tests/vehicles.test.mjs"
+        ]
+      },
+      "Contagion Clasp": {
+        "deck": "fynn_the_fangbearer",
+        "paragraphs": [
+          0,
+          1
+        ],
+        "evidence": [
+          "tests/fynn.test.mjs",
+          "tests/fynn-ui.cjs",
+          "tests/network.test.mjs",
+          "tests/goreclaw.test.mjs",
+          "tests/arahbo.test.mjs",
+          "tests/isshin-utilities.test.mjs",
+          "tests/vehicles.test.mjs"
+        ]
+      },
+      "Contagion Engine": {
+        "deck": "fynn_the_fangbearer",
+        "paragraphs": [
+          0,
+          1
+        ],
+        "evidence": [
+          "tests/fynn.test.mjs",
+          "tests/fynn-ui.cjs",
+          "tests/network.test.mjs",
+          "tests/goreclaw.test.mjs",
+          "tests/arahbo.test.mjs",
+          "tests/isshin-utilities.test.mjs",
+          "tests/vehicles.test.mjs"
+        ]
+      },
+      "Karn's Bastion": {
+        "deck": "fynn_the_fangbearer",
+        "paragraphs": [
+          0,
+          1
+        ],
+        "evidence": [
+          "tests/fynn.test.mjs",
+          "tests/fynn-ui.cjs",
+          "tests/network.test.mjs",
+          "tests/goreclaw.test.mjs",
+          "tests/arahbo.test.mjs",
+          "tests/isshin-utilities.test.mjs",
+          "tests/vehicles.test.mjs"
+        ]
+      },
+      "Bloated Contaminator": {
+        "deck": "fynn_the_fangbearer",
+        "paragraphs": [
+          0,
+          1,
+          2
+        ],
+        "evidence": [
+          "tests/fynn.test.mjs",
+          "tests/fynn-ui.cjs",
+          "tests/network.test.mjs",
+          "tests/goreclaw.test.mjs",
+          "tests/arahbo.test.mjs",
+          "tests/isshin-utilities.test.mjs",
+          "tests/vehicles.test.mjs"
+        ]
+      },
+      "Cankerbloom": {
+        "deck": "fynn_the_fangbearer",
+        "paragraphs": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "evidence": [
+          "tests/fynn.test.mjs",
+          "tests/fynn-ui.cjs",
+          "tests/network.test.mjs",
+          "tests/goreclaw.test.mjs",
+          "tests/arahbo.test.mjs",
+          "tests/isshin-utilities.test.mjs",
+          "tests/vehicles.test.mjs"
+        ]
+      },
+      "Heroic Intervention": {
+        "deck": "arahbo_roar_of_the_world",
+        "paragraphs": [
+          0
+        ],
+        "evidence": [
+          "tests/arahbo.test.mjs",
+          "tests/arahbo-combat.test.mjs",
+          "tests/arahbo-utilities.test.mjs",
+          "tests/destruction.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/arahbo-ui.cjs",
+          "tests/arahbo-actions-ui.cjs",
+          "tests/vehicles-ui.cjs",
+          "tests/goreclaw.test.mjs",
+          "tests/aurelia-utilities.test.mjs",
+          "tests/network.test.mjs"
+        ]
+      },
+      "Sol Ring": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Arcane Signet": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Commander's Sphere": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0,
+          1
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Mind Stone": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0,
+          1
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Thought Vessel": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0,
+          1
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Wayfarer's Bauble": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Worn Powerstone": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0,
+          1
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Burnished Hart": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Solemn Simulacrum": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0,
+          1
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Swiftfoot Boots": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0,
+          1
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Lightning Greaves": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0,
+          1
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Skullclamp": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0,
+          1,
+          2
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Tormod's Crypt": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Relic of Progenitus": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0,
+          1
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Nihil Spellbomb": {
+        "deck": "isshin_two_heavens_as_one",
+        "paragraphs": [
+          0,
+          1
+        ],
+        "evidence": [
+          "tests/isshin.test.mjs",
+          "tests/isshin-utilities.test.mjs",
+          "tests/isshin-ui.cjs",
+          "tests/network.test.mjs",
+          "tests/goreclaw.test.mjs",
+          "tests/aurelia-utilities.test.mjs",
+          "tests/arahbo.test.mjs",
+          "tests/extra-combat.test.mjs"
+        ]
+      },
+      "Soul-Guide Lantern": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0,
+          1,
+          2
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Meteor Golem": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Duplicant": {
+        "deck": "aurelia_the_warleader",
+        "paragraphs": [
+          0,
+          1
+        ],
+        "evidence": [
+          "tests/aurelia.test.mjs",
+          "tests/battlefield-entry.test.mjs",
+          "tests/hotseat-ui.cjs",
+          "tests/spell-resolution.test.mjs",
+          "tests/spell-resolution-ui.cjs",
+          "tests/extra-combat.test.mjs",
+          "tests/aurelia-ui.cjs",
+          "tests/aurelia-combat.test.mjs",
+          "tests/aurelia-actions-ui.cjs",
+          "tests/aurelia-utilities.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Steel Hellkite": {
+        "deck": "aurelia_the_warleader",
+        "paragraphs": [
+          0,
+          1,
+          2
+        ],
+        "evidence": [
+          "tests/aurelia.test.mjs",
+          "tests/battlefield-entry.test.mjs",
+          "tests/hotseat-ui.cjs",
+          "tests/spell-resolution.test.mjs",
+          "tests/spell-resolution-ui.cjs",
+          "tests/extra-combat.test.mjs",
+          "tests/aurelia-ui.cjs",
+          "tests/aurelia-combat.test.mjs",
+          "tests/aurelia-actions-ui.cjs",
+          "tests/aurelia-utilities.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Wurmcoil Engine": {
+        "deck": "aurelia_the_warleader",
+        "paragraphs": [
+          0,
+          1
+        ],
+        "evidence": [
+          "tests/aurelia.test.mjs",
+          "tests/battlefield-entry.test.mjs",
+          "tests/hotseat-ui.cjs",
+          "tests/spell-resolution.test.mjs",
+          "tests/spell-resolution-ui.cjs",
+          "tests/extra-combat.test.mjs",
+          "tests/aurelia-ui.cjs",
+          "tests/aurelia-combat.test.mjs",
+          "tests/aurelia-actions-ui.cjs",
+          "tests/aurelia-utilities.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Trading Post": {
+        "deck": "aurelia_the_warleader",
+        "paragraphs": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "evidence": [
+          "tests/aurelia.test.mjs",
+          "tests/battlefield-entry.test.mjs",
+          "tests/hotseat-ui.cjs",
+          "tests/spell-resolution.test.mjs",
+          "tests/spell-resolution-ui.cjs",
+          "tests/extra-combat.test.mjs",
+          "tests/aurelia-ui.cjs",
+          "tests/aurelia-combat.test.mjs",
+          "tests/aurelia-actions-ui.cjs",
+          "tests/aurelia-utilities.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Unwinding Clock": {
+        "deck": "aurelia_the_warleader",
+        "paragraphs": [
+          0
+        ],
+        "evidence": [
+          "tests/aurelia.test.mjs",
+          "tests/battlefield-entry.test.mjs",
+          "tests/hotseat-ui.cjs",
+          "tests/spell-resolution.test.mjs",
+          "tests/spell-resolution-ui.cjs",
+          "tests/extra-combat.test.mjs",
+          "tests/aurelia-ui.cjs",
+          "tests/aurelia-combat.test.mjs",
+          "tests/aurelia-actions-ui.cjs",
+          "tests/aurelia-utilities.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Command Tower": {
+        "deck": "aurelia_the_warleader",
+        "paragraphs": [
+          0
+        ],
+        "evidence": [
+          "tests/aurelia.test.mjs",
+          "tests/battlefield-entry.test.mjs",
+          "tests/hotseat-ui.cjs",
+          "tests/spell-resolution.test.mjs",
+          "tests/spell-resolution-ui.cjs",
+          "tests/extra-combat.test.mjs",
+          "tests/aurelia-ui.cjs",
+          "tests/aurelia-combat.test.mjs",
+          "tests/aurelia-actions-ui.cjs",
+          "tests/aurelia-utilities.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Exotic Orchard": {
+        "deck": "aurelia_the_warleader",
+        "paragraphs": [
+          0
+        ],
+        "evidence": [
+          "tests/aurelia.test.mjs",
+          "tests/battlefield-entry.test.mjs",
+          "tests/hotseat-ui.cjs",
+          "tests/spell-resolution.test.mjs",
+          "tests/spell-resolution-ui.cjs",
+          "tests/extra-combat.test.mjs",
+          "tests/aurelia-ui.cjs",
+          "tests/aurelia-combat.test.mjs",
+          "tests/aurelia-actions-ui.cjs",
+          "tests/aurelia-utilities.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Path of Ancestry": {
+        "deck": "aurelia_the_warleader",
+        "paragraphs": [
+          0,
+          1
+        ],
+        "evidence": [
+          "tests/aurelia.test.mjs",
+          "tests/battlefield-entry.test.mjs",
+          "tests/hotseat-ui.cjs",
+          "tests/spell-resolution.test.mjs",
+          "tests/spell-resolution-ui.cjs",
+          "tests/extra-combat.test.mjs",
+          "tests/aurelia-ui.cjs",
+          "tests/aurelia-combat.test.mjs",
+          "tests/aurelia-actions-ui.cjs",
+          "tests/aurelia-utilities.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Evolving Wilds": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Terramorphic Expanse": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Ash Barrens": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0,
+          1
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Myriad Landscape": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0,
+          1,
+          2
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Reliquary Tower": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0,
+          1
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Rogue's Passage": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0,
+          1
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "War Room": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0,
+          1
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Buried Ruin": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0,
+          1
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Field of Ruin": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0,
+          1
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Ghost Quarter": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0,
+          1
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Scavenger Grounds": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0,
+          1
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Blast Zone": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Temple of the False God": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Dimir Aqueduct": {
+        "deck": "kess_dissident_mage",
+        "paragraphs": [
+          0,
+          1,
+          2
+        ],
+        "evidence": [
+          "tests/kess.test.mjs",
+          "tests/kess-ui.cjs",
+          "tests/network.test.mjs",
+          "tests/mizzix.test.mjs",
+          "tests/kalamax.test.mjs",
+          "tests/niv-mizzet.test.mjs"
+        ]
+      },
+      "Dismal Backwater": {
+        "deck": "kess_dissident_mage",
+        "paragraphs": [
+          0,
+          1,
+          2
+        ],
+        "evidence": [
+          "tests/kess.test.mjs",
+          "tests/kess-ui.cjs",
+          "tests/network.test.mjs",
+          "tests/mizzix.test.mjs",
+          "tests/kalamax.test.mjs",
+          "tests/niv-mizzet.test.mjs"
+        ]
+      },
+      "Dimir Guildgate": {
+        "deck": "kess_dissident_mage",
+        "paragraphs": [
+          0,
+          1
+        ],
+        "evidence": [
+          "tests/kess.test.mjs",
+          "tests/kess-ui.cjs",
+          "tests/network.test.mjs",
+          "tests/mizzix.test.mjs",
+          "tests/kalamax.test.mjs",
+          "tests/niv-mizzet.test.mjs"
+        ]
+      },
+      "Selesnya Sanctuary": {
+        "deck": "arahbo_roar_of_the_world",
+        "paragraphs": [
+          0,
+          1,
+          2
+        ],
+        "evidence": [
+          "tests/arahbo.test.mjs",
+          "tests/arahbo-combat.test.mjs",
+          "tests/arahbo-utilities.test.mjs",
+          "tests/destruction.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/arahbo-ui.cjs",
+          "tests/arahbo-actions-ui.cjs",
+          "tests/vehicles-ui.cjs",
+          "tests/goreclaw.test.mjs",
+          "tests/aurelia-utilities.test.mjs",
+          "tests/network.test.mjs"
+        ]
+      },
+      "Forest": {
+        "deck": "goreclaw_terror_of_qal_sisma",
+        "paragraphs": [
+          0
+        ],
+        "evidence": [
+          "tests/goreclaw.test.mjs",
+          "tests/goreclaw-ui.cjs",
+          "tests/combat.test.mjs",
+          "tests/phase-flow.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Plains": {
+        "deck": "aurelia_the_warleader",
+        "paragraphs": [
+          0
+        ],
+        "evidence": [
+          "tests/aurelia.test.mjs",
+          "tests/battlefield-entry.test.mjs",
+          "tests/hotseat-ui.cjs",
+          "tests/spell-resolution.test.mjs",
+          "tests/spell-resolution-ui.cjs",
+          "tests/extra-combat.test.mjs",
+          "tests/aurelia-ui.cjs",
+          "tests/aurelia-combat.test.mjs",
+          "tests/aurelia-actions-ui.cjs",
+          "tests/aurelia-utilities.test.mjs",
+          "tests/vehicles.test.mjs",
+          "tests/vehicles-ui.cjs"
+        ]
+      },
+      "Island": {
+        "deck": "talrand_sky_summoner",
+        "paragraphs": [
+          0
+        ],
+        "evidence": [
+          "tests/talrand.test.mjs",
+          "tests/talrand-ui.cjs",
+          "tests/network.test.mjs",
+          "tests/goreclaw.test.mjs",
+          "tests/arahbo-utilities.test.mjs",
+          "tests/isshin-utilities.test.mjs",
+          "tests/vehicles.test.mjs"
+        ]
+      },
+      "Swamp": {
+        "deck": "isshin_two_heavens_as_one",
+        "paragraphs": [
+          0
+        ],
+        "evidence": [
+          "tests/isshin.test.mjs",
+          "tests/isshin-utilities.test.mjs",
+          "tests/isshin-ui.cjs",
+          "tests/network.test.mjs",
+          "tests/goreclaw.test.mjs",
+          "tests/aurelia-utilities.test.mjs",
+          "tests/arahbo.test.mjs",
+          "tests/extra-combat.test.mjs"
+        ]
+      }
+    }
   }
 }

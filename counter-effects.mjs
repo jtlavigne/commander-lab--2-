@@ -30,10 +30,10 @@ export function permanentCounterEvent(g,actor,id,counters,cause='effect'){
  return {actor,recipient:{kind:'card',id,owner:found.owner,battlefieldId:found.card.battlefieldId||null},counters,cause};
 }
 export const playerCounterEvent=(actor,owner,counters,cause='effect')=>({actor,recipient:{kind:'player',owner},counters,cause});
-function initialState(g,event){
+function initialState(g,event,enteringCard){
  if(!event||!Number.isInteger(event.actor)||!g.players[event.actor]||!Number.isInteger(event.recipient?.owner)||!g.players[event.recipient.owner]||!['card','player'].includes(event.recipient.kind)||!['effect','entry','cost','damage'].includes(event.cause)||!event.counters||typeof event.counters!=='object'||Array.isArray(event.counters)||Object.entries(event.counters).some(([kind,n])=>!kind||kind.length>100||!whole(n)))throw Error('Invalid counter event.');
- const found=event.recipient.kind==='card'?findCard(g,event.recipient.id):null,card=found?.card;
- if(event.recipient.kind==='card'&&(found?.zone!=='battlefield'||found.owner!==event.recipient.owner||(card.battlefieldId||null)!==event.recipient.battlefieldId))throw Error('Counter recipient is no longer that permanent.');
+ const found=event.recipient.kind==='card'?findCard(g,event.recipient.id):null,card=enteringCard||found?.card;
+ if(!enteringCard&&event.recipient.kind==='card'&&(found?.zone!=='battlefield'||found.owner!==event.recipient.owner||(card.battlefieldId||null)!==event.recipient.battlefieldId))throw Error('Counter recipient is no longer that permanent.');
  let counters=Object.fromEntries(Object.entries(event.counters).filter(([,n])=>n>0));
  if(event.recipient.kind==='player')for(const kind of Object.keys(counters))if(g.players[event.recipient.owner].zones.battlefield.some(c=>!c.faceDown&&new RegExp(kind==='poison'?"You can't (?:get poison counters|get counters)\\.":"You can't get counters\\.",'i').test(cardFace(c).oracle_text||'')))delete counters[kind];
  return {...structuredClone(event),counters,effect:event.cause!=='cost',providers:providers(g,event,card),applied:[],label:card?.name||g.players[event.recipient.owner].name};
@@ -41,7 +41,7 @@ function initialState(g,event){
 function applies(state,rule){return !state.applied.includes(rule.key)&&(!rule.effectOnly||state.effect)&&Object.entries(state.counters).some(([kind,n])=>n>0&&(!rule.kinds||rule.kinds.includes(kind)));}
 function commute(a,b,state){return a.operation===b.operation||!Object.keys(state.counters).some(kind=>(!a.kinds||a.kinds.includes(kind))&&(!b.kinds||b.kinds.includes(kind)));}
 function apply(state,rule){
- for(const [kind,n] of Object.entries(state.counters))if(n>0&&(!rule.kinds||rule.kinds.includes(kind))){const next=rule.operation==='double'?n*2:rule.operation==='half'?Math.floor(n/2):n+1;if(!whole(next))throw Error('Counter count is too large.');state.counters[kind]=next;}
+ for(const [kind,n] of Object.entries(state.counters))if(n>0&&(!rule.kinds||rule.kinds.includes(kind))){const next=rule.operation==='double'?n*2:rule.operation==='half'?Math.floor(n/2):rule.operation==='subtract'?Math.max(0,n-rule.amount):n+1;if(!whole(next))throw Error('Counter count is too large.');state.counters[kind]=next;}
  // CR 614.16: an effect-only replacement may become applicable after another
  // replacement places counters, even when the original placement was a cost.
  state.applied.push(rule.key);state.effect=true;
@@ -52,6 +52,20 @@ function apply(state,rule){
 export function createCounterPlan(g,events){
  if(!Array.isArray(events)||events.length>500)throw Error('Too many counter events.');
  return {states:events.filter(Boolean).map(event=>initialState(g,event)).sort((a,b)=>(a.recipient.owner-g.active+g.players.length)%g.players.length-(b.recipient.owner-g.active+g.players.length)%g.players.length),index:0};
+}
+// Entry replacements are planned against the battlefield BEFORE the batch
+// enters (CR 614.12). An incoming global provider cannot modify itself or
+// another member of that simultaneous batch. Its intrinsic compleated
+// replacement can still participate in the controller's chosen order.
+export function createEntryCounterPlan(g,entries){
+ if(!Array.isArray(entries)||entries.length>500)throw Error('Too many entering permanents.');
+ const states=entries.map(({card,owner,compleatedLife=0})=>{
+  if(!whole(compleatedLife)||compleatedLife%2)throw Error('Invalid compleated life payment.');
+  const state=initialState(g,{actor:owner,recipient:{kind:'card',id:card.instance,owner,battlefieldId:card.battlefieldId||null},counters:card.counters,cause:'entry'},card);
+  if(compleatedLife&&/(?:^|\n)Compleated\b/i.test(cardFace(card).oracle_text||'')&&/\bPlaneswalker\b/.test(cardFace(card).type_line||''))state.providers.push({key:card.instance+':compleated',name:card.name+' (compleated)',kinds:['loyalty'],effectOnly:false,operation:'subtract',amount:compleatedLife});
+  return state;
+ });
+ return {states:states.sort((a,b)=>(a.recipient.owner-g.active+g.players.length)%g.players.length-(b.recipient.owner-g.active+g.players.length)%g.players.length),index:0};
 }
 export function advanceCounterPlan(plan,key){
  if(key!==undefined){const state=plan.states[plan.index],rule=state?.providers.find(rule=>rule.key===key&&applies(state,rule));if(!rule)throw Error('Choose an available counter replacement.');apply(state,rule);}
@@ -77,5 +91,5 @@ export function proliferateCount(g,owner){let count=1;for(const source of g.play
 export function validateCounterPlan(plan,fail,playerCount){
  const seat=n=>Number.isInteger(n)&&n>=0&&n<playerCount,string=s=>typeof s==='string'&&s.length<=3000;
  if(!plan||!Array.isArray(plan.states)||plan.states.length>500||!Number.isInteger(plan.index)||plan.index<0||plan.index>plan.states.length)fail();
- for(const state of plan.states){if(!seat(state.actor)||!seat(state.recipient?.owner)||!['card','player'].includes(state.recipient.kind)||state.recipient.kind==='card'&&(!string(state.recipient.id)||state.recipient.battlefieldId!==null&&!string(state.recipient.battlefieldId))||!['effect','entry','cost','damage'].includes(state.cause)||typeof state.effect!=='boolean'||!string(state.label)||!state.counters||Array.isArray(state.counters)||Object.entries(state.counters).some(([kind,n])=>!kind||kind.length>100||!whole(n))||!Array.isArray(state.providers)||state.providers.length>1000||!Array.isArray(state.applied)||state.applied.length>1000||new Set(state.applied).size!==state.applied.length)fail();for(const rule of state.providers)if(!rule||!string(rule.key)||!string(rule.name)||!['double','half','add'].includes(rule.operation)||typeof rule.effectOnly!=='boolean'||rule.kinds!==null&&(!Array.isArray(rule.kinds)||rule.kinds.some(k=>!string(k))))fail();if(state.applied.some(key=>!state.providers.some(rule=>rule.key===key)))fail();}
+ for(const state of plan.states){if(!seat(state.actor)||!seat(state.recipient?.owner)||!['card','player'].includes(state.recipient.kind)||state.recipient.kind==='card'&&(!string(state.recipient.id)||state.recipient.battlefieldId!==null&&!string(state.recipient.battlefieldId))||!['effect','entry','cost','damage'].includes(state.cause)||typeof state.effect!=='boolean'||!string(state.label)||!state.counters||Array.isArray(state.counters)||Object.entries(state.counters).some(([kind,n])=>!kind||kind.length>100||!whole(n))||!Array.isArray(state.providers)||state.providers.length>1000||!Array.isArray(state.applied)||state.applied.length>1000||new Set(state.applied).size!==state.applied.length)fail();for(const rule of state.providers)if(!rule||!string(rule.key)||!string(rule.name)||!['double','half','add','subtract'].includes(rule.operation)||rule.operation==='subtract'&&(state.cause!=='entry'||!whole(rule.amount)||rule.amount===0)||typeof rule.effectOnly!=='boolean'||rule.kinds!==null&&(!Array.isArray(rule.kinds)||rule.kinds.some(k=>!string(k))))fail();if(state.applied.some(key=>!state.providers.some(rule=>rule.key===key)))fail();}
 }

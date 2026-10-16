@@ -3,8 +3,13 @@ import {addExtraTurns,phaseOut} from './turn-effects.mjs';
 import {findCard,transfer} from './engine.mjs';
 import {removePermanents} from './combat.mjs';
 
-export const TEMPORAL_OPERATIONS=['emblem','extraTurns','phaseOut','delayDraw','drawCount','cumulativeUpkeep','sacrificeSource','delayedCopy','delayReturn','returnTracked'];
+export const TEMPORAL_OPERATIONS=['watchDamage','tapAndFreeze','emblem','extraTurns','phaseOut','delayDraw','delayEndUntap','exileUntilEnd','returnExiledTracked','drawCount','cumulativeUpkeep','sacrificeSource','delayedCopy','delayReturn','returnTracked'];
 export function compileTemporalEffect(text){let m;
+ if(/^Choose up to (?:one|two|three|\d+) target creatures?\. Until your next turn, whenever (?:either|one) of those creatures deals combat damage, you draw a card\.$/i.test(text))return [{op:'watchDamage',combatOnly:true,text:'Draw a card.'}];
+ if(/^Tap up to (?:one|two|three|\d+) target nonland permanents?\. They don't untap during their controller's next untap step\.$/i.test(text))return [{op:'tapAndFreeze'}];
+ if(/^Exile another target permanent you control\. Return it to the battlefield under its owner's control at the beginning of the next end step\.$/i.test(text))return [{op:'exileUntilEnd'}];
+ if(text==="Return the tracked exiled card to the battlefield under its owner's control.")return [{op:'returnExiledTracked'}];
+ if((m=text.match(/^At the beginning of the next end step, untap up to (one|two|three|four|\d+) lands\.$/i)))return [{op:'delayEndUntap',amount:({one:1,two:2,three:3,four:4}[m[1].toLowerCase()]??Number(m[1]))}];
  if((m=text.match(/^You get an emblem with ["\u201c]([^]+)["\u201d]\.?$/i)))return [{op:'emblem',text:m[1]}];
  if((m=text.match(/^Take (an?|one|two|three|\d+) extra turns? after this one\.$/i)))return [{op:'extraTurns',amount:({a:1,an:1,one:1,two:2,three:3}[m[1].toLowerCase()]??Number(m[1]))}];
  if(/^Target creature you don't control phases out\.$/i.test(text))return [{op:'phaseOut'}];
@@ -19,6 +24,30 @@ export function compileTemporalEffect(text){let m;
  return null;
 }
 export function runTemporalStep(g,context,step,remaining,run){
+ if(step.op==='watchDamage'||step.op==='tapAndFreeze'){
+  const targets=(context.targets||[]).filter(t=>{const found=findCard(g,t.id);return found?.zone==='battlefield'&&(found.card.battlefieldId||null)===t.battlefieldId;});
+  if(step.op==='watchDamage'&&targets.length)(g.delayedTriggers??=[]).push({owner:context.owner,source:context.source,kind:'damage',afterTurn:g.turn+':'+g.active,untilNextTurn:true,combatOnly:step.combatOnly,targets:targets.map(t=>({id:t.id,battlefieldId:t.battlefieldId})),text:step.text});
+  if(step.op==='tapAndFreeze')for(const target of targets){const card=findCard(g,target.id).card;card.tapped=true;card.skipNextUntap=true;}
+  return true;
+ }
+ if(step.op==='exileUntilEnd'){
+  for(const target of context.targets||[]){const found=findCard(g,target.id);if(found?.zone!=='battlefield'||(found.card.battlefieldId||null)!==target.battlefieldId)continue;
+   const card=found.card,owner=card.ownerSeat??found.owner;transfer(g,card.instance,'exile',owner);
+   // A delayed return tracks the exiled object, not a card name or current
+   // source. Tokens cannot come back after leaving the battlefield.
+   if(!card.token)(g.delayedTriggers??=[]).push({owner:context.owner,source:{...context.source,delayedExile:{id:card.instance,zoneChangeId:card.zoneChangeId,owner}},kind:'end-step',afterTurn:g.turn+':'+g.active,text:"Return the tracked exiled card to the battlefield under its owner's control."});
+  }return true;
+ }
+ if(step.op==='returnExiledTracked'){
+  const ref=context.source.delayedExile,found=ref&&findCard(g,ref.id);
+  if(found?.zone==='exile'&&!found.card.token&&found.card.zoneChangeId===ref.zoneChangeId&&!g.players[ref.owner]?.eliminated){run(g,context,[{op:'enterPermanents',requests:[{id:ref.id,owner:ref.owner}]},...remaining]);return 'paused';}
+  return true;
+ }
+ if(step.op==='delayEndUntap'){
+  // The chosen lands are not targets and are chosen only when the delayed
+  // trigger resolves. Leaving the battlefield does not cancel this trigger.
+  (g.delayedTriggers??=[]).push({owner:context.owner,source:context.source,kind:'end-step',afterTurn:g.turn+':'+g.active,text:'Untap up to '+step.amount+' lands.'});return true;
+ }
  if(step.op==='emblem'){createEmblem(g,context.owner,context.source,step.text);return true;}
  if(step.op==='extraTurns'){addExtraTurns(g,context.owner,step.amount);return true;}
  if(step.op==='phaseOut'){for(const target of context.targets||[])phaseOut(g,target.id);return true;}

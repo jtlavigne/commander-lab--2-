@@ -12,3 +12,8 @@ contextBridge.exposeInMainWorld('tableNetwork',{
  onStatus(callback){const listener=(_event,status)=>callback(status);ipcRenderer.on('table-status',listener);return ()=>ipcRenderer.removeListener('table-status',listener);}
 });
 contextBridge.exposeInMainWorld('desktopApp',{exit:()=>tableCall('app-exit')});
+contextBridge.exposeInMainWorld('appUpdates',{
+ status:()=>tableCall('app-update-status'),check:()=>tableCall('app-update-check'),
+ download:()=>tableCall('app-update-download'),install:()=>tableCall('app-update-install'),
+ onState(callback){const listener=(_event,state)=>callback(state);ipcRenderer.on('app-update-state',listener);return ()=>ipcRenderer.removeListener('app-update-state',listener);}
+});

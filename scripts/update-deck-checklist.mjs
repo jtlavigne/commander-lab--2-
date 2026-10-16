@@ -66,6 +66,7 @@ for(const [index,deck] of manifest.entries()){
   if(!record){lines.push('- [ ] Fetch Oracle text, enumerate every printed and granted action, and verify relevant interactions.','');continue;}
   lines.push(`Oracle: [Scryfall](${record.scryfall_uri}); ${record.type_line}; cost ${record.mana_cost||'—'}${record.power!==undefined?`; ${code(record.power+'/'+record.toughness)}`:''}.`,'');
   const paragraphs=record.card_faces?.length?record.card_faces.flatMap(face=>(face.oracle_text||'').split('\n').filter(Boolean).map(text=>face.name+' ('+(face.mana_cost||'—')+') — '+text)):(record.oracle_text||'').split('\n').filter(Boolean);if(!paragraphs.length)lines.push('- [ ] Verify printed characteristics and intrinsic actions.');
+  if(p.reused_cards?.[record.name]){const reused=p.reused_cards[record.name];lines.push('Shared-card evidence: unchanged rules characteristics and Oracle text match ['+reused.deck+'](#'+reused.deck.replaceAll('_','-')+'), paragraphs '+reused.paragraphs.join(', ')+'. Evidence: '+reused.evidence.map(file=>'['+file+'](../'+file+')').join(', ')+'.','');}
   paragraphs.forEach((text,i)=>lines.push(`- ${mark(p.verified_paragraphs?.[record.name]?.includes(i))} ${escape(text)}`));lines.push('');
  }
 }

@@ -1,0 +1,149 @@
+{
+  "source": "https://api.scryfall.com/cards/collection",
+  "fetched": "2026-10-15",
+  "cards": [
+    {
+      "id": "08a5007f-06a0-40fa-a252-c38baa6b5c6f",
+      "oracle_id": "caa02547-66e3-4e27-a2d3-5e94f3e7a069",
+      "name": "Thraben Inspector",
+      "mana_cost": "{W}",
+      "cmc": 1.0,
+      "type_line": "Creature — Human Soldier",
+      "oracle_text": "When this creature enters, investigate. (Create a Clue token. It's an artifact with \"{2}, Sacrifice this token: Draw a card.\")",
+      "power": "1",
+      "toughness": "2",
+      "colors": [
+        "W"
+      ],
+      "color_identity": [
+        "W"
+      ],
+      "keywords": [
+        "Investigate"
+      ]
+    },
+    {
+      "id": "6ea45414-4047-4921-b77d-dfcba2fe7694",
+      "oracle_id": "bec6fb31-60a3-432f-ba36-aebf172f8b27",
+      "name": "Growing Ranks",
+      "mana_cost": "{2}{G/W}{G/W}",
+      "cmc": 4.0,
+      "type_line": "Enchantment",
+      "oracle_text": "At the beginning of your upkeep, populate. (Create a token that's a copy of a creature token you control.)",
+      "colors": [
+        "G",
+        "W"
+      ],
+      "color_identity": [
+        "G",
+        "W"
+      ],
+      "keywords": [
+        "Populate"
+      ]
+    },
+    {
+      "id": "0f97cdf4-231d-4bd0-af5e-bcb64ce1556c",
+      "oracle_id": "1a49ec1c-6150-4b46-b671-b7d6f4e301ae",
+      "name": "Growth-Chamber Guardian",
+      "mana_cost": "{1}{G}",
+      "cmc": 2.0,
+      "type_line": "Creature — Elf Crab Warrior",
+      "oracle_text": "{2}{G}: Adapt 2. (If this creature has no +1/+1 counters on it, put two +1/+1 counters on it.)\nWhenever one or more +1/+1 counters are put on this creature, you may search your library for a card named Growth-Chamber Guardian, reveal it, put it into your hand, then shuffle.",
+      "power": "2",
+      "toughness": "2",
+      "colors": [
+        "G"
+      ],
+      "color_identity": [
+        "G"
+      ],
+      "keywords": [
+        "Adapt"
+      ]
+    },
+    {
+      "id": "ef4e1c37-d520-4025-bd56-15ec452f6842",
+      "oracle_id": "e3c8cdf7-a26a-45eb-9498-99b618cfba99",
+      "name": "Fleecemane Lion",
+      "mana_cost": "{G}{W}",
+      "cmc": 2.0,
+      "type_line": "Creature — Cat",
+      "oracle_text": "{3}{G}{W}: Monstrosity 1. (If this creature isn't monstrous, put a +1/+1 counter on it and it becomes monstrous.)\nAs long as this creature is monstrous, it has hexproof and indestructible.",
+      "power": "3",
+      "toughness": "3",
+      "colors": [
+        "G",
+        "W"
+      ],
+      "color_identity": [
+        "G",
+        "W"
+      ],
+      "keywords": [
+        "Monstrosity"
+      ]
+    },
+    {
+      "id": "b8db6ab8-cd12-431a-bf18-28464cf03509",
+      "oracle_id": "73520b5a-3d55-40c9-af60-90fdd811934f",
+      "name": "Dromoka, the Eternal",
+      "mana_cost": "{3}{G}{W}",
+      "cmc": 5.0,
+      "type_line": "Legendary Creature — Dragon",
+      "oracle_text": "Flying\nWhenever a Dragon you control attacks, bolster 2. (Choose a creature with the least toughness among creatures you control and put two +1/+1 counters on it.)",
+      "power": "5",
+      "toughness": "5",
+      "colors": [
+        "G",
+        "W"
+      ],
+      "color_identity": [
+        "G",
+        "W"
+      ],
+      "keywords": [
+        "Bolster",
+        "Flying"
+      ]
+    },
+    {
+      "id": "59ea095b-af0e-4178-b6f4-816abb635fc0",
+      "oracle_id": "fb084141-cb80-479e-b5d4-114c1f31eb6c",
+      "name": "Generous Patron",
+      "mana_cost": "{2}{G}",
+      "cmc": 3.0,
+      "type_line": "Creature — Elf Advisor",
+      "oracle_text": "When this creature enters, support 2. (Put a +1/+1 counter on each of up to two other target creatures.)\nWhenever you put one or more counters on a creature you don't control, draw a card.",
+      "power": "1",
+      "toughness": "4",
+      "colors": [
+        "G"
+      ],
+      "color_identity": [
+        "G"
+      ],
+      "keywords": [
+        "Support"
+      ]
+    },
+    {
+      "id": "3525b8f3-8b5b-4f1e-9b18-8e925cf45413",
+      "oracle_id": "9a50418c-3cdc-4e3e-b02c-6da646093120",
+      "name": "Lead by Example",
+      "mana_cost": "{1}{G}",
+      "cmc": 2.0,
+      "type_line": "Instant",
+      "oracle_text": "Support 2. (Put a +1/+1 counter on each of up to two target creatures.)",
+      "colors": [
+        "G"
+      ],
+      "color_identity": [
+        "G"
+      ],
+      "keywords": [
+        "Support"
+      ]
+    }
+  ]
+}

@@ -1,8 +1,6 @@
 import {cardFace,manaValue} from './card-state.mjs';
-import {findCard,transfer} from './engine.mjs';
+import {findCard} from './engine.mjs';
 import {removePermanents} from './combat.mjs';
-import {queueCombatTriggers,snapshotCard} from './combat-effects.mjs';
-import {attachPermanent} from './attachments.mjs';
 
 export const REANIMATION_OPERATIONS=['reanimateAllLegendary','reanimate','victimize','reanimateAura','sacrificeTracked'];
 export function compileReanimationEffect(text){
@@ -17,23 +15,24 @@ export function reanimationChoiceOptions(g,pending){
  if(pending.step.op!=='victimize')return null;
  return g.players[pending.owner].zones.battlefield.filter(c=>/\bCreature\b/.test(cardFace(c).type_line||'')).map(c=>({key:c.instance,label:'Sacrifice '+c.name,zone:'battlefield'}));
 }
-export function runReanimationStep(g,context,step,remaining){
+export function runReanimationStep(g,context,step,remaining,run){
  if(step.op==='reanimateAllLegendary'){
-  const cards=g.players[context.owner].zones.graveyard.filter(card=>{const type=cardFace(card).type_line||'';return /\bLegendary\b/.test(type)&&/\b(?:Artifact|Battle|Creature|Enchantment|Land|Planeswalker)\b/.test(type);}),events=[];
-  for(const card of cards){transfer(g,card.instance,'battlefield',context.owner,undefined,{deferTriggers:true});events.push({kind:'enter',owner:context.owner,card:snapshotCard(card)});}
-  queueCombatTriggers(g,events);return 1;
+  const requests=g.players[context.owner].zones.graveyard.filter(card=>{const type=cardFace(card).type_line||'';return /\bLegendary\b/.test(type)&&/\b(?:Artifact|Battle|Creature|Enchantment|Land|Planeswalker)\b/.test(type);}).map(card=>({id:card.instance,owner:context.owner}));
+  run(g,context,[{op:'enterPermanents',requests},...remaining]);return 2;
  }
  if(step.op==='sacrificeTracked'){const ref=context.event?.card?.reanimationLink,found=ref&&findCard(g,ref.id);if(found?.zone==='battlefield'&&found.card.battlefieldId===ref.battlefieldId)removePermanents(g,[ref.id],{sacrifice:true});return 1;}
  if(step.op==='reanimateAura'){
   const aura=findCard(g,context.source.instance);if(aura?.zone!=='battlefield'||aura.card.battlefieldId!==context.source.battlefieldId)return 1;
   const target=findCard(g,aura.card.attachedTo);if(target?.zone!=='graveyard'||(target.card.zoneChangeId||null)!==aura.card.attachedZoneChangeId)return 1;
   delete aura.card.attachedTo;delete aura.card.attachedZoneChangeId;aura.card.attachmentMode='reanimated';
-  transfer(g,target.card.instance,'battlefield',context.owner,undefined,{deferTriggers:true});
-  aura.card.reanimationLink={id:target.card.instance,battlefieldId:target.card.battlefieldId,abilityOwner:context.owner};attachPermanent(g,aura.card.instance,target.card.instance);
-  queueCombatTriggers(g,[{kind:'enter',owner:context.owner,card:snapshotCard(target.card)}]);return 1;
+  run(g,context,[{op:'enterPermanents',requests:[{id:target.card.instance,owner:context.owner,reanimationAura:{id:aura.card.instance,battlefieldId:aura.card.battlefieldId,abilityOwner:context.owner}}]},...remaining]);return 2;
  }
  if(step.op==='reanimate'){
-  const target=context.target,found=target&&findCard(g,target.id);if(found?.zone==='graveyard'&&(found.card.zoneChangeId||null)===target.zoneChangeId){const value=manaValue(found.card);transfer(g,found.card.instance,'battlefield',context.owner);if(step.loseLife)g.players[context.owner].life-=value;}
+  const target=context.target,found=target&&findCard(g,target.id);
+  if(found?.zone==='graveyard'&&(found.card.zoneChangeId||null)===target.zoneChangeId){
+   const value=manaValue(found.card);
+   run(g,context,[{op:'enterPermanents',requests:[{id:found.card.instance,owner:context.owner}]},...(step.loseLife?[{op:'life',scope:'you',amount:-value}]:[]),...remaining]);return 2;
+  }
   return 1;
  }
  if(step.op==='victimize'){
@@ -43,9 +42,7 @@ export function runReanimationStep(g,context,step,remaining){
 }
 export function resolveReanimationChoice(g,pending,keys,run){
  if(pending.step.op!=='victimize')return false;
- if(removePermanents(g,keys,{sacrifice:true}).length){
-  const events=[];for(const target of pending.context.targets||[]){const found=findCard(g,target.id);if(found?.zone==='graveyard'&&(found.card.zoneChangeId||null)===target.zoneChangeId){transfer(g,found.card.instance,'battlefield',pending.owner,undefined,{deferTriggers:true,entryTapped:true});events.push({kind:'enter',owner:pending.owner,card:snapshotCard(found.card)});}}
-  queueCombatTriggers(g,events);
- }
- run(g,pending.context,pending.remaining);return true;
+ const requests=[];
+ if(removePermanents(g,keys,{sacrifice:true}).length)for(const target of pending.context.targets||[]){const found=findCard(g,target.id);if(found?.zone==='graveyard'&&(found.card.zoneChangeId||null)===target.zoneChangeId)requests.push({id:found.card.instance,owner:pending.owner,entryTapped:true});}
+ run(g,pending.context,[{op:'enterPermanents',requests},...pending.remaining]);return true;
 }

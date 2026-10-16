@@ -1,5 +1,6 @@
 import {CONTROLLER_ACTIONS,defaultControllerSettings,normalizeControllerSettings,assignControllerBinding,bindingLabel,createControllerInput,createBindingCapture} from './controller.mjs';
 import {createThemeSettings} from './theme.mjs';
+import {createUpdateSettings} from './update-ui.mjs';
 
 const STORAGE_KEY='commanderLabController';
 const interfaceActions=new Set(['confirm','cancel','focusPrevious','focusNext','adjustDown','adjustUp','settings']);
@@ -13,6 +14,7 @@ export function createControllerUI({onAction,onPan,onDrop,setStatus}){
  dialog.innerHTML='<div class="dialog-heading"><h2>Settings</h2><button id="settings-close" class="icon-button" aria-label="Close settings">×</button></div><h3>Controller</h3><p id="controller-status" role="status"></p><label class="controller-enable"><input id="controller-enabled" type="checkbox"> Enable controller input</label><label for="controller-device">Controller</label><select id="controller-device"></select><p class="panel-caption">Press a button on your controller if it is not listed. Mappings are saved on this computer. Labels below describe standard Xbox / PlayStation layouts; other controllers may use different button numbers.</p><div class="controller-tuning"><label>Stick deadzone<input id="controller-deadzone" type="range" min="0.08" max="0.6" step="0.01"><output id="controller-deadzone-value"></output></label><label>Pointer speed<input id="controller-pointerSpeed" type="range" min="150" max="1800" step="50"><output id="controller-pointerSpeed-value"></output></label><label>Camera speed<input id="controller-panSpeed" type="range" min="150" max="1800" step="50"><output id="controller-panSpeed-value"></output></label></div><p id="controller-message" role="status" aria-live="polite">Choose Bind, then press a controller button or move a stick. Reusing an input clears its previous action.</p><button id="controller-cancel-bind" hidden>Cancel binding</button><div id="controller-bindings"></div><div class="dialog-actions"><button id="controller-defaults">Restore defaults</button><button id="settings-done" class="primary">Done</button></div><p class="panel-caption">Left stick: pointer · Right stick: pan · A/Cross: activate · X/Square: tap · Hold Y/Triangle: inspect · Stick press: pick up/place · D-pad: controls and values. Text entry still uses the keyboard.</p>';
  document.body.append(dialog);
  createThemeSettings(dialog);
+ createUpdateSettings(dialog);
  const css=make('link');css.rel='stylesheet';css.href=new URL('./controller.css',import.meta.url).href;document.head.append(css);
  const cursor=make('div',undefined,'controller-pointer');cursor.hidden=true;cursor.setAttribute('aria-hidden','true');document.body.append(cursor);
  const q=id=>dialog.querySelector('#'+id),rows=new Map();

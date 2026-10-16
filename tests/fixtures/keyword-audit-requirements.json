@@ -1,0 +1,1150 @@
+{
+  "rulesDate": "2026-09-25",
+  "rulesUrl": "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt",
+  "documentUrl": "https://docs.google.com/document/d/1VDbfPI59vyM8S704KoHreT3vOI_2KiHnVp6UM9ay-_s/edit",
+  "documentSha256": "3ba2a9e8cfe41b3c2cef2ddec8e1710f5d0337d34746db3febf7b691b1eab06a",
+  "actions": [
+    {
+      "name": "Activate",
+      "rule": "701.2"
+    },
+    {
+      "name": "Attach",
+      "rule": "701.3"
+    },
+    {
+      "name": "Behold",
+      "rule": "701.4"
+    },
+    {
+      "name": "Cast",
+      "rule": "701.5"
+    },
+    {
+      "name": "Counter",
+      "rule": "701.6"
+    },
+    {
+      "name": "Create",
+      "rule": "701.7"
+    },
+    {
+      "name": "Destroy",
+      "rule": "701.8"
+    },
+    {
+      "name": "Discard",
+      "rule": "701.9"
+    },
+    {
+      "name": "Double",
+      "rule": "701.10"
+    },
+    {
+      "name": "Triple",
+      "rule": "701.11"
+    },
+    {
+      "name": "Exchange",
+      "rule": "701.12"
+    },
+    {
+      "name": "Exile",
+      "rule": "701.13"
+    },
+    {
+      "name": "Fight",
+      "rule": "701.14"
+    },
+    {
+      "name": "Goad",
+      "rule": "701.15"
+    },
+    {
+      "name": "Investigate",
+      "rule": "701.16"
+    },
+    {
+      "name": "Mill",
+      "rule": "701.17"
+    },
+    {
+      "name": "Play",
+      "rule": "701.18"
+    },
+    {
+      "name": "Regenerate",
+      "rule": "701.19"
+    },
+    {
+      "name": "Reveal",
+      "rule": "701.20"
+    },
+    {
+      "name": "Sacrifice",
+      "rule": "701.21"
+    },
+    {
+      "name": "Scry",
+      "rule": "701.22"
+    },
+    {
+      "name": "Search",
+      "rule": "701.23"
+    },
+    {
+      "name": "Shuffle",
+      "rule": "701.24"
+    },
+    {
+      "name": "Surveil",
+      "rule": "701.25"
+    },
+    {
+      "name": "Tap and Untap",
+      "rule": "701.26"
+    },
+    {
+      "name": "Transform",
+      "rule": "701.27"
+    },
+    {
+      "name": "Convert",
+      "rule": "701.28"
+    },
+    {
+      "name": "Fateseal",
+      "rule": "701.29"
+    },
+    {
+      "name": "Clash",
+      "rule": "701.30"
+    },
+    {
+      "name": "Planeswalk",
+      "rule": "701.31"
+    },
+    {
+      "name": "Set in Motion",
+      "rule": "701.32"
+    },
+    {
+      "name": "Abandon",
+      "rule": "701.33"
+    },
+    {
+      "name": "Proliferate",
+      "rule": "701.34"
+    },
+    {
+      "name": "Detain",
+      "rule": "701.35"
+    },
+    {
+      "name": "Populate",
+      "rule": "701.36"
+    },
+    {
+      "name": "Monstrosity",
+      "rule": "701.37"
+    },
+    {
+      "name": "Vote",
+      "rule": "701.38"
+    },
+    {
+      "name": "Bolster",
+      "rule": "701.39"
+    },
+    {
+      "name": "Manifest",
+      "rule": "701.40"
+    },
+    {
+      "name": "Support",
+      "rule": "701.41"
+    },
+    {
+      "name": "Meld",
+      "rule": "701.42"
+    },
+    {
+      "name": "Exert",
+      "rule": "701.43"
+    },
+    {
+      "name": "Explore",
+      "rule": "701.44"
+    },
+    {
+      "name": "Assemble",
+      "rule": "701.45"
+    },
+    {
+      "name": "Adapt",
+      "rule": "701.46"
+    },
+    {
+      "name": "Amass",
+      "rule": "701.47"
+    },
+    {
+      "name": "Learn",
+      "rule": "701.48"
+    },
+    {
+      "name": "Venture into the Dungeon",
+      "rule": "701.49"
+    },
+    {
+      "name": "Connive",
+      "rule": "701.50"
+    },
+    {
+      "name": "Open an Attraction",
+      "rule": "701.51"
+    },
+    {
+      "name": "Roll to Visit Your Attractions",
+      "rule": "701.52"
+    },
+    {
+      "name": "Incubate",
+      "rule": "701.53"
+    },
+    {
+      "name": "The Ring Tempts You",
+      "rule": "701.54"
+    },
+    {
+      "name": "Face a Villainous Choice",
+      "rule": "701.55"
+    },
+    {
+      "name": "Time Travel",
+      "rule": "701.56"
+    },
+    {
+      "name": "Discover",
+      "rule": "701.57"
+    },
+    {
+      "name": "Cloak",
+      "rule": "701.58"
+    },
+    {
+      "name": "Collect Evidence",
+      "rule": "701.59"
+    },
+    {
+      "name": "Suspect",
+      "rule": "701.60"
+    },
+    {
+      "name": "Forage",
+      "rule": "701.61"
+    },
+    {
+      "name": "Manifest Dread",
+      "rule": "701.62"
+    },
+    {
+      "name": "Endure",
+      "rule": "701.63"
+    },
+    {
+      "name": "Harness",
+      "rule": "701.64"
+    },
+    {
+      "name": "Airbend",
+      "rule": "701.65"
+    },
+    {
+      "name": "Earthbend",
+      "rule": "701.66"
+    },
+    {
+      "name": "Waterbend",
+      "rule": "701.67"
+    },
+    {
+      "name": "Blight",
+      "rule": "701.68"
+    },
+    {
+      "name": "Heal",
+      "rule": "701.69"
+    },
+    {
+      "name": "Recruit",
+      "rule": "701.70"
+    },
+    {
+      "name": "Empower Jace",
+      "rule": "701.71"
+    }
+  ],
+  "documentEntries": [
+    {
+      "name": "Deathtouch",
+      "section": "Evergreen Keywords",
+      "rule": "702.2"
+    },
+    {
+      "name": "Defender",
+      "section": "Evergreen Keywords",
+      "rule": "702.3"
+    },
+    {
+      "name": "Double Strike",
+      "section": "Evergreen Keywords",
+      "rule": "702.4"
+    },
+    {
+      "name": "Enchant",
+      "section": "Evergreen Keywords",
+      "rule": "702.5"
+    },
+    {
+      "name": "Equip",
+      "section": "Evergreen Keywords",
+      "rule": "702.6"
+    },
+    {
+      "name": "First Strike",
+      "section": "Evergreen Keywords",
+      "rule": "702.7"
+    },
+    {
+      "name": "Flash",
+      "section": "Evergreen Keywords",
+      "rule": "702.8"
+    },
+    {
+      "name": "Flying",
+      "section": "Evergreen Keywords",
+      "rule": "702.9"
+    },
+    {
+      "name": "Haste",
+      "section": "Evergreen Keywords",
+      "rule": "702.10"
+    },
+    {
+      "name": "Lifelink",
+      "section": "Evergreen Keywords",
+      "rule": "702.15"
+    },
+    {
+      "name": "Menace",
+      "section": "Evergreen Keywords",
+      "rule": "702.111"
+    },
+    {
+      "name": "Protection",
+      "section": "Evergreen Keywords",
+      "rule": "702.16"
+    },
+    {
+      "name": "Prowess",
+      "section": "Evergreen Keywords",
+      "rule": "702.108"
+    },
+    {
+      "name": "Reach",
+      "section": "Evergreen Keywords",
+      "rule": "702.17"
+    },
+    {
+      "name": "Trample",
+      "section": "Evergreen Keywords",
+      "rule": "702.19"
+    },
+    {
+      "name": "Vigilance",
+      "section": "Evergreen Keywords",
+      "rule": "702.20"
+    },
+    {
+      "name": "Ward",
+      "section": "Evergreen Keywords",
+      "rule": "702.21"
+    },
+    {
+      "name": "Attach",
+      "section": "Keyword Actions",
+      "rule": "701.3"
+    },
+    {
+      "name": "Clash",
+      "section": "Keyword Actions",
+      "rule": "701.30"
+    },
+    {
+      "name": "Counter",
+      "section": "Keyword Actions",
+      "rule": "701.6"
+    },
+    {
+      "name": "Reconfigure",
+      "section": "Keyword Actions",
+      "rule": "702.151"
+    },
+    {
+      "name": "Regeneration",
+      "section": "Keyword Actions",
+      "rule": "701.19"
+    },
+    {
+      "name": "Sacrifice",
+      "section": "Keyword Actions",
+      "rule": "701.21"
+    },
+    {
+      "name": "Scry",
+      "section": "Keyword Actions",
+      "rule": "701.22"
+    },
+    {
+      "name": "Tap/untap",
+      "section": "Keyword Actions",
+      "rule": "701.26"
+    },
+    {
+      "name": "Absorb",
+      "section": "Expansion Keywords",
+      "rule": "702.64"
+    },
+    {
+      "name": "Adapt",
+      "section": "Expansion Keywords",
+      "rule": "701.46"
+    },
+    {
+      "name": "Adventure",
+      "section": "Expansion Keywords",
+      "rule": null
+    },
+    {
+      "name": "Affinity",
+      "section": "Expansion Keywords",
+      "rule": "702.41"
+    },
+    {
+      "name": "Afterlife",
+      "section": "Expansion Keywords",
+      "rule": "702.135"
+    },
+    {
+      "name": "Aftermath",
+      "section": "Expansion Keywords",
+      "rule": "702.127"
+    },
+    {
+      "name": "Alliance",
+      "section": "Expansion Keywords",
+      "rule": null
+    },
+    {
+      "name": "Amplify",
+      "section": "Expansion Keywords",
+      "rule": "702.38"
+    },
+    {
+      "name": "Annihilator",
+      "section": "Expansion Keywords",
+      "rule": "702.86"
+    },
+    {
+      "name": "Aura Swap",
+      "section": "Expansion Keywords",
+      "rule": "702.65"
+    },
+    {
+      "name": "Banding",
+      "section": "Expansion Keywords",
+      "rule": "702.22"
+    },
+    {
+      "name": "Battle Cry",
+      "section": "Expansion Keywords",
+      "rule": "702.91"
+    },
+    {
+      "name": "Bestow",
+      "section": "Expansion Keywords",
+      "rule": "702.103"
+    },
+    {
+      "name": "Blitz",
+      "section": "Expansion Keywords",
+      "rule": "702.152"
+    },
+    {
+      "name": "Bloodrush",
+      "section": "Expansion Keywords",
+      "rule": null
+    },
+    {
+      "name": "Bloodthirst",
+      "section": "Expansion Keywords",
+      "rule": "702.54"
+    },
+    {
+      "name": "Bolster",
+      "section": "Expansion Keywords",
+      "rule": "701.39"
+    },
+    {
+      "name": "Bushido",
+      "section": "Expansion Keywords",
+      "rule": "702.45"
+    },
+    {
+      "name": "Buyback",
+      "section": "Expansion Keywords",
+      "rule": "702.27"
+    },
+    {
+      "name": "Cascade",
+      "section": "Expansion Keywords",
+      "rule": "702.85"
+    },
+    {
+      "name": "Casualty",
+      "section": "Expansion Keywords",
+      "rule": "702.153"
+    },
+    {
+      "name": "Champion",
+      "section": "Expansion Keywords",
+      "rule": "702.72"
+    },
+    {
+      "name": "Changeling",
+      "section": "Expansion Keywords",
+      "rule": "702.73"
+    },
+    {
+      "name": "Channel",
+      "section": "Expansion Keywords",
+      "rule": null
+    },
+    {
+      "name": "Cipher",
+      "section": "Expansion Keywords",
+      "rule": "702.99"
+    },
+    {
+      "name": "Connive",
+      "section": "Expansion Keywords",
+      "rule": "701.50"
+    },
+    {
+      "name": "Conspire",
+      "section": "Expansion Keywords",
+      "rule": "702.78"
+    },
+    {
+      "name": "Convoke",
+      "section": "Expansion Keywords",
+      "rule": "702.51"
+    },
+    {
+      "name": "Coven",
+      "section": "Expansion Keywords",
+      "rule": null
+    },
+    {
+      "name": "Crew",
+      "section": "Expansion Keywords",
+      "rule": "702.122"
+    },
+    {
+      "name": "Cumulative Upkeep",
+      "section": "Expansion Keywords",
+      "rule": "702.24"
+    },
+    {
+      "name": "Cycling",
+      "section": "Expansion Keywords",
+      "rule": "702.29"
+    },
+    {
+      "name": "Dash",
+      "section": "Expansion Keywords",
+      "rule": "702.109"
+    },
+    {
+      "name": "Daybound/Nightbound",
+      "section": "Expansion Keywords",
+      "rule": "702.145"
+    },
+    {
+      "name": "Delve",
+      "section": "Expansion Keywords",
+      "rule": "702.66"
+    },
+    {
+      "name": "Detain",
+      "section": "Expansion Keywords",
+      "rule": "701.35"
+    },
+    {
+      "name": "Devour",
+      "section": "Expansion Keywords",
+      "rule": "702.82"
+    },
+    {
+      "name": "Disturb",
+      "section": "Expansion Keywords",
+      "rule": "702.146"
+    },
+    {
+      "name": "Dredge",
+      "section": "Expansion Keywords",
+      "rule": "702.52"
+    },
+    {
+      "name": "Echo",
+      "section": "Expansion Keywords",
+      "rule": "702.30"
+    },
+    {
+      "name": "Embalm",
+      "section": "Expansion Keywords",
+      "rule": "702.128"
+    },
+    {
+      "name": "Emerge",
+      "section": "Expansion Keywords",
+      "rule": "702.119"
+    },
+    {
+      "name": "Entwine",
+      "section": "Expansion Keywords",
+      "rule": "702.42"
+    },
+    {
+      "name": "Epic",
+      "section": "Expansion Keywords",
+      "rule": "702.50"
+    },
+    {
+      "name": "Escape",
+      "section": "Expansion Keywords",
+      "rule": "702.138"
+    },
+    {
+      "name": "Evoke",
+      "section": "Expansion Keywords",
+      "rule": "702.74"
+    },
+    {
+      "name": "Evolve",
+      "section": "Expansion Keywords",
+      "rule": "702.100"
+    },
+    {
+      "name": "Exalted",
+      "section": "Expansion Keywords",
+      "rule": "702.83"
+    },
+    {
+      "name": "Exert",
+      "section": "Expansion Keywords",
+      "rule": "701.43"
+    },
+    {
+      "name": "Exploit",
+      "section": "Expansion Keywords",
+      "rule": "702.110"
+    },
+    {
+      "name": "Explore",
+      "section": "Expansion Keywords",
+      "rule": "701.44"
+    },
+    {
+      "name": "Extort",
+      "section": "Expansion Keywords",
+      "rule": "702.101"
+    },
+    {
+      "name": "Fabricated",
+      "section": "Expansion Keywords",
+      "rule": "702.123"
+    },
+    {
+      "name": "Fading",
+      "section": "Expansion Keywords",
+      "rule": "702.32"
+    },
+    {
+      "name": "Fateseal",
+      "section": "Expansion Keywords",
+      "rule": "701.29"
+    },
+    {
+      "name": "Fear",
+      "section": "Expansion Keywords",
+      "rule": "702.36"
+    },
+    {
+      "name": "Flanking",
+      "section": "Expansion Keywords",
+      "rule": "702.25"
+    },
+    {
+      "name": "Flashback",
+      "section": "Expansion Keywords",
+      "rule": "702.34"
+    },
+    {
+      "name": "Flip",
+      "section": "Expansion Keywords",
+      "rule": null
+    },
+    {
+      "name": "Forecast",
+      "section": "Expansion Keywords",
+      "rule": "702.57"
+    },
+    {
+      "name": "Foretell",
+      "section": "Expansion Keywords",
+      "rule": "702.143"
+    },
+    {
+      "name": "Frenzy",
+      "section": "Expansion Keywords",
+      "rule": "702.68"
+    },
+    {
+      "name": "Graft",
+      "section": "Expansion Keywords",
+      "rule": "702.58"
+    },
+    {
+      "name": "Gravestorm",
+      "section": "Expansion Keywords",
+      "rule": "702.69"
+    },
+    {
+      "name": "Haunt",
+      "section": "Expansion Keywords",
+      "rule": "702.55"
+    },
+    {
+      "name": "Hideaway",
+      "section": "Expansion Keywords",
+      "rule": "702.75"
+    },
+    {
+      "name": "Horsemanship",
+      "section": "Expansion Keywords",
+      "rule": "702.31"
+    },
+    {
+      "name": "Imprint",
+      "section": "Expansion Keywords",
+      "rule": null
+    },
+    {
+      "name": "Indestructible",
+      "section": "Expansion Keywords",
+      "rule": "702.12"
+    },
+    {
+      "name": "Inspired",
+      "section": "Expansion Keywords",
+      "rule": null
+    },
+    {
+      "name": "Investigate",
+      "section": "Expansion Keywords",
+      "rule": "701.16"
+    },
+    {
+      "name": "Jump-start",
+      "section": "Expansion Keywords",
+      "rule": "702.133"
+    },
+    {
+      "name": "Kicker",
+      "section": "Expansion Keywords",
+      "rule": "702.33"
+    },
+    {
+      "name": "Level up",
+      "section": "Expansion Keywords",
+      "rule": "702.87"
+    },
+    {
+      "name": "Landwalk",
+      "section": "Expansion Keywords",
+      "rule": "702.14"
+    },
+    {
+      "name": "Living Weapon",
+      "section": "Expansion Keywords",
+      "rule": "702.92"
+    },
+    {
+      "name": "Madness",
+      "section": "Expansion Keywords",
+      "rule": "702.35"
+    },
+    {
+      "name": "Manifest",
+      "section": "Expansion Keywords",
+      "rule": "701.40"
+    },
+    {
+      "name": "Meld",
+      "section": "Expansion Keywords",
+      "rule": "701.42"
+    },
+    {
+      "name": "Mentor",
+      "section": "Expansion Keywords",
+      "rule": "702.134"
+    },
+    {
+      "name": "Miracle",
+      "section": "Expansion Keywords",
+      "rule": "702.94"
+    },
+    {
+      "name": "Modular",
+      "section": "Expansion Keywords",
+      "rule": "702.43"
+    },
+    {
+      "name": "Monstrosity",
+      "section": "Expansion Keywords",
+      "rule": "701.37"
+    },
+    {
+      "name": "Morph and Megamorph",
+      "section": "Expansion Keywords",
+      "rule": "702.37"
+    },
+    {
+      "name": "Mutate",
+      "section": "Expansion Keywords",
+      "rule": "702.140"
+    },
+    {
+      "name": "Ninjutsu",
+      "section": "Expansion Keywords",
+      "rule": "702.49"
+    },
+    {
+      "name": "Offering",
+      "section": "Expansion Keywords",
+      "rule": "702.48"
+    },
+    {
+      "name": "Overload",
+      "section": "Expansion Keywords",
+      "rule": "702.96"
+    },
+    {
+      "name": "Persist",
+      "section": "Expansion Keywords",
+      "rule": "702.79"
+    },
+    {
+      "name": "Phasing",
+      "section": "Expansion Keywords",
+      "rule": "702.26"
+    },
+    {
+      "name": "Poisonous",
+      "section": "Expansion Keywords",
+      "rule": "702.70"
+    },
+    {
+      "name": "Populate",
+      "section": "Expansion Keywords",
+      "rule": "701.36"
+    },
+    {
+      "name": "Proliferate",
+      "section": "Expansion Keywords",
+      "rule": "701.34"
+    },
+    {
+      "name": "Provoke",
+      "section": "Expansion Keywords",
+      "rule": "702.39"
+    },
+    {
+      "name": "Prowl",
+      "section": "Expansion Keywords",
+      "rule": "702.76"
+    },
+    {
+      "name": "Rampage",
+      "section": "Expansion Keywords",
+      "rule": "702.23"
+    },
+    {
+      "name": "Rebound",
+      "section": "Expansion Keywords",
+      "rule": "702.88"
+    },
+    {
+      "name": "Recover",
+      "section": "Expansion Keywords",
+      "rule": "702.59"
+    },
+    {
+      "name": "Reinforce",
+      "section": "Expansion Keywords",
+      "rule": "702.77"
+    },
+    {
+      "name": "Renown",
+      "section": "Expansion Keywords",
+      "rule": "702.112"
+    },
+    {
+      "name": "Replicate",
+      "section": "Expansion Keywords",
+      "rule": "702.56"
+    },
+    {
+      "name": "Retrace",
+      "section": "Expansion Keywords",
+      "rule": "702.81"
+    },
+    {
+      "name": "Riot",
+      "section": "Expansion Keywords",
+      "rule": "702.136"
+    },
+    {
+      "name": "Ripple",
+      "section": "Expansion Keywords",
+      "rule": "702.60"
+    },
+    {
+      "name": "Scavenge",
+      "section": "Expansion Keywords",
+      "rule": "702.97"
+    },
+    {
+      "name": "Shadow",
+      "section": "Expansion Keywords",
+      "rule": "702.28"
+    },
+    {
+      "name": "Shroud",
+      "section": "Expansion Keywords",
+      "rule": "702.18"
+    },
+    {
+      "name": "Soulbond",
+      "section": "Expansion Keywords",
+      "rule": "702.95"
+    },
+    {
+      "name": "Soulshift",
+      "section": "Expansion Keywords",
+      "rule": "702.46"
+    },
+    {
+      "name": "Spectacle",
+      "section": "Expansion Keywords",
+      "rule": "702.137"
+    },
+    {
+      "name": "Splice",
+      "section": "Expansion Keywords",
+      "rule": "702.47"
+    },
+    {
+      "name": "Split Second",
+      "section": "Expansion Keywords",
+      "rule": "702.61"
+    },
+    {
+      "name": "Storm",
+      "section": "Expansion Keywords",
+      "rule": "702.40"
+    },
+    {
+      "name": "Sunburst",
+      "section": "Expansion Keywords",
+      "rule": "702.44"
+    },
+    {
+      "name": "Support",
+      "section": "Expansion Keywords",
+      "rule": "701.41"
+    },
+    {
+      "name": "Surveil",
+      "section": "Expansion Keywords",
+      "rule": "701.25"
+    },
+    {
+      "name": "Suspend",
+      "section": "Expansion Keywords",
+      "rule": "702.62"
+    },
+    {
+      "name": "Totem Armor",
+      "section": "Expansion Keywords",
+      "rule": "702.89"
+    },
+    {
+      "name": "Transfigure",
+      "section": "Expansion Keywords",
+      "rule": "702.71"
+    },
+    {
+      "name": "Transform",
+      "section": "Expansion Keywords",
+      "rule": "701.27"
+    },
+    {
+      "name": "Transmute",
+      "section": "Expansion Keywords",
+      "rule": "702.53"
+    },
+    {
+      "name": "Tribute",
+      "section": "Expansion Keywords",
+      "rule": "702.104"
+    },
+    {
+      "name": "Undying",
+      "section": "Expansion Keywords",
+      "rule": "702.93"
+    },
+    {
+      "name": "Unearth",
+      "section": "Expansion Keywords",
+      "rule": "702.84"
+    },
+    {
+      "name": "Unleash",
+      "section": "Expansion Keywords",
+      "rule": "702.98"
+    },
+    {
+      "name": "Wither",
+      "section": "Expansion Keywords",
+      "rule": "702.80"
+    },
+    {
+      "name": "Addendum",
+      "section": "Ability Keywords",
+      "rule": null
+    },
+    {
+      "name": "Battalion",
+      "section": "Ability Keywords",
+      "rule": null
+    },
+    {
+      "name": "Chroma",
+      "section": "Ability Keywords",
+      "rule": null
+    },
+    {
+      "name": "Domain",
+      "section": "Ability Keywords",
+      "rule": null
+    },
+    {
+      "name": "Enrage",
+      "section": "Ability Keywords",
+      "rule": null
+    },
+    {
+      "name": "Fateful Hour",
+      "section": "Ability Keywords",
+      "rule": null
+    },
+    {
+      "name": "Ferocious",
+      "section": "Ability Keywords",
+      "rule": null
+    },
+    {
+      "name": "Grandeur",
+      "section": "Ability Keywords",
+      "rule": null
+    },
+    {
+      "name": "Hellbent",
+      "section": "Ability Keywords",
+      "rule": null
+    },
+    {
+      "name": "Heroic",
+      "section": "Ability Keywords",
+      "rule": null
+    },
+    {
+      "name": "Join forces",
+      "section": "Ability Keywords",
+      "rule": null
+    },
+    {
+      "name": "Kinship",
+      "section": "Ability Keywords",
+      "rule": null
+    },
+    {
+      "name": "Landfall",
+      "section": "Ability Keywords",
+      "rule": null
+    },
+    {
+      "name": "Metalcraft",
+      "section": "Ability Keywords",
+      "rule": null
+    },
+    {
+      "name": "Morbid",
+      "section": "Ability Keywords",
+      "rule": null
+    },
+    {
+      "name": "Radiance",
+      "section": "Ability Keywords",
+      "rule": null
+    },
+    {
+      "name": "Raid",
+      "section": "Ability Keywords",
+      "rule": null
+    },
+    {
+      "name": "Rally",
+      "section": "Ability Keywords",
+      "rule": null
+    },
+    {
+      "name": "Sweep",
+      "section": "Ability Keywords",
+      "rule": null
+    },
+    {
+      "name": "Threshold",
+      "section": "Ability Keywords",
+      "rule": null
+    },
+    {
+      "name": "Undergrowth",
+      "section": "Ability Keywords",
+      "rule": null
+    }
+  ]
+}

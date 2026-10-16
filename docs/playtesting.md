@@ -6,6 +6,8 @@ Commander Lab is an experimental Electron desktop app. Ten of the 39 supplied de
 
 For a packaged testing build, open [GitHub Releases](https://github.com/jtlavigne/commander-lab--2-/releases) and download the Windows **setup.exe**, or extract the Windows **ZIP** and run **Commander Lab.exe**. These builds include Electron; Node.js is not required. The window title shows the version to include in bug reports. Use the same version as the other players. Testing builds are unsigned, so Windows may ask you to confirm the publisher.
 
+For future updates in an installed Windows build, open **Settings > App updates**, choose **Check for updates**, then **Download update**. Finish your game before confirming **Restart & install**. Your saved decks, settings and cached art are kept. If your current version has no update button, install a newer setup.exe once to get it. ZIP builds and source checkouts still update manually. Everyone should update to the same release before joining a room.
+
 To run from source instead:
 
 1. Install Node.js 24, including npm.

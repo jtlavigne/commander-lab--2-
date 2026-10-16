@@ -4,6 +4,14 @@ import {pairedPartner} from './soulbond.mjs';
 // ---- Rules-text normalization and active paragraphs ----
 // Keep original Oracle metadata intact; consumers match a normalized view.
 export const normalizeRules=text=>(text||'').replace(/’/g,"'").replace(/[−–]/g,'-');
+// Printed keyword lists and evaluated grants use the same reader. A mention
+// inside a trigger, conditional clause or granted ability is not a declaration.
+export function keywordDeclarationText(text,vocabulary){
+ const clean=normalizeRules(text).replace(/\([^()]*\)/g,'').trim();
+ if(/\b(?:as long as|unless)\b/i.test(clean))return null;
+ const first=clean.split(/[.\n]/)[0].trim();
+ return vocabulary.some(k=>new RegExp('^'+k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?=$|[, :{0-9])','i').test(first))?first:null;
+}
 export function graveyardCardTypes(player){const types=new Set();for(const card of player.zones.graveyard)for(const type of ['Artifact','Battle','Creature','Enchantment','Instant','Kindred','Land','Planeswalker','Sorcery'])if(new RegExp('\\b'+type+'\\b').test(cardFace(card).type_line||''))types.add(type);return types;}
 export function loyaltyCostSymbol(value){
  let cost=normalizeRules(value).trim();if(cost.startsWith('[')&&cost.endsWith(']'))cost=cost.slice(1,-1);
@@ -28,7 +36,10 @@ export function matchesAbilityRecipient(subject,card,owner,source,sourceOwner){
  }
  const union=subject.match(/^each (other )?creature you control that's (.+)$/);
  if(union)return type.includes('creature')&&owner===sourceOwner&&(!union[1]||card.instance!==source.instance)&&union[2].replace(/\b(?:a|an|or)\b|,/g,' ').trim().split(/\s+/).some(t=>(type.split('—')[1]||'').trim().split(/\s+/).includes(t));
- if(subject===normalizeRules(cardFace(card).name||card.name).toLowerCase())return card.instance===source.instance;
+ // Legendary cards may refer to themselves by the name before the comma.
+ // Resolve that reference against the provider, never another same-name card.
+ const selfNames=[cardFace(source).name,source.name].filter(Boolean).flatMap(name=>[name,name.split(',')[0]]).map(name=>normalizeRules(name).toLowerCase());
+ if(selfNames.includes(subject))return card.instance===source.instance;
  const match=subject.match(/^(?:each )?(other )?(nonland )?(planeswalkers?|creatures?|lands?|artifacts?|enchantments?|permanents?|auras?|equipment|vehicles?)(?: (you control|your opponents control))?(?: (with a counter on it|with counters? on them))?$/);if(!match)return false;
  const kind=match[3].replace(/s$/,'');
  if(match[1]&&source.instance===card.instance||match[2]&&type.includes('land')||match[5]&&!Object.values(card.counters||{}).some(n=>n>0))return false;

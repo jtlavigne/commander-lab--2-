@@ -27,4 +27,9 @@ nsis:
   allowToChangeInstallationDirectory: true
   deleteAppDataOnUninstall: false
   artifactName: 'Commander-Lab-${version}-windows-${arch}-setup.${ext}'
-publish: null
+publish:
+  provider: github
+  owner: jtlavigne
+  repo: commander-lab--2-
+  releaseType: prerelease
+  channel: test

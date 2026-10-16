@@ -3,7 +3,7 @@ import {findCard,transfer,shuffle} from './engine.mjs';
 import {fieldCards,isCreature} from './creature-rules.mjs';
 import {queueCombatTriggers,snapshotCard} from './combat-effects.mjs';
 
-export const POLYMORPH_OPERATIONS=['polymorph','revealPermanents','polymorphReveal'];
+export const POLYMORPH_OPERATIONS=['polymorph','revealPermanents','polymorphReveal','finishPolymorph'];
 const number=s=>({a:1,one:1,two:2,three:3}[s?.toLowerCase()]??Number(s));
 export function compilePolymorphEffect(text){let m;
  if(/^Exile (?:another )?target (?:planeswalker or creature|creature or planeswalker) you control\. Reveal cards from the top of your library until you reveal a creature or planeswalker card\. Put that card onto the battlefield and the rest on the bottom of your library in a random order\.$/i.test(text))return [{op:'polymorph',scope:'target',types:['Creature','Planeswalker'],destination:'exile',remainder:'random-bottom'}];
@@ -31,6 +31,16 @@ function removeForPolymorph(g,affected,destination){
 
 export function runPolymorphStep(g,context,step,remaining,run){
  const owner=step.owner??context.owner;
+ if(step.op==='finishPolymorph'){
+  // Remainder movement is a later instruction. In particular, do not shuffle
+  // an entering card back into the library while its replacements are pending.
+  const rest=step.ids.filter(id=>!step.hits.includes(id)&&findCard(g,id)?.zone==='library');
+  if(step.remainder==='ordered-bottom'&&rest.length){run(g,context,[{op:'orderBottomLibrary',owner,ids:rest,min:rest.length,max:rest.length},...remaining]);return 2;}
+  const library=g.players[owner].zones.library;
+  if(step.remainder==='shuffle')shuffle(library);
+  else{const bottom=rest.map(id=>findCard(g,id).card);shuffle(bottom);const ids=new Set(rest);g.players[owner].zones.library=[...library.filter(c=>!ids.has(c.instance)),...bottom];}
+  return 1;
+ }
  if(step.op==='polymorph'){
   const found=findCard(g,context.target?.id),affected=step.scope==='all'?fieldCards(g).filter(f=>f.owner===owner&&isCreature(f.card)):found?.zone==='battlefield'?[found]:[];
   const recipient=step.recipient==='controller'?found?.owner:owner;
@@ -53,14 +63,9 @@ export function runPolymorphStep(g,context,step,remaining,run){
 
 export function resolvePolymorphChoice(g,pending,run){
  if(pending.step.op!=='polymorphReveal')return false;
- const {step,context,remaining,owner}=pending,events=[];
- for(const id of step.hits){const found=findCard(g,id);if(found?.zone!=='library'||found.owner!==owner)continue;transfer(g,id,'battlefield',owner,undefined,{deferTriggers:true});events.push({kind:'enter',owner,card:snapshotCard(found.card)});}
- // New permanents enter together and see each other's enters triggers.
- queueCombatTriggers(g,events);
- const rest=step.ids.filter(id=>!step.hits.includes(id)&&findCard(g,id)?.zone==='library');
- if(step.remainder==='ordered-bottom'&&rest.length){run(g,context,[{op:'orderBottomLibrary',owner,ids:rest,min:rest.length,max:rest.length},...remaining]);return true;}
- const library=g.players[owner].zones.library;
- if(step.remainder==='shuffle')shuffle(library);
- else{const bottom=rest.map(id=>findCard(g,id).card);shuffle(bottom);const ids=new Set(rest);g.players[owner].zones.library=[...library.filter(c=>!ids.has(c.instance)),...bottom];}
- run(g,context,remaining);return true;
+ const {step,context,remaining,owner}=pending;
+ const requests=step.hits.filter(id=>{const found=findCard(g,id);return found?.zone==='library'&&found.owner===owner;}).map(id=>({id,owner}));
+ // All hits share one entry batch. Incoming replacement providers cannot
+ // modify companions, while entry triggers see the completed group.
+ run(g,context,[{op:'enterPermanents',requests,revealed:{owner,ids:step.ids}},{op:'finishPolymorph',owner,ids:step.ids,hits:step.hits,remainder:step.remainder},...remaining]);return true;
 }

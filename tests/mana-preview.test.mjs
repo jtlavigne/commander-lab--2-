@@ -53,8 +53,8 @@ test('snow, colorless and restricted mana remain distinct',()=>{
  const g=setup(),p=g.players[0];p.zones.battlefield=[card('restricted','Snow Land','{T}: Add {C}{C}. Spend this mana only to cast creature spells.')];
  p.zones.hand=[spell('snow','{S}{C}'),card('artifact','Artifact','',{mana_cost:'{1}'}),spell('blue','{U}')];assert.deepEqual([...previewSpellMana(g,0).keys()],['snow']);
 });
-test('unmodeled production and sacrifice costs do not invent affordable cards',()=>{
- const g=setup(),p=g.players[0];p.zones.battlefield=[card('unknown','Land','{T}: Add X mana of any one color.'),card('sac','Land','{T}, Sacrifice this land: Add {G}{G}.')];p.zones.hand=[spell('green','{G}')];assert.equal(previewSpellMana(g,0).size,0);
+test('unmodeled production and sacrifices requiring another permanent stay manual',()=>{
+ const g=setup(),p=g.players[0];p.zones.battlefield=[card('unknown','Land','{T}: Add X mana of any one color.'),card('sac','Land','{T}, Sacrifice another creature: Add {G}{G}.')];p.zones.hand=[spell('green','{G}')];assert.equal(previewSpellMana(g,0).size,0);
 });
 test('preview never substitutes potential mana for actual payment',async()=>{
  const {castSpell}=await import('../casting.mjs');const g=setup(),p=g.players[0];p.zones.battlefield=[land('f')];p.zones.hand=[spell('one','{G}')];
@@ -63,4 +63,51 @@ test('preview never substitutes potential mana for actual payment',async()=>{
 test('search is bounded and many equivalent basic lands reach expensive spells',()=>{
  const g=setup(),p=g.players[0];p.zones.battlefield=Array.from({length:20},(_,i)=>land('f'+i));p.zones.hand=[spell('large','{19}{G}'),spell('impossible','{U}')];
  const preview=previewSpellMana(g,0,{maxStates:64});assert.ok(preview.has('large'));assert.equal(preview.has('impossible'),false);
+});
+
+test('mana rocks fund hand and command cards and Signets must pay their input cost',()=>{
+ const g=setup(),p=g.players[0];p.zones.battlefield=[card('signet','Artifact','{1}, {T}: Add {W}{U}.')];
+ p.zones.hand=[spell('mixed','{1}{W}{U}'),spell('tooMuch','{2}{W}{U}')];
+ p.zones.command=[spell('commander','{W}{U}',{commander:true})];
+ assert.equal(previewSpellMana(g,0).size,0);
+ p.zones.battlefield.push(card('ring','Artifact','{T}: Add {C}{C}.'));
+ const before=structuredClone(g);assert.deepEqual([...previewSpellMana(g,0).keys()].sort(),['commander','mixed']);assert.deepEqual(g,before);
+});
+
+test('mana creatures respect summoning sickness, haste, tap state and ownership',()=>{
+ const g=setup(),p=g.players[0],elf=card('elf','Creature','{T}: Add {G}.',{summoningSick:true});
+ p.zones.battlefield=[elf];p.zones.hand=[spell('green','{G}'),spell('two','{G}{G}'),spell('blue','{U}')];
+ g.players[1].zones.battlefield=[card('other','Creature','{T}: Add {U}.')];
+ assert.equal(previewSpellMana(g,0).size,0);
+ elf.oracle_text='Haste\n{T}: Add {G}.';assert.deepEqual([...previewSpellMana(g,0).keys()],['green']);
+ elf.tapped=true;assert.equal(previewSpellMana(g,0).size,0);
+ elf.tapped=false;elf.summoningSick=false;elf.oracle_text='{T}: Add {G}.';assert.deepEqual([...previewSpellMana(g,0).keys()],['green']);
+});
+
+test('artifact creatures are not exempt from summoning sickness',()=>{
+ const g=setup(),p=g.players[0];p.zones.battlefield=[card('myr','Artifact Creature','{T}: Add {U}.',{summoningSick:true})];p.zones.hand=[spell('blue','{U}')];
+ assert.equal(previewSpellMana(g,0).size,0);p.zones.battlefield[0].summoningSick=false;assert.ok(previewSpellMana(g,0).has('blue'));
+});
+
+test('enchantment sources and counter-based output share mana multipliers',()=>{
+ const g=setup(),p=g.players[0];p.zones.battlefield=[card('enchantment','Enchantment','{T}: Add {G}.'),card('chalice','Artifact','{T}: Add {C} for each charge counter on this artifact.',{counters:{charge:2}}),card('double','Enchantment','If you tap a permanent for mana, it produces twice as much of that mana instead.')];
+ p.zones.hand=[spell('six','{4}{G}{G}'),spell('seven','{5}{G}{G}')];assert.deepEqual([...previewSpellMana(g,0).keys()],['six']);
+});
+
+test('self-sacrifice sources produce once and do not alter the real board',()=>{
+ const g=setup(),p=g.players[0];p.zones.battlefield=[card('treasure','Artifact','{T}, Sacrifice this artifact: Add one mana of any color.'),card('petal','Artifact','Sacrifice this artifact: Add one mana of any color.',{tapped:true})];
+ p.zones.hand=[spell('mixed','{G}{U}'),spell('three','{3}')];const before=structuredClone(g);
+ assert.deepEqual([...previewSpellMana(g,0).keys()],['mixed']);assert.deepEqual(g,before);
+ p.zones.battlefield[0].tapped=true;assert.equal(previewSpellMana(g,0).size,0);
+});
+
+test('sacrificed artifacts stop contributing to later mana output',()=>{
+ const g=setup(),p=g.players[0];p.zones.battlefield=[card('petal','Artifact','Sacrifice this artifact: Add one mana of any color.'),card('engine','Artifact','{1}, {T}: Add {C} for each artifact you control.')];
+ p.zones.hand=[spell('one','{1}'),spell('two','{2}')];assert.deepEqual([...previewSpellMana(g,0).keys()],['one']);
+});
+
+test('multiple abilities on a rock are alternatives, with restricted output preserved',()=>{
+ const g=setup(),p=g.players[0];p.zones.battlefield=[card('rock','Artifact','{T}: Add {U}.\n{T}: Add {C}{C}. Spend this mana only to cast creature spells.')];
+ p.zones.hand=[spell('creature','{2}'),spell('mixed','{U}{C}'),card('artifact','Artifact','',{mana_cost:'{2}'})];
+ assert.deepEqual([...previewSpellMana(g,0).keys()],['creature']);
 });

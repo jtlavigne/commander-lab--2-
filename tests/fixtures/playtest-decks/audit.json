@@ -37,12 +37,26 @@
             "text": "{T}: Add {C}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -129,12 +143,26 @@
             "text": "{T}: Add one mana of any color in your commander's color identity.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           }
         ],
@@ -149,16 +177,24 @@
             "index": 0,
             "face": "Ashiok, Dream Render",
             "text": "Spells and abilities your opponents control can't cause their controller to search their library.",
-            "status": "UNVERIFIED",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/atraxa-control.test.mjs",
+              "tests/network.test.mjs",
+              "tests/atraxa-library-ui.cjs"
+            ]
           },
           {
             "index": 1,
             "face": "Ashiok, Dream Render",
             "text": "−1: Target player mills four cards. Then exile each opponent's graveyard.",
-            "status": "FAIL (manual resolution)",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/atraxa-control.test.mjs",
+              "tests/network.test.mjs",
+              "tests/atraxa-library-ui.cjs"
+            ]
           }
         ],
         "spellPrograms": []
@@ -242,12 +278,26 @@
             "text": "{T}: Add {C}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -309,12 +359,26 @@
             "text": "{T}: Add {C}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -367,12 +431,26 @@
             "text": "{T}: Add one mana of any color in your commander's color identity.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           }
         ],
@@ -389,12 +467,26 @@
             "text": "Flying",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -431,13 +523,26 @@
             "status": "PASS (regression)",
             "effectParser": "recognized",
             "evidence": [
-              "tests/fynn.test.mjs",
-              "tests/fynn-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/goreclaw.test.mjs",
-              "tests/arahbo.test.mjs",
-              "tests/isshin-utilities.test.mjs",
-              "tests/vehicles.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -447,13 +552,26 @@
             "status": "PASS (regression)",
             "effectParser": "recognized",
             "evidence": [
-              "tests/fynn.test.mjs",
-              "tests/fynn-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/goreclaw.test.mjs",
-              "tests/arahbo.test.mjs",
-              "tests/isshin-utilities.test.mjs",
-              "tests/vehicles.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           }
         ],
@@ -468,8 +586,29 @@
             "index": 0,
             "face": "Contentious Plan",
             "text": "Proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)",
-            "status": "UNVERIFIED",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
+              "tests/network.test.mjs",
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
+            ]
           },
           {
             "index": 1,
@@ -752,12 +891,26 @@
             "text": "{T}: Add {U} or {B}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           }
         ],
@@ -794,9 +947,13 @@
             "index": 0,
             "face": "Elspeth, Sun's Champion",
             "text": "+1: Create three 1/1 white Soldier creature tokens.",
-            "status": "UNVERIFIED",
+            "status": "PASS (regression)",
             "effectParser": "recognized",
-            "evidence": []
+            "evidence": [
+              "tests/entry-batches.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/network.test.mjs"
+            ]
           },
           {
             "index": 1,
@@ -890,13 +1047,26 @@
             "status": "PASS (regression)",
             "effectParser": "recognized",
             "evidence": [
-              "tests/fynn.test.mjs",
-              "tests/fynn-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/goreclaw.test.mjs",
-              "tests/arahbo.test.mjs",
-              "tests/isshin-utilities.test.mjs",
-              "tests/vehicles.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           }
         ],
@@ -913,12 +1083,26 @@
             "text": "{T}: Add one mana of any color that a land an opponent controls could produce.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           }
         ],
@@ -999,12 +1183,26 @@
             "text": "{T}: Add one mana of any color that a land an opponent controls could produce.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           }
         ],
@@ -1037,15 +1235,26 @@
             "text": "({T}: Add {G}.)",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kalamax.test.mjs",
-              "tests/kalamax-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/talrand.test.mjs",
-              "tests/goreclaw.test.mjs",
-              "tests/arahbo-utilities.test.mjs",
-              "tests/isshin-utilities.test.mjs",
-              "tests/vehicles.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           }
         ],
@@ -1128,12 +1337,26 @@
             "text": "Flying",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -1230,9 +1453,13 @@
             "index": 1,
             "face": "Ichormoon Gauntlet",
             "text": "Whenever you cast a noncreature spell, choose a counter on target permanent. Put an additional counter of that kind on that permanent.",
-            "status": "UNVERIFIED",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/atraxa-control.test.mjs",
+              "tests/network.test.mjs",
+              "tests/atraxa-library-ui.cjs"
+            ]
           }
         ],
         "spellPrograms": []
@@ -1264,12 +1491,26 @@
             "text": "({T}: Add {U}.)",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           }
         ],
@@ -1286,12 +1527,26 @@
             "text": "{T}: Add {C}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -1301,13 +1556,26 @@
             "status": "PASS (regression)",
             "effectParser": "recognized",
             "evidence": [
-              "tests/fynn.test.mjs",
-              "tests/fynn-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/goreclaw.test.mjs",
-              "tests/arahbo.test.mjs",
-              "tests/isshin-utilities.test.mjs",
-              "tests/vehicles.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           }
         ],
@@ -1487,12 +1755,26 @@
             "text": "{T}: Add {C}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -1541,16 +1823,24 @@
             "index": 0,
             "face": "Narset, Parter of Veils",
             "text": "Each opponent can't draw more than one card each turn.",
-            "status": "UNVERIFIED",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/network.test.mjs"
+            ]
           },
           {
             "index": 1,
             "face": "Narset, Parter of Veils",
             "text": "−2: Look at the top four cards of your library. You may reveal a noncreature, nonland card from among them and put it into your hand. Put the rest on the bottom of your library in a random order.",
-            "status": "FAIL (manual resolution)",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/network.test.mjs"
+            ]
           }
         ],
         "spellPrograms": []
@@ -1566,13 +1856,26 @@
             "text": "Trample",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/fynn.test.mjs",
-              "tests/fynn-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/goreclaw.test.mjs",
-              "tests/arahbo.test.mjs",
-              "tests/isshin-utilities.test.mjs",
-              "tests/vehicles.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -1648,9 +1951,11 @@
             "index": 0,
             "face": "Oath of Teferi",
             "text": "When Oath of Teferi enters, exile another target permanent you control. Return it to the battlefield under its owner's control at the beginning of the next end step.",
-            "status": "UNVERIFIED",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/atraxa-delayed.test.mjs"
+            ]
           },
           {
             "index": 1,
@@ -1724,14 +2029,26 @@
             "text": "({T}: Add {W}.)",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/isshin.test.mjs",
-              "tests/isshin-utilities.test.mjs",
-              "tests/isshin-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/goreclaw.test.mjs",
-              "tests/aurelia-utilities.test.mjs",
-              "tests/arahbo.test.mjs",
-              "tests/extra-combat.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           }
         ],
@@ -1876,12 +2193,26 @@
             "text": "Flying",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -1944,12 +2275,26 @@
             "text": "{T}: Add {C}{C}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           }
         ],
@@ -1964,9 +2309,13 @@
             "index": 0,
             "face": "Sorin the Mirthless",
             "text": "+1: Look at the top card of your library. You may reveal that card and put it into your hand. If you do, you lose life equal to its mana value.",
-            "status": "FAIL (manual resolution)",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/network.test.mjs"
+            ]
           },
           {
             "index": 1,
@@ -1998,12 +2347,26 @@
             "text": "({T}: Add {B}.)",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           }
         ],
@@ -2047,8 +2410,12 @@
             "index": 0,
             "face": "Tamiyo, Compleated Sage",
             "text": "Compleated ({G/U/P} can be paid with {G}, {U}, or 2 life. If life was paid, this planeswalker enters with two fewer loyalty counters.)",
-            "status": "UNVERIFIED",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/network.test.mjs"
+            ]
           },
           {
             "index": 1,
@@ -2062,9 +2429,12 @@
             "index": 2,
             "face": "Tamiyo, Compleated Sage",
             "text": "−X: Exile target nonland permanent card with mana value X from your graveyard. Create a token that's a copy of that card.",
-            "status": "FAIL (manual resolution)",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-batches.test.mjs"
+            ]
           },
           {
             "index": 3,
@@ -2090,17 +2460,25 @@
             "index": 0,
             "face": "Tamiyo, Field Researcher",
             "text": "+1: Choose up to two target creatures. Until your next turn, whenever either of those creatures deals combat damage, you draw a card.",
-            "status": "FAIL (manual resolution)",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/network.test.mjs"
+            ]
           },
           {
             "index": 1,
             "face": "Tamiyo, Field Researcher",
             "text": "−2: Tap up to two target nonland permanents. They don't untap during their controller's next untap step.",
-            "status": "FAIL (manual resolution)",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/network.test.mjs"
+            ]
           },
           {
             "index": 2,
@@ -2151,17 +2529,25 @@
             "index": 0,
             "face": "Teferi, Hero of Dominaria",
             "text": "+1: Draw a card. At the beginning of the next end step, untap up to two lands.",
-            "status": "FAIL (manual resolution)",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/atraxa-delayed.test.mjs",
+              "tests/network.test.mjs",
+              "tests/atraxa-library-ui.cjs"
+            ]
           },
           {
             "index": 1,
             "face": "Teferi, Hero of Dominaria",
             "text": "−3: Put target nonland permanent into its owner's library third from the top.",
-            "status": "FAIL (manual resolution)",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/atraxa-delayed.test.mjs",
+              "tests/network.test.mjs",
+              "tests/atraxa-library-ui.cjs"
+            ]
           },
           {
             "index": 2,
@@ -2186,8 +2572,12 @@
             "index": 0,
             "face": "Teferi, Master of Time",
             "text": "You may activate loyalty abilities of Teferi on any player's turn any time you could cast an instant.",
-            "status": "UNVERIFIED",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/network.test.mjs"
+            ]
           },
           {
             "index": 1,
@@ -2275,12 +2665,26 @@
             "text": "Flying",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -2301,7 +2705,22 @@
               "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
               "tests/counter-costs.test.mjs",
-              "tests/entry-casting.test.mjs"
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           }
         ],
@@ -2377,17 +2796,25 @@
             "index": 0,
             "face": "The Chain Veil",
             "text": "At the beginning of your end step, if you didn't activate a loyalty ability of a planeswalker this turn, you lose 2 life.",
-            "status": "UNVERIFIED",
+            "status": "PASS (regression)",
             "effectParser": "missing",
-            "evidence": []
+            "evidence": [
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/network.test.mjs"
+            ]
           },
           {
             "index": 1,
             "face": "The Chain Veil",
             "text": "{4}, {T}: For each planeswalker you control, you may activate one of its loyalty abilities once this turn as though none of its loyalty abilities have been activated this turn.",
-            "status": "UNVERIFIED",
+            "status": "PASS (regression)",
             "effectParser": "recognized",
-            "evidence": []
+            "evidence": [
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/network.test.mjs"
+            ]
           }
         ],
         "spellPrograms": []
@@ -2403,12 +2830,26 @@
             "text": "Flying",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -2418,13 +2859,26 @@
             "status": "PASS (regression)",
             "effectParser": "recognized",
             "evidence": [
-              "tests/fynn.test.mjs",
-              "tests/fynn-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/goreclaw.test.mjs",
-              "tests/arahbo.test.mjs",
-              "tests/isshin-utilities.test.mjs",
-              "tests/vehicles.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           }
         ],
@@ -2446,9 +2900,11 @@
             "index": 1,
             "face": "Sword of Truth and Justice",
             "text": "Whenever equipped creature deals combat damage to a player, put a +1/+1 counter on a creature you control, then proliferate. (Choose any number of permanents and/or players, then give each another counter of each kind already there.)",
-            "status": "UNVERIFIED",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/atraxa-control.test.mjs"
+            ]
           },
           {
             "index": 2,
@@ -2480,12 +2936,26 @@
             "text": "{T}: Add {C}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -2509,12 +2979,26 @@
             "text": "Flying",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -2573,8 +3057,12 @@
             "index": 0,
             "face": "Vraska, Betrayal's Sting",
             "text": "Compleated ({B/P} can be paid with {B} or 2 life. If life was paid, this planeswalker enters with two fewer loyalty counters.)",
-            "status": "UNVERIFIED",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/network.test.mjs"
+            ]
           },
           {
             "index": 1,
@@ -2600,9 +3088,11 @@
             "index": 3,
             "face": "Vraska, Betrayal's Sting",
             "text": "−9: If target player has fewer than nine poison counters, they get a number of poison counters equal to the difference.",
-            "status": "FAIL (manual resolution)",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/atraxa-delayed.test.mjs"
+            ]
           }
         ],
         "spellPrograms": []
@@ -2662,12 +3152,26 @@
             "text": "{T}: Add {C}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -2698,12 +3202,26 @@
             "text": "This land enters tapped.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -2718,9 +3236,9 @@
       }
     ],
     "counts": {
-      "PASS (regression)": 75,
-      "FAIL (manual resolution)": 21,
-      "UNVERIFIED": 89
+      "PASS (regression)": 96,
+      "FAIL (manual resolution)": 12,
+      "UNVERIFIED": 77
     }
   },
   {
@@ -2782,9 +3300,11 @@
             "index": 0,
             "face": "Oath of Teferi",
             "text": "When Oath of Teferi enters, exile another target permanent you control. Return it to the battlefield under its owner's control at the beginning of the next end step.",
-            "status": "UNVERIFIED",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/atraxa-delayed.test.mjs"
+            ]
           },
           {
             "index": 1,
@@ -2885,8 +3405,10 @@
             "index": 0,
             "face": "Quantum Misalignment",
             "text": "Create a token that's a copy of target creature you control, except it isn't legendary.",
-            "status": "FAIL (manual resolution)",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/permanent-copy.test.mjs"
+            ]
           },
           {
             "index": 1,
@@ -2912,7 +3434,7 @@
         "spellPrograms": [
           {
             "text": "Create a token that's a copy of target creature you control, except it isn't legendary.",
-            "recognized": false
+            "recognized": true
           }
         ]
       },
@@ -2971,12 +3493,26 @@
             "text": "Flying",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -3197,24 +3733,30 @@
             "index": 0,
             "face": "Memnarch, the Warden",
             "text": "Indestructible",
-            "status": "UNVERIFIED",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/permanent-copy.test.mjs"
+            ]
           },
           {
             "index": 1,
             "face": "Memnarch, the Warden",
             "text": "When Memnarch enters, create two 1/1 colorless Myr artifact creature tokens.",
-            "status": "UNVERIFIED",
+            "status": "PASS (regression)",
             "effectParser": "recognized",
-            "evidence": []
+            "evidence": [
+              "tests/permanent-copy.test.mjs"
+            ]
           },
           {
             "index": 2,
             "face": "Memnarch, the Warden",
             "text": "Whenever Memnarch attacks, draw a card for each artifact you control.",
-            "status": "UNVERIFIED",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/permanent-copy.test.mjs"
+            ]
           }
         ],
         "spellPrograms": []
@@ -3343,8 +3885,12 @@
             "index": 0,
             "face": "Teferi, Master of Time",
             "text": "You may activate loyalty abilities of Teferi on any player's turn any time you could cast an instant.",
-            "status": "UNVERIFIED",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/network.test.mjs"
+            ]
           },
           {
             "index": 1,
@@ -3482,12 +4028,26 @@
             "text": "Flying",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -3649,12 +4209,26 @@
             "text": "Flying",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -3956,9 +4530,13 @@
             "index": 1,
             "face": "Ichormoon Gauntlet",
             "text": "Whenever you cast a noncreature spell, choose a counter on target permanent. Put an additional counter of that kind on that permanent.",
-            "status": "UNVERIFIED",
-            "effectParser": "missing",
-            "evidence": []
+            "status": "PASS (regression)",
+            "effectParser": "recognized",
+            "evidence": [
+              "tests/atraxa-control.test.mjs",
+              "tests/network.test.mjs",
+              "tests/atraxa-library-ui.cjs"
+            ]
           }
         ],
         "spellPrograms": []
@@ -3996,9 +4574,13 @@
             "index": 0,
             "face": "Elspeth, Sun's Champion",
             "text": "+1: Create three 1/1 white Soldier creature tokens.",
-            "status": "UNVERIFIED",
+            "status": "PASS (regression)",
             "effectParser": "recognized",
-            "evidence": []
+            "evidence": [
+              "tests/entry-batches.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/network.test.mjs"
+            ]
           },
           {
             "index": 1,
@@ -4108,12 +4690,26 @@
             "text": "Flying",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -4250,12 +4846,26 @@
             "text": "Flying",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -4287,12 +4897,26 @@
             "text": "Flying",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -4317,12 +4941,26 @@
             "text": "{T}: Add {C}{C}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           }
         ],
@@ -4339,12 +4977,26 @@
             "text": "{T}: Add one mana of any color in your commander's color identity.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           }
         ],
@@ -4361,12 +5013,26 @@
             "text": "{T}: Add one mana of any color that a land an opponent controls could produce.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           }
         ],
@@ -4443,12 +5109,26 @@
             "text": "{T}: Add {C}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -4472,12 +5152,26 @@
             "text": "{T}: Add {C}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -4501,12 +5195,26 @@
             "text": "{T}: Add {C}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -4539,12 +5247,26 @@
             "text": "{T}: Add {C}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -4619,12 +5341,26 @@
             "text": "{T}: Add {C}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -4648,12 +5384,26 @@
             "text": "{T}: Add {C}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -4712,12 +5462,26 @@
             "text": "{T}: Add one mana of any color in your commander's color identity.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           }
         ],
@@ -4741,12 +5505,26 @@
             "text": "{T}: Add {U} or {B}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           }
         ],
@@ -4763,12 +5541,26 @@
             "text": "{T}: Add one mana of any color that a land an opponent controls could produce.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           }
         ],
@@ -4801,12 +5593,26 @@
             "text": "{T}: Add {C}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -4852,12 +5658,26 @@
             "text": "({T}: Add {U}.)",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           }
         ],
@@ -4905,12 +5725,26 @@
             "text": "{T}: Add {C}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -4939,12 +5773,26 @@
             "text": "{T}: Add {C}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -4968,12 +5816,26 @@
             "text": "This land enters tapped.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -4982,12 +5844,26 @@
             "text": "{T}: Add one mana of any color in your commander's color identity. When that mana is spent to cast a creature spell that shares a creature type with your commander, scry 1. (Look at the top card of your library. You may put that card on the bottom.)",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           }
         ],
@@ -5004,14 +5880,26 @@
             "text": "({T}: Add {W}.)",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/isshin.test.mjs",
-              "tests/isshin-utilities.test.mjs",
-              "tests/isshin-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/goreclaw.test.mjs",
-              "tests/aurelia-utilities.test.mjs",
-              "tests/arahbo.test.mjs",
-              "tests/extra-combat.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           }
         ],
@@ -5087,12 +5975,26 @@
             "text": "{T}: Add {C}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -5172,12 +6074,26 @@
             "text": "{T}: Add {C}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -5201,12 +6117,26 @@
             "text": "{T}: Add {C}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -5230,12 +6160,26 @@
             "text": "({T}: Add {B}.)",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           }
         ],
@@ -5319,12 +6263,26 @@
             "text": "{T}: Add {C}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -5348,12 +6306,26 @@
             "text": "{T}: Add {C}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -5363,13 +6335,26 @@
             "status": "PASS (regression)",
             "effectParser": "recognized",
             "evidence": [
-              "tests/fynn.test.mjs",
-              "tests/fynn-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/goreclaw.test.mjs",
-              "tests/arahbo.test.mjs",
-              "tests/isshin-utilities.test.mjs",
-              "tests/vehicles.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           }
         ],
@@ -5386,12 +6371,26 @@
             "text": "{T}: Add {C}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -5416,12 +6415,26 @@
             "text": "{T}: Add {C}.",
             "status": "PASS (regression)",
             "evidence": [
-              "tests/kess.test.mjs",
-              "tests/kess-ui.cjs",
+              "tests/counter-effects.test.mjs",
+              "tests/counter-effects-ui.cjs",
               "tests/network.test.mjs",
-              "tests/mizzix.test.mjs",
-              "tests/kalamax.test.mjs",
-              "tests/niv-mizzet.test.mjs"
+              "tests/counter-costs.test.mjs",
+              "tests/entry-casting.test.mjs",
+              "tests/atraxa-library.test.mjs",
+              "tests/atraxa-library-ui.cjs",
+              "tests/atraxa-delayed.test.mjs",
+              "tests/atraxa-control.test.mjs",
+              "tests/atraxa-duration.test.mjs",
+              "tests/atraxa-duration-ui.cjs",
+              "tests/commander-evidence.test.mjs",
+              "tests/atraxa-activations.test.mjs",
+              "tests/atraxa-activations-ui.cjs",
+              "tests/entry-replacements.test.mjs",
+              "tests/entry-replacements-ui.cjs",
+              "tests/entry-batches.test.mjs",
+              "tests/permanent-copy.test.mjs",
+              "tests/entry-routes.test.mjs",
+              "tests/entry-routes-ui.cjs"
             ]
           },
           {
@@ -5460,9 +6473,9 @@
       }
     ],
     "counts": {
-      "PASS (regression)": 71,
-      "FAIL (manual resolution)": 23,
-      "UNVERIFIED": 91
+      "PASS (regression)": 79,
+      "FAIL (manual resolution)": 22,
+      "UNVERIFIED": 84
     }
   }
 ]
