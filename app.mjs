@@ -3,7 +3,7 @@ import {automaticFor} from './turn-settings.mjs';
 import {isCopyPlaceholder} from './token-catalog.mjs';
 import {decksReadyForOpening} from './opening-hand.mjs';
 import {createOpeningHandUI} from './opening-hand-ui.mjs';
-import {STEPS,ZONES,newGame,findCard,parseDeck,validateSession,changePlayerCount,commandersFor} from './engine.mjs';
+import {STEPS,ZONES,newGame,findCard,validateSession,changePlayerCount} from './engine.mjs';
 import {practiceGame} from './practice.mjs';
 import {cardFace,creatureStats} from './card-state.mjs';
 import {availableLoyaltyAbilities,getLoyaltyAbility,loyaltyStatus,defaultAbilityPositions,detectLoyaltyPositions} from './planeswalker.mjs';
@@ -21,6 +21,9 @@ import {reduceGameAction} from './game-actions.mjs';
 import {createControllerUI} from './controller-ui.mjs';
 import {castingPermission} from './spell-rules.mjs';
 import {createBoardInteraction} from './board-interaction.mjs';
+import {createPileUI} from './pile-ui.mjs';
+import {createPlayerStatsUI} from './player-stats-ui.mjs';
+import {createDeckImportUI} from './deck-import-ui.mjs';
 import {createCastPresentation} from './cast-presentation.mjs';
 import {createTurnPresentation} from './turn-presentation.mjs';
 import {createCardMotion,tapIndicator} from './card-motion.mjs';
@@ -43,18 +46,16 @@ const COUNTER_PRESETS=[
  ['Keyword counters',['flying','first strike','double strike','deathtouch','decayed','exalted','haste','hexproof','indestructible','lifelink','menace','reach','shadow','trample','vigilance']],
  ['Keyword variants',['hexproof from white','hexproof from blue','hexproof from black','hexproof from red','hexproof from green','hexproof from monocolored','hexproof from multicolored']]
 ];
-let g=newGame(),seat=0,selected=null,history=[],panel='stack',pileView=null,draggedId=null,dragOffset={x:.5,y:.5},importing=false,sessionEpoch=0;
+let g=newGame(),seat=0,selected=null,history=[],panel='stack',draggedId=null,dragOffset={x:.5,y:.5},sessionEpoch=0;
 const artCache=new Map();
 const layoutCache=new Map();
-let camera,cardPreview,manaUI,combatUI,boardPicker,castPresentation,turnPresentation,cardMotion;
+let camera,cardPreview,manaUI,combatUI,pileUI,playerStatsUI,deckImportUI,boardPicker,castPresentation,turnPresentation,cardMotion;
 let networkSession=null,offlineBackup=null;
 let hoverPoint=null,hoverFrame=0;
 let handDragImage;
 let dock,handSeat=0;
 try{const savedHand=localStorage.getItem('commanderLabHandSeat');if(savedHand!==null&&/^[0-3]$/.test(savedHand))handSeat=Number(savedHand);}catch{}
-let artworkLoading=false;
 seat=handSeat;
-function hasArtwork(card){const faces=card.image_uris?.normal?1:card.card_faces?.some(face=>face.image_uris?.normal)?card.card_faces.length:1;return Array.from({length:faces},(_,i)=>card.localImages?.[i]).every(src=>typeof src==='string'&&src.startsWith('data:image/'));}
 try{const saved=localStorage.getItem('commanderLab');if(saved)g=validateSession(JSON.parse(saved));}catch{setStatus('The saved session could not be read. A fresh table is ready.');}
 if(handSeat>=g.players.length)seat=handSeat=0;
 const serialize=state=>JSON.stringify(state,(key,value)=>key==='localImages'?undefined:value);
@@ -179,7 +180,7 @@ function enableCardDrag(node,card,{concealed=false,preview=false,rotated=false}=
 }
 function pileTop(owner,zone){const cards=g.players[owner].zones[zone];return zone==='library'?cards[0]:cards.at(-1);}
 function pileButton(owner,zone){
- const player=g.players[owner],top=pileTop(owner,zone),pile=button('',()=>openPile(owner,zone),'pile '+zone+(top?'':' pile-empty'));
+ const player=g.players[owner],top=pileTop(owner,zone),pile=button('',()=>pileUI.open(owner,zone),'pile '+zone+(top?'':' pile-empty'));
  let face;
  if(zone==='library'){face=el('img');face.src=CARD_BACK_URL;face.alt='Commander Lab card back';face.draggable=false;}
  else if(top){const card=cardButton({...top,faceDown:false,tapped:false},{interactive:false});face=el('div',undefined,card.className+' pile-face');face.append(...card.childNodes);face.setAttribute('aria-label',top.name);}
@@ -281,7 +282,7 @@ function renderTable(){
   const identity=button('',()=>selectSeat(owner),'player-heading');const title=el('div');const name=el('h2',player.name+(player.eliminated?' - eliminated':''));if(owner===g.active){const dot=el('span',undefined,'active-marker');dot.title='Active turn';name.append(dot);}title.append(name,el('span','SEAT 0'+(owner+1)+(owner===seat?' / CONTROLLING':''),'seat-description'));identity.append(el('span',String(owner+1),'seat-avatar'),title);
   const tools=el('div',undefined,'mat-tools'),life=el('div',undefined,'life-control');
   const less=button('−',()=>dispatch({type:'life',owner,delta:-1}));less.setAttribute('aria-label',player.name+': subtract one life');
-  const total=button(String(player.life),()=>openStats(owner),'life-total');total.title='Edit life, poison, commander damage and name';total.setAttribute('aria-label',player.name+': '+player.life+' life. Edit stats');
+    const total=button(String(player.life),()=>playerStatsUI.open(owner),'life-total');total.title='Edit life, poison, commander damage and name';total.setAttribute('aria-label',player.name+': '+player.life+' life. Edit stats');
   const more=button('+',()=>dispatch({type:'life',owner,delta:1}));more.setAttribute('aria-label',player.name+': add one life');life.append(less,total,more);
   tools.append(life,button('Draw',()=>dispatch({type:'draw',owner}), 'draw-button'));heading.append(identity,tools);
   const body=el('div',undefined,'mat-body'),field=el('div',undefined,'battlefield');const fieldHeading=el('div',undefined,'zone-heading');fieldHeading.append(el('span','BATTLEFIELD'),el('span',String(player.zones.battlefield.length),'zone-count'));const cards=el('div',undefined,'cards');
@@ -492,7 +493,6 @@ function renderStack(){
  });
 }
 function render(){
- $('finish-library-search').hidden=!networkSession||!g.players[seat].librarySearch;
  $('automatic').checked=automaticFor(g,seat);$('automatic').disabled=false;
  $('automatic').setAttribute('aria-label',g.players[seat].name+' auto untap / draw');
  $('automatic').parentElement.title='Automatically untap and draw during '+g.players[seat].name+' turns only.';
@@ -506,50 +506,9 @@ function render(){
  saveLocal();$('turnnumber').textContent=String(g.turn).padStart(2,'0');$('turn').textContent='TURN '+g.turn+' / '+g.players[g.active].name;const planned=g.turnPlan?.steps[g.turnPlan.index];$('step').textContent=STEPS[g.step]+(planned?.extra?' · Extra':'');$('step').title=planned?.extra?'Additional '+planned.kind+' phase · '+planned.source:STEPS[g.step];
  $('steps').replaceChildren(...STEPS.map((s,i)=>{const b=button(STEP_LABELS[i],()=>dispatch({type:'step',step:i}),'step'+(i===g.step?' current':''));b.title=s;b.setAttribute('aria-label',s);if(i===g.step)b.setAttribute('aria-current','step');return b;}));
  $('players').replaceChildren(...g.players.map((p,i)=>{const b=button('0'+(i+1),()=>selectSeat(i),'seat-selector'+(i===seat?' selected':''));b.style.setProperty('--seat-color',COLORS[i]);b.title='Control '+p.name;b.setAttribute('aria-label','Control '+p.name);b.setAttribute('aria-pressed',String(seat===i));return b;}));
- $('undo').disabled=networkSession?networkSession.connection!=='connected':!history.length;for(const id of ['reset','practice','quickpractice','load','player-count'])if($(id))$(id).disabled=!!networkSession;if($('reset-game'))$('reset-game').disabled=!!networkSession&&!networkSession.host;if($('starting-hands'))$('starting-hands').disabled=!!networkSession&&!networkSession.host;renderTable();renderHandDock();manaUI?.render();combatUI?.render();renderSelection();renderInspector();renderStack();boardPicker?.refresh();castPresentation?.refresh();turnPresentation?.refresh();$('log').replaceChildren(...(g.log.length?g.log.map((text,index)=>{const row=el('div',text);row.title=index===0?'Most recent action':'';return row;}):[el('p','Your table actions will appear here.')]));setPanel(panel);if($('pile-dialog').open)renderPile();cardPreview?.refresh(true);cardMotion?.refresh();refreshHover();maybePromptEntry();manaUI?.maybeResolveEffect();openingHandUI?.refresh();
+ $('undo').disabled=networkSession?networkSession.connection!=='connected':!history.length;for(const id of ['reset','practice','quickpractice','load','player-count'])if($(id))$(id).disabled=!!networkSession;if($('reset-game'))$('reset-game').disabled=!!networkSession&&!networkSession.host;if($('starting-hands'))$('starting-hands').disabled=!!networkSession&&!networkSession.host;renderTable();renderHandDock();manaUI?.render();combatUI?.render();renderSelection();renderInspector();renderStack();boardPicker?.refresh();castPresentation?.refresh();turnPresentation?.refresh();$('log').replaceChildren(...(g.log.length?g.log.map((text,index)=>{const row=el('div',text);row.title=index===0?'Most recent action':'';return row;}):[el('p','Your table actions will appear here.')]));setPanel(panel);pileUI?.render();cardPreview?.refresh(true);cardMotion?.refresh();refreshHover();maybePromptEntry();manaUI?.maybeResolveEffect();openingHandUI?.refresh();
 }
 // ---- Deck/pile dialogs and player statistics ----
-function openImport(owner=seat){
- if(networkSession)owner=seat;
- $('import-seat').replaceChildren(...g.players.map((p,i)=>{const option=el('option','Seat '+(i+1)+' / '+p.name);option.value=i;return option;}));$('import-seat').value=owner;$('import-seat').disabled=!!networkSession;$('player-name').value=g.players[owner].name;$('import-dialog').showModal();
-}
-function openPile(owner,zone){
- if(networkSession&&zone==='library'){
-  if(owner!==seat){setStatus('You can search only your own library.');return;}
-  if(g.pendingEffect?.kind==='oracle-choice'){manaUI.maybeResolveEffect();setStatus('Use the pending effect choices to search.');return;}
-  if(!g.players[owner].librarySearch){dispatch({type:'librarySearch',open:true},{after:()=>showPile(owner,zone)});return;}
- }
- showPile(owner,zone);
-}
-function showPile(owner,zone){if(!networkSession)seat=owner;pileView={owner,zone};$('pile-search').value='';render();renderPile();if(!$('pile-dialog').open)$('pile-dialog').showModal();if(zone==='library')$('pile-search').focus();}
-function finishLibrarySearch(shuffle=true){dispatch({type:'librarySearch',open:false,shuffle},{after:()=>{$('pile-dialog').close();pileView=null;}});}
-const finishSearch=button('Finish search & shuffle',()=>finishLibrarySearch());finishSearch.id='finish-library-search';finishSearch.hidden=true;$('automatic').closest('.turn-actions').prepend(finishSearch);
-
-function renderPile(){
- if(!pileView)return;const {owner,zone}=pileView,player=g.players[owner];$('pile-owner').textContent='SEAT 0'+(owner+1)+' / '+player.name;$('pile-title').textContent=LABELS[zone]+' · '+player.zones[zone].length+' cards';$('pile-caption').textContent=zone==='library'?'Top to bottom, left to right. Hold Left Alt over a card to inspect it, or drag it directly onto the table.':'Hold Left Alt to inspect or drag a card back onto the table.';
- const cards=player.zones[zone],query=zone==='library'?$('pile-search').value.trim().toLocaleLowerCase():'';
- const entries=cards.map((card,index)=>({card,index})).filter(({card})=>!query||[card.name,...(card.card_faces||[]).map(face=>face.name)].some(name=>name?.toLocaleLowerCase().includes(query)));
- $('pile-search-controls').hidden=zone!=='library';$('pile-search-clear').hidden=!$('pile-search').value;
- $('pile-search-status').textContent=query?entries.length+' of '+cards.length+' cards':cards.length+' cards';
- $('pile-cards').replaceChildren(...entries.map(({card,index})=>{const wrapper=el('div');wrapper.append(cardButton(card),el('div',zone==='library'?(index===0?'TOP / 1':String(index+1)):String(index+1),'pile-index'));return wrapper;}));
- if(networkSession&&zone==='library'&&player.librarySearch){
-  const actions=el('div',undefined,'pile-search-row');
-  actions.append(button('Finish search & shuffle',()=>finishLibrarySearch()),button('Finish without shuffling',()=>finishLibrarySearch(false)));
-  $('pile-cards').append(actions);
- }
- if(!entries.length)$('pile-cards').append(el('p',cards.length?'No cards match your search.':'This pile is empty.','pile-empty-message'));refreshHover();
-}
-$('pile-search').oninput=renderPile;
-$('pile-search-clear').onclick=()=>{$('pile-search').value='';renderPile();$('pile-search').focus();};
-let statsSeat=0;
-function openStats(owner){
- if(networkSession&&owner!==seat){setStatus('Each player edits their own totals.');return;}
- statsSeat=owner;const p=g.players[owner];$('stats-title').textContent=p.name;$('seat-name').value=p.name;$('life-total').value=p.life;$('poison-total').value=p.poison;$('command-casts').value=p.casts;
- const commanders=commandersFor(g,owner);$('command-casts').value=commanders[0]?.commandCasts??p.casts;
- $('command-casts').previousElementSibling.textContent=commanders.length>1?commanders[0].name+' casts':'Command casts';
- $('partner-casts').replaceChildren(...commanders.slice(1).map(card=>{const group=el('div'),label=el('label',card.name+' casts'),input=el('input');input.id='casts-'+card.instance;label.htmlFor=input.id;input.type='number';input.min=0;input.step=1;input.required=true;input.dataset.commander=card.instance;input.value=card.commandCasts??0;group.append(label,input);return group;}));
- $('damage-inputs').replaceChildren(...g.players.map((source,i)=>{const group=el('div'),label=el('label','Seat '+(i+1));label.htmlFor='damage-'+i;label.title=source.name;const input=el('input');input.type='number';input.min=0;input.required=true;input.id='damage-'+i;input.value=p.damage[i];group.append(label,input);return group;}));$('stats-dialog').showModal();
-}
 // ---- Toolbar actions and confirmed table changes ----
 function confirmAction(title,text,action){$('confirm-title').textContent=title;$('confirm-text').textContent=text;$('confirm-action').onclick=()=>{$('confirm-dialog').close();action();};$('confirm-dialog').showModal();}
 function undo(){if(g.opening?.status==='choosing'||!networkSession&&history.length&&JSON.parse(history.at(-1)).opening?.status==='choosing'){setStatus('Opening-hand decisions cannot be undone.');return;}if(networkSession){dispatch({type:'undo'});return;}if(!history.length)return;rememberArt();const previousTurn=g.turn+':'+g.active;g=JSON.parse(history.pop());const handedOff=previousTurn!==g.turn+':'+g.active;if(handedOff)seat=g.active;restoreArt();sessionEpoch++;selected=null;render();if(handedOff)camera?.focusSeat(seat);setStatus('Last table action undone.');}
@@ -558,7 +517,7 @@ $('endturn').onclick=()=>dispatch({type:'endTurn'});
 $('draw').onclick=()=>dispatch({type:'draw'});$('untap').onclick=()=>dispatch({type:'untap'});
 $('shuffle').onclick=()=>dispatch({type:'shuffle'});
 $('mulligan').onclick=()=>dispatch({type:'redraw'});
-$('undo').onclick=undo;$('openimport').onclick=()=>openImport();$('import-seat').onchange=()=>{$('player-name').value=g.players[Number($('import-seat').value)].name;};
+$('undo').onclick=undo;$('openimport').onclick=()=>deckImportUI.open();
 function openTokenDialog(copyId){
  const select=$('token-template');select.replaceChildren(new Option('Custom token',''));
  for(const [index,token] of (g.players[seat].tokenCatalog||[]).entries())if(!isCopyPlaceholder(token))select.add(new Option(token.name+(token.power!==undefined?' '+token.power+'/'+token.toughness:'')+' '+(token.colors||[]).join(''),String(index)));
@@ -573,9 +532,9 @@ const copyException=el('label'),copyCheckbox=el('input');copyCheckbox.type='chec
 document.querySelector('label[for=token-template]').textContent='Token template or copy source';
 $('token-template').onchange=()=>{const value=$('token-template').value,custom=value==='';for(const id of ['token-name','token-text','token-power'])$(id).disabled=!custom;copyException.hidden=!value.startsWith('copy:');};
 $('help').onclick=()=>$('help-dialog').showModal();
-$('quickstats').onclick=()=>openStats(seat);
+$('quickstats').onclick=()=>playerStatsUI.open(seat);
 $('quickpractice').onclick=()=>$('practice').click();
-$('refreshart').onclick=()=>hydrateArt({retry:true});
+$('refreshart').onclick=()=>deckImportUI.hydrateArt({retry:true});
 $('dock-player').onchange=()=>selectSeat(Number($('dock-player').value));
 $('dock-draw').onclick=()=>dispatch({type:'draw'});
 $('dock-left').onclick=()=>dock.scroll(-1);$('dock-right').onclick=()=>dock.scroll(1);
@@ -591,7 +550,6 @@ for(const name of ['stack','log'])$('tab-'+name).onclick=()=>setPanel(name);
 $('tab-stack').ondragenter=()=>{if(draggedId)setPanel('stack');};
 for(const b of document.querySelectorAll('[data-close]'))b.onclick=()=>b.closest('dialog').close();
 $('loadlabel').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('load').click();}};
-$('stats-form').onsubmit=e=>{e.preventDefault();const life=Number($('life-total').value),poison=Number($('poison-total').value),casts=Number($('command-casts').value),extra=[...$('partner-casts').querySelectorAll('input')],damage=g.players.map((_,i)=>Number($('damage-'+i).value));if(![life,poison,...damage].every(Number.isFinite)||![casts,...extra.map(input=>Number(input.value))].every(n=>Number.isSafeInteger(n)&&n>=0))return;dispatch({type:'playerStats',owner:statsSeat,name:$('seat-name').value.trim(),life,poison,damage,totalCasts:casts,casts:Object.fromEntries([...commandersFor(g,statsSeat).map((c,i)=>[c.instance,i?Number(extra.find(input=>input.dataset.commander===c.instance)?.value??c.commandCasts??0):casts])])});$('stats-dialog').close();};
 $('token-form').onsubmit=e=>{e.preventDefault();const name=$('token-name').value.trim(),count=Number($('token-count').value),value=$('token-template').value;if(value.startsWith('copy:')){const id=value.slice(5),source=findCard(g,id);dispatch({type:'copyToken',id,count,battlefieldId:source?.card.battlefieldId||null,nonlegendary:$('token-copy-nonlegendary').checked});$('token-dialog').close();return;}if(value!==''){dispatch({type:'token',templateIndex:Number(value),count});$('token-dialog').close();return;}if(!name||!Number.isInteger(count)||count<1||count>50)return;const parts=($('token-power').value.trim()||name.match(/^[+-]?\d+\/[+-]?\d+/)?.[0]||'').split('/');dispatch({type:'token',name,count,text:$('token-text').value,power:parts[0]?.trim()||'0',toughness:parts[1]?.trim()||'0'});$('token-dialog').close();};
 document.addEventListener('keydown',e=>{
  if(e.altKey||e.target.closest('input,textarea,select')||document.querySelector('dialog[open]'))return;
@@ -602,56 +560,21 @@ document.addEventListener('keydown',e=>{
  else if(selected&&e.key.toLowerCase()==='f'){e.preventDefault();toggleFaceDown(selected);}
  else if(e.key==='Escape'){clearHover();}
 });
-// ---- Imports, session files and local artwork hydration ----
-// Fetch each distinct name once, then create a separate instance for every
-// physical copy. Shared metadata must never make duplicate cards share identity.
-async function lookupNames(names){
- const unique=[...new Map(names.map(name=>[name.trim().toLowerCase(),name.trim()])).values()],records=new Map();
- for(let i=0;i<unique.length;i+=250){const loaded=await window.cards.lookupBatch(unique.slice(i,i+250));for(const [name,card] of Object.entries(loaded))records.set(name.trim().toLowerCase(),card);}
- return Object.fromEntries(names.map(name=>[name,records.get(name.trim().toLowerCase())]));
-}
-$('import-form').onsubmit=async e=>{
- e.preventDefault();if(importing)return;const target=Number($('import-seat').value),commanders=[$('commander').value.trim(),$('partner').value.trim()].filter(Boolean),playerName=$('player-name').value.trim();let list;
- try{list=parseDeck($('deck').value);}catch(error){$('import-status').textContent=error.message;return;}
- if(!list.length){$('import-status').textContent='Paste a deck list first.';return;}
- if(list.reduce((n,row)=>n+row.count,0)>500){$('import-status').textContent='Please keep each imported deck to 500 cards or fewer.';return;}
- if(!window.cards){$('import-status').textContent='Launch through Electron to download card data. The practice table works offline.';return;}
- const epoch=sessionEpoch;importing=true;$('import').disabled=true;$('refreshart').disabled=true;$('import').textContent='Loading cards…';
- try{
-  const names=[...new Set([...list.map(c=>c.name),...commanders])];$('import-status').textContent='Loading '+names.length+' card names and caching artwork. First imports can take a few minutes.';
-  const records=await lookupNames(names);$('import-status').textContent='Finding tokens and caching their artwork...';const reserve=window.cards.lookupTokens?await window.cards.lookupTokens(names):{tokens:[],warnings:[]};if(epoch!==sessionEpoch)throw Error('The table changed during import. Cached cards are ready; import again into this table.');
-  const instance=(c,isCommander=false)=>({...c,instance:crypto.randomUUID(),tapped:false,counters:{},face:0,commander:isCommander,ownerSeat:target});
-  const library=[],command=commanders.map((name,commandSlot)=>{if(!records[name])throw Error('Missing card: '+name);return {...instance(records[name],true),commandSlot,commandCasts:0};});
-  if(command.length===2&&command[0].id===command[1].id)throw Error('Choose two different command-zone cards.');
-  const remaining=new Set(command.map(card=>card.id));
-  for(const row of list){const card=records[row.name];if(!card)throw Error('Missing card: '+row.name);let count=row.count;if(remaining.delete(card.id))count--;for(let i=0;i<count;i++)library.push(instance(card));}
-  const count=library.length+command.length;if(count>500)throw Error('Please keep each imported deck, including commanders, to 500 cards or fewer.');
-  const missingImages=[...new Map([...library,...command].map(card=>[card.id,card])).values()].filter(card=>!hasArtwork(card)||card.artworkError);
-  const resultMessage=(reserve.warnings.length?reserve.warnings.join(' ')+' ':'')+'Loaded '+reserve.tokens.length+' token templates. Imported '+count+' cards for '+(playerName||g.players[target].name)+(missingImages.length?'. Images missing for '+missingImages.length+' card names; click Images to retry.':' with card images.');
-  dispatch({type:'import',owner:target,library,command,tokenCatalog:reserve.tokens,name:playerName},{message:resultMessage});
-  $('import-dialog').close();$('import-status').textContent='Card data and artwork download from Scryfall and cache locally.';
- }catch(error){$('import-status').textContent=error.message;setStatus(error.message);}
- finally{importing=false;$('import').disabled=false;$('refreshart').disabled=artworkLoading;$('import').textContent='Import & shuffle →';}
-};
+// ---- Session files ----
 $('save').onclick=()=>{const url=URL.createObjectURL(new Blob([serialize(g)],{type:'application/json'}));const link=el('a');link.href=url;link.download='commander-session.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);setStatus('Session exported, including card positions and counters.');};
 $('load').onchange=async e=>{
  const file=e.target.files[0];if(!file)return;
- try{if(file.size>30*1024*1024)throw Error('Session file exceeds 30 MB.');const value=validateSession(JSON.parse(await file.text()));mutate(()=>{g=value;sessionEpoch++;seat=0;selected=null;restoreArt();},'Session loaded. Restoring cached artwork…');await hydrateArt();}
+ try{if(file.size>30*1024*1024)throw Error('Session file exceeds 30 MB.');const value=validateSession(JSON.parse(await file.text()));mutate(()=>{g=value;sessionEpoch++;seat=0;selected=null;restoreArt();},'Session loaded. Restoring cached artwork…');await deckImportUI.hydrateArt();}
  catch(error){setStatus(error.message);}finally{e.target.value='';}
 };
-async function hydrateArt({retry=false}={}){
- rememberArt();if(!window.cards||artworkLoading)return;const epoch=sessionEpoch,all=allCards(),missingCards=all.filter(c=>c.id&&(!hasArtwork(c)||c.artworkVersion!==2)),tokenIds=[...new Set(missingCards.filter(c=>c.token||c.tokenTemplate).map(c=>c.id))],names=[...new Set(missingCards.filter(c=>!c.token&&!c.tokenTemplate).map(c=>c.name))];
- if(!names.length&&!tokenIds.length){if(retry)setStatus(all.some(c=>c.id)?'All imported cards already have images.':'Import a deck to download its card images.');return;}
- artworkLoading=true;$('refreshart').disabled=true;setStatus('Downloading missing card images…');
- try{const records=await lookupNames(names),byId={};for(let i=0;i<tokenIds.length;i+=250)Object.assign(byId,await window.cards.lookupIds(tokenIds.slice(i,i+250)));if(epoch!==sessionEpoch)return;for(const card of all){const record=(card.token||card.tokenTemplate)?byId[card.id]:records[card.name];if(record){card.localImages=record.localImages;card.artworkVersion=record.artworkVersion;if(record.artworkError)card.artworkError=record.artworkError;else delete card.artworkError;cacheArtwork(card);}}restoreArt();render();const missing=[...new Set(all.filter(c=>c.id&&(!hasArtwork(c)||c.artworkVersion!==2)).map(c=>c.name))];setStatus(missing.length?'High-resolution images unavailable for '+missing.join(', ')+'. Click Images to retry.':'High-resolution card images ready.');}
- catch(error){setStatus('Card images could not download: '+error.message+'. Click Images to retry.');}
- finally{artworkLoading=false;$('refreshart').disabled=importing;}
-}
 dock=createHandDock({root:$('hand-dock'),track:$('dock-scroll'),items:$('dock-items'),caption:$('dock-caption'),onScroll:({canLeft,canRight})=>{$('dock-left').disabled=!canLeft;$('dock-right').disabled=!canRight;}});
 cardPreview=createCardPreview({roots:[document.body],getCard:inspectionCard,renderCard:cardButton,renderDetails:renderInspector});
 boardPicker=createBoardInteraction({getGame:()=>g,getSeat:()=>seat,renderCard:card=>cardButton(card,{interactive:false}),el,button,setStatus});
 manaUI=createManaUI({getGame:()=>g,getSeat:()=>seat,selectSeat,toggleTapped,findCard,dispatch,setStatus,el,button,boardPicker,useLoyaltyAbility,renderCard:(card,options)=>cardButton(card,{...options,interactive:false})});
-combatUI=createCombatUI({openLibrary:owner=>openPile(owner,'library'),getGame:()=>g,getSeat:()=>seat,selectSeat,dispatch,setStatus,el,button,boardPicker,renderCard:card=>cardButton(card,{interactive:false}),showStack:()=>{showPanel();setPanel('stack');}});
+playerStatsUI=createPlayerStatsUI({getGame:()=>g,getNetwork:()=>networkSession,getSeat:()=>seat,dispatch,setStatus,el});
+deckImportUI=createDeckImportUI({getGame:()=>g,getNetwork:()=>networkSession,getSeat:()=>seat,getEpoch:()=>sessionEpoch,allCards,dispatch,setStatus,render,rememberArt,cacheArtwork,restoreArt});
+pileUI=createPileUI({getGame:()=>g,getNetwork:()=>networkSession,getSeat:()=>seat,setSeat:owner=>{seat=owner;},dispatch,render,renderCard:card=>cardButton(card),refreshHover,resolvePendingEffect:()=>manaUI?.maybeResolveEffect(),setStatus,el,button});
+combatUI=createCombatUI({openLibrary:owner=>pileUI.open(owner,'library'),getGame:()=>g,getSeat:()=>seat,selectSeat,dispatch,setStatus,el,button,boardPicker,renderCard:card=>cardButton(card,{interactive:false}),showStack:()=>{showPanel();setPanel('stack');}});
 turnPresentation=createTurnPresentation({getGame:()=>g,getSeat:()=>seat,getEpoch:()=>sessionEpoch});
 cardMotion=createCardMotion({getSeat:()=>seat,getEpoch:()=>sessionEpoch});
 castPresentation=createCastPresentation({getGame:()=>g,renderCard:(card,options)=>cardButton(card,{...options,interactive:false}),resolveArt:card=>({...card,localImages:findCard(g,card.instance)?.card.localImages||artCache.get(card.id||card.name)?.localImages}),priorityControls:()=>manaUI.priorityControls({id:'play-priority-controls',responses:true}),el,button});
@@ -677,7 +600,7 @@ function networkStatus(info){
 function networkState(packet){
  const first=!networkSession||networkSession.seat===undefined;if(!networkSession){rememberArt();offlineBackup=serialize(g);sessionEpoch++;}
  if(g.networkEpoch!==undefined&&g.networkEpoch!==packet.game.networkEpoch){sessionEpoch++;for(const dialog of document.querySelectorAll('dialog[open]'))if(!['network-dialog','launch-screen'].includes(dialog.id))dialog.close();}
- networkSession={...networkSession,...packet,connection:'connected'};rememberArt();g=packet.game;seat=packet.seat;selected=null;restoreArt();render();if(first)camera?.focusSeat(seat);hydrateArt();
+ networkSession={...networkSession,...packet,connection:'connected'};rememberArt();g=packet.game;seat=packet.seat;selected=null;restoreArt();render();if(first)camera?.focusSeat(seat);deckImportUI.hydrateArt();
 }
 function leaveNetwork(){networkSession=null;sessionEpoch++;g=offlineBackup?JSON.parse(offlineBackup):newGame();offlineBackup=null;seat=handSeat=0;selected=null;$('automatic').disabled=false;restoreArt();render();camera?.focusSeat(seat);setStatus('Left the shared table. Your previous local table is restored.');}
 createNetworkUI({getGame:()=>g,serialize,getAutomatic:()=>false,onState:networkState,onStatus:networkStatus,onLeave:leaveNetwork,setStatus});
@@ -705,9 +628,9 @@ createControllerUI({setStatus,onPan:(x,y)=>camera.panBy(x,y),
   target.dispatchEvent(new DragEvent('drop',{bubbles:true,cancelable:true,dataTransfer:data,clientX:point.x,clientY:point.y}));
  }
 });
-window.cards?.onProgress?.(progress=>{if(!importing&&!artworkLoading)return;const message=progress.stage==='images'?'Card images '+progress.completed+' / '+progress.total+(progress.name?' · '+progress.name:''):'Loading card data · '+progress.total+' names';if(importing)$('import-status').textContent=message;setStatus(message);});
-hydrateArt();
+window.cards?.onProgress?.(progress=>{const importing=deckImportUI?.isImporting()||false,artworkLoading=deckImportUI?.isArtworkLoading()||false;if(!importing&&!artworkLoading)return;const message=progress.stage==='images'?'Card images '+progress.completed+' / '+progress.total+(progress.name?' · '+progress.name:''):'Loading card data · '+progress.total+' names';if(importing)$('import-status').textContent=message;setStatus(message);});
+deckImportUI.hydrateArt();
 
-launchUI=createLaunchUI({getGame:()=>g,getNetwork:()=>networkSession,dispatch,onLocal:game=>mutate(()=>{g=game;sessionEpoch++;seat=handSeat=0;selected=null;},'Local lobby ready.',{autoPass:false}),onState:networkState,onLeave:leaveNetwork,openImport,selectSeat,setStatus});
+launchUI=createLaunchUI({getGame:()=>g,getNetwork:()=>networkSession,dispatch,onLocal:game=>mutate(()=>{g=game;sessionEpoch++;seat=handSeat=0;selected=null;},'Local lobby ready.',{autoPass:false}),onState:networkState,onLeave:leaveNetwork,openImport:owner=>deckImportUI.open(owner),selectSeat,setStatus});
 
 openingHandUI=createOpeningHandUI({getGame:()=>g,getNetwork:()=>networkSession,getSeat:()=>seat,selectSeat,dispatch,renderCard:cardButton});

@@ -1,8 +1,8 @@
-Commander Lab **0.1.0-test.3** for Windows x64. Download the **setup.exe** installer, or extract the **ZIP** and run **Commander Lab.exe**. Node.js is not required.
+Commander Lab **0.1.0-test.4** for Windows x64. Download the **setup.exe** installer, or extract the **ZIP** and run **Commander Lab.exe**. Node.js is not required.
 
 Everyone in a multiplayer room should use the same version (shown in the window title). Internet access is needed to import Scryfall card data and artwork. Hosting still uses the host's computer; this release does not provide a matchmaking server.
 
-This update adds in-app updates, permanent/token copying that retains supported abilities, and playable-card mana previews using artifacts, creatures and other supported sources. It expands shared Atraxa ability handling and battlefield-entry counter replacements, including choices that pause resolution correctly through library searches, delayed returns and polymorph effects. New keyword-action audits distinguish tested behavior from remaining implementation work. Saved choices and multiplayer privacy are covered by focused regression tests.
+This maintenance release moves pile browsing, player statistics, deck import and artwork hydration into dedicated renderer UI modules. Existing gameplay actions, selectors and supported rules behavior are unchanged; this release does not claim additional card-rule support. The full engine/network suite and all 40 Electron UI workflows pass.
 
 **Neither deck is fully verified yet.** Unsupported effects may need manual handling. See `docs/playtest-deck-audit.md` for the card-by-card evidence and remaining gaps. Automated unit tests and focused deck, mana, planeswalker and multiplayer UI checks cover the verified scenarios; passing tests are not a count of fully implemented card interactions.
 
