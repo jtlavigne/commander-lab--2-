@@ -1,20 +1,21 @@
+import {runEffectFamily,EFFECT_STOP,EFFECT_CONTINUE} from './effect-dispatch.mjs';
 import {preparePermanentEntries,commitPermanentEntries,validateEntryRequests} from './entry-effects.mjs';
-import {compileKeywordAction,runKeywordAction,keywordActionOptions,resolveKeywordAction,validateKeywordAction,KEYWORD_ACTION_OPERATIONS} from './keyword-actions.mjs';
-import {compilePermanentCopy,runPermanentCopy,validatePermanentCopy,COPY_OPERATIONS} from './permanent-copy.mjs';
-import {compilePolymorphEffect,runPolymorphStep,resolvePolymorphChoice,POLYMORPH_OPERATIONS} from './polymorph.mjs';
+import {compileKeywordAction,keywordActionOptions,resolveKeywordAction,validateKeywordAction,KEYWORD_ACTION_OPERATIONS} from './keyword-actions.mjs';
+import {compilePermanentCopy,validatePermanentCopy,COPY_OPERATIONS} from './permanent-copy.mjs';
+import {compilePolymorphEffect,resolvePolymorphChoice,POLYMORPH_OPERATIONS} from './polymorph.mjs';
 import {namedToken} from './token-catalog.mjs';
 import {finishResolutionTriggers} from './trigger-rules.mjs';
 import {createCounterPlan,advanceCounterPlan,commitCounterPlan,validateCounterPlan,permanentCounterEvent,playerCounterEvent,proliferateCount} from './counter-effects.mjs';
-import {compileReanimationEffect,runReanimationStep,reanimationChoiceOptions,resolveReanimationChoice,REANIMATION_OPERATIONS} from './reanimation.mjs';
-import {compileSecretChoiceEffect,runSecretStep,resolveSecretNumber,SECRET_OPERATIONS} from './secret-choices.mjs';
+import {compileReanimationEffect,reanimationChoiceOptions,resolveReanimationChoice,REANIMATION_OPERATIONS} from './reanimation.mjs';
+import {compileSecretChoiceEffect,resolveSecretNumber,SECRET_OPERATIONS} from './secret-choices.mjs';
 import {gainLife,drawAllowance,canSearchLibrary} from './resource-rules.mjs';
 import {soulbondOptions,pairCreatures} from './soulbond.mjs';
 import {spellCopyCount} from './spell-copy-rules.mjs';
-import {compilePermissionEffect,runPermissionStep,permissionChoiceOptions,resolvePermissionChoice,PERMISSION_OPERATIONS,offeredCardAllowed} from './permission-effects.mjs';
+import {compilePermissionEffect,permissionChoiceOptions,resolvePermissionChoice,PERMISSION_OPERATIONS,offeredCardAllowed} from './permission-effects.mjs';
 import {manifestTop} from './face-down.mjs';
 import {cardFace,manaValue} from './card-state.mjs';
-import {compileTemporalEffect,runTemporalStep,TEMPORAL_OPERATIONS} from './temporal-effects.mjs';
-import {compileLibraryEffect,runLibraryStep,libraryChoiceOptions,resolveLibraryChoice,LIBRARY_OPERATIONS,LIBRARY_CHOICES} from './library-effects.mjs';
+import {compileTemporalEffect,TEMPORAL_OPERATIONS} from './temporal-effects.mjs';
+import {compileLibraryEffect,libraryChoiceOptions,resolveLibraryChoice,LIBRARY_OPERATIONS,LIBRARY_CHOICES} from './library-effects.mjs';
 import {findCard,transfer,draw,shuffle,note} from './engine.mjs';
 import {combatRecipient,combatStats,fieldCards,isCreature,selfSubject,keywordSet} from './creature-rules.mjs';
 import {normalizeRules} from './ability-effects.mjs';
@@ -266,9 +267,11 @@ export function applyOracleEffect(g,entry,text=entry.text){
 }
 export function enterPermanents(g,entry,requests){runProgram(g,contextFor(entry),[{op:'enterPermanents',requests}]);}
 export function applyCounterEvents(g,entry,events){runProgram(g,contextFor(entry),[{op:'counterBatch',events}]);}
+// ---- Resolution and resumable choices ----
+// Programs are serializable. Paused instructions preserve the remaining steps
+// for the controlling player; triggers wait until the full resolution finishes.
 function runProgram(g,context,program){
- // Triggers created during resolution wait until the whole instruction sequence
- // and its choices finish. Players cannot respond between those instructions.
+  // Players cannot respond between instructions of the same resolution.
  g.resolutionInProgress=true;
  const playerRecipients=(scope,recipient=context.owner)=>scope==='that player'?[context.event?.target?.owner].filter(owner=>g.players[owner]):scope==='you'?[recipient]:scope.startsWith('target')?(context.targets||[]).filter(t=>t.kind==='player').map(t=>t.owner):g.players.flatMap((player,owner)=>player.eliminated||scope==='each opponent'&&owner===context.owner?[]:[owner]);
  for(let i=0;i<program.length;i++){
@@ -316,16 +319,11 @@ function runProgram(g,context,program){
    if(n>1){runProgram(g,context,next);return;}
   }
   if(step.op==='returnStackTarget'){const target=g.stack.find(e=>e.card?.instance===context.target?.id&&e.card.zoneChangeId===context.target.zoneChangeId);if(target)transfer(g,target.card.instance,'hand',target.card.ownerSeat??target.owner);}
-  const polymorphResult=runPolymorphStep(g,context,step,rest,runProgram);if(polymorphResult===2)return;if(polymorphResult===1)continue;
-  const libraryResult=runLibraryStep(g,context,step,rest,runProgram);if(libraryResult===2)return;if(libraryResult===1)continue;
-  if(runPermanentCopy(g,context,step,rest,runProgram))return;
+  const familyResult=runEffectFamily(g,context,step,rest,runProgram);
+  if(familyResult===EFFECT_STOP)return;
+  if(familyResult===EFFECT_CONTINUE)continue;
   if(step.op==='counterFloor'){const events=(context.targets||[]).filter(t=>t.kind==='player').flatMap(t=>{const p=g.players[t.owner],current=step.counter==='poison'?p.poison||0:p.counters?.[step.counter]||0,amount=Math.max(0,step.amount-current);return amount?[playerCounterEvent(owner,t.owner,{[step.counter]:amount})]:[];});runProgram(g,context,[{op:'counterBatch',events},...rest]);return;}
-  const keywordResult=runKeywordAction(g,context,step,rest,runProgram);if(keywordResult===2)return;if(keywordResult===1)continue;
-  const reanimationResult=runReanimationStep(g,context,step,rest,runProgram);if(reanimationResult===2)return;if(reanimationResult===1)continue;
-  const secretResult=runSecretStep(g,context,step,rest,runProgram);if(secretResult===2)return;if(secretResult===1)continue;
-  const permissionResult=runPermissionStep(g,context,step,rest,runProgram);if(permissionResult===2)return;if(permissionResult===1)continue;
   if(step.op==='chooseManaColor'){g.pendingEffect={kind:'oracle-choice',owner,name:context.name,context,step,remaining:rest};return;}
-  const temporalResult=runTemporalStep(g,context,step,rest,runProgram);if(temporalResult==='paused')return;if(temporalResult)continue;
   if(step.op==='drawCount'){g.pendingEffect={kind:'oracle-choice',owner,name:context.name,context,step,remaining:rest};return;}
   if(step.op==='returnSpells')for(const card of [...g.players[owner].zones.graveyard])if(/\b(?:Instant|Sorcery)\b/.test(cardFace(card).type_line||''))transfer(g,card.instance,'hand',owner);
   if(step.op==='temporaryMana')(g.temporaryManaRules??=[]).push({owner,scope:step.scope,color:step.color,source:context.source});

@@ -33,14 +33,68 @@ export function draw(g,p,n=1,{turnAction=true,opening=false,work}={}){
  if(turnAction&&g.step===2&&p===g.active&&n>0)g.turnDrawStamp=g.turn+':'+g.active;
  queueCombatTriggers(g,events);note(g,g.players[p].name+' draws '+drawn+'.');return drawn;
 }
-export function advance(g,{automatic=true}={}){if(g.players.some(p=>p.librarySearch))throw Error('Finish the library search before advancing.');if(g.stack.length||g.pendingEffect||pendingEntry(g))throw Error('Resolve the stack and pending effects before advancing.');const planned=nextTurnStep(g),next=planned.step;assertCombatStep(g,next);clearMana(g,{endOfTurn:g.step===STEPS.length-1});delete g.priority;commitTurnStep(g,planned);g.step=next;if(g.step===2)g.drawStepSerial=(g.drawStepSerial||0)+1;if(g.step===0){cleanTurnDamage(g);startNextTurn(g);phaseInForTurn(g,g.active);g.players[g.active].landsPlayed=0;g.players[g.active].extraLandPlays=0;beginControllerTurn(g);}if(g.step===11)cleanTurnDamage(g);if(automaticFor(g,g.active,automatic)&&g.step===0)untap(g,g.active);if(automaticFor(g,g.active,automatic)&&g.step===2)draw(g,g.active);enterCombatStep(g,g.step);note(g,g.players[g.active].name+': '+STEPS[g.step]);}
-export function changeStep(g,step){if(g.players.some(p=>p.librarySearch))throw Error('Finish the library search before advancing.');if(g.stack.length||g.pendingEffect||pendingEntry(g))throw Error('Resolve the stack and pending effects before changing steps.');if(!Number.isInteger(step)||step<0||step>=STEPS.length)throw Error('Unknown step.');assertCombatStep(g,step);if(step!==g.step){clearMana(g);delete g.priority;selectTurnStep(g,step);g.step=step;if(step===2)g.drawStepSerial=(g.drawStepSerial||0)+1;if(step===11)cleanTurnDamage(g);enterCombatStep(g,step);}note(g,g.players[g.active].name+': '+STEPS[g.step]+' (manual step selection).');}
+// ---- Phase boundaries and turn handoff ----
+// Check pending work before clearing mana or priority. Manual step selection
+// intentionally does not perform automatic untap/draw or start a new turn.
+function assertCanAdvance(g,action){
+ if(g.players.some(p=>p.librarySearch))throw Error('Finish the library search before advancing.');
+ if(g.stack.length||g.pendingEffect||pendingEntry(g))throw Error('Resolve the stack and pending effects before '+action+'.');
+}
+function beginNextTurn(g){
+ startNextTurn(g);
+ phaseInForTurn(g,g.active);
+ g.players[g.active].landsPlayed=0;
+ g.players[g.active].extraLandPlays=0;
+ beginControllerTurn(g);
+}
+export function advance(g,{automatic=true}={}){
+ assertCanAdvance(g,'advancing');
+ const planned=nextTurnStep(g),next=planned.step;
+ assertCombatStep(g,next);
+ clearMana(g,{endOfTurn:g.step===STEPS.length-1});
+ delete g.priority;
+ commitTurnStep(g,planned);
+ g.step=next;
+ if(g.step===2)g.drawStepSerial=(g.drawStepSerial||0)+1;
+ if(g.step===0){cleanTurnDamage(g);beginNextTurn(g);}
+ if(g.step===11)cleanTurnDamage(g);
+ if(automaticFor(g,g.active,automatic)&&g.step===0)untap(g,g.active);
+ if(automaticFor(g,g.active,automatic)&&g.step===2)draw(g,g.active);
+ enterCombatStep(g,g.step);
+ note(g,g.players[g.active].name+': '+STEPS[g.step]);
+}
+export function changeStep(g,step){
+ assertCanAdvance(g,'changing steps');
+ if(!Number.isInteger(step)||step<0||step>=STEPS.length)throw Error('Unknown step.');
+ assertCombatStep(g,step);
+ if(step!==g.step){
+  clearMana(g);
+  delete g.priority;
+  selectTurnStep(g,step);
+  g.step=step;
+  if(step===2)g.drawStepSerial=(g.drawStepSerial||0)+1;
+  if(step===11)cleanTurnDamage(g);
+  enterCombatStep(g,step);
+ }
+ note(g,g.players[g.active].name+': '+STEPS[g.step]+' (manual step selection).');
+}
 export function untap(g,p){
  g.players[p].zones.battlefield.forEach(c=>{if(c.skipNextUntap){delete c.skipNextUntap;return;}c.tapped=false;delete c.manaActivation;delete c.tapAbility;});
  if(g.step===0&&p===g.active){g.turnUntapStamp=g.turn+':'+g.active;for(const [owner,player] of g.players.entries())if(owner!==p)for(const source of player.zones.battlefield)if(!source.faceDown){const scope=cardFace(source).oracle_text?.match(/^Untap all (artifacts|creatures|lands|permanents) you control during each other player's untap step\./im)?.[1];if(scope)for(const card of player.zones.battlefield)if(scope==='permanents'||new RegExp('\\b'+scope.replace(/s$/,'')+'\\b','i').test(cardFace(card).type_line||'')){card.tapped=false;delete card.manaActivation;delete card.tapAbility;}}}
  note(g,g.players[p].name+' untaps their battlefield.');
 }
-export function endTurn(g,{automatic=false}={}){if(g.players.some(p=>p.librarySearch))throw Error('Finish the library search before advancing.');if(g.stack.length||g.pendingEffect||pendingEntry(g))throw Error('Resolve the stack and pending effects before ending the turn.');assertCombatStep(g,0);clearMana(g,{endOfTurn:true});cleanTurnDamage(g);delete g.priority;delete g.turnPlan;g.step=0;startNextTurn(g);phaseInForTurn(g,g.active);g.players[g.active].landsPlayed=0;g.players[g.active].extraLandPlays=0;beginControllerTurn(g);if(automaticFor(g,g.active,automatic))untap(g,g.active);note(g,'Turn '+g.turn+': '+g.players[g.active].name);}
+export function endTurn(g,{automatic=false}={}){
+ assertCanAdvance(g,'ending the turn');
+ assertCombatStep(g,0);
+ clearMana(g,{endOfTurn:true});
+ cleanTurnDamage(g);
+ delete g.priority;
+ delete g.turnPlan;
+ g.step=0;
+ beginNextTurn(g);
+ if(automaticFor(g,g.active,automatic))untap(g,g.active);
+ note(g,'Turn '+g.turn+': '+g.players[g.active].name);
+}
 export function findCard(g,id){for(let owner=0;owner<g.players.length;owner++)for(const zone of ZONES){const card=g.players[owner].zones[zone].find(c=>c.instance===id);if(card)return {card,owner,zone};}const entry=g.stack.find(e=>e.card?.instance===id);return entry?{card:entry.card,owner:entry.owner,zone:'stack'}:null;}
 export function commandersFor(g,owner){return [...ZONES.flatMap(zone=>g.players[owner].zones[zone]),...g.stack.filter(entry=>entry.owner===owner).map(entry=>entry.card)].filter(card=>card?.commander).sort((a,b)=>(a.commandSlot??0)-(b.commandSlot??0));}
 // ---- Zone transitions and permanent identity ----

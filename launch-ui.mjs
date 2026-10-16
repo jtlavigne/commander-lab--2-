@@ -1,11 +1,12 @@
+import {el as make,loadStyles} from './ui-dom.mjs';
 import {MULLIGAN_MODES} from './opening-hand.mjs';
 import {FORMATS,lobbyGame} from './lobby.mjs';
 import {PREMADE_DECKS} from './premade-decks.mjs';
 
 const BACKGROUNDS=[{file:'emerald-sanctuary.png',name:'Emerald Sanctuary'},{file:'moonlit-archipelago.png',name:'Moonlit Archipelago'}];
 export function createLaunchUI({getGame,getNetwork,dispatch,onLocal,onState,onLeave,openImport,selectSeat,setStatus}){
- const bridge=window.tableNetwork,make=(tag,text)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;return n;},q=id=>document.getElementById(id);
- const css=make('link');css.rel='stylesheet';css.href=new URL('./launch.css',import.meta.url).href;document.head.append(css);
+ const bridge=window.tableNetwork,q=id=>document.getElementById(id);
+ loadStyles('./launch.css',import.meta.url);
  const screen=make('dialog');screen.id='launch-screen';screen.setAttribute('aria-label','Commander Lab launch screen');
  screen.innerHTML=`<div class="launch-landscape" aria-hidden="true"></div><div class="launch-shade"></div><div class="launch-layout"><nav class="launch-nav"><span class="eyebrow">YOUR NEXT GREAT GAME</span><h1>Commander<span>Lab</span></h1><p>A place to play things out.</p><button id="launch-local">Local</button><button id="launch-multiplayer">Multiplayer</button><button id="launch-settings">Settings</button><button id="launch-exit">Exit game</button><button id="launch-resume" class="launch-resume">Return to table</button><span id="landscape-title" class="landscape-title"></span></nav><section class="launch-panel"><div id="launch-content"></div><p id="launch-error" role="alert"></p></section></div>`;
  document.body.append(screen);let page='home',rooms=[],busy=false,background=Math.floor(Math.random()*BACKGROUNDS.length),lastLobby='',wasWaiting=false;

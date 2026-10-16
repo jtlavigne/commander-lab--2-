@@ -1,3 +1,4 @@
+import {el as make,button,loadStyles} from './ui-dom.mjs';
 import {CONTROLLER_ACTIONS,defaultControllerSettings,normalizeControllerSettings,assignControllerBinding,bindingLabel,createControllerInput,createBindingCapture} from './controller.mjs';
 import {createThemeSettings} from './theme.mjs';
 import {createUpdateSettings} from './update-ui.mjs';
@@ -5,8 +6,6 @@ import {createUpdateSettings} from './update-ui.mjs';
 const STORAGE_KEY='commanderLabController';
 const interfaceActions=new Set(['confirm','cancel','focusPrevious','focusNext','adjustDown','adjustUp','settings']);
 export function createControllerUI({onAction,onPan,onDrop,setStatus}){
- const make=(tag,text,cls)=>{const node=document.createElement(tag);if(text!==undefined)node.textContent=text;if(cls)node.className=cls;return node;};
- const button=(text,fn)=>{const node=make('button',text);node.type='button';node.onclick=fn;return node;};
  let settings=defaultControllerSettings();
  try{settings=normalizeControllerSettings(JSON.parse(localStorage.getItem(STORAGE_KEY)));}catch{}
  const input=createControllerInput(),dialog=make('dialog'),open=button('Settings',()=>show());open.id='settings';open.title='Appearance and controller settings';
@@ -15,7 +14,7 @@ export function createControllerUI({onAction,onPan,onDrop,setStatus}){
  document.body.append(dialog);
  createThemeSettings(dialog);
  createUpdateSettings(dialog);
- const css=make('link');css.rel='stylesheet';css.href=new URL('./controller.css',import.meta.url).href;document.head.append(css);
+ loadStyles('./controller.css',import.meta.url);
  const cursor=make('div',undefined,'controller-pointer');cursor.hidden=true;cursor.setAttribute('aria-hidden','true');document.body.append(cursor);
  const q=id=>dialog.querySelector('#'+id),rows=new Map();
  let capture=null,pads=[],pad=null,lastDevices='',point={x:innerWidth/2,y:innerHeight/2},focusMode=false,carried=null,lastModal=null,inspecting=false;

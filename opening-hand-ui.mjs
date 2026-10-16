@@ -1,11 +1,11 @@
+import {el as make,loadStyles} from './ui-dom.mjs';
 import {dismissCardPreview} from './card-preview.mjs';
 import {openingPending,bottomCount,freeMulligans,MULLIGAN_MODES} from './opening-hand.mjs';
 
 // Private card selection stays in this renderer. Only a confirmed keep sends
 // IDs to the host; the host publishes counts/readiness, never those selections.
 export function createOpeningHandUI({getGame,getNetwork,getSeat,selectSeat,dispatch,renderCard}){
- const make=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
- const css=make('link');css.rel='stylesheet';css.href=new URL('./opening-hand.css',import.meta.url).href;document.head.append(css);
+ loadStyles('./opening-hand.css',import.meta.url);
  const dialog=make('dialog');dialog.id='opening-hand-dialog';dialog.setAttribute('aria-labelledby','opening-title');dialog.addEventListener('cancel',e=>e.preventDefault());document.body.append(dialog);
  let selected=[],identity='',busy=false,failure='';
  function button(text,fn,id){const b=make('button',text);b.type='button';if(id)b.id=id;b.disabled=busy;b.onclick=fn;return b;}

@@ -2,6 +2,8 @@
 
 An Electron desktop Commander playtester with a four-seat manual tabletop.
 
+For code navigation and refactoring guidance, see [code structure](docs/code-structure.md).
+
 Rules work is tracked in the [39-deck implementation checklist](docs/commander-deck-checklist.md), with per-deck acceptance criteria, card-by-card Oracle audits, checked test evidence and remaining gaps. Ten decks currently pass their scoped audits, through Kess. See [implementation notes](docs/rules-implementation.md) for sources and verification status.
 
 The two exact Atraxa/Jace lists supplied during playtesting have a separate [card-by-card audit](docs/playtest-deck-audit.md). That report distinguishes verified regression coverage, missing resolution handlers, and unverified interactions; neither list is currently certified fully working. Regenerate it with `npm.cmd run audit:playtest-decks`.

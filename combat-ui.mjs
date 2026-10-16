@@ -1,3 +1,4 @@
+import {loadStyles} from './ui-dom.mjs';
 import {turnController} from './game-outcome.mjs';
 import {findCard} from './engine.mjs';
 import {attackTargets,blockController,previewCombat,damageSources,assignmentFor,damagePhase} from './combat.mjs';
@@ -9,7 +10,7 @@ import {combatGroups} from './board-interaction.mjs';
 
 export function createCombatUI({getGame,getSeat,selectSeat,dispatch,setStatus,el,button,showStack,boardPicker,renderCard,openLibrary}){
  const root=el('section',undefined,'combat-panel camera-hud');root.id='combat-panel';root.setAttribute('aria-label','Combat declarations and damage preview');document.getElementById('table-viewport').append(root);
- const css=el('link');css.rel='stylesheet';css.href=new URL('./combat.css',import.meta.url).href;document.head.append(css);
+ loadStyles('./combat.css',import.meta.url);
  const arena=el('section',undefined,'combat-arena');arena.id='combat-arena';arena.setAttribute('aria-label','Combat groups for your seat');
  const scrim=el('div',undefined,'combat-focus-scrim');scrim.hidden=true;scrim.setAttribute('aria-hidden','true');document.getElementById('table-viewport').append(scrim);
  let selectedBlocker=null,pickedAttacker=null,projection=null;

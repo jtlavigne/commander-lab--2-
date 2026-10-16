@@ -1,3 +1,4 @@
+import {loadStyles} from './ui-dom.mjs';
 // Updates are independent of game state. Reopening Settings keeps download
 // progress, and only the native confirmation can restart the application.
 export function createUpdateSettings(dialog, bridge = window.appUpdates) {
@@ -10,7 +11,7 @@ export function createUpdateSettings(dialog, bridge = window.appUpdates) {
    <button type="button" id="update-download" hidden>Download update</button>
    <button type="button" id="update-install" hidden>Restart &amp; install</button></div>`;
  dialog.querySelector('.dialog-heading').after(section);
- const css = document.createElement('link'); css.rel = 'stylesheet'; css.href = new URL('./update-ui.css', import.meta.url).href; document.head.append(css);
+ loadStyles('./update-ui.css', import.meta.url);
  const q = id => section.querySelector('#update-' + id);
  function render(state) {
   q('version').textContent = state.currentVersion ? 'v' + state.currentVersion : '';

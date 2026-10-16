@@ -1,3 +1,4 @@
+import {el,button} from './ui-dom.mjs';
 import {automaticFor} from './turn-settings.mjs';
 import {isCopyPlaceholder} from './token-catalog.mjs';
 import {decksReadyForOpening} from './opening-hand.mjs';
@@ -56,8 +57,6 @@ seat=handSeat;
 function hasArtwork(card){const faces=card.image_uris?.normal?1:card.card_faces?.some(face=>face.image_uris?.normal)?card.card_faces.length:1;return Array.from({length:faces},(_,i)=>card.localImages?.[i]).every(src=>typeof src==='string'&&src.startsWith('data:image/'));}
 try{const saved=localStorage.getItem('commanderLab');if(saved)g=validateSession(JSON.parse(saved));}catch{setStatus('The saved session could not be read. A fresh table is ready.');}
 if(handSeat>=g.players.length)seat=handSeat=0;
-const el=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;};
-const button=(text,fn,cls)=>{const b=el('button',text,cls);b.type='button';b.onclick=fn;return b;};
 const serialize=state=>JSON.stringify(state,(key,value)=>key==='localImages'?undefined:value);
 const allCards=()=>[...g.players.flatMap(p=>[...ZONES.flatMap(z=>p.zones[z]),...(p.tokenCatalog||[])]),...g.stack.map(e=>e.card).filter(Boolean)];
 function setStatus(text){$('status').textContent=text;}
