@@ -431,3 +431,10 @@ Local test.7 verification passed: 1,345 unit/network cases, all 43 interface
 workflows under forced reduced motion, the minimum-window pointer check, Windows
 installer/ZIP and updater checksum builds, runtime inventory, and the actual
 packaged-app smoke test. GitHub publication remains gated by the same checks.
+
+Test.7 CI passed the prior corrections, then found that the planeswalker test
+used a hidden native window constrained by the runner desktop size. Its viewport
+is now offscreen and deterministic, with unchanged alignment assertions. The
+workflow passes locally at standard and minimum sizes; screenshot capture waits
+for an actual paint. Test.8 is the next immutable release candidate, containing
+the same accumulated runtime changes.
