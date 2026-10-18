@@ -407,3 +407,17 @@ continuous-effect layering, further nonnumeric entry choices and the remaining
 unchecked planeswalker/combat/land interactions still need independent evidence.
 
 Exact-list paragraph audit at this checkpoint: Atraxa **104 PASS / 12 FAIL / 69 UNVERIFIED**; Jace **83 PASS / 22 FAIL / 80 UNVERIFIED**. Only the tested Viral Drake/Ichor Rats infect paragraphs receive new checked evidence. Broader provider paragraphs remain open.
+
+
+### Release CI follow-up
+
+The test.5 tag passed all 1,345 CI unit/network tests but did not publish: the
+expanded full interface gate caught a stale-pointer hit-test assumption in the
+board workflow. The test now moves the real Chromium pointer, waits for actual
+hit reachability, and reports the blocking element if reachability fails. It
+still dispatches real pointer input and does not bypass the hit assertion. The
+workflow passes locally at normal size and at 1000 by 760, the app's minimum
+window size. The latter is now an additional release gate.
+
+The failed tag is retained unchanged. Test.6 carries this test correction and all
+accumulated application changes; publication still requires its complete CI run.

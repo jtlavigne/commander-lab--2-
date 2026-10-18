@@ -25,6 +25,7 @@ jobs:
           if ($env:GITHUB_REF_TYPE -eq 'tag' -and $env:GITHUB_REF_NAME -ne "v$version") { throw 'Tag must match package.json version.' }
       - run: npm test
       - run: npm run test:ui
+      - run: node launch.cjs tests/board-interface-ui.cjs --viewport=1000x760
       - run: npm run dist:win
       - run: node scripts/smoke-packaged.cjs
       - uses: actions/upload-artifact@v4
