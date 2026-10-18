@@ -10,7 +10,7 @@ const fountain=()=>card('Hallowed Fountain','Land — Plains Island',"({T}: Add 
 const pain=()=>card('Adarkar Wastes','Land','{T}: Add {C}.\n{T}: Add {W} or {U}. This land deals 1 damage to you.');
 const setup=()=>{const g=newGame();g.step=3;g.responseMode='hold';return g;};
 test('shock lands offer an entry payment; paying changes only the entering controller’s life',()=>{
- const g=setup(),p=g.players[0],land=fountain();p.zones.hand=[land];playLand(g,land.instance);assert.equal(p.landsPlayed,1);assert.equal(p.life,40);assert.equal(land.tapped,true);assert.equal(land.entryLife.amount,2);
+ const g=setup(),p=g.players[0],land=fountain();p.zones.hand=[land];playLand(g,land.instance);assert.equal(p.landsPlayed,1);assert.equal(p.life,40);assert.equal(p.zones.battlefield.length,0);assert.equal(g.pendingEffect.kind,'entry-choice');assert.equal(g.pendingEffect.entries[0].card.entryLife.amount,2);
  const before=JSON.stringify(g);for(const action of [()=>advance(g),()=>changeStep(g,9),()=>endTurn(g),()=>activateMana(g,land.instance,'basic:U')])assert.throws(action,/pending|choice/);assert.equal(JSON.stringify(g),before);
  chooseEntryLife(g,land.instance,true);assert.equal(p.life,38);assert.equal(g.players[1].life,40);assert.equal(land.tapped,false);assert.equal(land.entryLife,undefined);
  activateMana(g,land.instance,'basic:U');assert.equal(manaTotals(p).U,1);assert.equal(p.life,38,'Shock lands do not charge life each time they tap');reverseManaTap(g,land);assert.equal(p.life,38);

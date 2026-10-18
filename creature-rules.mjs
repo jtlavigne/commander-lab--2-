@@ -52,6 +52,20 @@ export function keywordSet(g,owner,card,{keywords=KEYWORDS,read=words}={}){
  }
  for(const keyword of card.lostKeywords||[])result.delete(keyword);return result;
 }
+// Numeric abilities such as toxic retain each instance rather than becoming a
+// boolean Set entry. Reuse the same active-paragraph and continuous-grant rules.
+export function keywordTotal(g,owner,card,keyword){
+ if(card.faceDown&&!card.manifested||card.lostKeywords?.includes(keyword))return 0;
+ let total=0;
+ const read=text=>{
+  const declaration=keywordDeclarationText(text,[...KEYWORDS,keyword]);
+  if(declaration!==null)for(const match of declaration.matchAll(new RegExp('(?:^|,\\s*| and )'+keyword+' (\\d+)\\b','gi')))total+=Number(match[1]);
+  return [];
+ };
+ keywordSet(g,owner,card,{keywords:[],read});
+ for(const text of card.temporaryKeywords||[])read(text);
+ return total;
+}
 export function summoningSick(g,owner,card){return isCreature(card)&&!!card.summoningSick&&!keywordSet(g,owner,card).has('haste');}
 export function protectedFrom(g,owner,card,source){
  const clauses=[rulesText(card),...(card.temporaryKeywords||[])];for(const {card:provider,owner:controller} of ruleSources(g))if(!provider.faceDown)for(const {text} of activeRuleParagraphs(provider)){const grant=text.replace(/ (?:get|gets) [+-]\d+\/[+-]\d+(?: for each [^.]+?)? and (?:have|has) /i,' have ').match(/^(.+?) (?:have|has) (protection from .+?)\.$/i);if(grant&&combatRecipient(g,grant[1],card,owner,provider,controller))clauses.push(grant[2]);}

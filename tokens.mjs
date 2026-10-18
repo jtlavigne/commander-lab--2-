@@ -1,3 +1,4 @@
+import {copiedCharacteristics} from './copy-state.mjs';
 import {activeRuleParagraphs,normalizeRules} from './ability-effects.mjs';
 import {enterPermanents} from './oracle-effects.mjs';
 import {matchingToken} from './token-catalog.mjs';
@@ -5,6 +6,7 @@ import {transfer} from './engine.mjs';
 import {queueCombatTriggers,snapshotCard} from './combat-effects.mjs';
 import {attackTargets} from './combat.mjs';
 import {publicManifest} from './face-down-state.mjs';
+import {isCreature} from './creature-rules.mjs';
 
 // Token construction is shared by spells, triggered abilities and manual setup.
 // Replacement providers can modify these definitions without card-name cases.
@@ -31,7 +33,7 @@ export function tokenDefenders(g,owner,defender){
 }
 export function enterAttacking(g,id,target){
  const card=g.players[g.active].zones.battlefield.find(c=>c.instance===id);
- if(!card||!tokenDefenders(g,g.active).some(t=>t.key===target.key))return;
+ if(!card||!isCreature(card)||!tokenDefenders(g,g.active).some(t=>t.key===target.key&&(t.battlefieldId||null)===(target.battlefieldId||null)))return;
  g.combat.attackers.push({id,battlefieldId:card.battlefieldId,defender:{...target},blocked:false,enteredAttacking:true});
  g.combat.defenders=[...new Set([...g.combat.defenders,target.owner])];
  // Entering attacking is not declaring an attack: no attack event or history.
@@ -47,6 +49,8 @@ export function enterBlocking(g,owner,id,attacker){
 // reminder text, supplies every activated, triggered and static ability.
 export function tokenCopyDefinition(source,{nonlegendary=false}={}){
  if(source.faceDown)source=publicManifest(source);
+ else if(source.copyValues)source=source.copyValues;
+ else source=copiedCharacteristics(source);
  const fields=['id','name','mana_cost','cmc','type_line','oracle_text','power','toughness','loyalty','defense','colors','color_indicator','color_identity','keywords','image_uris','localImages','artworkVersion','layout'];
  const pick=card=>Object.fromEntries(fields.filter(key=>card[key]!==undefined).map(key=>[key,structuredClone(card[key])]));
  const definition=pick(source);

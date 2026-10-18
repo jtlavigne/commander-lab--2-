@@ -16,7 +16,7 @@ app.whenReady().then(async()=>{
   'Test Walker':{type_line:'Legendary Planeswalker',loyalty:'4'},
   'Test Battery':{type_line:'Artifact',oracle_text:'Test Battery enters with three charge counters on it.'},
   'Test Protection':{type_line:'Enchantment',oracle_text:'This enchantment enters with eight isolation counters on it.'},
-  'Test X':{type_line:'Artifact Creature',power:'0',toughness:'0',oracle_text:'Test X enters with X +1/+1 counters on it.'},
+  'Test Variable Counter':{type_line:'Artifact Creature',power:'0',toughness:'0',oracle_text:'This creature enters with that many +1/+1 counters on it.'},
   'Test Variable':{type_line:'Creature',power:'*',toughness:'*',oracle_text:'Its power and toughness depend on the battlefield.'},
   'Test Saga':{type_line:'Enchantment — Saga',oracle_text:'I — Draw a card.\nII — Draw a card.'}
  };
@@ -474,7 +474,7 @@ app.whenReady().then(async()=>{
   await fs.writeFile(path.join(qaDir,'counter-controls.png'),(await win.webContents.capturePage()).toPNG());
   // Starting values and overlays use the real import, drag, inspector and stack flows.
   await alt('keyUp');await mouse({type:'mouseMoved',x:12,y:12});
-  await run("document.getElementById('openimport').click();document.getElementById('commander').value='';document.getElementById('partner').value='';document.getElementById('deck').value='1 Test Creature\\n1 Test Walker\\n1 Test Battery\\n1 Test Protection\\n1 Test X\\n1 Test Variable\\n1 Test Saga';document.getElementById('import-form').requestSubmit()");
+  await run("document.getElementById('openimport').click();document.getElementById('commander').value='';document.getElementById('partner').value='';document.getElementById('deck').value='1 Test Creature\\n1 Test Walker\\n1 Test Battery\\n1 Test Protection\\n1 Test Variable Counter\\n1 Test Variable\\n1 Test Saga';document.getElementById('import-form').requestSubmit()");
   for(let i=0;i<30&&await run("document.getElementById('import-dialog').open");i++)await new Promise(r=>setTimeout(r,50));
   const fixtures=await run("Object.fromEntries(JSON.parse(localStorage.getItem('commanderLab')).players[0].zones.hand.map(c=>[c.name,c.instance]))");
   const field='.player-mat[data-seat="0"] .battlefield .cards',fixtureCard=name=>`.battlefield .card[data-card="${fixtures[name]}"]`,fixtureState=name=>run(`JSON.parse(localStorage.getItem('commanderLab')).players[0].zones.battlefield.find(c=>c.instance===${JSON.stringify(fixtures[name])})`);
@@ -514,27 +514,27 @@ app.whenReady().then(async()=>{
   assert.deepEqual(await run("JSON.parse(localStorage.getItem('commanderLab')).stack.at(-1).card.counters"),{},'Loyalty must start on entry, not on the stack');
   await run("document.getElementById('togglepanel').click();[...document.querySelectorAll('#stack .entry button')].find(b=>b.textContent==='Resolve → battlefield').click();document.getElementById('togglepanel').click()");
   assert.equal((await fixtureState('Test Walker')).counters.loyalty,4);assert.equal(await run(`document.querySelector('${fixtureCard('Test Walker')} .card-counter-overlay').textContent`),'4');
-  await run(drag(fixtures['Test X'],field,.45,.55,true));assert.equal(await run("document.getElementById('entry-dialog').open"),true);
+  await run(drag(fixtures['Test Variable Counter'],field,.45,.55,true));assert.equal(await run("document.getElementById('entry-dialog').open"),true);
   await run("document.querySelector('#entry-fields input').value='5';document.getElementById('entry-form').requestSubmit()");
-  assert.equal(await run(`document.querySelector('${fixtureCard('Test X')} .card-pt-overlay').textContent`),'5 / 5');
+  assert.equal(await run(`document.querySelector('${fixtureCard('Test Variable Counter')} .card-pt-overlay').textContent`),'5 / 5');
   await run(drag(fixtures['Test Variable'],field,.72,.55,true));assert.equal(await run("document.querySelectorAll('#entry-fields input').length"),2);
   await run("document.querySelector('[data-choice=power]').value='7';document.querySelector('[data-choice=toughness]').value='8';document.getElementById('entry-form').requestSubmit()");
   assert.equal(await run(`document.querySelector('${fixtureCard('Test Variable')} .card-pt-overlay').textContent`),'7 / 8');
-  await run(drag(fixtures['Test X'],'.player-mat[data-seat="0"] .pile.graveyard'));await run("document.querySelector('.pinned-player .pile.graveyard').click()");
-  await run(drag(fixtures['Test X'],field,.45,.55));await run("document.getElementById('pile-dialog').close()");
+  await run(drag(fixtures['Test Variable Counter'],'.player-mat[data-seat="0"] .pile.graveyard'));await run("document.querySelector('.pinned-player .pile.graveyard').click()");
+  await run(drag(fixtures['Test Variable Counter'],field,.45,.55));await run("document.getElementById('pile-dialog').close()");
   for(let i=0;i<10&&!await run("document.getElementById('entry-dialog').open");i++)await new Promise(resolve=>setTimeout(resolve,20));
   assert.equal(await run("document.getElementById('entry-dialog').open"),true,'Reentry must ask for fresh variable values');
-  await run("document.getElementById('entry-later').click()");assert.equal(await run(`!!document.querySelector('${fixtureCard('Test X')} .card-entry-pending')`),true);
-  await run("document.querySelector('#mana-bar [data-type=C]').click()");assert.equal(await run("document.getElementById('entry-dialog').open"),false,'Deferring entry values must survive an unrelated game action');
-  await peek(fixtureCard('Test X'));await run("[...document.querySelectorAll('#inspector button')].find(b=>b.textContent==='Set entering values…').click();document.querySelector('#entry-fields input').value='2';document.getElementById('entry-form').requestSubmit()");
-  assert.equal(await run(`document.querySelector('${fixtureCard('Test X')} .card-pt-overlay').textContent`),'2 / 2');
+  assert.equal(await run("document.getElementById('entry-later').disabled"),true,'Pre-entry decisions cannot be deferred past the entering event');
+  assert.equal(await fixtureState('Test Variable Counter'),undefined,'The permanent remains outside the battlefield until its quantity is chosen');
+  await run("document.querySelector('#entry-fields input').value='2';document.getElementById('entry-form').requestSubmit()");
+  assert.equal(await run(`document.querySelector('${fixtureCard('Test Variable Counter')} .card-pt-overlay').textContent`),'2 / 2');
   const beforeOverlayReload=await fixtureState('Test Variable');
   await alt('keyUp');await run("document.getElementById('fit-seat').click()");
   win.setContentSize(1501,960);await new Promise(r=>setTimeout(r,80));win.setContentSize(1500,960);await new Promise(r=>setTimeout(r,120));
   await fs.writeFile(path.join(qaDir,'permanent-overlays.png'),(await win.webContents.capturePage()).toPNG());
   const overlayReloaded=new Promise(resolve=>win.webContents.once('did-finish-load',resolve));win.webContents.reload();await overlayReloaded;
   assert.deepEqual(await fixtureState('Test Variable'),beforeOverlayReload,'Manual starting stats must survive reload');
-  assert.equal(await run(`document.querySelector('${fixtureCard('Test X')} .card-pt-overlay').textContent`),'2 / 2');
+  assert.equal(await run(`document.querySelector('${fixtureCard('Test Variable Counter')} .card-pt-overlay').textContent`),'2 / 2');
   win.webContents.debugger.detach();
   assert.deepEqual(errors,[]);console.log('Electron UI checks passed: dock resizing and persistence, pinned hand, hover, scrolling, transfers, pan, zoom, images, stack, stats, imports, and two window sizes.');
  }catch(error){console.error(error);if(errors.length)console.error(errors);app.exit(1);return;}

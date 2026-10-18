@@ -11,7 +11,7 @@ import {validateLoyaltyState} from './planeswalker.mjs';
 import {pendingEntry} from './life-effects.mjs';
 import {assertCombatStep,enterCombatStep,cleanTurnDamage,beginControllerTurn,validateCombat} from './combat.mjs';
 import {validateCombatTrigger,queueCombatTriggers,snapshotCard} from './combat-effects.mjs';
-import {validateOracleChoice} from './oracle-effects.mjs';
+import {validateOracleChoice,enterPermanents} from './oracle-effects.mjs';
 import {nextTurnStep,commitTurnStep,selectTurnStep,validateTurnPlan} from './turn-plan.mjs';
 import {combatStats} from './creature-rules.mjs';
 import {refreshLinkedCards} from './linked-cards.mjs';
@@ -114,7 +114,7 @@ export function placeInLibrary(g,id,target,placement='top'){
  return card;
 }
 
-export function transfer(g,id,to,target,position,{deferTriggers=false,entryCounters={},entryTapped=false,attachTo,resolvedEntryCounters}={}){
+export function transfer(g,id,to,target,position,{deferTriggers=false,entryCounters={},entryTapped=false,attachTo,resolvedEntryCounters,entryCopyEffects}={}){
  if(!ZONES.includes(to)&&to!=='stack')throw Error('Unknown zone');
  const found=findCard(g,id);if(!found)throw Error('Card not found');
  const {card,owner,zone}=found;target??=owner;
@@ -158,11 +158,11 @@ export function transfer(g,id,to,target,position,{deferTriggers=false,entryCount
  if(to!=='battlefield'||zone!=='battlefield'||owner!==target)delete card.pairedWith;
  delete card.playPermission;delete card.flashbackGrant;delete card.graveCastGrant;
  delete card.rebound;
- if(to!=='battlefield'){delete card.skipNextUntap;delete card.attackHistory;delete card.exertedTurn;delete card.imprintLink;delete card.imprintProfile;delete card.abilityUses;delete card.triggerUses;delete card.graveCastUses;delete card.goadedBy;delete card.combatDamageHistory;}
+ if(to!=='battlefield'){delete card.copyEffects;delete card.skipNextUntap;delete card.attackHistory;delete card.exertedTurn;delete card.imprintLink;delete card.imprintProfile;delete card.abilityUses;delete card.triggerUses;delete card.graveCastUses;delete card.goadedBy;delete card.combatDamageHistory;}
  if(to==='battlefield'){
   if(zone==='stack'&&card.spellCopy){delete card.spellCopy;card.token=true;}
   if(zone!=='stack'&&zone!=='battlefield')card.castKicks=0;
-  if(zone!=='battlefield')initializePermanent(card,g,target,{forceTapped:entryTapped,cast});else if(owner!==target)card.summoningSick=true;
+  if(zone!=='battlefield'){if(entryCopyEffects)card.copyEffects=structuredClone(entryCopyEffects);initializePermanent(card,g,target,{forceTapped:entryTapped,cast,preserveCopyEffects:!!entryCopyEffects});}else if(owner!==target)card.summoningSick=true;
   if(attachTo&&!attachPermanent(g,id,attachTo))throw Error('This permanent cannot attach to that recipient.');
   if(zone!=='battlefield')for(const [kind,n] of Object.entries(entryCounters)){if(!Number.isSafeInteger(n)||n<0)throw Error('Invalid entering counters.');card.counters[kind]=(card.counters[kind]||0)+n;}
   // A staged entry has already resolved its replacement order before moving.
@@ -178,8 +178,22 @@ export function transfer(g,id,to,target,position,{deferTriggers=false,entryCount
  if(departure){const event={card:departure.card,owner,deadZoneId:card.zoneChangeId};queueCombatTriggers(g,[{...event,kind:'leave'},...(to==='graveyard'?[{...event,kind:'graveyard'},...(/\bCreature\b/.test(departure.card.type_line||'')?[{...event,kind:'die'}]:[])]:[])],departure.observers);}
  note(g,g.players[target].name+': '+card.name+' → '+to);return card;
 }
-export function move(g,p,id,to){const found=findCard(g,id);if(!found||found.owner!==p||found.zone==='stack')throw Error('Card not found');return transfer(g,id,to,p);}
-export function resolve(g,to){const entry=g.stack.at(-1);if(!entry)return;if(g.pendingEffect||pendingEntry(g))throw Error('Finish pending effects before resolving another object.');if(!entry.card)throw Error('Use Resolve mana for this ability.');if(!ZONES.includes(to))throw Error('Unknown zone');transfer(g,entry.card.instance,to,entry.owner);delete g.priority;note(g,'Resolved '+entry.card.name+' → '+to);}
+export function move(g,p,id,to){
+ const found=findCard(g,id);if(!found||found.owner!==p||found.zone==='stack')throw Error('Card not found');
+ if(to==='battlefield'&&found.zone!=='battlefield'){
+  enterPermanents(g,{owner:p,name:'Place '+found.card.name,source:{instance:id,name:found.card.name}},[{id,owner:p}]);
+  return found.card;
+ }
+ return transfer(g,id,to,p);
+}
+export function resolve(g,to){
+ const entry=g.stack.at(-1);if(!entry)return;
+ if(g.pendingEffect||pendingEntry(g))throw Error('Finish pending effects before resolving another object.');
+ if(!entry.card)throw Error('Use Resolve mana for this ability.');if(!ZONES.includes(to))throw Error('Unknown zone');
+ if(to==='battlefield')enterPermanents(g,entry,[{id:entry.card.instance,owner:entry.owner}]);
+ else transfer(g,entry.card.instance,to,entry.owner);
+ delete g.priority;note(g,(g.pendingEffect?'Resolving ':'Resolved ')+entry.card.name+' → '+to);
+}
 // ---- Deck text import ----
 export function parseDeck(text){
  const cards=new Map();
@@ -287,8 +301,8 @@ export function validateSession(value){
  if(value.responseMode!==undefined&&!['auto','hold'].includes(value.responseMode))fail();
  if(value.battlefieldDepartures&&(typeof value.battlefieldDepartures.turn!=='string'||!Array.isArray(value.battlefieldDepartures.counts)||value.battlefieldDepartures.counts.length!==value.players.length||value.battlefieldDepartures.counts.some(n=>!Number.isSafeInteger(n)||n<0)))fail();
  validateLoyaltyState(value);validateTurnPlan(value,fail);
- if(value.pendingEffect&&(!['proliferate','counter-choice','combat-manual','oracle-choice','destruction-choice'].includes(value.pendingEffect.kind)||!Number.isInteger(value.pendingEffect.owner)||value.pendingEffect.owner<0||value.pendingEffect.owner>=value.players.length||typeof value.pendingEffect.name!=='string'||value.pendingEffect.kind==='combat-manual'&&typeof value.pendingEffect.text!=='string'))fail();
- validateOracleChoice(value.pendingEffect,fail,value.players.length);
+ if(value.pendingEffect&&(!['proliferate','entry-choice','counter-choice','combat-manual','oracle-choice','destruction-choice'].includes(value.pendingEffect.kind)||!Number.isInteger(value.pendingEffect.owner)||value.pendingEffect.owner<0||value.pendingEffect.owner>=value.players.length||typeof value.pendingEffect.name!=='string'||value.pendingEffect.kind==='combat-manual'&&typeof value.pendingEffect.text!=='string'))fail();
+ validateOracleChoice(value.pendingEffect,fail,value.players.length,value);
  if(value.pendingEffect?.context?.spellId&&!value.stack.some(entry=>entry.card?.instance===value.pendingEffect.context.spellId&&entry.resolving))fail();
  validateCombat(value,fail);
  validatePlayEvents(value,fail);
@@ -303,7 +317,7 @@ export function resetGame(g){
  if(g.lobby)fresh.lobby=structuredClone(g.lobby);fresh.players.forEach(p=>p.life=startingLife(fresh));
  for(const [seat,player] of g.players.entries()){fresh.players[seat].tokenCatalog=structuredClone(player.tokenCatalog||[]);fresh.players[seat].name=player.name;fresh.players[seat].responseMode=responseModeFor(g,seat);if(player.automatic!==undefined)fresh.players[seat].automatic=player.automatic;}
  const cards=[...g.players.flatMap((p,seat)=>ZONES.flatMap(zone=>p.zones[zone].map(card=>({card,seat})))),...g.stack.filter(e=>e.card).map(e=>({card:e.card,seat:e.owner})),...(g.departedCards||[]),...(g.phasedOut||[]).map(({card,owner})=>({card,seat:owner}))];
- for(const {card,seat} of cards)if(!card.token&&!card.spellCopy&&!card.cardCopy){const owner=card.ownerSeat??seat,c=structuredClone(card);for(const key of ['monstrous','tablePosition','battlefieldStats','entryChoices','entryLife','entryCondition','manaActivation','tapAbility','loyaltyActivations','loyaltyExtra','loyaltyAttachment','classLevel','markedDamage','deathtouchDamage','temporaryStats','temporaryKeywords','lostKeywords','summoningSick','battlefieldId','zoneChangeId','manaSettings','attachedTo','attachedBattlefieldId','attachedZoneChangeId','attachmentMode','reanimationLink','pairedWith','skipNextUntap','attackHistory','exertedTurn','playPermission','flashbackGrant','graveCastGrant','rebound','imprintLink','imprintProfile','lastBattlefield','abilityUses','triggerUses','graveCastUses','goadedBy','combatDamageHistory','castKicks','armorChoice','animatedCreature','exileLinks','linkedExileCount'])delete c[key];c.counters={};c.tapped=false;c.faceDown=false;c.face=0;c.ownerSeat=owner;if(c.commander)c.commandCasts=0;fresh.players[owner].zones[c.commander?'command':'library'].push(c);}
+ for(const {card,seat} of cards)if(!card.token&&!card.spellCopy&&!card.cardCopy){const owner=card.ownerSeat??seat,c=structuredClone(card);for(const key of ['copyEffects','monstrous','tablePosition','battlefieldStats','entryChoices','entryLife','entryCondition','manaActivation','tapAbility','loyaltyActivations','loyaltyExtra','loyaltyAttachment','classLevel','markedDamage','deathtouchDamage','temporaryStats','temporaryKeywords','lostKeywords','summoningSick','battlefieldId','zoneChangeId','manaSettings','attachedTo','attachedBattlefieldId','attachedZoneChangeId','attachmentMode','reanimationLink','pairedWith','skipNextUntap','attackHistory','exertedTurn','playPermission','flashbackGrant','graveCastGrant','rebound','imprintLink','imprintProfile','lastBattlefield','abilityUses','triggerUses','graveCastUses','goadedBy','combatDamageHistory','castKicks','armorChoice','animatedCreature','exileLinks','linkedExileCount'])delete c[key];c.counters={};c.tapped=false;c.faceDown=false;c.face=0;c.ownerSeat=owner;if(c.commander)c.commandCasts=0;fresh.players[owner].zones[c.commander?'command':'library'].push(c);}
  for(const [owner,p] of fresh.players.entries()){shuffle(p.zones.library);draw(fresh,owner,Math.min(7,p.zones.library.length),{opening:true});}note(fresh,'Game reset. Imported decks and player names kept.');return fresh;
 }
 export function changePlayerCount(g,count){

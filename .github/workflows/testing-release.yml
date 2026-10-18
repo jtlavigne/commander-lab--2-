@@ -24,16 +24,7 @@ jobs:
           if ($version -notmatch '^\d+\.\d+\.\d+-test\.\d+$') { throw 'Testing releases must use the test.N update channel.' }
           if ($env:GITHUB_REF_TYPE -eq 'tag' -and $env:GITHUB_REF_NAME -ne "v$version") { throw 'Tag must match package.json version.' }
       - run: npm test
-      - run: npm run test:ui:playtest-decks
-      - run: npm run test:ui:tokens
-      - run: npm run test:ui:keyword-actions
-      - run: npm run test:ui:atraxa-library
-      - run: npm run test:ui:atraxa-duration
-      - run: npm run test:ui:atraxa-activations
-      - run: npm run test:ui:entry-replacements
-      - run: npm run test:ui:entry-routes
-      - run: npm run test:ui:network
-      - run: npm run test:ui:updates
+      - run: npm run test:ui
       - run: npm run dist:win
       - run: node scripts/smoke-packaged.cjs
       - uses: actions/upload-artifact@v4

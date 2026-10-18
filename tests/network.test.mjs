@@ -28,6 +28,139 @@ test('keyword resolution choices are seat-owned and resume across two-client rec
 });
 async function eventually(fn){const start=Date.now();while(!fn()){if(Date.now()-start>5000)throw Error('Timed out waiting for synchronization.');await new Promise(r=>setTimeout(r,10));}}
 
+test('damage counter choices reconnect at the affected seat before simultaneous damage commits once',async t=>{
+ const {changeStep}=await import('../engine.mjs'),combat=await import('../combat.mjs'),records=JSON.parse(await fs.readFile(new URL('./fixtures/commander/oracle/atraxa_praetors_voice.json',import.meta.url))).cards;
+ const seed=game(),real=(name,id)=>({...structuredClone(records.find(c=>c.name===name)),instance:id,counters:{}}),enter=(c,owner)=>{seed.players[owner].zones.hand.push(c);transfer(seed,c.instance,'battlefield',owner,undefined,{deferTriggers:true});c.summoningSick=false;return c;};
+ const a=enter(card('Wither lifelink',{instance:'damage-source',type_line:'Creature',power:'3',toughness:'10',oracle_text:'Wither, lifelink'}),0),b=enter(card('Blocker',{instance:'damage-target',type_line:'Creature',power:'1',toughness:'12',oracle_text:''}),1);
+ enter(real('Vorinclex, Monstrous Raider','damage-double'),0);enter(real('Winding Constrictor','damage-add'),1);
+ changeStep(seed,4);changeStep(seed,5);combat.setAttacker(seed,a.instance,'player:1');combat.confirmAttackers(seed);changeStep(seed,6);combat.setBlocker(seed,1,b.instance,a.instance);combat.confirmBlockers(seed,1);changeStep(seed,7);combat.applyCombatDamage(seed);
+ const {clients}=await setup(t,2,{seed,checkpoint:true}),[host,peer]=clients,sync=()=>eventually(()=>clients.every(c=>c.snapshot.revision===host.snapshot.revision));
+ assert.equal(host.snapshot.game.pendingEffect.kind,'remote-choice');assert.equal(peer.snapshot.game.pendingEffect.owner,1);assert.equal(peer.snapshot.game.players[0].life,40);
+ await assert.rejects(host.send({type:'counterChoice',key:'damage-add:0'}),/choosing/);await assert.rejects(peer.send({type:'counterChoice',key:'forged'}),/available/);
+ peer.disconnectForTest();await host.send({type:'responseMode',mode:'prompt'});await sync();assert.equal(peer.snapshot.game.pendingEffect.damageBatch.records.length,2);
+ const {counterChoiceOptions}=await import('../oracle-effects.mjs'),key=counterChoiceOptions(peer.snapshot.game).find(r=>r.operation==='add').key;await peer.send({type:'counterChoice',key});await sync();
+ for(const c of clients){const g=c.snapshot.game;assert.equal(g.pendingEffect,undefined);assert.equal(g.players[0].life,43);assert.equal(g.players[0].zones.battlefield.find(c=>c.instance===a.instance).markedDamage,1);assert.equal(g.players[1].zones.battlefield.find(c=>c.instance===b.instance).counters['-1/-1'],8);assert.equal(g.combat.normalDone,true);}
+ await assert.rejects(host.send({type:'damage'}),/Review blockers/);assert.ok(peer.snapshot.game.players[0].zones.hand.every(c=>c.hidden));
+});
+
+test('as-enters copies are controller-owned across reconnect and synchronize abilities and expiration',async t=>{
+ const {enterPermanents}=await import('../oracle-effects.mjs'),{cardFace}=await import('../card-state.mjs');
+ const records=JSON.parse(await fs.readFile(new URL('./fixtures/playtest-decks/jace.json',import.meta.url))).cards,seed=game(2);seed.active=1;
+ const source=card('Public mana creature',{type_line:'Creature',power:'2',toughness:'2',oracle_text:'{T}: Add {G}.',instance:'copy-source'});
+ seed.players[0].zones.hand.push(source);transfer(seed,source.instance,'battlefield',0,undefined,{deferTriggers:true});
+ const mirror=card('Cursed Mirror',{...records.find(c=>c.name==='Cursed Mirror'),instance:'copy-mirror'});seed.players[1].zones.hand.push(mirror);
+ enterPermanents(seed,{owner:1,name:'Cursed Mirror',source:mirror},[{id:mirror.instance,owner:1}]);
+ const {clients}=await setup(t,2,{seed,checkpoint:true}),[host,peer]=clients,sync=()=>eventually(()=>clients.every(c=>c.snapshot.revision===peer.snapshot.revision));
+ assert.equal(host.snapshot.game.pendingEffect.kind,'remote-choice');assert.equal(peer.snapshot.game.pendingEffect.entryKind,'copy');
+ await assert.rejects(host.send({type:'entryCopy',id:mirror.instance,target:source.instance,battlefieldId:source.battlefieldId}),/choosing/);
+ peer.disconnectForTest();await host.send({type:'responseMode',mode:'prompt'});await sync();assert.equal(peer.snapshot.game.pendingEffect.entryKind,'copy');
+ await assert.rejects(peer.send({type:'entryCopy',id:mirror.instance,target:source.instance,battlefieldId:'stale'}),/eligible/);
+ await peer.send({type:'entryCopy',id:mirror.instance,target:source.instance,battlefieldId:source.battlefieldId});await sync();
+ let c=peer.snapshot.game.players[1].zones.battlefield.find(c=>c.instance===mirror.instance);
+ assert.equal(cardFace(c).name,source.name);const ability=manaAbilities(peer.snapshot.game,1,c)[0];assert.match(ability.text,/\{G\}/);
+ await peer.send({type:'activate',id:c.instance,ability:ability.id,choice:{}});await sync();assert.equal(peer.snapshot.game.players[1].mana[0].type,'G');
+ await peer.send({type:'copyToken',id:c.instance,count:1,battlefieldId:c.battlefieldId});await sync();
+ const token=peer.snapshot.game.players[1].zones.battlefield.find(c=>c.token);assert.ok(token);assert.equal(token.copyEffects,undefined);
+ peer.disconnectForTest();await host.send({type:'responseMode',mode:'auto'});await sync();assert.equal(cardFace(peer.snapshot.game.players[1].zones.battlefield.find(c=>c.instance===mirror.instance)).name,source.name);
+ await peer.send({type:'step',step:11});await sync();
+ for(const client of clients){const g=client.snapshot.game,c=g.players[1].zones.battlefield.find(c=>c.instance===mirror.instance),copy=g.players[1].zones.battlefield.find(c=>c.token);
+  assert.equal(c.copyEffects,undefined);assert.equal(c.tapped,true);assert.equal(cardFace(c).name,'Cursed Mirror');assert.match(manaAbilities(g,1,c)[0].text,/\{R\}/);
+  assert.equal(copy.oracle_text.includes('Haste'),true);assert.match(manaAbilities(g,1,copy)[0].text,/\{G\}/);assert.equal(g.pendingEffect,undefined);
+ }
+ assert.ok(host.snapshot.game.players[1].zones.hand.every(c=>c.hidden));
+});
+
+test('pre-entry order selection stays with the active choosing controller and survives reconnect without paying a cost',async t=>{
+ const {enterPermanents}=await import('../oracle-effects.mjs'),records=JSON.parse(await fs.readFile(new URL('./fixtures/playtest-decks/atraxa.json',import.meta.url))).cards,seed=game(3);seed.active=1;seed.players[1].life=3;
+ const a=card('Breeding Pool',{...records.find(c=>c.name==='Breeding Pool'),instance:'order-a'}),b=card('Hallowed Fountain',{...records.find(c=>c.name==='Hallowed Fountain'),instance:'order-b'}),c=card('Godless Shrine',{...records.find(c=>c.name==='Godless Shrine'),instance:'order-c'});
+ seed.players[0].zones.hand.push(a);seed.players[1].zones.hand.push(b,c);enterPermanents(seed,{owner:0,name:'Entry batch',source:{instance:'batch',name:'Batch'}},[{id:a.instance,owner:0},{id:b.instance,owner:1},{id:c.instance,owner:1}]);
+ const {clients}=await setup(t,3,{seed,checkpoint:true}),[host,peer,third]=clients,sync=()=>eventually(()=>clients.every(c=>c.snapshot.revision===host.snapshot.revision));
+ await assert.rejects(host.send({type:'entrySelect',id:a.instance,kind:'life'}),/choosing/);await assert.rejects(peer.send({type:'entrySelect',id:a.instance,kind:'life'}),/current controller/);
+ await peer.send({type:'entrySelect',id:c.instance,kind:'life'});await sync();assert.equal(peer.snapshot.game.pendingEffect.entryIndex,2);assert.equal(peer.snapshot.game.players[1].life,3);assert.equal(third.snapshot.game.pendingEffect.kind,'remote-choice');
+ peer.disconnectForTest();await host.send({type:'responseMode',mode:'prompt'});await sync();assert.equal(peer.snapshot.game.pendingEffect.entryIndex,2);await peer.send({type:'entryLife',id:c.instance,pay:true});await sync();assert.equal(peer.snapshot.game.players[1].life,1);assert.equal(peer.snapshot.game.pendingEffect.entryIndex,1);
+ await assert.rejects(peer.send({type:'entryLife',id:b.instance,pay:true}),/Not enough life/);await peer.send({type:'entryLife',id:b.instance,pay:false});await sync();assert.equal(host.snapshot.game.pendingEffect.kind,'entry-choice');await host.send({type:'entryLife',id:a.instance,pay:true});await sync();
+ for(const client of clients){const g=client.snapshot.game;assert.equal(g.players[1].life,1);assert.deepEqual(g.players[1].zones.battlefield.map(c=>[c.instance,c.tapped]),[[b.instance,true],[c.instance,false]]);assert.equal(g.pendingEffect,undefined);}
+ assert.ok(third.snapshot.game.players[1].zones.hand.every(c=>c.hidden));
+});
+
+test('copied token pre-entry values belong to their controller across reconnect before counter replacement choices',async t=>{
+ const records=JSON.parse(await fs.readFile(new URL('./fixtures/commander/oracle/atraxa_praetors_voice.json',import.meta.url))).cards,seed=game();
+ for(const [name,id] of [['Doubling Season','values-double'],["Lae'zel, Vlaakith's Champion",'values-add']]){const c=card(name,{...records.find(c=>c.name===name),instance:id});seed.players[0].zones.hand.push(c);transfer(seed,id,'battlefield',0,undefined,{deferTriggers:true});}
+ const source=card('Variable token source',{instance:'values-source',type_line:'Creature',power:'0',toughness:'0',oracle_text:'This creature enters with that many +1/+1 counters on it.'});seed.players[0].zones.hand.push(source);transfer(seed,source.instance,'battlefield',0,undefined,{deferTriggers:true});delete source.entryChoices;source.counters={'+1/+1':8};
+ const {clients}=await setup(t,2,{seed,checkpoint:true}),[host,peer]=clients,sync=()=>eventually(()=>peer.snapshot.revision===host.snapshot.revision);
+ await host.send({type:'copyToken',id:source.instance,count:1});await sync();assert.equal(host.snapshot.game.pendingEffect.kind,'entry-choice');assert.equal(peer.snapshot.game.pendingEffect.kind,'remote-choice');
+ const ids=host.snapshot.game.pendingEffect.entries.map(e=>e.card.instance);assert.equal(ids.length,2);assert.equal(host.snapshot.game.players[0].zones.battlefield.filter(c=>c.token).length,0);
+ await assert.rejects(peer.send({type:'entryValues',id:ids[0],values:{'counter:+1/+1':3}}),/choosing/);await assert.rejects(host.send({type:'entryValues',id:source.instance,values:{'counter:+1/+1':3}}),/requested decision/);
+ await host.send({type:'entryValues',id:ids[0],values:{'counter:+1/+1':3}});await sync();peer.disconnectForTest();await host.send({type:'entryValues',id:ids[1],values:{'counter:+1/+1':4}});await sync();assert.equal(host.snapshot.game.pendingEffect.kind,'counter-choice');
+ while(host.snapshot.game.pendingEffect?.kind==='counter-choice'){const p=host.snapshot.game.pendingEffect,key=p.plan.states[p.plan.index].providers.find(r=>r.operation==='add').key;await host.send({type:'counterChoice',key});await sync();}
+ for(const c of clients){const copies=c.snapshot.game.players[0].zones.battlefield.filter(c=>c.token);assert.deepEqual(copies.map(c=>c.counters['+1/+1']),[8,10]);assert.ok(copies.every(c=>!c.entryChoices));assert.equal(c.snapshot.game.pendingEffect,undefined);}
+ assert.ok(peer.snapshot.game.players[0].zones.hand.every(c=>c.hidden));assert.ok(!JSON.stringify(peer.snapshot).includes('Private hand 0'));
+});
+
+test('simultaneous shock entries pay life once in controller order while both permanents remain outside the battlefield',async t=>{
+ const {enterPermanents}=await import('../oracle-effects.mjs'),records=JSON.parse(await fs.readFile(new URL('./fixtures/playtest-decks/atraxa.json',import.meta.url))).cards,seed=game();seed.active=1;seed.players[0].life=3;
+ const a=card('Breeding Pool',{...records.find(c=>c.name==='Breeding Pool'),instance:'shock-a'}),b=card('Hallowed Fountain',{...records.find(c=>c.name==='Hallowed Fountain'),instance:'shock-b'});seed.players[0].zones.hand.push(a);seed.players[1].zones.hand.push(b);
+ enterPermanents(seed,{owner:0,name:'Simultaneous lands',source:{instance:'lands',name:'Lands'}},[{id:a.instance,owner:0},{id:b.instance,owner:1}]);
+ const {clients}=await setup(t,2,{seed,checkpoint:true}),[host,peer]=clients,sync=()=>eventually(()=>peer.snapshot.revision===host.snapshot.revision);
+ assert.equal(peer.snapshot.game.pendingEffect.kind,'entry-choice');assert.equal(host.snapshot.game.pendingEffect.kind,'remote-choice');await assert.rejects(host.send({type:'entryLife',id:b.instance,pay:true}),/choosing/);
+ await peer.send({type:'entryLife',id:b.instance,pay:true});await sync();assert.equal(peer.snapshot.game.players[1].life,38);assert.equal(host.snapshot.game.pendingEffect.kind,'entry-choice');assert.ok(host.snapshot.game.players.every(p=>p.zones.battlefield.length===0));
+ await assert.rejects(peer.send({type:'entryLife',id:b.instance,pay:true}),/choosing/);peer.disconnectForTest();await host.send({type:'entryLife',id:a.instance,pay:true});await sync();
+ for(const c of clients){assert.equal(c.snapshot.game.players[0].life,1);assert.equal(c.snapshot.game.players[1].life,38);assert.ok(c.snapshot.game.players.every(p=>p.zones.battlefield.length===1&&!p.zones.battlefield[0].tapped&&!p.zones.battlefield[0].entryLife));assert.equal(c.snapshot.game.pendingEffect,undefined);}
+ await assert.rejects(host.send({type:'entryLife',id:a.instance,pay:true}),/No life payment/);assert.equal(host.snapshot.game.players[0].life,1);
+});
+
+test('shared land plays keep one allowance and private hands through entry replacement reconnect',async t=>{
+ const records=JSON.parse(await fs.readFile(new URL('./fixtures/commander/oracle/atraxa_praetors_voice.json',import.meta.url))).cards,seed=game(),make=(name,id)=>card(name,{...records.find(c=>c.name===name),instance:id});
+ for(const [name,id,owner] of [['Doubling Season','manual-land-double',0],['Vorinclex, Monstrous Raider','manual-land-half',1]]){const c=make(name,id);seed.players[owner].zones.hand.push(c);transfer(seed,c.instance,'battlefield',owner,undefined,{deferTriggers:true});}
+ const land=make('Blast Zone','played-land');seed.players[0].zones.hand.push(land);
+ const {clients}=await setup(t,2,{seed,checkpoint:true}),[host,peer]=clients,sync=()=>eventually(()=>peer.snapshot.revision===host.snapshot.revision);
+ await host.send({type:'playLand',id:land.instance,position:{x:.4,y:.6}});await sync();assert.equal(host.snapshot.game.players[0].landsPlayed,1);assert.equal(host.snapshot.game.pendingEffect.kind,'counter-choice');assert.equal(peer.snapshot.game.pendingEffect.kind,'remote-choice');
+ assert.equal(peer.snapshot.game.players[0].zones.battlefield.some(c=>c.instance===land.instance),false);assert.ok(peer.snapshot.game.players[0].zones.hand.every(c=>c.hidden));
+ const key=host.snapshot.game.pendingEffect.plan.states[0].providers.find(r=>r.operation==='double').key;await assert.rejects(peer.send({type:'counterChoice',key}),/choosing/);
+ peer.disconnectForTest();await host.send({type:'counterChoice',key});await sync();
+ for(const c of clients){const p=c.snapshot.game.players[0],entered=p.zones.battlefield.find(c=>c.instance===land.instance);assert.equal(entered.counters.charge,1);assert.deepEqual(entered.tablePosition,{x:.4,y:.6,normalized:true});assert.equal(p.landsPlayed,1);assert.equal(c.snapshot.game.pendingEffect,undefined);}
+ await assert.rejects(host.send({type:'playLand',id:seed.players[0].zones.hand[0].instance}),/land/i);
+});
+
+test('shared corrective entries restore the original manual-effect controller after replacement choices',async t=>{
+ const records=JSON.parse(await fs.readFile(new URL('./fixtures/commander/oracle/atraxa_praetors_voice.json',import.meta.url))).cards,seed=game();
+ for(const [name,id] of [['Doubling Season','manual-double'],["Lae'zel, Vlaakith's Champion",'manual-add']]){const c=card(name,{...records.find(c=>c.name===name),instance:id});seed.players[0].zones.hand.push(c);transfer(seed,id,'battlefield',0,undefined,{deferTriggers:true});}
+ const visitor=card('Manual visitor',{instance:'manual-visitor',type_line:'Creature',power:'0',toughness:'0',oracle_text:'This creature enters with two +1/+1 counters on it.\nWhen this creature enters, draw a card.'});seed.players[0].zones.graveyard.push(visitor);seed.pendingEffect={kind:'combat-manual',owner:1,name:'Manual return',text:'Return the card, then confirm.'};
+ const {clients}=await setup(t,2,{seed,checkpoint:true}),[host,peer]=clients,sync=()=>eventually(()=>peer.snapshot.revision===host.snapshot.revision);
+ await host.send({type:'move',id:visitor.instance,to:'battlefield'});await sync();assert.equal(host.snapshot.game.pendingEffect.kind,'counter-choice');assert.equal(peer.snapshot.game.pendingEffect.kind,'remote-choice');
+ const key=host.snapshot.game.pendingEffect.plan.states[0].providers.find(r=>r.operation==='add').key;await assert.rejects(peer.send({type:'counterChoice',key}),/choosing/);
+ peer.disconnectForTest();await host.send({type:'counterChoice',key});await sync();assert.equal(peer.snapshot.game.pendingEffect.kind,'combat-manual');assert.equal(host.snapshot.game.pendingEffect.kind,'remote-choice');assert.equal(host.snapshot.game.stack.length,0);
+ await assert.rejects(host.send({type:'manualResolved'}),/No manual effect/);await peer.send({type:'manualResolved'});await sync();assert.equal(host.snapshot.game.stack.length,1);assert.equal(host.snapshot.game.pendingEffect,undefined);
+ await host.send({type:'pass'});await sync();await peer.send({type:'pass'});await sync();assert.equal(host.snapshot.game.players[0].zones.hand.length,2);assert.ok(peer.snapshot.game.players[0].zones.hand.every(c=>c.hidden));assert.equal(peer.snapshot.game.players[0].zones.battlefield.find(c=>c.instance===visitor.instance).counters['+1/+1'],6);
+});
+
+test('Myriad doubles assign defenders individually before simultaneous entry choices across three clients and reconnect',async t=>{
+ const {changeStep}=await import('../engine.mjs'),{setAttacker,confirmAttackers}=await import('../combat.mjs');
+ const records=JSON.parse(await fs.readFile(new URL('./fixtures/commander/oracle/atraxa_praetors_voice.json',import.meta.url))).cards,seed=game(3);
+ const enter=(c,owner=0)=>{seed.players[owner].zones.hand.push(c);transfer(seed,c.instance,'battlefield',owner,undefined,{deferTriggers:true});c.summoningSick=false;return c;};
+ const source=enter(card('Myriad counter creature',{instance:'myriad-source',type_line:'Creature',power:'0',toughness:'0',keywords:['Myriad'],oracle_text:'Myriad\nThis creature enters with two +1/+1 counters on it.'}));
+ for(const [name,id] of [['Doubling Season','myriad-double'],["Lae'zel, Vlaakith's Champion",'myriad-add']])enter(card(name,{...records.find(c=>c.name===name),instance:id}));
+ const walker=enter(card('Defending walker',{instance:'myriad-walker',type_line:'Planeswalker',loyalty:'5',oracle_text:''}),2);
+ changeStep(seed,5);setAttacker(seed,source.instance,'player:1');confirmAttackers(seed);
+ const {clients}=await setup(t,3,{seed,checkpoint:true}),[host,peer,third]=clients,sync=()=>eventually(()=>clients.every(c=>c.snapshot.revision===host.snapshot.revision));
+ for(const c of clients){await c.send({type:'pass'});await sync();}
+ assert.equal(host.snapshot.game.pendingEffect.step.op,'myriad');await host.send({type:'oracleChoice',keys:['player:2']});await sync();
+ assert.equal(host.snapshot.game.pendingEffect.step.op,'myriadDefenders');assert.equal(third.snapshot.game.pendingEffect.kind,'remote-choice');
+ await assert.rejects(third.send({type:'oracleChoice',keys:['card:'+walker.instance]}),/choosing/);
+ third.disconnectForTest();await host.send({type:'oracleChoice',keys:['card:'+walker.instance]});await sync();
+ assert.equal(host.snapshot.game.pendingEffect.kind,'counter-choice');assert.equal(host.snapshot.game.players[0].zones.battlefield.filter(c=>c.token).length,0);
+ while(host.snapshot.game.pendingEffect?.kind==='counter-choice'){
+  const pending=host.snapshot.game.pendingEffect,key=pending.plan.states[pending.plan.index].providers.find(r=>r.operation==='add').key;
+  await assert.rejects(peer.send({type:'counterChoice',key}),/choosing/);await host.send({type:'counterChoice',key});await sync();
+ }
+ for(const c of clients){
+  const g=c.snapshot.game,copies=g.players[0].zones.battlefield.filter(c=>c.token);assert.equal(copies.length,2);assert.ok(copies.every(c=>c.counters['+1/+1']===6&&c.tapped));
+  const attackers=g.combat.attackers.filter(a=>a.enteredAttacking);assert.deepEqual(attackers.map(a=>a.defender.key),['player:2','card:'+walker.instance]);
+  assert.equal(g.combat.endTriggers[0].tokens.length,2);assert.equal(g.pendingEffect,undefined);
+ }
+ assert.ok(third.snapshot.game.players[0].zones.hand.every(c=>c.hidden));assert.ok(!JSON.stringify(third.snapshot).includes('Private hand 0'));
+});
+
 test('searched permanent entry keeps the library private and resumes before shuffle and draw across clients',async t=>{
  const records=JSON.parse(await fs.readFile(new URL('./fixtures/commander/oracle/atraxa_praetors_voice.json',import.meta.url))).cards,seed=game(),make=(name,id)=>card(name,{...records.find(c=>c.name===name),instance:id});
  for(const [name,id,owner] of [['Doubling Season','search-double',0],['Vorinclex, Monstrous Raider','search-half',1]]){const c=make(name,id);seed.players[owner].zones.hand.push(c);transfer(seed,id,'battlefield',owner);}

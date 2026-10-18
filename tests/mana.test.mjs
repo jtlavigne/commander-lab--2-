@@ -6,7 +6,7 @@ import {newGame,advance,endTurn,changeStep,validateSession,transfer} from '../en
 import {addMana,manaTotals,manaAbilities,activatedAbilities,activationError,paymentPlan,payMana,clearMana,spellPayment,reverseManaTap,manaOptionKey} from '../mana.mjs';
 import {castSpell,activateMana,activateManaLoyalty,prioritySeat,passPriority,canRespond,resolveProliferate,playLand} from '../casting.mjs';
 import {landLimit} from '../lands.mjs';
-const card=(name,type_line,oracle_text='',extra={})=>({instance:name,name,type_line,oracle_text,counters:{},tapped:false,face:0,...extra});
+const card=(name,type_line,oracle_text='',extra={})=>({instance:name,name,type_line,oracle_text,counters:{},tapped:false,face:0,...(/\bCreature\b/.test(type_line)?{power:'2',toughness:'2'}:{}),...extra});
 const setup=()=>{const g=newGame();g.step=3;g.responseMode='hold';return g;};
 const {dryad}=JSON.parse(readFileSync(new URL('./fixtures/mana-fixing.json',import.meta.url),'utf8'));
 const source=(g,c,choice={})=>{g.players[0].zones.battlefield.push(c);activateMana(g,c.instance,manaAbilities(g,0,c)[0].id,choice);};

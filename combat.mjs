@@ -1,3 +1,6 @@
+import {dealDamagePackets} from './damage-effects.mjs';
+export {dealDamagePackets};
+import {expireCopies,validateCopyEffects} from './copy-state.mjs';
 import {findCard,note,transfer} from './engine.mjs';
 import {gainLife} from './resource-rules.mjs';
 import {refreshPairs} from './soulbond.mjs';
@@ -7,7 +10,6 @@ import {snapshotCard,queueCombatTriggers,deathDestinations,moveDeadPermanent} fr
 import {pendingLifeEntry} from './life-effects.mjs';
 import {attachmentLegal,isAura} from './attachments.mjs';
 import {checkPlayerLosses} from './game-outcome.mjs';
-import {addPlayerCounter} from './player-counters.mjs';
 import {chooseDestructionReplacement} from './destruction.mjs';
 
 export {summoningSick,combatStats,attackError,blockError};
@@ -130,26 +132,6 @@ function validateAssignment(g,source,amounts){
 function applyDamageBatch(g,phase){
  const packets=[];for(const source of damageSources(g,phase)){const assignment=assignmentFor(g,source,phase);validateAssignment(g,source,assignment);for(const a of assignment)if(a.amount>0){const target=source.targets.find(t=>targetKey(t)===a.target);packets.push({source,target,amount:a.amount});}}return dealDamagePackets(g,packets,true);
 }
-export function dealDamagePackets(g,packets,combat=false){
- const events=[];
- const unpreventable=p=>combat&&fieldCards(g).some(({card,owner})=>!card.faceDown&&owner===p.source.owner&&isCreature(p.source.card)&&/Combat damage that would be dealt by creatures you control can't be prevented\./i.test(rulesTextSafe(card)));
- packets=packets.filter(p=>{
-  if(p.amount<=0||g.players[p.target.owner]?.eliminated)return false;if(unpreventable(p))return true;
-  const recipient=p.target.kind==='card'&&live(g,p.target.id);if(!recipient)return true;
-  if(protectedFrom(g,p.target.owner,recipient.card,p.source.card))return false;
-  return !combat||!fieldCards(g).some(({card:source,owner})=>!source.faceDown&&(source.oracle_text||'').split('\n').some(text=>{const match=text.match(/^Prevent all combat damage that would be dealt to (.+?)\.$/i);return match&&combatRecipient(g,match[1],recipient.card,recipient.owner,source,owner);}));
- });
- const shielded=new Set();for(const p of packets)if(p.target.kind==='card'){const f=live(g,p.target.id);if(f?.card.counters?.shield>0)shielded.add(p.target.id);}
- for(const id of shielded){const c=live(g,id).card;c.counters.shield--;if(!c.counters.shield)delete c.counters.shield;}
- for(const packet of packets){const {source,target,amount}=packet;if(target.kind==='card'&&shielded.has(target.id)&&!unpreventable(packet))continue;const keywords=keywordSet(g,source.owner,source.card);let dealt=0;
-  if(target.kind==='player'){const p=g.players[target.owner];if(keywords.has('infect'))addPlayerCounter(g,target.owner,'poison',amount);else p.life-=amount;dealt=amount;if(combat&&source.card.commander){p.damage[source.card.ownerSeat??source.owner]+=amount;p.commanderDamage??={};p.commanderDamage[source.card.instance]=(p.commanderDamage[source.card.instance]||0)+amount;}const toxic=rulesTextSafe(source.card).match(/(?:^|\n|, )Toxic (\d+)/i);if(combat&&toxic)addPlayerCounter(g,target.owner,'poison',Number(toxic[1]));}
-  else{const f=live(g,target.id);if(!f)continue;const c=f.card;if(isCreature(c)){if(keywords.has('infect')||keywords.has('wither'))c.counters['-1/-1']=(c.counters['-1/-1']||0)+amount;else c.markedDamage=(c.markedDamage||0)+amount;if(keywords.has('deathtouch'))c.deathtouchDamage=true;}if(/Planeswalker/.test(cardFace(c).type_line||''))c.counters.loyalty=Math.max(0,(c.counters.loyalty||0)-amount);dealt=amount;}
-  if(combat&&dealt&&target.kind==='player'){const found=live(g,source.card.instance,source.card.battlefieldId);if(found){if(found.card.combatDamageHistory?.turn!==stamp(g))found.card.combatDamageHistory={turn:stamp(g),players:[]};if(!found.card.combatDamageHistory.players.includes(target.owner))found.card.combatDamageHistory.players.push(target.owner);}}
-  if(dealt){if(keywords.has('lifelink'))gainLife(g,source.owner,dealt);events.push({kind:'damage',combat,keywords:[...keywords],card:snapshotCard(source.card),owner:source.owner,target:{...target},amount:dealt});const recipient=target.kind==='card'&&live(g,target.id);if(recipient&&isCreature(recipient.card))events.push({kind:'receive-damage',combat,card:snapshotCard(recipient.card),owner:recipient.owner,amount:dealt});}
- }
- return events;
-}
-const rulesTextSafe=card=>(cardFace(card).oracle_text||'');
 // Destruction and sacrifice share zone replacements and last-known observers.
 // Sacrifice bypasses indestructible and shield; simultaneous deaths are batched.
 export function removePermanents(g,ids,{sacrifice=false}={}){
@@ -189,17 +171,23 @@ export function stateBasedActions(g,{damageEvents=[]}={}){
  queueCombatTriggers(g,[...damageEvents,...events],observers);if(dead.length||cancelled)results.push(...stateBasedActions(g));return results;
 }
 export function applyCombatDamage(g){
- ready(g);if(g.step!==7||g.combat?.stage!=='damage'||g.combat.normalDone)throw Error('Review blockers and enter the damage step first.');const phase=damagePhase(g),events=applyDamageBatch(g,phase);if(phase==='first')g.combat.firstDone=true;else{g.combat.normalDone=true;g.combat.stage='complete';}
+ ready(g);if(g.step!==7||g.combat?.stage!=='damage'||g.combat.normalDone)throw Error('Review blockers and enter the damage step first.');const phase=damagePhase(g),events=applyDamageBatch(g,phase);
+ if(g.pendingEffect?.damageBatch){g.pendingEffect.damageBatch.combatState={id:g.combat.id,phase};return phase;}
+ return completeCombatDamage(g,phase,events);
+}
+export function completeCombatDamage(g,phase,events){
+ if(phase==='first')g.combat.firstDone=true;else{g.combat.normalDone=true;g.combat.stage='complete';}
  stateBasedActions(g,{damageEvents:events});note(g,(phase==='first'?'First-strike':'Normal')+' combat damage applied.');return phase;
 }
 export function previewCombat(g){
  if(!g.combat)return {creatures:[],players:[],planeswalkers:[],deaths:[],sources:[],error:''};
  const before=fieldCards(g),slim={...g,players:g.players.map(p=>({...p,zones:Object.fromEntries(Object.entries(p.zones).map(([z,cards])=>[z,cards.map(snapshotCard)]))})),log:[],stack:[]};const simulation=structuredClone(slim);simulation.pendingEffect=undefined;let deaths=[];
  const firstIds=[...new Set([...g.combat.attackers.map(a=>a.id),...g.combat.blocks.map(b=>b.blocker)])].filter(id=>{const f=live(g,id);return f&&[...keywordSet(g,f.owner,f.card)].some(k=>k==='first strike'||k==='double strike');});simulation.combat.firstStrikeIds??=firstIds;
- try{if(firstIds.length&&!simulation.combat.firstDone){applyDamageBatch(simulation,'first');deaths.push(...stateBasedActions(simulation));simulation.combat.firstDone=true;}if(!simulation.combat.normalDone){applyDamageBatch(simulation,'normal');deaths.push(...stateBasedActions(simulation));}}catch(error){return {creatures:[],players:[],planeswalkers:[],deaths:[],sources:damageSources(g),error:error.message};}
+ const uncertain=()=>({creatures:[],players:[],planeswalkers:[],deaths:[],sources:damageSources(g),error:'',warning:'Counter replacement order affects damage results. Choose replacements when damage is applied.'});
+ try{if(firstIds.length&&!simulation.combat.firstDone){applyDamageBatch(simulation,'first');if(simulation.pendingEffect?.damageBatch)return uncertain();deaths.push(...stateBasedActions(simulation));simulation.combat.firstDone=true;}if(!simulation.combat.normalDone){applyDamageBatch(simulation,'normal');if(simulation.pendingEffect?.damageBatch)return uncertain();deaths.push(...stateBasedActions(simulation));}}catch(error){return {creatures:[],players:[],planeswalkers:[],deaths:[],sources:damageSources(g),error:error.message};}
  return {creatures:before.filter(({card})=>isCreature(card)&&[...g.combat.attackers.map(a=>a.id),...g.combat.blocks.map(b=>b.blocker)].includes(card.instance)).map(({card,owner})=>{const after=live(simulation,card.instance);return {id:card.instance,name:card.name,owner,before:combatStats(g,owner,card),after:after?combatStats(simulation,after.owner,after.card):null,destination:deaths.find(d=>d.id===card.instance)?.destination,options:deaths.find(d=>d.id===card.instance)?.options||[]};}),players:g.players.map((p,owner)=>({owner,name:p.name,before:p.life,after:simulation.players[owner].life,poison:simulation.players[owner].poison-p.poison})).filter(p=>p.before!==p.after||p.poison),planeswalkers:before.filter(({card})=>!card.faceDown&&/Planeswalker/.test(cardFace(card).type_line||'')).map(({card,owner})=>({id:card.instance,owner,name:card.name,before:card.counters.loyalty||0,after:live(simulation,card.instance)?.card.counters.loyalty||0,destination:deaths.find(d=>d.id===card.instance)?.destination})).filter(p=>p.before!==p.after),deaths,sources:damageSources(g),error:''};
 }
-export function cleanTurnDamage(g){for(const player of g.players){player.extraLandPlays=0;for(const card of player.zones.graveyard){delete card.flashbackGrant;delete card.graveCastGrant;}}delete g.temporaryManaRules;delete g.spellCopyEffects;delete g.temporaryGraveyardRules;for(const {card} of [...fieldCards(g),...(g.phasedOut||[])]){delete card.animatedCreature;delete card.markedDamage;delete card.deathtouchDamage;delete card.temporaryStats;delete card.temporaryKeywords;delete card.lostKeywords;}delete g.combat;delete g.blockingRules;}
+export function cleanTurnDamage(g){for(const player of g.players){player.extraLandPlays=0;for(const card of player.zones.graveyard){delete card.flashbackGrant;delete card.graveCastGrant;}}delete g.temporaryManaRules;delete g.spellCopyEffects;delete g.temporaryGraveyardRules;for(const {card} of [...fieldCards(g),...(g.phasedOut||[])]){expireCopies(card);delete card.animatedCreature;delete card.markedDamage;delete card.deathtouchDamage;delete card.temporaryStats;delete card.temporaryKeywords;delete card.lostKeywords;}delete g.combat;delete g.blockingRules;}
 export function beginControllerTurn(g){for(const {card} of fieldCards(g))if(card.goadedBy){card.goadedBy=card.goadedBy.filter(owner=>owner!==g.active);if(!card.goadedBy.length)delete card.goadedBy;}for(const card of g.players[g.active].zones.battlefield)card.summoningSick=false;}
 export function validateCombat(g,fail){
  if(g.blockingRules&&(typeof g.blockingRules.turn!=='string'||!Array.isArray(g.blockingRules.controllers)||g.blockingRules.controllers.length!==g.players.length||g.blockingRules.controllers.some(n=>!Number.isInteger(n)||!g.players[n])||!Array.isArray(g.blockingRules.must)||g.blockingRules.must.length!==g.players.length||g.blockingRules.must.some(b=>typeof b!=='boolean')))fail();
@@ -207,6 +195,7 @@ export function validateCombat(g,fail){
  if(g.combatsThisTurn&&(!g.combatsThisTurn||typeof g.combatsThisTurn.turn!=='string'||!Number.isSafeInteger(g.combatsThisTurn.count)||g.combatsThisTurn.count<1))fail();
  const seats=list=>Array.isArray(list)&&list.length<=g.players.length&&new Set(list).size===list.length&&list.every(n=>Number.isInteger(n)&&n>=0&&n<g.players.length);
  for(const {card} of fieldCards(g)){
+  validateCopyEffects(card.copyEffects,fail);
   if(card.goadedBy&&!seats(card.goadedBy))fail();
   if(card.attackHistory&&(typeof card.attackHistory.turn!=='string'||!Number.isSafeInteger(card.attackHistory.count)||card.attackHistory.count<1||card.attackHistory.players!==undefined&&!seats(card.attackHistory.players)))fail();
   if(card.exertedTurn!==undefined&&(typeof card.exertedTurn!=='string'||!/^\d+:[0-3]$/.test(card.exertedTurn)))fail();

@@ -1,11 +1,12 @@
+import {commitDamageBatch,validateDamageBatch} from './damage-effects.mjs';
 import {runEffectFamily,EFFECT_STOP,EFFECT_CONTINUE} from './effect-dispatch.mjs';
-import {preparePermanentEntries,commitPermanentEntries,validateEntryRequests} from './entry-effects.mjs';
+import {preparePermanentEntries,commitPermanentEntries,validateEntryRequests,nextEntryChoice,applyPreparedEntryChoice,finalizeEntryChoices,validatePreparedEntries} from './entry-effects.mjs';
 import {compileKeywordAction,keywordActionOptions,resolveKeywordAction,validateKeywordAction,KEYWORD_ACTION_OPERATIONS} from './keyword-actions.mjs';
 import {compilePermanentCopy,validatePermanentCopy,COPY_OPERATIONS} from './permanent-copy.mjs';
 import {compilePolymorphEffect,resolvePolymorphChoice,POLYMORPH_OPERATIONS} from './polymorph.mjs';
 import {namedToken} from './token-catalog.mjs';
 import {finishResolutionTriggers} from './trigger-rules.mjs';
-import {createCounterPlan,advanceCounterPlan,commitCounterPlan,validateCounterPlan,permanentCounterEvent,playerCounterEvent,proliferateCount} from './counter-effects.mjs';
+import {createCounterPlan,createEntryCounterPlan,advanceCounterPlan,commitCounterPlan,validateCounterPlan,permanentCounterEvent,playerCounterEvent,proliferateCount} from './counter-effects.mjs';
 import {compileReanimationEffect,reanimationChoiceOptions,resolveReanimationChoice,REANIMATION_OPERATIONS} from './reanimation.mjs';
 import {compileSecretChoiceEffect,resolveSecretNumber,SECRET_OPERATIONS} from './secret-choices.mjs';
 import {gainLife,drawAllowance,canSearchLibrary} from './resource-rules.mjs';
@@ -19,7 +20,7 @@ import {compileLibraryEffect,libraryChoiceOptions,resolveLibraryChoice,LIBRARY_O
 import {findCard,transfer,draw,shuffle,note} from './engine.mjs';
 import {combatRecipient,combatStats,fieldCards,isCreature,selfSubject,keywordSet} from './creature-rules.mjs';
 import {normalizeRules} from './ability-effects.mjs';
-import {stateBasedActions,removePermanents as destroyBatch,dealDamagePackets} from './combat.mjs';
+import {stateBasedActions,completeCombatDamage,removePermanents as destroyBatch,dealDamagePackets} from './combat.mjs';
 import {queueCombatTriggers,snapshotCard,queueReflexiveTrigger} from './combat-effects.mjs';
 import {paymentPlan,payMana,addMana,parseProduction} from './mana.mjs';
 import {addCombatPhase} from './turn-plan.mjs';
@@ -265,7 +266,28 @@ function contextFor(entry){return {owner:entry.owner,name:entry.name||entry.card
 export function applyOracleEffect(g,entry,text=entry.text){
  const program=compileOracleEffect(text)||(!text.endsWith('.')?compileOracleEffect(text+'.'):null)||(entry.kind==='ability'?compileOracleEffect(text.replace(/\s+Activate only as a sorcery\.$/i,'')):null);if(!program)return false;runProgram(g,contextFor(entry),program);return true;
 }
-export function enterPermanents(g,entry,requests){runProgram(g,contextFor(entry),[{op:'enterPermanents',requests}]);}
+export function enterPermanents(g,entry,requests){
+ const pending=g.pendingEffect;
+ if(pending&&pending.kind!=='combat-manual')throw Error('Finish the pending effect before placing another permanent.');
+ // Manual effects remain acknowledged by their original controller after a
+ // placement's replacement choices. Do not overwrite a search or other choice.
+ if(pending)delete g.pendingEffect;
+ runProgram(g,contextFor(entry),[{op:'enterPermanents',requests},...(pending?[{op:'resumeManualEffect',effect:pending}]:[])]);
+}
+function stageEntryBatch(g,context,remaining,requests,entries,revealed){
+ const choice=nextEntryChoice(g,entries),base={name:context.name,context,remaining,entryRequests:requests,...(revealed?{revealed}:{})};
+ if(choice){g.pendingEffect={...base,kind:'entry-choice',owner:choice.owner,entryIndex:choice.index,entryKind:choice.kind,entries};return true;}
+ finalizeEntryChoices(requests,entries);
+ const plan=createEntryCounterPlan(g,entries),counter=advanceCounterPlan(plan);
+ if(counter){g.pendingEffect={...base,kind:'counter-choice',owner:counter.owner,plan};return true;}
+ commitPermanentEntries(g,requests,plan);return false;
+}
+export function resolveEntryChoice(g,kind,answer){
+ const pending=g.pendingEffect;if(pending?.kind!=='entry-choice')throw Error('No pre-entry decision is pending.');
+ applyPreparedEntryChoice(g,pending,kind,answer);
+ delete g.pendingEffect;
+ if(!stageEntryBatch(g,pending.context,pending.remaining,pending.entryRequests,pending.entries,pending.revealed))runProgram(g,pending.context,pending.remaining);
+}
 export function applyCounterEvents(g,entry,events){runProgram(g,contextFor(entry),[{op:'counterBatch',events}]);}
 // ---- Resolution and resumable choices ----
 // Programs are serializable. Paused instructions preserve the remaining steps
@@ -285,14 +307,22 @@ function runProgram(g,context,program){
   if(step.op==='targetLoot'){runProgram(g,context,[...(context.targets||[]).filter(t=>t.kind==='player').flatMap(t=>[{op:'draw',owner:t.owner,amount:String(step.draw)},{op:'discard',owner:t.owner,max:step.discard}]),...rest]);return;}
   if(step.op==='targetTreasure')for(const target of context.targets||[])if(target.kind==='player')createTokens(g,target.owner,{name:'Treasure',type_line:'Token Artifact — Treasure',oracle_text:'{T}, Sacrifice this artifact: Add one mana of any color.'},1);
   if(step.op==='myriad'){const defenders=g.players.flatMap((player,seat)=>player.eliminated||seat===owner||seat===context.event?.defender?[]:[seat]);if(defenders.length&&g.combat){g.pendingEffect={kind:'oracle-choice',owner,name:context.name,context,step:{...step,defenders,max:defenders.length},remaining:rest};return;}}
+  if(step.op==='myriadDefenders'){
+   if(step.index<step.choices.length){g.pendingEffect={kind:'oracle-choice',owner,name:context.name,context,step,remaining:rest};return;}
+   runProgram(g,context,[{op:'enterPermanents',requests:step.requests},{op:'trackMyriadTokens',ids:step.requests.map(r=>r.id)},...rest]);return;
+  }
+  if(step.op==='trackMyriadTokens'&&g.combat){
+   const tokens=step.ids.map(id=>findCard(g,id)).filter(found=>found?.zone==='battlefield'&&found.card.token).map(({card})=>({id:card.instance,battlefieldId:card.battlefieldId}));
+   if(tokens.length)(g.combat.endTriggers??=[]).push({owner,source:context.source,tokens});
+  }
   if(step.op==='exileTrackedTokens')for(const token of context.event?.tokens||[]){const found=findCard(g,token.id);if(found?.zone==='battlefield'&&found.card.battlefieldId===token.battlefieldId){const controller=found.card.ownerSeat??found.owner;transfer(g,token.id,'exile',controller);g.players[controller].zones.exile=g.players[controller].zones.exile.filter(c=>c.instance!==token.id);}}
   if(step.op==='controlBlocks'){const turn=g.turn+':'+g.active;if(g.blockingRules?.turn!==turn)g.blockingRules={turn,controllers:g.players.map((_,seat)=>seat),must:g.players.map(()=>false)};for(let seat=0;seat<g.players.length;seat++)if(seat!==owner){g.blockingRules.controllers[seat]=owner;g.blockingRules.must[seat]=true;}}
   if(step.op==='proliferate'){const count=step.expanded?1:proliferateCount(g,owner);g.pendingEffect={kind:'proliferate',owner,name:context.name,context,remaining:[...Array.from({length:count-1},()=>({op:'proliferate',expanded:true})),...rest]};return;}
   if(step.op==='enterPermanents'){
-   const {requests,plan}=preparePermanentEntries(g,step.requests),choice=advanceCounterPlan(plan);
-   if(choice){g.pendingEffect={kind:'counter-choice',owner:choice.owner,name:context.name,context,remaining:rest,plan,entryRequests:requests,...(step.revealed?{revealed:step.revealed}:{})};return;}
-   commitPermanentEntries(g,requests,plan);
+   const {requests,entries}=preparePermanentEntries(g,step.requests);
+   if(stageEntryBatch(g,context,rest,requests,entries,step.revealed))return;
   }
+  if(step.op==='resumeManualEffect')g.pendingEffect=step.effect;
   if(step.op==='counterBatch'){const plan=createCounterPlan(g,step.events),choice=advanceCounterPlan(plan);if(choice){g.pendingEffect={kind:'counter-choice',owner:choice.owner,name:context.name,context,remaining:rest,plan};return;}commitCounterPlan(g,plan);}
   if(step.op==='soulbond'&&soulbondOptions(g,owner,context.source,context.event).length){g.pendingEffect={kind:'oracle-choice',owner,name:context.name,context,step,remaining:rest};return;}
   if(step.op==='counterSpell'){const target=context.targets?.find(t=>t.zone==='stack')||context.target,result=target&&counterSpell(g,target,owner,context.source);if(result)context.counteredController=result.owner;}
@@ -369,8 +399,7 @@ function runProgram(g,context,program){
   if(step.op==='untapSelf'){const found=findCard(g,context.source.instance);if(found?.zone==='battlefield'&&(found.card.battlefieldId||null)===(context.source.battlefieldId||null)){found.card.tapped=false;delete found.card.manaActivation;delete found.card.tapAbility;}}
   if(step.op==='tapTarget')for(const target of context.targets||[]){const found=findCard(g,target.id);if(found?.zone==='battlefield')found.card.tapped=true;}
   if(step.op==='dividedDamage'){
-   const packets=(context.targets||[]).map(target=>({source:{owner,card:context.source},target,amount:context.division?.find(d=>d.key===target.key)?.amount||0})),events=dealDamagePackets(g,packets);
-   for(const event of events.filter(e=>e.kind==='damage'))if(event.target.kind==='player'&&step.restrictNoncreature)g.players[event.target.owner].noncreatureLock=g.turn+':'+g.active;else if(event.target.kind==='card'&&step.tapCreatures){const found=findCard(g,event.target.id);if(found?.zone==='battlefield'&&isCreature(found.card))found.card.tapped=true;}
+   const packets=(context.targets||[]).map(target=>({source:{owner,card:context.source},target,amount:context.division?.find(d=>d.key===target.key)?.amount||0})),events=dealDamagePackets(g,packets,false,{restrictNoncreature:!!step.restrictNoncreature,tapCreatures:!!step.tapCreatures});
    queueCombatTriggers(g,events);
   }
   if(step.op==='reboundCast'){const card=findCard(g,context.source.instance);if(card?.zone==='exile'&&card.card.zoneChangeId===context.event.zoneChangeId){g.pendingEffect={kind:'oracle-choice',owner,name:context.name,context,step:{op:'castExiled',id:card.card.instance,zoneChangeId:card.card.zoneChangeId,min:0,max:0},remaining:rest};return;}}
@@ -484,6 +513,7 @@ function runProgram(g,context,program){
    removePermanents(g,[context.target?.id]);const owners=step.who==='each'?g.players.map((_,i)=>(i+g.active)%g.players.length):[context.target.owner];runProgram(g,context,[...owners.map(owner=>step.who==='controller'?{op:'optional',owner,label:'Search for a basic land',then:[{op:'search',owner,scope:'basic land',max:1,tapped:false}]}:{op:'search',owner,scope:'basic land',max:1,tapped:false}),...rest]);return;
   }
   if(step.op==='exileOne'){runProgram(g,context,[{op:'selectMove',owner:context.target.owner,zone:'graveyard',to:'exile',max:1,min:1},...rest]);return;}
+ if(g.pendingEffect?.damageBatch){g.pendingEffect.context=context;g.pendingEffect.remaining=rest;return;}
  }catch(error){if(!error?.destructionPause)throw error;g.pendingEffect.continuation={context,program:program.slice(i)};return;}
  }
  if(context.spellId&&findCard(g,context.spellId)?.zone==='stack')finishSpell(g,context.spellId);
@@ -503,6 +533,7 @@ export function oracleChoiceOptions(g){
  if(step.op==='castExiled'||step.op==='castOffered')return [];
  if(step.op==='chooseManaColor')return ['W','U','B','R','G'].map(key=>({key,label:'Add '+step.amount+' '+key+' mana'}));
  if(step.op==='myriad')return tokenDefenders(g,owner).filter(t=>step.defenders.includes(t.owner));
+ if(step.op==='myriadDefenders')return tokenDefenders(g,owner,step.requests.find(r=>r.id===step.choices[step.index])?.attacking.owner);
  if(step.op==='chooseCounterKind'){
   const target=pending.context.target,found=findCard(g,target?.id);
   return found?.zone==='battlefield'&&(found.card.battlefieldId||null)===target.battlefieldId?Object.entries(found.card.counters||{}).filter(([,n])=>n>0).map(([key,n])=>({key,label:key+' ('+n+' on '+found.card.name+')'})):[];
@@ -554,7 +585,20 @@ export function resolveOracleChoice(g,keys=[]){
  if(step.op==='chooseExiled'){if(!unique.length){runProgram(g,context,remaining);return;}const chosen=step.cards.find(c=>c.id===unique[0]);g.pendingEffect={kind:'oracle-choice',owner,name:pending.name,context,step:{op:'castOffered',zone:step.zone||'exile',id:chosen.id,zoneChangeId:chosen.zoneChangeId,scope:step.scope,manaValue:step.manaValue,graveyardExile:!!step.graveyardExile,trackForCopies:!!step.trackForCopies,min:0,max:0},remaining:[{...step,cards:step.cards.filter(c=>c.id!==chosen.id)},...remaining]};return;}
  if(step.op==='chooseCounterKind'){const events=unique.map(kind=>permanentCounterEvent(g,context.owner,context.target.id,{[kind]:1}));runProgram(g,context,[{op:'counterBatch',events},...remaining]);return;}
  if(step.op==='chooseCounters'){runProgram(g,context,[{op:'counterBatch',events:unique.map(id=>permanentCounterEvent(g,context.owner,id,{[step.counter]:number(step.amount)}))},...remaining]);return;}
- if(step.op==='myriad'){const created=createTokens(g,owner,tokenCopyDefinition(context.source),unique.length,{tapped:true}),tokens=[];for(const [index,card] of created.entries()){enterAttacking(g,card.instance,options.find(o=>o.key===unique[Math.floor(index/(created.length/unique.length))]));tokens.push({id:card.instance,battlefieldId:card.battlefieldId});}if(tokens.length&&g.combat)(g.combat.endTriggers??=[]).push({owner,source:context.source,tokens});runProgram(g,context,remaining);return;}
+ if(step.op==='myriad'){
+  const {requests}=prepareTokenEntries(g,owner,tokenCopyDefinition(context.source),unique.length,{tapped:true,useTemplate:false}),choices=[],perOpponent=unique.length?requests.length/unique.length:0;
+  for(const [index,request] of requests.entries()){
+   request.attacking={...options.find(o=>o.key===unique[Math.floor(index/perOpponent)])};
+   // The initial selection assigns the first token for each opponent. Token
+   // doublers create additional, individually assignable attacking copies.
+   if(index%perOpponent)choices.push(request.id);
+  }
+  runProgram(g,context,[{op:'myriadDefenders',requests,choices,index:0,min:1,max:1},...remaining]);return;
+ }
+ if(step.op==='myriadDefenders'){
+  const request=step.requests.find(r=>r.id===step.choices[step.index]);request.attacking={...options.find(o=>o.key===unique[0])};
+  runProgram(g,context,[{...step,index:step.index+1},...remaining]);return;
+ }
  if(step.op==='castExiled'||step.op==='castOffered'){const first=remaining[0],found=findCard(g,step.id);if(first?.op==='chooseExiled'&&found?.zone===(step.zone||'exile')&&(found.card.zoneChangeId||null)===step.zoneChangeId)runProgram(g,context,[{...first,cards:[...first.cards,{id:step.id,zoneChangeId:step.zoneChangeId}]},...remaining.slice(1)]);else runProgram(g,context,remaining);return;}
  if(step.op==='tokenDefenders'){
   const target=options.find(option=>option.key===unique[0]);if(target)enterAttacking(g,step.tokens[0].id,target);
@@ -580,10 +624,14 @@ export function resolveOracleChoice(g,keys=[]){
  note(g,pending.name+': '+unique.length+' card(s) chosen.');
  runProgram(g,context,[...(requests.length?[{op:'enterPermanents',requests}]:[]),...(step.op==='search'?[{op:'shuffleLibrary',owner}]:[]),...remaining]);
 }
-export function validateOracleChoice(pending,fail,playerCount=4){
+export function validateOracleChoice(pending,fail,playerCount=4,game){
  const validReveal=r=>r&&Number.isInteger(r.owner)&&r.owner>=0&&r.owner<playerCount&&Array.isArray(r.ids)&&r.ids.length<=10000&&r.ids.every(id=>typeof id==='string')&&new Set(r.ids).size===r.ids.length;
  if(pending?.revealed!==undefined&&!validReveal(pending.revealed))fail();
- if(pending?.kind==='counter-choice'){validateCounterPlan(pending.plan,fail,playerCount);if(pending.entryRequests!==undefined)validateEntryRequests(pending.entryRequests,fail,playerCount,pending.plan);const choice=advanceCounterPlan(structuredClone(pending.plan));if(!choice||choice.owner!==pending.owner)fail();validateOracleChoice({kind:'oracle-choice',owner:pending.owner,name:pending.name,context:pending.context,step:{op:'optional',label:'Resume after counters',then:pending.remaining},remaining:[]},fail,playerCount);return;}
+ if(pending?.kind==='entry-choice'){
+  if(!game)fail();validatePreparedEntries(game,pending,fail);
+  validateOracleChoice({kind:'oracle-choice',owner:pending.owner,name:pending.name,context:pending.context,step:{op:'optional',label:'Resume after entry',then:pending.remaining},remaining:[]},fail,playerCount);return;
+ }
+ if(pending?.kind==='counter-choice'){if(pending.damageBatch){validateDamageBatch(pending.damageBatch,fail,playerCount);if(pending.entryRequests||pending.damageBatch.combatState&&game&&game.combat?.id!==pending.damageBatch.combatState.id)fail();}validateCounterPlan(pending.plan,fail,playerCount);if(pending.entryRequests!==undefined)validateEntryRequests(pending.entryRequests,fail,playerCount,pending.plan);const choice=advanceCounterPlan(structuredClone(pending.plan));if(!choice||choice.owner!==pending.owner)fail();validateOracleChoice({kind:'oracle-choice',owner:pending.owner,name:pending.name,context:pending.context,step:{op:'optional',label:'Resume after counters',then:pending.remaining},remaining:[]},fail,playerCount);return;}
  if(pending?.kind==='proliferate'&&pending.context){validateOracleChoice({kind:'oracle-choice',owner:pending.owner,name:pending.name,context:pending.context,step:{op:'optional',label:'Resume after proliferating',then:pending.remaining},remaining:[]},fail,playerCount);return;}
  if(pending?.kind==='destruction-choice'){
   const seat=n=>Number.isInteger(n)&&n>=0&&n<playerCount;
@@ -593,17 +641,23 @@ export function validateOracleChoice(pending,fail,playerCount=4){
  }
  if(pending?.kind!=='oracle-choice')return;
  const seat=n=>Number.isInteger(n)&&n>=0&&n<playerCount,integer=n=>Number.isSafeInteger(n)&&n>=0&&n<=999999,string=s=>typeof s==='string'&&s.length<=3000;
- const context=pending.context;if(!context||!seat(context.owner)||!context.source||!string(context.source.instance)||!string(context.source.name)||context.spellId!==undefined&&!string(context.spellId)||context.x!==undefined&&!integer(context.x)||!pending.step||!['populate','bolster','polymorphReveal',...LIBRARY_CHOICES,'orderCopies','chooseGraveCast','victimize','miracleReveal','secretNumber','castOffered','chooseManaColor','drawCount','castExiled','search','deploy','optional','optionalPay','mode','freeCast','discard','selectMove','sacrificeChoice','soulbond','scry','orderTop','tokenDefenders','myriad','chooseCounterKind','chooseCounters','chooseExiled','sacrificeReflexive','announceModes','orderGraveBottom','chooseUntapLands','retargetCopy'].includes(pending.step.op))fail();
+ const context=pending.context;if(!context||!seat(context.owner)||!context.source||!string(context.source.instance)||!string(context.source.name)||context.spellId!==undefined&&!string(context.spellId)||context.x!==undefined&&!integer(context.x)||!pending.step||!['populate','bolster','polymorphReveal',...LIBRARY_CHOICES,'orderCopies','chooseGraveCast','victimize','miracleReveal','secretNumber','castOffered','chooseManaColor','drawCount','castExiled','search','deploy','optional','optionalPay','mode','freeCast','discard','selectMove','sacrificeChoice','soulbond','scry','orderTop','tokenDefenders','myriad','myriadDefenders','chooseCounterKind','chooseCounters','chooseExiled','sacrificeReflexive','announceModes','orderGraveBottom','chooseUntapLands','retargetCopy'].includes(pending.step.op))fail();
  const target=t=>{if(!t||!['card','player'].includes(t.kind)||!seat(t.owner)||t.kind==='card'&&!string(t.id))fail();};if(context.target)target(context.target);if(context.targets){if(!Array.isArray(context.targets)||context.targets.length>100)fail();context.targets.forEach(target);}
  if(context.announcedTargets){if(!Array.isArray(context.announcedTargets)||context.announcedTargets.length>100)fail();context.announcedTargets.forEach(target);}if(context.activeTargetGroup!==undefined&&context.activeTargetGroup!==null&&!integer(context.activeTargetGroup))fail();
  let nodes=0;
  for(const refs of [context.copyOrder])if(refs!==undefined&&(!Array.isArray(refs)||refs.length>500||refs.some(ref=>!string(ref.id)||!string(ref.zoneChangeId))))fail();
  if(context.offeredSpells!==undefined&&(!Array.isArray(context.offeredSpells)||context.offeredSpells.length>500||context.offeredSpells.some(ref=>!string(ref.id)||!string(ref.zoneChangeId))))fail();
  const operations=['enterPermanents',...POLYMORPH_OPERATIONS,...REANIMATION_OPERATIONS,'doubleCounters','counterBatch','graveCount','destroyAndLoseLife','resumeDraw','miracleReveal',...SECRET_OPERATIONS,...KEYWORD_ACTION_OPERATIONS,'targetLoot','targetTreasure',...LIBRARY_OPERATIONS,...TEMPORAL_OPERATIONS,'destroyOpposing','copyEventSpells',...PERMISSION_OPERATIONS,'castOffered','chooseManaColor','scaledMana','grantFlashback','playerCounter','manifestTarget','returnSpells','temporaryMana','bounce','bounceAttackers','tapOpponents','kickedDraw','targetDraw','shuffleSelf','copySpell','returnStackTarget','retargetCopy','transformSelf','counterSpell','counterUnless','counterControllerToken','chooseUntapLands','untapTargets','bottomTargets','attachSelfToEvent','orderGraveBottom','creatureDamage','proliferate','controlBlocks','sacrificeReflexive','announceModes','exileToCast','chooseExiled','attackingDraw','chooseCounterKind','chooseCounters','goadTarget','creatureControllerDamage','myriad','exileTrackedTokens','win','loseKeywords','blockLimit','animateVehicle','exileLinked','removeCombat','conditionalPump','createTokens','tokenDefenders','scry','orderTop','extraCombat','untapCreatures','lastKeywords','poison','life','landPlays','mana','damage','exileTarget','gift','warp','draw','pump','counter','treasure','destroy','sweep','fight','return','exileGraves','unblockable','attach','pumpSelf','skipUntap','repeatDamage','chargeX','destroyManaValue','destroyAndSearch','exileOne','search','deploy','optional','optionalPay','mode','freeCast','discard','selectMove','sacrificeChoice','soulbond'];
- operations.push(...COPY_OPERATIONS,'counterFloor','libraryPosition','configureCreatedTokens');
+ operations.push(...COPY_OPERATIONS,'counterFloor','libraryPosition','configureCreatedTokens','myriadDefenders','trackMyriadTokens','resumeManualEffect');
  const program=(steps,depth)=>{if(!Array.isArray(steps)||steps.length>100||depth>6)fail();steps.forEach(step=>check(step,depth));};
  const check=(step,depth)=>{
   if(step?.op==='enterPermanents'){validateEntryRequests(step.requests,fail,playerCount);if(step.revealed!==undefined&&!validReveal(step.revealed))fail();}
+  if(step?.op==='resumeManualEffect'){const e=step.effect;if(!e||e.kind!=='combat-manual'||!seat(e.owner)||!string(e.name)||typeof e.text!=='string'||e.text.length>20000||e.revealed!==undefined&&!validReveal(e.revealed))fail();}
+  if(step?.op==='myriadDefenders'){
+   validateEntryRequests(step.requests,fail,playerCount);
+   if(!Array.isArray(step.choices)||step.choices.length>500||new Set(step.choices).size!==step.choices.length||step.choices.some(id=>!string(id)||!step.requests.some(r=>r.id===id))||!integer(step.index)||step.index>step.choices.length||step.requests.some(r=>!r.token||!r.attacking||!r.entryTapped))fail();
+  }
+  if(step?.op==='trackMyriadTokens'&&(!Array.isArray(step.ids)||step.ids.length>500||new Set(step.ids).size!==step.ids.length||step.ids.some(id=>!string(id))))fail();
   if(step?.op==='configureCreatedTokens'&&(!Array.isArray(step.ids)||step.ids.length>500||new Set(step.ids).size!==step.ids.length||step.ids.some(id=>!string(id))||!Array.isArray(step.groups)||step.groups.length>4||step.groups.some(n=>n!==null&&!seat(n))||['attacking','blocking','fixedDefender'].some(k=>typeof step[k]!=='boolean')||step.createdCounter&&(!string(step.createdCounter.kind)||!integer(step.createdCounter.amount)||step.createdCounter.amount>999999)))fail();
   if(++nodes>500||!step||!operations.includes(step.op)&&!['attachEventEquipment','attachToEventCreature','returnEventFromGraveyard','untapLands','unlessPay','addendum','exileToPlay','reboundCast','castExiled','dividedDamage','untapSelf','tapTarget','destroyDamagedManaValue','attackDamage'].includes(step.op)||step.owner!==undefined&&!seat(step.owner)||['max','min','manaValue'].some(key=>step[key]!==undefined&&!integer(step[key])))fail();
   validateKeywordAction(step,fail);
@@ -701,4 +755,4 @@ export function continueOracleCast(g,pending){if(pending.step?.trackForCopies){c
 // The affected player can differ from the spell's controller. Keep the original
 // context when handing the choice off, then resume the spell exactly once.
 export function counterChoiceOptions(g){if(g.pendingEffect?.kind!=='counter-choice')return [];return advanceCounterPlan(structuredClone(g.pendingEffect.plan))?.options||[];}
-export function resolveCounterChoice(g,key){const pending=g.pendingEffect;if(pending?.kind!=='counter-choice')throw Error('No counter replacement is pending.');const choice=advanceCounterPlan(pending.plan,key);if(choice){pending.owner=choice.owner;return;}delete g.pendingEffect;if(pending.entryRequests)commitPermanentEntries(g,pending.entryRequests,pending.plan);else commitCounterPlan(g,pending.plan);runProgram(g,pending.context,pending.remaining);}
+export function resolveCounterChoice(g,key){const pending=g.pendingEffect;if(pending?.kind!=='counter-choice')throw Error('No counter replacement is pending.');const choice=advanceCounterPlan(pending.plan,key);if(choice){pending.owner=choice.owner;return;}delete g.pendingEffect;if(pending.damageBatch){const events=commitDamageBatch(g,pending.damageBatch,pending.plan),combat=pending.damageBatch.combatState;if(combat){if(g.combat?.id!==combat.id)throw Error('The pending combat changed.');completeCombatDamage(g,combat.phase,events);}else queueCombatTriggers(g,events);}else if(pending.entryRequests)commitPermanentEntries(g,pending.entryRequests,pending.plan);else commitCounterPlan(g,pending.plan);runProgram(g,pending.context,pending.remaining);}

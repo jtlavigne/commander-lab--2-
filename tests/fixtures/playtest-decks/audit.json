@@ -56,7 +56,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -162,7 +172,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           }
         ],
@@ -245,8 +265,12 @@
             "index": 1,
             "face": "Breeding Pool",
             "text": "As this land enters, you may pay 2 life. If you don't, it enters tapped.",
-            "status": "UNVERIFIED",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/network.test.mjs"
+            ]
           }
         ],
         "spellPrograms": []
@@ -297,7 +321,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -378,7 +412,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -450,7 +494,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           }
         ],
@@ -486,7 +540,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -542,7 +606,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -571,7 +645,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           }
         ],
@@ -607,7 +691,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -910,7 +1004,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           }
         ],
@@ -1066,7 +1170,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           }
         ],
@@ -1102,7 +1216,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           }
         ],
@@ -1202,7 +1326,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           }
         ],
@@ -1254,7 +1388,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           }
         ],
@@ -1305,8 +1449,12 @@
             "index": 1,
             "face": "Godless Shrine",
             "text": "As this land enters, you may pay 2 life. If you don't, it enters tapped.",
-            "status": "UNVERIFIED",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/network.test.mjs"
+            ]
           }
         ],
         "spellPrograms": []
@@ -1356,7 +1504,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -1386,8 +1544,12 @@
             "index": 1,
             "face": "Hallowed Fountain",
             "text": "As this land enters, you may pay 2 life. If you don't, it enters tapped.",
-            "status": "UNVERIFIED",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/network.test.mjs"
+            ]
           }
         ],
         "spellPrograms": []
@@ -1423,8 +1585,12 @@
             "index": 0,
             "face": "Ichor Rats",
             "text": "Infect (This creature deals damage to creatures in the form of -1/-1 counters and to players in the form of poison counters.)",
-            "status": "UNVERIFIED",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs",
+              "tests/network.test.mjs"
+            ]
           },
           {
             "index": 1,
@@ -1510,7 +1676,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           }
         ],
@@ -1546,7 +1722,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -1575,7 +1761,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           }
         ],
@@ -1774,7 +1970,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -1875,7 +2081,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -1983,8 +2199,12 @@
             "index": 1,
             "face": "Overgrown Tomb",
             "text": "As this land enters, you may pay 2 life. If you don't, it enters tapped.",
-            "status": "UNVERIFIED",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/network.test.mjs"
+            ]
           }
         ],
         "spellPrograms": []
@@ -2048,7 +2268,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           }
         ],
@@ -2212,7 +2442,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -2294,7 +2534,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           }
         ],
@@ -2366,7 +2616,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           }
         ],
@@ -2684,7 +2944,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -2720,7 +2990,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           }
         ],
@@ -2742,8 +3022,12 @@
             "index": 1,
             "face": "Temple Garden",
             "text": "As this land enters, you may pay 2 life. If you don't, it enters tapped.",
-            "status": "UNVERIFIED",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/network.test.mjs"
+            ]
           }
         ],
         "spellPrograms": []
@@ -2849,7 +3133,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -2878,7 +3172,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           }
         ],
@@ -2955,7 +3259,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -2998,15 +3312,29 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
             "index": 1,
             "face": "Viral Drake",
             "text": "Infect (This creature deals damage to creatures in the form of -1/-1 counters and to players in the form of poison counters.)",
-            "status": "UNVERIFIED",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs",
+              "tests/network.test.mjs"
+            ]
           },
           {
             "index": 2,
@@ -3113,8 +3441,12 @@
             "index": 1,
             "face": "Watery Grave",
             "text": "As this land enters, you may pay 2 life. If you don't, it enters tapped.",
-            "status": "UNVERIFIED",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/network.test.mjs"
+            ]
           }
         ],
         "spellPrograms": []
@@ -3171,7 +3503,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -3221,7 +3563,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -3236,9 +3588,9 @@
       }
     ],
     "counts": {
-      "PASS (regression)": 96,
+      "PASS (regression)": 104,
       "FAIL (manual resolution)": 12,
-      "UNVERIFIED": 77
+      "UNVERIFIED": 69
     }
   },
   {
@@ -3447,8 +3799,12 @@
             "index": 0,
             "face": "Spark Double",
             "text": "You may have this creature enter as a copy of a creature or planeswalker you control, except it enters with an additional +1/+1 counter on it if it's a creature, it enters with an additional loyalty counter on it if it's a planeswalker, and it isn't legendary.",
-            "status": "UNVERIFIED",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/network.test.mjs"
+            ]
           }
         ],
         "spellPrograms": []
@@ -3512,7 +3868,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -4047,7 +4413,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -4228,7 +4604,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -4709,7 +5095,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -4865,7 +5261,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -4916,7 +5322,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -4960,7 +5376,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           }
         ],
@@ -4996,7 +5422,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           }
         ],
@@ -5032,7 +5468,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           }
         ],
@@ -5128,7 +5574,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -5171,7 +5627,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -5214,7 +5680,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -5266,7 +5742,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -5317,15 +5803,23 @@
             "index": 0,
             "face": "Cursed Mirror",
             "text": "{T}: Add {R}.",
-            "status": "UNVERIFIED",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/network.test.mjs"
+            ]
           },
           {
             "index": 1,
             "face": "Cursed Mirror",
             "text": "As this artifact enters, you may have it become a copy of any creature on the battlefield until end of turn, except it has haste.",
-            "status": "UNVERIFIED",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/network.test.mjs"
+            ]
           }
         ],
         "spellPrograms": []
@@ -5360,7 +5854,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -5403,7 +5907,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -5481,7 +5995,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           }
         ],
@@ -5524,7 +6048,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           }
         ],
@@ -5560,7 +6094,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           }
         ],
@@ -5612,7 +6156,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -5677,7 +6231,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           }
         ],
@@ -5744,7 +6308,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -5792,7 +6366,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -5835,7 +6419,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -5863,7 +6457,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           }
         ],
@@ -5899,7 +6503,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           }
         ],
@@ -5994,7 +6608,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -6016,8 +6640,12 @@
             "index": 0,
             "face": "Sokenzan, Crucible of Defiance",
             "text": "{T}: Add {R}.",
-            "status": "UNVERIFIED",
-            "evidence": []
+            "status": "PASS (regression)",
+            "evidence": [
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/network.test.mjs"
+            ]
           },
           {
             "index": 1,
@@ -6093,7 +6721,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -6136,7 +6774,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -6179,7 +6827,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           }
         ],
@@ -6282,7 +6940,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -6325,7 +6993,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -6354,7 +7032,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           }
         ],
@@ -6390,7 +7078,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -6434,7 +7132,17 @@
               "tests/entry-batches.test.mjs",
               "tests/permanent-copy.test.mjs",
               "tests/entry-routes.test.mjs",
-              "tests/entry-routes-ui.cjs"
+              "tests/entry-routes-ui.cjs",
+              "tests/myriad-entry.test.mjs",
+              "tests/vehicles-ui.cjs",
+              "tests/manual-entry.test.mjs",
+              "tests/pre-entry.test.mjs",
+              "tests/pre-entry-ui.cjs",
+              "tests/entry-copy.test.mjs",
+              "tests/entry-copy-ui.cjs",
+              "tests/artwork-cache.test.mjs",
+              "tests/damage-counters.test.mjs",
+              "tests/damage-counters-ui.cjs"
             ]
           },
           {
@@ -6473,9 +7181,9 @@
       }
     ],
     "counts": {
-      "PASS (regression)": 79,
+      "PASS (regression)": 83,
       "FAIL (manual resolution)": 22,
-      "UNVERIFIED": 84
+      "UNVERIFIED": 80
     }
   }
 ]

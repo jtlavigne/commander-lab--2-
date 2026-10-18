@@ -22,7 +22,7 @@ const cardZones={
 };
 
 const sharedActions=new Set([...OPENING_ACTIONS,...LOBBY_ACTIONS,...seatActions,...turnActions,...hostActions,...Object.keys(cardZones),
- 'shuffle','redraw','untap','counter','oracleChoice','counterChoice','destructionChoice','proliferate','triggerTarget','manualResolved','confirmBlockers','token','copyToken','import']);
+ 'shuffle','redraw','untap','counter','entryCopy','entrySelect','oracleChoice','counterChoice','destructionChoice','proliferate','triggerTarget','manualResolved','confirmBlockers','token','copyToken','import']);
 
 // Local hotseat and shared play use the same gameplay implementation.
 // This adapter only enforces permissions and removes local-only packet data.
@@ -32,7 +32,9 @@ export function authorizeAction(g,a,actor,{host=false}={}){
  if(a.type!=='move'&&a.owner!==undefined&&a.owner!==actor)throw Error('Each player controls their own seat.');
  if(turnActions.has(a.type)&&(['advance','endTurn','step'].includes(a.type)?turnController(g):g.active)!==actor)throw Error('Wait for the active player.');
  if(hostActions.has(a.type)&&!host)throw Error('Only the host can change table settings.');
- const zones=cardZones[a.type],found=zones&&findCard(g,a.id);
+ const stagedEntry=g.pendingEffect?.kind==='entry-choice'&&['entryValues','entryLife','entryTapped'].includes(a.type);
+ if(stagedEntry&&g.pendingEffect.owner!==actor)throw Error('Another player is choosing.');
+ const zones=stagedEntry?null:cardZones[a.type],found=zones&&findCard(g,a.id);
  if(zones&&(!found||(a.type==='cast'?castingController(g,found):['blocker','blockerReplace'].includes(a.type)?blockController(g,found.owner):found.owner)!==actor||!zones.includes(found.zone)))throw Error('You do not control that card.');
  switch(a.type){
   case 'counter':
@@ -44,7 +46,7 @@ export function authorizeAction(g,a,actor,{host=false}={}){
    if(a.to==='stack'||found.zone==='hand'&&a.to==='battlefield')throw Error('Use casting or Play land to pay costs.');
    if(a.owner!==undefined&&a.owner!==actor&&found.zone!=='battlefield')throw Error('Only battlefield control can be transferred.');
    break;
-  case 'counterChoice':case 'oracleChoice':case 'destructionChoice':case 'proliferate':
+  case 'entryCopy':case 'entrySelect':case 'counterChoice':case 'oracleChoice':case 'destructionChoice':case 'proliferate':
    if(g.pendingEffect?.owner!==actor)throw Error('Another player is choosing.');break;
   case 'triggerTarget':
    if(g.stack.find(e=>e.id===a.id)?.owner!==actor)throw Error('Another player owns that ability.');break;

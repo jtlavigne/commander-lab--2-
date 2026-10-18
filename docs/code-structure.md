@@ -14,6 +14,10 @@ lists, Oracle fixtures, artwork and audit output should retain their source form
 | `*-effects.mjs`, `casting.mjs`, `combat.mjs`, `mana.mjs` | Shared rules for costs, targets, replacements, triggers and resolution. |
 | `app.mjs`, `*-ui.mjs` | Renderer state, interaction and presentation; gameplay changes go through commands. |
 | `ui-dom.mjs` | Shared text-safe element/button creation and module-relative stylesheets. Specialized controls own their event handling and busy state. |
+| `entry-values-ui.mjs`, `entry-choice-ui.mjs` | Starting-value prompts, local deferral state and choosing between pending entry decisions. Gameplay validation stays in the reducer. |
+| `entry-copy.mjs`, `copy-state.mjs` | Recognized as-enters copy descriptors, non-targeting battlefield choices and independent copy layers. Entry and cleanup callers own when those layers apply or expire. |
+| `damage-effects.mjs` | Plans damage results and counter replacements as one event, preserving affected-seat choices and serializable combat/spell continuations. |
+| `artwork-cache.mjs` | Client-local artwork and loyalty-layout restoration across undo, imports and network snapshots. Cached assets stay outside game commands. |
 | `main.cjs`, `preload.cjs`, `app-updates.cjs` | Desktop lifecycle, sandboxed IPC and user-confirmed release updates. |
 | `scripts/`, `tests/`, `docs/` | Import/audit/build tooling, behavior checks and evidence of supported rules. |
 
@@ -42,3 +46,9 @@ checks use `launch.cjs`. Existing focused `test:ui:*` commands remain available.
 UI refactors should preserve selectors, text, accessibility attributes and action
 dispatch. Turn refactors should preserve the order of cleanup, player handoff,
 phasing, reset of per-turn allowances, automatic actions and combat/phase events.
+
+The renderer's `render()` keeps frame order visible: capture prior positions,
+synchronize hand ownership, build controls and cards, refresh anchored overlays,
+then open pending prompts. `renderTurnControls`, `renderGameResult` and `renderLog`
+keep toolbar and status rendering separate from that sequence. UI factories use
+getters for the current game/seat because accepted commands replace snapshots.

@@ -12,7 +12,7 @@ import {landPlayError} from './lands.mjs';
 import {pendingEntry,payLife} from './life-effects.mjs';
 import {triggerNeedsTarget,resolveCombatTrigger,queueCombatTriggers,snapshotCard,triggerOrderGroup,confirmTriggerOrder,closeTriggerOrders} from './combat-effects.mjs';
 import {stateBasedActions,removePermanents} from './combat.mjs';
-import {enterPermanents,applyOracleEffect,applyCounterEvents,continueOracleCast} from './oracle-effects.mjs';
+import {enterPermanents,resolveEntryChoice,applyOracleEffect,applyCounterEvents,continueOracleCast} from './oracle-effects.mjs';
 import {combatStats} from './creature-rules.mjs';
 import {spellAnnouncement,currentSpellTargets,spellHasLegalChoices,spellModes} from './spell-effects.mjs';
 import {effectTargetSpec,effectTargetOptions,groupedTargets} from './effect-targets.mjs';
@@ -74,6 +74,7 @@ export function castSpell(g,id,options={}){
  note(g,g.players[owner].name+' casts '+card.name+'.'+(payment.life?' Pays '+payment.life+' life.':''));settlePriority(g);return entry;
 }
 export function activateMana(g,id,abilityId,choice={}){
+ if(g.pendingEffect?.kind==='entry-choice')throw Error('Finish the pending pre-entry decision first.');
  if(triggerOrderGroup(g))throw Error('Confirm simultaneous trigger order first.');
  if(triggerNeedsTarget(g))throw Error('Choose the triggered ability’s target first.');
  const found=findCard(g,id);if(!found||!['battlefield','hand'].includes(found.zone))throw Error('Use a source on the battlefield or a cycling card in hand.');
@@ -265,10 +266,15 @@ export function playLand(g,id,position){
  if(pendingEntry(g))throw Error('Finish the entering land’s life payment choice first.');
  const found=findCard(g,id);if(!found||!['hand','exile','graveyard'].includes(found.zone)||!castingPermission(g,found.owner,found.card,found.zone)||!/\bLand\b/.test(cardFace(found.card).type_line||''))throw Error('No permission to play a land from this zone.');
  const error=landPlayError(g,found.owner);if(error)throw Error(error);
- const card=transfer(g,id,'battlefield',found.owner,position);g.players[found.owner].landsPlayed=(g.players[found.owner].landsPlayed||0)+1;
+ // A land play does not use the stack, but entering counter replacements can
+ // still need its controller's choice. Reserve the play exactly once while
+ // that choice is pending; later land plays remain blocked by pending work.
+ const card=found.card;enterPermanents(g,{owner:found.owner,name:'Play '+card.name,source:{instance:card.instance,name:card.name}},[{id,owner:found.owner,position}]);
+ g.players[found.owner].landsPlayed=(g.players[found.owner].landsPlayed||0)+1;
  note(g,g.players[found.owner].name+' plays '+card.name+' as a land.');return card;
 }
 export function chooseEntryLife(g,id,pay){
+ if(g.pendingEffect?.kind==='entry-choice'){resolveEntryChoice(g,'life',{id,pay});settlePriority(g);return;}
  const found=findCard(g,id);if(found?.zone!=='battlefield'||!found.card.entryLife)throw Error('No life payment choice is pending for this land.');
  if(typeof pay!=='boolean')throw Error('Choose whether to pay life.');
  const {card,owner}=found,{amount,forcedTapped}=card.entryLife;if(pay)payLife(g.players[owner],amount);
@@ -276,6 +282,7 @@ export function chooseEntryLife(g,id,pay){
  note(g,g.players[owner].name+(pay?' pays '+amount+' life for ':' declines the life payment for ')+card.name+'; it enters '+(card.tapped?'tapped.':'untapped.'));settlePriority(g);
 }
 export function chooseEntryTapped(g,id,tapped){
+ if(g.pendingEffect?.kind==='entry-choice'){resolveEntryChoice(g,'condition',{id,tapped});settlePriority(g);return;}
  const found=findCard(g,id);if(found?.zone!=='battlefield'||!found.card.entryCondition)throw Error('No entry condition is pending for this permanent.');
  if(typeof tapped!=='boolean')throw Error('Choose tapped or untapped.');
  const {card,owner}=found;card.tapped=tapped||!!card.entryLife;delete card.entryCondition;if(card.entryLife)card.entryLife.forcedTapped=tapped;

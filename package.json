@@ -1,6 +1,6 @@
 {
     "name": "commander-lab",
-    "version": "0.1.0-test.4",
+    "version": "0.1.0-test.5",
     "private": true,
     "description": "Manual Commander desktop playtester",
     "main": "main.cjs",
@@ -54,7 +54,10 @@
         "test:ui:atraxa-activations": "node launch.cjs tests/atraxa-activations-ui.cjs",
         "test:ui:entry-replacements": "node launch.cjs tests/entry-replacements-ui.cjs",
         "test:ui:entry-routes": "node launch.cjs tests/entry-routes-ui.cjs",
-        "test:ui:updates": "node launch.cjs tests/updates-ui.cjs"
+        "test:ui:updates": "node launch.cjs tests/updates-ui.cjs",
+        "test:ui:pre-entry": "node launch.cjs tests/pre-entry-ui.cjs",
+        "test:ui:entry-copy": "node launch.cjs tests/entry-copy-ui.cjs",
+        "test:ui:damage-counters": "node launch.cjs tests/damage-counters-ui.cjs"
     },
     "devDependencies": {
         "electron": "44.7.1",

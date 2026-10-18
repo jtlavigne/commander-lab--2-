@@ -53,6 +53,7 @@ export function entryLifePayment(card){
  return match&&Number(match[1])>0?Number(match[1]):null;
 }
 export function pendingEntry(g){
+ if(g.pendingEffect?.kind==='entry-choice'){const p=g.pendingEffect,entry=p.entries?.[p.entryIndex],kind=p.entryKind||(entry?.card.entryChoices?.length?'values':entry?.card.entryCondition?'condition':'life');if(entry&&['life','condition'].includes(kind))return {...entry,kind};}
  for(const [owner,player] of g.players.entries())for(const card of player.zones.battlefield)if(card.entryLife||card.entryCondition)return {card,owner};return null;
 }
 export const pendingLifeEntry=pendingEntry;

@@ -14,6 +14,14 @@ The 39 supplied deck lists define the implementation queue and acceptance cases.
 
 Unrecognized spell/ability effects require explicit manual resolution and acknowledgment. Unrecognized tapped-entry conditions similarly require a saved manual entry decision. These fallbacks remain necessary while the deck audit is incomplete.
 
+## Decisions before battlefield entry
+
+`entry-effects.mjs` prepares a simultaneous batch outside the battlefield. Required numeric starting values, supported life payments and manual tapped-entry conditions are stored as an `entry-choice` for the affected controller. The ordinary `entryValues`, `entryLife` and `entryTapped` commands can answer that pending decision even for a staged token that is not yet in any card zone. Network authorization permits only the choosing controller; the reducer checks the exact permanent and decision type.
+
+The batch remains outside the battlefield until these decisions finish. Numeric quantities are then included in the counter-replacement plan. Chosen base stats and tapped state are installed before entry observers run. Life is paid once at the decision, so another payment in the same batch sees the updated life total. Saved decisions preserve paid costs and remaining work; reloading does not pay again. Prepared batch order is the current default within a controller's choices; letting that controller select a different outstanding decision order is still open.
+
+Known X from a resolving spell is retained for its entry counters. For a noncast object with X in its mana cost, that X is zero; a text-only X without a defined value still asks for a value. A noncast sunburst entry uses no spent colors. Legacy saved battlefield choices remain readable, while new gameplay routes use pre-entry decisions. As-enters copying, additional nonnumeric choices and unsupported conditions still require their own behavior evidence.
+
 ## Spell-copy and permission additions (Kalamax audit)
 
 `spell-copy-rules.mjs` evaluates copy-count replacements once per batch and additional permanent triggers at the event. Twinning Staff adds one copy per provider; Veyran adds independent cast/copy triggers, including its own. Neither causes copies to be cast. A zero-copy instruction stays zero. Card-copy permissions such as Mastery do not pass through spell-copy replacements.
@@ -89,3 +97,67 @@ Rules sources for these distinctions: [Modern Horizons Kess notes](https://magic
 Atraxa counter work is in progress. Oracle counter placement, poison/other player counters, proliferate and Deepglow-style doubling use serializable counter plans. Plans distinguish the placing actor from the affected player, preserve counter kinds, and let the affected seat order noncommuting replacements before committing a simultaneous batch. Repeated proliferates have separate selections and finish before subsequent instructions such as drawing. Choice ownership, reload and three-client reconnect are tested. Positive loyalty activation costs now use the same plans before response priority, with cost/effect distinctions retained. Negative costs preserve zero loyalty so the walker leaves while its ability stays on the stack. Entry counters, damage counter placement and removal costs remain unfinished; this batch does not complete the provider cards' full audits.
 
 Counter replacement ordering, effect-versus-cost distinctions and proliferate follow rules 614.16, 616.1 and 701.34 in the [official Comprehensive Rules](https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.pdf). Evidence: `tests/counter-effects.test.mjs`, `tests/counter-effects-ui.cjs`, and the counter-replacement reconnect scenario in `tests/network.test.mjs`.
+
+## As-enters copy preparation
+
+`entry-copy.mjs` recognizes complete optional creature/planeswalker copy clauses,
+including the tested nonlegendary/additional-counter and temporary-haste
+exceptions. These are descriptors, not card-name branches. Copy selection is a
+pre-entry replacement decision, made before the same object's other entry
+decisions. It uses current battlefield objects without targeting, cannot choose
+another incoming batch member, and validates the chosen battlefield incarnation.
+The board picker permits an explicit no-copy decision and restores from saved
+pending state. Controllers can choose another independent decision they own
+through the existing entry-order control; APNAP ownership remains enforced.
+
+`copy-state.mjs` stores ordered copy layers separately from the physical card.
+Readers see the last layer's copiable characteristics, including printed text,
+mana value, artwork and copy exceptions, without carrying counters, animation or
+temporary grants from the original. Prospective entries are recalculated after
+copying, then numeric/life/tapped choices and shared counter replacements finish
+before the entire batch enters. Entry triggers observe the committed copy and
+retain their normal response window. Copies of temporary copies inherit the
+copied abilities, not the source effect's duration. Cleanup removes only temporary
+layers; zone changes and reset remove all layers. Ordinary permanent copies have
+the chosen DFC face only; transforming token-copy behavior remains separate.
+
+Evidence: `tests/entry-copy.test.mjs`, `tests/entry-copy-ui.cjs` and the two-client
+copy/reconnect/expiry scenario in `tests/network.test.mjs`. These exercise actual
+cached Spark Double and Cursed Mirror text, copied planeswalker loyalty/grants,
+counter providers, mana activation with haste, entry triggers, no-copy/countered
+spells, source removal, hidden face-down sources, chained effects and saves.
+Unknown copy wording is not compiled. This does not implement arbitrary external
+copy replacements, full continuous-effect layering, all copy exceptions or all
+nonnumeric as-enters choices. A chain is limited to 50 applied copy effects.
+Rules references: CR 614.12, 616.1c and 707.2/707.9 in the official rules above,
+[Spark Double release notes](https://magic.wizards.com/en/news/feature/war-spark-release-notes-2019-04-19)
+and [Cursed Mirror release notes](https://media.wizards.com/2021/downloads/STX_Release_Notes/EN_MTGSTX_FAQ_04122021.pdf).
+
+
+## Damage result counter replacements
+
+`damage-effects.mjs` prepares damage packets and converts infect, wither and
+combat toxic into counter events before committing results. Combat placements
+retain their non-effect origin; noncombat damage from a resolving effect retains
+that origin. A later replacement can make an initially non-effect placement
+eligible for an effect-only replacement under CR 614.16. Each damage source has
+its own placement event; halving multiple toxic-1 sources rounds each separately.
+Numeric toxic instances add across printed abilities, supported continuous grants
+and repeated temporary grants.
+
+When order matters, a serializable counter choice holds the whole damage batch.
+The affected player chooses; all ordinary damage, loyalty/defense removal,
+lifelink, commander damage, counters and damage histories wait. Counter and
+damage/death observers then see the complete committed event. Combat remembers
+which damage step it was applying; spell continuations resume once without
+repeating a fight, drawing early or replaying damage after reconnect. A preview
+whose outcome depends on a replacement choice says so and still permits moving
+to damage. This is not a preview range calculator or a complete damage
+replacement/prevention/life-result rules layer.
+
+Evidence: `tests/damage-counters.test.mjs`, `tests/damage-counters-ui.cjs` and the
+affected-seat damage reconnect scenario in `tests/network.test.mjs`. Actual
+Viral Drake, Ichor Rats, Bloated Contaminator and counter-provider Oracle text is
+read from previously cached fixtures; no later manifest deck is fetched. Rules
+references are CR 120.3?120.5, 614.16, 616 and 702.80/90/164, plus the official
+[toxic release notes](https://magic.wizards.com/en/news/feature/phyrexia-all-will-be-one-release-notes).

@@ -278,3 +278,132 @@ The batch also records tapped-entry conditions before committing any member. An 
 Verification: **1,259 unit/network tests pass**. Eleven focused cases in tests/entry-routes.test.mjs cover these paths, batches, fresh identities, triggers, saves and invalid continuations. Two new real-client scenarios verify private search/entry/shuffle/draw and owner-controlled Oath return choices across reconnect. The new Electron entry-routes workflow passes actual search selection, pending-entry reload, delayed-return response windows and public polymorph reveal followed by remainder ordering. Existing entry-replacement, playtest-deck and Atraxa-library Electron suites also pass. The new workflow is included in the full UI and testing-release commands.
 
 The prior batch's Elspeth token paragraph is now recorded in the manifest checklist as well as the exact-list audit. No broad counter-provider paragraph or complete deck gate is closed by these scoped tests. Completion remains **10/39**, Atraxa remains active, and Hapatra has not been fetched. Legacy direct movement, Myriad entry counters, variable entry values, pre-entry life/manual choices and damage-counter replacement integration remain open.
+
+## Myriad copy entries and last-known copiable values
+
+Myriad now uses the shared staged-entry instruction instead of the immediate token path. Token-count replacements are applied once, each resulting token retains its chosen opponent, and additional tokens from doubling can separately attack that opponent or one of their planeswalkers. Defender choices happen before entry. Counter-replacement ordering then completes for the entire batch before any token enters; entry observers see the final counters and attacking state. Entering attacking does not declare an attack or generate further Myriad triggers.
+
+The normal delayed end-of-combat trigger tracks every created token by battlefield identity and remains respondable/counterable. The source can leave before the Myriad trigger resolves. Copies retain supported rules text without copying source counters or temporary Vehicle animation. Trigger snapshots now preserve the underlying copiable values separately when current characteristics differ or both DFC faces are needed. A noncreature copy enters tapped and receives the delayed exile instruction without incorrectly entering combat.
+
+Rules checked against [CR 702.116 and the Comprehensive Rules](https://magic.wizards.com/en/rules) and the official [Tarkir: Dragonstorm release notes](https://magic.wizards.com/en/news/feature/tarkir-dragonstorm-release-notes), including separate defender choices when a replacement creates multiple tokens for one opponent. The cached 2026-09-25 rules remain the fixture reference. No new deck's Oracle data was fetched.
+
+Verification: **1,273 unit/network tests pass**. Six new scenarios in `tests/myriad-entry.test.mjs` cover three/four seats, simultaneous counter ordering, independent doubled defenders, saves, decline, source departure, response to delayed exile, copied animation and malformed saved requests. A real three-client test in `tests/network.test.mjs` covers response priority, rejected foreign choices, private hands and reconnect during staged entry. The expanded `tests/entry-routes-ui.cjs` exercises the actual defender/replacement controls across reload; Isshin, Vehicle and token-catalog Electron regressions also pass.
+
+This closes the specifically listed Myriad entry-path gap, not the full counter-provider audit. Atraxa remains active at **10/39 completed decks**. Direct/tabletop entries, complete pre-entry variable/life/manual choices, damage-counter replacements and the other unchecked Atraxa paragraphs remain open. Hapatra is still unfetched.
+
+## Land plays and corrective battlefield entries
+
+Land plays, local manual resolution to the battlefield, corrective move commands and the direct move API now use the shared staged-entry operation. Counter replacements finish before the new permanent enters. The card stays in its originating zone while its controller chooses, and saved choices preserve its position, identity and remaining work. Playing a land reserves its land allowance once; it does not use the stack or allow another land play during the pending choice. Corrective placements do not consume that allowance. Moving an existing permanent across the mat or changing its controller preserves its battlefield identity and counters without firing entry triggers.
+
+A manual effect can require players to move cards before acknowledging its completion. Such a placement now saves that acknowledgment across nested entry-replacement choices and restores it to the original effect controller. Entry triggers remain deferred until that controller confirms the manual effect. Automated resolution choices, including library searches and scry, cannot be overwritten by a new unrelated placement. The shared command settlement performs state-based actions before releasing deferred triggers.
+
+Verification: **1,283 unit/network tests pass**, including eight new cases in `tests/manual-entry.test.mjs`. Two real two-client scenarios in `tests/network.test.mjs` verify land allowance, foreign-choice rejection, private hands, reconnect, restoration of a different manual-effect controller and subsequent private draws. The expanded entry-routes Electron workflow uses actual hand controls and a graveyard-to-battlefield drag, reloads during entry choices, and checks the remaining hand's land eligibility. All **40 Electron workflows pass**; the final direct-move wrapper also passes the complete unit suite and the entry-routes Electron check.
+
+This closes the documented manual/tabletop and land-play entry-route gap. It does not close pre-entry variable-value, shock-life or manual-condition decisions: those legacy decisions still occur after entry and need a separate staged choice flow. As-enters cloning, temporary copying, damage-counter replacements and the other unchecked Atraxa paragraphs remain open. Broad counter-provider paragraphs remain unchecked. Raw `transfer` remains a mutation/setup primitive used inside the staged commit and test setup, not an alternative gameplay entry framework. Completion remains **10/39**; no Hapatra Oracle data was fetched.
+
+## Numeric entry decisions, shock life and tapped conditions
+
+New gameplay entries now pause outside the battlefield for required numeric values, supported life payments and unresolved tapped-entry conditions. The entire batch stays out while controllers decide in active-player order. Numeric quantities and effect-added counters are combined before counter-replacement ordering; chosen base stats and tapped state are installed before entry triggers observe the batch. Life payments update the paying controller once and are not replayed after reload or reconnect. Insufficient life disables payment; declining remains legal. Known forced-tapped instructions cannot be undone by paying life or confirming a different unresolved condition.
+
+The framework saves prospective entries, original-zone identities, the choosing controller and the unfinished resolution. Staged tokens never appear in a temporary hand zone. Network commands cannot answer another controller's choice or substitute an unrelated card. Reset drops staged tokens. Search/reveal continuations still wait before shuffling or drawing. Mandatory pre-entry values cannot be deferred past the entry event. Older saved battlefield choices retain their compatibility flow.
+
+Known cast X remains attached to the resolving spell. Noncast entries with X in their mana cost use zero; text-only undefined X still prompts rather than inheriting an unrelated cast's zero. Noncast sunburst supplies no spent colors. These cases follow [CR 107.3, 614.12a–b and 702.44](https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt), checked through the current official rules link. Existing early mana tests now give their hypothetical creatures explicit stats, and the tabletop UI uses an explicitly variable quantity rather than an uncast mana-cost X with an arbitrary chosen value.
+
+Verification: **1,302 unit/network tests and all 41 Electron workflows pass**. Seventeen scenarios in `tests/pre-entry.test.mjs` include actual cached Breeding Pool, Hallowed Fountain, Godless Shrine, Overgrown Tomb, Temple Garden and Watery Grave clauses, pay/decline, fresh entries, batch affordability, replacement order, unknown stats, token resets, source identity and malformed saves. Two real two-client tests cover private staged token values and simultaneous shock entries with controller handoff and reconnect. `tests/pre-entry-ui.cjs` exercises mandatory fields, copied tokens, replacement order, life/condition dialogs and reload; the existing mana, hotseat and tabletop tests use the corrected timing. The focused UI command is also a release-workflow gate. Only the six exact-list shock-land entry paragraphs receive new checked evidence; the 39-deck Atraxa manifest has no such lands.
+
+This is a scoped entry milestone. Additional nonnumeric choices/costs/reveals, letting a controller reorder independent outstanding entry decisions, as-enters cloning, temporary copy effects, damage-counter replacements and other unchecked Atraxa interactions remain open. Numeric quantities without an implemented Oracle calculation still use the requested manual prompt. Broad provider paragraphs and full deck gates remain unchecked. Completion remains **10/39** and Hapatra remains unfetched.
+
+
+## Controller-selected entry order and shared copy layers
+
+A controller can choose another independent pending entry decision they own,
+including switching between numeric, life and tapped-condition dialogs. The
+active controller's APNAP group remains in force. Separate tapped-state causes
+compose correctly when a life payment and unresolved condition are answered in
+either order; changing focus does not pay costs or move cards. These selections
+survive reload and real three-client reconnect.
+
+Optional as-enters copying now uses descriptors and the same staged entry
+pipeline. The tested Spark Double and Cursed Mirror clauses choose actual
+battlefield cards without targeting; shroud does not prohibit the choice, and
+simultaneously incoming companions are ineligible. Copying occurs before that
+object's remaining entry choices. The prospective copy gains the copied rules,
+printed starting values and recognized exceptions before counter replacement
+plans are built. Costs, counters, temporary animation and source status are not
+copied. Sunburst reads colors spent on the resolving copy spell. Face-down
+choices use only public creature characteristics and labels in both host and
+projected client views.
+
+Copy layers preserve the physical card underneath. Copied mana, loyalty and
+entry-trigger abilities work through the existing shared readers. Spark's
+nonlegendary exception is copiable; its additional entry counter is not. A later
+copy effect supersedes the earlier entry-counter exception. Mirror's haste is
+copiable, while its duration is not. Cleanup removes temporary layers without
+reentering, untapping or clearing unrelated counters; an indefinite later layer
+survives expiry of an earlier temporary layer. Zone changes and reset clear all
+layers. Ordinary permanent copies get only the chosen DFC face, separately from
+transforming token copies. The board picker requires a copy/no-copy decision and
+supports switching to another independent pending entry decision.
+
+Verification: **1,327 unit/network tests pass**. Sixteen cases in
+`tests/entry-copy.test.mjs` include actual cached Spark Double and Cursed Mirror,
+counter-provider order, inherited loyalty grants, copied mana/haste, response
+windows, countered spells, source removal, malformed saves, DFC faces, chained
+copies and casting colors. Atraxa's Tamiyo exile-and-copy creates a functioning
+cloning token through this pipeline without a temporary hand card. A real
+two-client test in `tests/network.test.mjs` verifies choice ownership, stale
+incarnation rejection, reconnect, activation, further token copying, private hands
+and expiry. All **42 Electron workflows passed**; the focused
+`tests/entry-copy-ui.cjs` was rerun after the final concealed-card eligibility
+and casting-payment corrections. The copy UI is also a release-workflow gate.
+
+The exact-list audit now records Atraxa **102 PASS / 12 FAIL / 71 UNVERIFIED**
+and Jace **83 PASS / 22 FAIL / 80 UNVERIFIED** paragraphs. Evidence reuse is
+limited to identical Oracle text; these are scoped regression counts, not complete
+card or deck certifications. The 39-deck completion count remains **10/39**, with
+Atraxa active and Hapatra unfetched. Arbitrary external copy replacements, full
+continuous-effect layering, additional copy exceptions and nonnumeric entry
+costs/choices remain open. Damage-counter replacement integration, the remaining
+provider/planeswalker/combat/land paragraphs and complete Atraxa gates still need
+their own evidence. The next shared counter path to address is infect/wither/toxic
+damage, which currently bypasses counter-replacement plans.
+
+Rules: CR 614.12, 616.1c and 707.2/707.9, plus the official
+[Spark Double notes](https://magic.wizards.com/en/news/feature/war-spark-release-notes-2019-04-19)
+and [Cursed Mirror notes](https://media.wizards.com/2021/downloads/STX_Release_Notes/EN_MTGSTX_FAQ_04122021.pdf).
+
+
+## Damage-counter pipeline and test.5 release checkpoint
+
+Infect, wither and toxic now enter the shared counter-replacement framework.
+A noncommuting choice stages all simultaneous results, including ordinary damage
+and lifelink, until the affected player decides. The saved batch retains source
+characteristics, recipient incarnation, combat step and spell continuation.
+Damage amount remains independent from the number of replaced counters: poison
+prohibitions and halving do not erase lifelink, commander damage or damage
+triggers. Multiple toxic sources are separate placement events. Combat and
+resolving-effect origins remain distinct for effect-only replacements; applying
+another counter replacement can make one applicable under CR 614.16.
+
+Seventeen new unit cases cover real Viral Drake, Ichor Rats and Bloated
+Contaminator text; provider ownership, doubling, halving, toxic instances, poison
+prohibitions, combat/noncombat differences, simultaneous damage, fights with
+continuations, lifelink, state-based deaths, pending save validation and private
+views. A real two-client checkpoint/reconnect test verifies foreign-choice and
+replay rejection. The new Electron workflow verifies an uncertain preview stays
+playable, affected-seat replacement controls, reload, atomic results and the
+respondable Contaminator proliferate trigger.
+
+The test.5 release checkpoint passes **1,345 unit/network tests**, all **43
+Electron workflows**, the Windows installer/ZIP build, updater checksum
+validation and the packaged-app smoke test. This
+release includes all accumulated entry, copy and renderer changes since test.4.
+The release workflow now runs the complete interface suite before publishing.
+
+Completion remains **10/39**, with Atraxa active and Hapatra unfetched. This
+closes the tested damage-counter path, not every damage prevention/replacement
+case, numeric keyword, counter-provider paragraph or complete-deck gate. Full
+continuous-effect layering, further nonnumeric entry choices and the remaining
+unchecked planeswalker/combat/land interactions still need independent evidence.
+
+Exact-list paragraph audit at this checkpoint: Atraxa **104 PASS / 12 FAIL / 69 UNVERIFIED**; Jace **83 PASS / 22 FAIL / 80 UNVERIFIED**. Only the tested Viral Drake/Ichor Rats infect paragraphs receive new checked evidence. Broader provider paragraphs remain open.

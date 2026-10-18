@@ -1,6 +1,7 @@
 import {activatedLoyaltyThisTurn} from './planeswalker.mjs';
 import {emblemSources} from './rule-sources.mjs';
 import {publicManifest} from './face-down-state.mjs';
+import {tokenCopyDefinition} from './tokens.mjs';
 import {gainLife} from './resource-rules.mjs';
 import {soulbondOptions} from './soulbond.mjs';
 import {graveyardExileReplacement} from './grave-casting.mjs';
@@ -18,7 +19,16 @@ import {recordPlay} from './play-events.mjs';
 import {attackTriggerCount,claimTriggerUse,triggeredParagraphs,enqueueTriggers,stageTriggers} from './trigger-rules.mjs';
 
 const number=value=>({a:1,an:1,one:1,two:2,three:3,four:4,five:5}[value?.toLowerCase()]??Number(value));
-export const snapshotCard=card=>{if(card.faceDown&&card.manifested)return publicManifest(card);const {localImages,card_faces,...rest}=card;return {...structuredClone(rest),...cardFace({...card,localImages:undefined,card_faces:card_faces?.map(({localImages,image_uris,...face})=>face)}),localImages:undefined,card_faces:undefined};};
+export const snapshotCard=card=>{
+ if(card.faceDown&&card.manifested)return publicManifest(card);
+ const {localImages,card_faces,...rest}=card;
+ // Last-known live characteristics are used by ordinary triggers. Copy
+ // effects additionally need the underlying copiable values: animation and
+ // linked-exile stats are not inherited, and both DFC faces must survive.
+ const needsCopyValues=card.copyEffects||card.copyValues||card.animatedCreature||card.imprintProfile||Number.isSafeInteger(card.linkedExileCount)||card_faces?.length;
+ const copyValues=needsCopyValues?tokenCopyDefinition({...rest,card_faces:card_faces?.map(({localImages,...face})=>face)}):undefined;
+ return {...structuredClone(rest),...cardFace({...card,localImages:undefined,card_faces:card_faces?.map(({localImages,image_uris,...face})=>face)}),localImages:undefined,card_faces:undefined,...(copyValues?{copyValues}:{})};
+};
 function eventMatches(g,condition,event,source,owner){
  condition=condition.trim();if(['attack','block'].includes(event.kind))condition=condition.replace(/attacks or blocks$/i,event.kind==='attack'?'attacks':'blocks');const card=event.card,controller=event.owner;
  if(event.kind==='counter'){

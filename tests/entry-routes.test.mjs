@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {newGame,transfer,findCard,validateSession,changeStep} from '../engine.mjs';
 import {applyOracleEffect,resolveOracleChoice,counterChoiceOptions,resolveCounterChoice,enterPermanents} from '../oracle-effects.mjs';
-import {resolveTop,activateMana,castSpell} from '../casting.mjs';
+import {resolveTop,activateMana,castSpell,chooseEntryLife} from '../casting.mjs';
 import {chooseTriggerTarget} from '../combat-effects.mjs';
 import {activatedAbilities,addMana} from '../mana.mjs';
 import {projectGame} from '../multiplayer/protocol.mjs';
@@ -68,6 +68,6 @@ test('simultaneous check lands cannot count another incoming land or its Dryad t
 });
 
 test('incoming tap replacements do not change batch companions shock-land payment conditions',()=>{
- const g=game(),provider={...creature('Tap provider'),type_line:'Enchantment',oracle_text:'Lands enter tapped.'},land=real('Breeding Pool');g.players[0].zones.hand=[provider,land];enterPermanents(g,{owner:0,name:'Batch',source:{name:'Batch',instance:'batch'}},[provider,land].map(c=>({id:c.instance,owner:0})));assert.equal(land.entryLife.amount,2);assert.equal(land.entryLife.forcedTapped,false);
- const later=real('Breeding Pool');g.players[0].zones.hand=[later];enterPermanents(g,{owner:0,name:'Later',source:{name:'Later',instance:'later'}},[{id:later.instance,owner:0}]);assert.equal(later.entryLife.forcedTapped,true);
+ const g=game(),provider={...creature('Tap provider'),type_line:'Enchantment',oracle_text:'Lands enter tapped.'},land=real('Breeding Pool');g.players[0].zones.hand=[provider,land];enterPermanents(g,{owner:0,name:'Batch',source:{name:'Batch',instance:'batch'}},[provider,land].map(c=>({id:c.instance,owner:0})));assert.equal(g.pendingEffect.entries[1].card.entryLife.amount,2);assert.equal(g.pendingEffect.entries[1].card.entryLife.forcedTapped,false);assert.equal(g.players[0].zones.battlefield.length,0);chooseEntryLife(g,land.instance,true);assert.equal(land.tapped,false);
+ const later=real('Breeding Pool');g.players[0].zones.hand=[later];enterPermanents(g,{owner:0,name:'Later',source:{name:'Later',instance:'later'}},[{id:later.instance,owner:0}]);assert.equal(g.pendingEffect.entries[0].card.entryLife.forcedTapped,true);chooseEntryLife(g,later.instance,false);assert.equal(later.tapped,true);
 });

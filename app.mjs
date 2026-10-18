@@ -1,4 +1,6 @@
 import {el,button} from './ui-dom.mjs';
+import {createEntryValuesUI} from './entry-values-ui.mjs';
+import {createArtworkCache} from './artwork-cache.mjs';
 import {automaticFor} from './turn-settings.mjs';
 import {isCopyPlaceholder} from './token-catalog.mjs';
 import {decksReadyForOpening} from './opening-hand.mjs';
@@ -47,8 +49,7 @@ const COUNTER_PRESETS=[
  ['Keyword variants',['hexproof from white','hexproof from blue','hexproof from black','hexproof from red','hexproof from green','hexproof from monocolored','hexproof from multicolored']]
 ];
 let g=newGame(),seat=0,selected=null,history=[],panel='stack',draggedId=null,dragOffset={x:.5,y:.5},sessionEpoch=0;
-const artCache=new Map();
-const layoutCache=new Map();
+const artworkCache=createArtworkCache();
 let camera,cardPreview,manaUI,combatUI,pileUI,playerStatsUI,deckImportUI,boardPicker,castPresentation,turnPresentation,cardMotion;
 let networkSession=null,offlineBackup=null;
 let hoverPoint=null,hoverFrame=0;
@@ -60,14 +61,13 @@ try{const saved=localStorage.getItem('commanderLab');if(saved)g=validateSession(
 if(handSeat>=g.players.length)seat=handSeat=0;
 const serialize=state=>JSON.stringify(state,(key,value)=>key==='localImages'?undefined:value);
 const allCards=()=>[...g.players.flatMap(p=>[...ZONES.flatMap(z=>p.zones[z]),...(p.tokenCatalog||[])]),...g.stack.map(e=>e.card).filter(Boolean)];
+// Copy profiles reference artwork independently of the physical card beneath them.
+const allArtworkCards=()=>allCards().flatMap(card=>[card,...(card.copyEffects||[]).map(effect=>effect.values)]);
 function setStatus(text){$('status').textContent=text;}
-// Artwork is cached outside serialized game history and multiplayer commands.
-// Restoring a snapshot reconnects those local assets without downloading again.
-function cacheArtwork(card){
- if(card.localImages)artCache.set(card.id||card.name,{localImages:card.localImages,artworkVersion:card.artworkVersion,artworkError:card.artworkError});
-}
-function rememberArt(){for(const card of allCards()){cacheArtwork(card);if(card.loyaltyLayout)layoutCache.set(card.id||card.name,card.loyaltyLayout);}}
-function restoreArt(){for(const card of allCards()){const art=artCache.get(card.id||card.name);if(art)Object.assign(card,art);const layout=layoutCache.get(card.id||card.name);if(layout&&!card.loyaltyLayout)card.loyaltyLayout=layout;}}
+// Reconnect local presentation assets after undo, imports and shared snapshots.
+const cacheArtwork=artworkCache.rememberCard;
+const rememberArt=()=>artworkCache.remember(allCards());
+const restoreArt=()=>artworkCache.restore(allCards());
 function saveLocal(){if(networkSession){$('save-status').textContent=networkSession.connection==='connected'?'SHARED · '+networkSession.revision:'RECONNECTING';return;}try{localStorage.setItem('commanderLab',serialize(g));$('save-status').textContent='SAVED LOCALLY';}catch{$('save-status').textContent='EXPORT TO SAVE';setStatus('Local storage is full or unavailable. Export this session to save it.');}}
 // ---- Gameplay commands and local transactions ----
 // UI effects run only after a gameplay action is accepted. They never enter packets.
@@ -193,7 +193,8 @@ function pileButton(owner,zone){
  enableDrop(pile,owner,zone);return pile;
 }
 function cardButton(c,{interactive=true,overlayControls=false,revealed=false}={}){
- c=revealed?c:visibleCard(c);
+ c=cardFace(revealed?c:visibleCard(c));
+ if(c.copyEffects&&!c.localImages)c.localImages=artworkCache.get(c)?.localImages;
  const found=findCard(g,c.instance),onBoard=found?.zone==='battlefield',handActions=!c.faceDown&&found?.zone==='hand'&&found.owner===seat&&activatedAbilities(g,found.owner,c).some(a=>a.cycling||a.handOnly),editable=(interactive||overlayControls)&&(onBoard||handActions);
  // A battlefield card groups real counter buttons; controls must not nest in a button.
  const b=el(editable?'div':'button',undefined,'card card-'+cardColor(c)+(c.tapped?' tapped':''));
@@ -429,35 +430,12 @@ function renderCreatureControls(card){
  controls.append(row,el('p','Counters adjust these base values automatically. Other abilities and temporary effects can be set here.','counter-hint'),save,button('Use printed stats',()=>dispatch({type:'stats',id:card.instance,values:null})));return controls;
 }
 // ---- Entry choices and the floating inspector ----
-// Commands replace state objects. Track a permanent's entry identity, not its
-// object reference, so "Later" survives unrelated actions and shared updates.
-const deferredEntries=new Set();
-const entryKey=card=>card.instance+':'+(card.battlefieldId||card.zoneChangeId||'');
-function promptEntry(id){
- const found=findCard(g,id);if(!found||found.zone!=='battlefield'||!found.card.entryChoices?.length)return;
- const card=found.card,fields=$('entry-fields');fields.replaceChildren();$('entry-dialog').dataset.card=id;$('entry-title').textContent=cardFace(card).name||card.name;$('entry-oracle').textContent=cardFace(card).oracle_text||'';
- for(const choice of card.entryChoices){const group=el('div'),label=el('label',choice.label),input=el('input');input.id='entry-'+fields.children.length;label.htmlFor=input.id;input.dataset.choice=choice.key;input.type='number';input.step=1;input.min=choice.min;input.max=999999;input.required=true;input.value=choice.suggested;group.append(label,input);fields.append(group);}
- $('entry-dialog').showModal();fields.querySelector('input')?.select();
-}
-function maybePromptEntry(){
- const pending=g.players.flatMap(player=>player.zones.battlefield).filter(card=>card.entryChoices?.length);
- const live=new Set(pending.map(entryKey));
- for(const key of deferredEntries)if(!live.has(key))deferredEntries.delete(key);
- const dialog=$('entry-dialog');if(dialog.open){const found=findCard(g,dialog.dataset.card);if(found?.zone==='battlefield'&&found.card.entryChoices?.length)return;dialog.close();}
- if(document.querySelector('dialog[open]'))return;
- const card=pending.find(card=>!deferredEntries.has(entryKey(card))&&(!networkSession||findCard(g,card.instance)?.owner===seat));if(card)promptEntry(card.instance);
-}
-$('entry-form').onsubmit=event=>{event.preventDefault();const found=findCard(g,$('entry-dialog').dataset.card);if(!found)return;
- const values=Object.fromEntries([...$('entry-fields').querySelectorAll('input')].map(input=>[input.dataset.choice,Number(input.value)]));
- dispatch({type:'entryValues',id:found.card.instance,values});
-};
-function deferEntry(){const found=findCard(g,$('entry-dialog').dataset.card);if(found)deferredEntries.add(entryKey(found.card));$('entry-dialog').close();}
-$('entry-later').onclick=deferEntry;$('entry-dialog').oncancel=event=>{event.preventDefault();deferEntry();};
-document.addEventListener('toggle',event=>{if(event.target.matches('dialog')&&event.newState==='closed')queueMicrotask(()=>{maybePromptEntry();manaUI?.maybeResolveEffect();openingHandUI?.refresh();});},true);
+const entryValuesUI=createEntryValuesUI({getGame:()=>g,getSeat:()=>seat,getNetwork:()=>networkSession,selectSeat,dispatch});
+document.addEventListener('toggle',event=>{if(event.target.matches('dialog')&&event.newState==='closed')queueMicrotask(()=>{entryValuesUI.refresh();manaUI?.maybeResolveEffect();openingHandUI?.refresh();});},true);
 function renderInspector(id=cardPreview?.id||selected,{readOnly=false,inspectionCard:inspected}={}){
  const container=$('inspector'),scroll=container.dataset.card===id?container.scrollTop:0;container.dataset.card=id||'';container.replaceChildren();const found=id&&findCard(g,id);
  if(!found){const empty=el('div',undefined,'inspection-empty');empty.append(el('div','◇','empty-card-icon'),el('h2','A closer look.'),el('p','Hold Left Alt over a card to inspect it and make your next move.'));container.append(empty);return;}
- const {owner,zone}=found,card=inspected||visibleCard(found.card),hidden=concealedHand(id)&&(!inspected||inspected.faceDown);
+ const {owner,zone}=found,card=inspected|| (found.card.copyEffects&&!found.card.faceDown?cardFace(visibleCard(found.card)):visibleCard(found.card)),hidden=concealedHand(id)&&(!inspected||inspected.faceDown);
  const location=el('div',undefined,'inspector-location');location.append(el('span','SEAT 0'+(owner+1)+' / '+LABELS[zone]),el('span',card.practice?'PRACTICE':card.token?'TOKEN':'CARD'));
  container.append(location,el('h2',card.faceDown?'Face-down card':card.card_faces?.[card.face||0]?.name||card.name));
  if(card.manifested&&owner===seat){const printed=card.card_faces?.[0]||card;container.append(el('p','Manifested card: '+printed.name+' '+(printed.mana_cost||''),'type-line'),el('p',printed.oracle_text||'','oracle-text'));}
@@ -475,7 +453,7 @@ function renderInspector(id=cardPreview?.id||selected,{readOnly=false,inspection
  const controls=el('div',undefined,'move-controls');const moveLabel=el('label','MOVE TO');moveLabel.htmlFor='move-zone';const row=el('div',undefined,'control-row'),zoneSelect=el('select');zoneSelect.id='move-zone';for(const z of [...ZONES,'stack']){const option=el('option',LABELS[z]);option.value=z;zoneSelect.append(option);}zoneSelect.value=zone==='hand'?'battlefield':zone==='stack'?'graveyard':'hand';
  const destination=el('select');destination.id='move-seat';destination.setAttribute('aria-label','Destination player');g.players.forEach((p,i)=>{const option=el('option',p.name);option.value=i;destination.append(option);});destination.value=owner;
  row.append(zoneSelect,button('Move →',()=>dispatch({type:'move',id:card.instance,to:zoneSelect.value,owner:Number(destination.value)})));controls.append(moveLabel,destination,row);container.append(controls);
- if(!hidden){if(zone==='battlefield'){if(card.entryChoices?.length)container.append(button('Set entering values…',()=>promptEntry(card.instance)));const stats=renderCreatureControls(card);if(stats)container.append(stats);}container.append(renderCounterControls(card));}container.scrollTop=scroll;
+ if(!hidden){if(zone==='battlefield'){if(card.entryChoices?.length)container.append(button('Set entering values…',()=>entryValuesUI.open(card.instance)));const stats=renderCreatureControls(card);if(stats)container.append(stats);}container.append(renderCounterControls(card));}container.scrollTop=scroll;
 }
 // ---- Stack and coordinated repaint ----
 function renderStack(){
@@ -492,21 +470,53 @@ function renderStack(){
   if(index===0&&!g.pendingEffect){box.append(button(networkSession?'Pass priority':'Resolve now',()=>dispatch({type:networkSession?'pass':'resolveNow'})));if(entry.card&&!networkSession)box.append(button('Resolve → battlefield',()=>dispatch({type:'resolveTo',to:'battlefield'})),button('Resolve → graveyard',()=>dispatch({type:'resolveTo',to:'graveyard'})));box.append(button(entry.card?'Counter → graveyard':'Counter ability',()=>dispatch({type:'counter'})));}target.append(box);
  });
 }
+// ---- Render orchestration ----
+// Keep the frame order explicit: capture the old card positions, build the new
+// board, then refresh overlays and prompts using the newly rendered anchors.
+function renderGameResult(){
+ let result=$('game-result');if(!result){result=el('section',undefined,'game-result');result.id='game-result';result.setAttribute('role','status');document.body.append(result);}result.hidden=!g.result;if(g.result){result.replaceChildren(el('strong',g.result.draw?'Game drawn':g.result.winners.map(i=>g.players[i].name).join(' and ')+' wins'),el('span',g.result.source),networkSession&&!networkSession.host?el('span','The host can reset this game.'):button('Reset game',()=>$('reset-game').click()));}
+}
+function renderTurnControls(){
+ $('turnnumber').textContent=String(g.turn).padStart(2,'0');$('turn').textContent='TURN '+g.turn+' / '+g.players[g.active].name;const planned=g.turnPlan?.steps[g.turnPlan.index];$('step').textContent=STEPS[g.step]+(planned?.extra?' · Extra':'');$('step').title=planned?.extra?'Additional '+planned.kind+' phase · '+planned.source:STEPS[g.step];
+ $('steps').replaceChildren(...STEPS.map((s,i)=>{const b=button(STEP_LABELS[i],()=>dispatch({type:'step',step:i}),'step'+(i===g.step?' current':''));b.title=s;b.setAttribute('aria-label',s);if(i===g.step)b.setAttribute('aria-current','step');return b;}));
+ $('players').replaceChildren(...g.players.map((p,i)=>{const b=button('0'+(i+1),()=>selectSeat(i),'seat-selector'+(i===seat?' selected':''));b.style.setProperty('--seat-color',COLORS[i]);b.title='Control '+p.name;b.setAttribute('aria-label','Control '+p.name);b.setAttribute('aria-pressed',String(seat===i));return b;}));
+ $('undo').disabled=networkSession?networkSession.connection!=='connected':!history.length;for(const id of ['reset','practice','quickpractice','load','player-count'])if($(id))$(id).disabled=!!networkSession;if($('reset-game'))$('reset-game').disabled=!!networkSession&&!networkSession.host;if($('starting-hands'))$('starting-hands').disabled=!!networkSession&&!networkSession.host;
+}
+function renderLog(){
+ $('log').replaceChildren(...(g.log.length?g.log.map((text,index)=>{const row=el('div',text);row.title=index===0?'Most recent action':'';return row;}):[el('p','Your table actions will appear here.')]));
+}
 function render(){
- $('automatic').checked=automaticFor(g,seat);$('automatic').disabled=false;
+ $('automatic').checked=automaticFor(g,seat);
+ $('automatic').disabled=false;
  $('automatic').setAttribute('aria-label',g.players[seat].name+' auto untap / draw');
  $('automatic').parentElement.title='Automatically untap and draw during '+g.players[seat].name+' turns only.';
  cardMotion?.capture();
  launchUI?.refresh();
- let result=$('game-result');if(!result){result=el('section',undefined,'game-result');result.id='game-result';result.setAttribute('role','status');document.body.append(result);}result.hidden=!g.result;if(g.result){result.replaceChildren(el('strong',g.result.draw?'Game drawn':g.result.winners.map(i=>g.players[i].name).join(' and ')+' wins'),el('span',g.result.source),networkSession&&!networkSession.host?el('span','The host can reset this game.'):button('Reset game',()=>$('reset-game').click()));}
- // Synchronize the controlled hand before building cards and overlays. Visual
- // presentations refresh after those elements exist so their anchors are current.
+ renderGameResult();
+ // Hand ownership must be current before constructing cards or mana previews.
  syncHandSeat();
  manaUI?.beginRender();
- saveLocal();$('turnnumber').textContent=String(g.turn).padStart(2,'0');$('turn').textContent='TURN '+g.turn+' / '+g.players[g.active].name;const planned=g.turnPlan?.steps[g.turnPlan.index];$('step').textContent=STEPS[g.step]+(planned?.extra?' · Extra':'');$('step').title=planned?.extra?'Additional '+planned.kind+' phase · '+planned.source:STEPS[g.step];
- $('steps').replaceChildren(...STEPS.map((s,i)=>{const b=button(STEP_LABELS[i],()=>dispatch({type:'step',step:i}),'step'+(i===g.step?' current':''));b.title=s;b.setAttribute('aria-label',s);if(i===g.step)b.setAttribute('aria-current','step');return b;}));
- $('players').replaceChildren(...g.players.map((p,i)=>{const b=button('0'+(i+1),()=>selectSeat(i),'seat-selector'+(i===seat?' selected':''));b.style.setProperty('--seat-color',COLORS[i]);b.title='Control '+p.name;b.setAttribute('aria-label','Control '+p.name);b.setAttribute('aria-pressed',String(seat===i));return b;}));
- $('undo').disabled=networkSession?networkSession.connection!=='connected':!history.length;for(const id of ['reset','practice','quickpractice','load','player-count'])if($(id))$(id).disabled=!!networkSession;if($('reset-game'))$('reset-game').disabled=!!networkSession&&!networkSession.host;if($('starting-hands'))$('starting-hands').disabled=!!networkSession&&!networkSession.host;renderTable();renderHandDock();manaUI?.render();combatUI?.render();renderSelection();renderInspector();renderStack();boardPicker?.refresh();castPresentation?.refresh();turnPresentation?.refresh();$('log').replaceChildren(...(g.log.length?g.log.map((text,index)=>{const row=el('div',text);row.title=index===0?'Most recent action':'';return row;}):[el('p','Your table actions will appear here.')]));setPanel(panel);pileUI?.render();cardPreview?.refresh(true);cardMotion?.refresh();refreshHover();maybePromptEntry();manaUI?.maybeResolveEffect();openingHandUI?.refresh();
+ saveLocal();
+ renderTurnControls();
+ renderTable();
+ renderHandDock();
+ manaUI?.render();
+ combatUI?.render();
+ renderSelection();
+ renderInspector();
+ renderStack();
+ boardPicker?.refresh();
+ castPresentation?.refresh();
+ turnPresentation?.refresh();
+ renderLog();
+ setPanel(panel);
+ pileUI?.render();
+ cardPreview?.refresh(true);
+ cardMotion?.refresh();
+ refreshHover();
+ entryValuesUI.refresh();
+ manaUI?.maybeResolveEffect();
+ openingHandUI?.refresh();
 }
 // ---- Deck/pile dialogs and player statistics ----
 // ---- Toolbar actions and confirmed table changes ----
@@ -572,12 +582,12 @@ cardPreview=createCardPreview({roots:[document.body],getCard:inspectionCard,rend
 boardPicker=createBoardInteraction({getGame:()=>g,getSeat:()=>seat,renderCard:card=>cardButton(card,{interactive:false}),el,button,setStatus});
 manaUI=createManaUI({getGame:()=>g,getSeat:()=>seat,selectSeat,toggleTapped,findCard,dispatch,setStatus,el,button,boardPicker,useLoyaltyAbility,renderCard:(card,options)=>cardButton(card,{...options,interactive:false})});
 playerStatsUI=createPlayerStatsUI({getGame:()=>g,getNetwork:()=>networkSession,getSeat:()=>seat,dispatch,setStatus,el});
-deckImportUI=createDeckImportUI({getGame:()=>g,getNetwork:()=>networkSession,getSeat:()=>seat,getEpoch:()=>sessionEpoch,allCards,dispatch,setStatus,render,rememberArt,cacheArtwork,restoreArt});
+deckImportUI=createDeckImportUI({getGame:()=>g,getNetwork:()=>networkSession,getSeat:()=>seat,getEpoch:()=>sessionEpoch,allCards:allArtworkCards,dispatch,setStatus,render,rememberArt,cacheArtwork,restoreArt});
 pileUI=createPileUI({getGame:()=>g,getNetwork:()=>networkSession,getSeat:()=>seat,setSeat:owner=>{seat=owner;},dispatch,render,renderCard:card=>cardButton(card),refreshHover,resolvePendingEffect:()=>manaUI?.maybeResolveEffect(),setStatus,el,button});
 combatUI=createCombatUI({openLibrary:owner=>pileUI.open(owner,'library'),getGame:()=>g,getSeat:()=>seat,selectSeat,dispatch,setStatus,el,button,boardPicker,renderCard:card=>cardButton(card,{interactive:false}),showStack:()=>{showPanel();setPanel('stack');}});
 turnPresentation=createTurnPresentation({getGame:()=>g,getSeat:()=>seat,getEpoch:()=>sessionEpoch});
 cardMotion=createCardMotion({getSeat:()=>seat,getEpoch:()=>sessionEpoch});
-castPresentation=createCastPresentation({getGame:()=>g,renderCard:(card,options)=>cardButton(card,{...options,interactive:false}),resolveArt:card=>({...card,localImages:findCard(g,card.instance)?.card.localImages||artCache.get(card.id||card.name)?.localImages}),priorityControls:()=>manaUI.priorityControls({id:'play-priority-controls',responses:true}),el,button});
+castPresentation=createCastPresentation({getGame:()=>g,renderCard:(card,options)=>cardButton(card,{...options,interactive:false}),resolveArt:card=>({...card,localImages:findCard(g,card.instance)?.card.localImages||artworkCache.get(card)?.localImages}),priorityControls:()=>manaUI.priorityControls({id:'play-priority-controls',responses:true}),el,button});
 
 document.addEventListener('pointermove',trackHover);document.addEventListener('pointerover',trackHover);document.addEventListener('pointerout',scheduleHover);
 document.documentElement.addEventListener('pointerleave',clearHover);window.addEventListener('blur',clearHover);

@@ -10,10 +10,12 @@ import {prepareTokenEntries,createTokenCopies} from './tokens.mjs';
 import {setAttacker,confirmAttackers,setBlocker,confirmBlockers,setDamageAssignment,applyCombatDamage,attackTargets,stateBasedActions,blockController,controlledBlockerSeat} from './combat.mjs';
 import {attackError,attackTargetError} from './creature-rules.mjs';
 import {chooseTriggerTarget,deathDestinations,orderTriggers} from './combat-effects.mjs';
-import {enterPermanents,resolveOracleChoice,resolveDestructionChoice,resolveCounterChoice} from './oracle-effects.mjs';
+import {enterPermanents,resolveEntryChoice,resolveOracleChoice,resolveDestructionChoice,resolveCounterChoice} from './oracle-effects.mjs';
 import {autoPassEmptySteps} from './phase-flow.mjs';
 import {turnController} from './game-outcome.mjs';
 import {LOBBY_ACTIONS,applyLobbyAction,refreshLobbyDeck} from './lobby.mjs';
+import {finishResolutionTriggers} from './trigger-rules.mjs';
+import {selectEntryChoice} from './entry-effects.mjs';
 const integer=(n,min=0,max=999999)=>{
  if(!Number.isSafeInteger(n)||n<min||n>max)throw Error('Invalid whole-number value.');
  return n;
@@ -57,6 +59,7 @@ export function reduceGameAction(original,action,actor,{automatic=false,host=tru
  if(openingPending(g)&&!['reset','responseMode'].includes(a.type))throw Error('Finish opening hands and confirm ready before playing.');
  if(g.lobby?.status==='waiting'&&!['import','playerStats','responseMode'].includes(a.type))throw Error('Start the game from the lobby before playing.');
  if(g.pendingEffect?.kind==='counter-choice'&&!['counterChoice','reset','responseMode'].includes(a.type))throw Error('Finish counter replacement choices first.');
+ if(g.pendingEffect?.kind==='entry-choice'&&!['entryCopy','entrySelect','entryValues','entryLife','entryTapped','reset','responseMode'].includes(a.type))throw Error('Finish the pending pre-entry decision first.');
  // ---- Apply one command ----
  // These commands are shared by mouse, keyboard, controller and network input.
  switch(a.type){
@@ -97,7 +100,13 @@ export function reduceGameAction(original,action,actor,{automatic=false,host=tru
   case 'resolveNow':resolveTop(g);break;
   case 'resolveTo':resolve(g,a.to);break;
   case 'counter':if(!g.stack.length)throw Error('The stack is empty.');counterTop(g);break;
-  case 'move':{const id=requireCard(a.id).instance;if(a.to==='library')placeInLibrary(g,id,a.owner??actor,a.libraryPosition??'top');else transfer(g,id,a.to,a.owner??actor,a.position);break;}
+  case 'move':{
+   const card=requireCard(a.id),found=findCard(g,a.id),target=a.owner??actor;
+   if(a.to==='library')placeInLibrary(g,card.instance,target,a.libraryPosition??'top');
+   else if(a.to==='battlefield'&&found.zone!=='battlefield')enterPermanents(g,{owner:target,name:'Place '+card.name,source:{instance:card.instance,name:card.name}},[{id:card.instance,owner:target,position:a.position}]);
+   else transfer(g,card.instance,a.to,target,a.position);
+   break;
+  }
   case 'tap':{
    const card=requireCard(a.id,['battlefield']),controller=findCard(g,a.id).owner;
    if(card.tapped)reverseManaTap(g,card,{fromEffect:a.fromEffect===true||g.step===0&&g.active===controller});
@@ -130,9 +139,14 @@ export function reduceGameAction(original,action,actor,{automatic=false,host=tru
    else c.battlefieldStats={face:c.face||0,power:integer(a.values.power,-999999),toughness:integer(a.values.toughness,-999999)};
    break;
   }
-  case 'entryValues':{const c=requireCard(a.id,['battlefield']);applyEntryChoices(c,a.values);note(g,c.name+': starting values set.');break;}
-  case 'entryLife':requireCard(a.id,['battlefield']);chooseEntryLife(g,a.id,a.pay);break;
-  case 'entryTapped':requireCard(a.id,['battlefield']);chooseEntryTapped(g,a.id,a.tapped);break;
+  case 'entrySelect':selectEntryChoice(g,a.id,a.kind);break;
+  case 'entryValues':{
+   if(g.pendingEffect?.kind==='entry-choice')resolveEntryChoice(g,'values',{id:a.id,values:a.values});
+   else{const c=requireCard(a.id,['battlefield']);applyEntryChoices(c,a.values);note(g,c.name+': starting values set.');}break;
+  }
+  case 'entryCopy':resolveEntryChoice(g,'copy',{id:a.id,target:a.target,battlefieldId:a.battlefieldId});break;
+  case 'entryLife':chooseEntryLife(g,a.id,a.pay);break;
+  case 'entryTapped':chooseEntryTapped(g,a.id,a.tapped);break;
   case 'oracleChoice':resolveOracleChoice(g,a.keys);settlePriority(g);break;
   case 'destructionChoice':resolveDestructionChoice(g,a.id);settlePriority(g);break;
   case 'proliferate':resolveProliferate(g,a.ids||[],a.owners||[]);break;
@@ -234,7 +248,7 @@ export function reduceGameAction(original,action,actor,{automatic=false,host=tru
  // ---- Settle the accepted action, then validate the resulting snapshot ----
  // Costs/effects finish before deaths, priority and empty-step progression.
  // Resolution choices keep their continuation and suppress premature progression.
- stateBasedActions(g);settlePriority(g);
+ stateBasedActions(g);finishResolutionTriggers(g);settlePriority(g);
  if(g.lobby?.status==='waiting'&&a.type==='import')refreshLobbyDeck(g,owner);
  if(g.lobby?.status!=='waiting')autoPassEmptySteps(g,{automatic});
  validateSession(g);

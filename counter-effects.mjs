@@ -36,7 +36,7 @@ function initialState(g,event,enteringCard){
  if(!enteringCard&&event.recipient.kind==='card'&&(found?.zone!=='battlefield'||found.owner!==event.recipient.owner||(card.battlefieldId||null)!==event.recipient.battlefieldId))throw Error('Counter recipient is no longer that permanent.');
  let counters=Object.fromEntries(Object.entries(event.counters).filter(([,n])=>n>0));
  if(event.recipient.kind==='player')for(const kind of Object.keys(counters))if(g.players[event.recipient.owner].zones.battlefield.some(c=>!c.faceDown&&new RegExp(kind==='poison'?"You can't (?:get poison counters|get counters)\\.":"You can't get counters\\.",'i').test(cardFace(c).oracle_text||'')))delete counters[kind];
- return {...structuredClone(event),counters,effect:event.cause!=='cost',providers:providers(g,event,card),applied:[],label:card?.name||g.players[event.recipient.owner].name};
+ return {...structuredClone(event),counters,effect:!['cost','damage'].includes(event.cause),providers:providers(g,event,card),applied:[],label:card?.name||g.players[event.recipient.owner].name};
 }
 function applies(state,rule){return !state.applied.includes(rule.key)&&(!rule.effectOnly||state.effect)&&Object.entries(state.counters).some(([kind,n])=>n>0&&(!rule.kinds||rule.kinds.includes(kind)));}
 function commute(a,b,state){return a.operation===b.operation||!Object.keys(state.counters).some(kind=>(!a.kinds||a.kinds.includes(kind))&&(!b.kinds||b.kinds.includes(kind)));}
@@ -75,13 +75,13 @@ export function advanceCounterPlan(plan,key){
   apply(state,available[0]);
  }return null;
 }
-export function commitCounterPlan(g,plan){
+export function commitCounterPlan(g,plan,{deferTriggers=false}={}){
  if(plan.index!==plan.states.length)throw Error('Finish counter replacement choices first.');
  const entries=plan.states.flatMap(state=>{const target=state.recipient,found=target.kind==='card'?findCard(g,target.id):null;if(g.players[target.owner].eliminated||target.kind==='card'&&(found?.zone!=='battlefield'||(found.card.battlefieldId||null)!==target.battlefieldId))return [];return [{state,card:found?.card,owner:target.kind==='card'?found.owner:target.owner}];});
  // Check every resulting total first so overflow cannot partially apply a batch.
  const totals=new Map();for(const {state,card,owner} of entries)for(const [kind,n] of Object.entries(state.counters)){const key=(card?.instance??'player:'+owner)+':'+kind,current=totals.get(key)??(card?card.counters?.[kind]||0:kind==='poison'?g.players[owner].poison||0:g.players[owner].counters?.[kind]||0);if(!whole(current+n))throw Error('Counter total is too large.');totals.set(key,current+n);}
  const events=[];for(const {state,card,owner} of entries){const counts=Object.fromEntries(Object.entries(state.counters).filter(([,n])=>n>0));for(const [kind,n] of Object.entries(counts)){if(card){card.counters??={};card.counters[kind]=(card.counters[kind]||0)+n;}else if(kind==='poison')g.players[owner].poison+=n;else{g.players[owner].counters??={};g.players[owner].counters[kind]=(g.players[owner].counters[kind]||0)+n;}}if(Object.keys(counts).length)events.push({kind:'counter',owner:state.actor,target:{...state.recipient},counters:counts,...(card?{card:snapshotCard(card)}:{})});}
- queueCombatTriggers(g,events);return events;
+ if(!deferTriggers)queueCombatTriggers(g,events);return events;
 }
 // Each proliferate replacement expands the original action once. The Oracle
 // continuation marks the extra actions as expanded to avoid recursive doubling.
