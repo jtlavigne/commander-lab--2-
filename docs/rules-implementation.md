@@ -438,3 +438,14 @@ is now offscreen and deterministic, with unchanged alignment assertions. The
 workflow passes locally at standard and minimum sizes; screenshot capture waits
 for an actual paint. Test.8 is the next immutable release candidate, containing
 the same accumulated runtime changes.
+
+### Published testing release: test.8
+
+The complete release pipeline passed on GitHub: 1,345 unit/network tests, all 43
+reduced-motion interface workflows, both minimum-size checks, installer/ZIP and
+checksum builds, and the packaged-app smoke test. All five public release assets
+were verified, including the test.8 updater manifest. This does not close any
+remaining whole-deck verification gates.
+
+- Run: https://github.com/jtlavigne/commander-lab--2-/actions/runs/39098222983
+- Release: https://github.com/jtlavigne/commander-lab--2-/releases/tag/v0.1.0-test.8
