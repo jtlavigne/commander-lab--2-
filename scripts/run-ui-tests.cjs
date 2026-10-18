@@ -8,6 +8,7 @@ const root = path.resolve(__dirname, '..');
 const tests = readdirSync(path.join(root, 'tests'))
  .filter(name => name === 'ui.cjs' || name.endsWith('-ui.cjs'))
  .sort();
+const electronFlags = process.argv.includes('--reduced-motion') ? ['--force-prefers-reduced-motion'] : [];
 let child;
 for (const signal of ['SIGINT', 'SIGTERM']) process.on(signal, () => child?.kill(signal));
 
@@ -16,7 +17,7 @@ async function main() {
   console.log('\nUI check: ' + name);
   // This check launches multiple Electron processes itself from Node.
   const args = name === 'launch-profiles-ui.cjs'
-   ? [path.join('tests', name)] : ['launch.cjs', path.join('tests', name)];
+   ? [path.join('tests', name)] : ['launch.cjs', ...electronFlags, path.join('tests', name)];
   const code = await new Promise((resolve, reject) => {
    child = spawn(process.execPath, args, {cwd: root, stdio: 'inherit', windowsHide: true});
    child.once('error', reject);

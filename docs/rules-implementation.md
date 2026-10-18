@@ -419,5 +419,15 @@ still dispatches real pointer input and does not bypass the hit assertion. The
 workflow passes locally at normal size and at 1000 by 760, the app's minimum
 window size. The latter is now an additional release gate.
 
-The failed tag is retained unchanged. Test.6 carries this test correction and all
-accumulated application changes; publication still requires its complete CI run.
+The failed tags are retained unchanged. Test.6 passed the pointer check, but CI
+then exposed a lobby test assuming animations were enabled by default. The tests
+now respect the host preference and explicitly exercise both motion modes. The
+offscreen counter screenshot also waits for a painted frame rather than racing
+the compositor after a hidden-window resize. Test.7 carries all accumulated
+application changes and these test corrections; publication requires its complete
+CI gate.
+
+Local test.7 verification passed: 1,345 unit/network cases, all 43 interface
+workflows under forced reduced motion, the minimum-window pointer check, Windows
+installer/ZIP and updater checksum builds, runtime inventory, and the actual
+packaged-app smoke test. GitHub publication remains gated by the same checks.

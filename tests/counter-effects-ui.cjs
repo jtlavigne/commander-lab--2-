@@ -28,7 +28,10 @@ app.whenReady().then(async()=>{
   assert.equal(await run("document.getElementById('activation-confirm').disabled"),true);assert.equal(await run("document.getElementById('activation-phyrexian-life').checked"),true);
   await run("const input=document.querySelector('[data-counter-cost-card=Donor]');input.value='3';input.dispatchEvent(new Event('input'))");
   assert.equal(await run("document.getElementById('activation-confirm').disabled"),false);assert.match(await run("document.getElementById('activation-cost-summary').textContent"),/Pay 4 life/);
-  win.setSize(1501,960);await new Promise(r=>setTimeout(r,120));await fs.writeFile(path.join(__dirname,'..','.qa','tekuthal-cost.png'),(await win.webContents.capturePage()).toPNG());
+  // Capture the actual offscreen paint rather than racing capturePage against
+  // Chromium's compositor after resizing a hidden window.
+  const screenshot=await new Promise((resolve,reject)=>{const timer=setTimeout(()=>{win.webContents.removeListener('paint',paint);reject(new Error('Counter dialog did not paint'));},5000);function paint(_event,_dirty,image){clearTimeout(timer);resolve(image);}win.webContents.once('paint',paint);win.webContents.invalidate();});
+  await fs.writeFile(path.join(__dirname,'..','.qa','tekuthal-cost.png'),screenshot.toPNG());
   await click('#activation-confirm');assert.equal((await state()).players[0].life,36);assert.ok((await state()).players[0].zones.graveyard.some(c=>c.instance==='Donor'));assert.equal((await state()).players[0].zones.battlefield.find(c=>c.instance==='Tekuthal').counters.indestructible,undefined);
   await reload();assert.equal((await state()).stack.length,1);await pass();assert.equal((await state()).players[0].zones.battlefield.find(c=>c.instance==='Tekuthal').counters.indestructible,1);
   // Compleated reads the saved casting payment only when the spell resolves.
